@@ -16,7 +16,6 @@ public class Invoice {
 		this.totalPrice = 0;
 	}
 	
-	//Customer Invoice
 	public Invoice(int id, ArrayList<Product> products){
 		this.id = id;
 		this.products = products;
