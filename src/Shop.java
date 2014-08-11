@@ -129,6 +129,8 @@ public class Shop extends JFrame {
 		
 		validate();
 		
+		repaint();
+		
 	}
 	
 	
@@ -139,6 +141,8 @@ public class Shop extends JFrame {
 		container.add(framePanel);
 		
 		validate();
+		
+		repaint();
 	}
 	
 	public static void main(String []args){
