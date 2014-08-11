@@ -8,43 +8,18 @@ public class Invoice {
 	private int id;
 	private Date date = new Date();
 	private DateFormat format = DateFormat.getDateInstance();
-	private Customer customer;
-	private Supplier supplier;
 	private ArrayList<Product> products = new ArrayList<Product>();
 	private double totalPrice;
 	
 	public Invoice(){
 		this.id = 0;
-		this.customer = new Customer();
 		this.totalPrice = 0;
 	}
 	
 	//Customer Invoice
-	public Invoice(int id, Customer customer, ArrayList<Product> products){
+	public Invoice(int id, ArrayList<Product> products){
 		this.id = id;
-		this.customer = customer;
 		this.products = products;
-		this.totalPrice = customerPrice(products);
-	}
-	
-	//Supplier Invoice
-	public Invoice(int id, Supplier supplier, ArrayList<Product> products){
-		this.id = id;
-		this.supplier = supplier;
-		this.products = products;
-		this.totalPrice = supplierPrice(products);
-	}
-	
-	public double customerPrice(ArrayList<Product> products){
-		//TO-DO
-		double price = products.get(0).getCustomerPrice();
-		return price;
-	}
-	
-	public double supplierPrice(ArrayList<Product> products){
-		//TO-DO
-		double price = products.get(0).getSupplierPrice();
-		return price;
 	}
 
 	public int getId() {
@@ -53,22 +28,6 @@ public class Invoice {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	public Supplier getSupplier() {
-		return supplier;
-	}
-
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
 	}
 
 	public ArrayList<Product> getProducts() {
