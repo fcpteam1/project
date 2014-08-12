@@ -96,45 +96,29 @@ public class Stock {
 		}
 	}
 
-	public static void stockLevels (ArrayList <Stock> stocks, int id)
+
+	public static void stockLevels (ArrayList <Stock> stocks, ArrayList <Product> products)
 	{
-		String product= null;
-		int productQuantity=0;
-
-		if (id==0)
+		System.out.println("Stock Levels\n*********************************");
+		for (int i= 0; i<products.size(); i++)
 		{
-			System.out.println ("Stock List"+
-							"\n****************************");
-		}
-		
-		boolean idFound= false;
-
-		for (Stock temp: stocks)
-		{
-			if (temp.getProduct().getId()==id)
+			int quantity=0;
+			for (int j= 0; j< stocks.size(); j++)
 			{
-				product= temp.getProduct().getName();
-				productQuantity+= temp.getQuantity();
-				idFound=true;
+				if (products.get(i).getId()== stocks.get(j).getProduct().getId())
+				{
+					quantity++;
+				}
+			}
+			
+			if(quantity>0)
+			{
+				System.out.println("\nProduct: "+products.get(i).getName()+
+									" "+ quantity);
 			}
 		}
-		
-		if (idFound)
-		{
-			System.out.println("Product: "+product + 
-					"  Quantity: "+ productQuantity +"\n");
-			id++;
-			stockLevels(stocks, id);
-		}
-	
-		if (id==0)
-		{
-			System.out.println("Out of Stock+\n****************************");
-		}
-		else if (id==1)
-		{
-			System.out.println ("\n****************************");
-		}
+		System.out.println("\n*********************************");
 	}
+
 
 }
