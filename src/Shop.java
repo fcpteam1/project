@@ -2,11 +2,10 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Icon;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +16,10 @@ import javax.swing.JButton;
 public class Shop extends JFrame {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// all components used for the login screen
 	private JPanel loginPanel,framePanel,centreLoginPanel,loginSubmitPanel;
 	private JTextField loginUsername, loginPassword;
