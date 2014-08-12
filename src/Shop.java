@@ -6,10 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -29,6 +31,8 @@ public class Shop extends JFrame {
 	// all components used for login screen
 	
 	// main menu screen
+	private JTabbedPane tabbedPanel;
+	private JPanel mainMenuPane;
 	private JPanel mainMenuPanel,mainCentrePanel,customerPanel,userPanel,salePanel,stockPanel,logoutPanel,productPanel,supplierPanel,orderPanel,invoicePanel;
 	private JButton customerButton,saleButton,userButton,stockButton,productButton,supplierButton,orderButton,invoiceButton,logoutButton;
 	private JLabel customerLabel,saleLabel,userLabel,stockLabel,productLabel,supplierLabel,invoiceLabel,orderLabel;
@@ -116,6 +120,22 @@ public class Shop extends JFrame {
 		orderLabel=new JLabel(new ImageIcon("icon.png"));
 		orderPanel.add(orderLabel,BorderLayout.CENTER);
 		
+		tabbedPanel=new JTabbedPane();
+		mainMenuPane=new JPanel();
+		mainMenuPane.setLayout(new BorderLayout());
+		
+		tabbedPanel.addTab("Customers",customerPanel);
+		tabbedPanel.addTab("Users",userPanel);
+		tabbedPanel.addTab("Product",productPanel);
+		tabbedPanel.addTab("Sales",salePanel);
+		tabbedPanel.addTab("Stocks",stockPanel);
+		tabbedPanel.addTab("Orders",orderPanel);
+		tabbedPanel.addTab("Invoices",invoicePanel);
+		tabbedPanel.addTab("Suppliers",supplierPanel);
+		
+		mainMenuPane.add(tabbedPanel,BorderLayout.CENTER);
+		
+		
 		logoutPanel=new JPanel();
 		logoutPanel.setLayout(new FlowLayout());
 		logoutButton=new JButton("LOGOUT");
@@ -128,7 +148,7 @@ public class Shop extends JFrame {
 		
 		
 		
-		
+		/*
 		mainCentrePanel.add(customerPanel);
 		mainCentrePanel.add(salePanel);
 		mainCentrePanel.add(userPanel);
@@ -137,7 +157,7 @@ public class Shop extends JFrame {
 		mainCentrePanel.add(supplierPanel);
 		mainCentrePanel.add(invoicePanel);
 		mainCentrePanel.add(orderPanel);
-		
+		*/
 		
 		mainMenuPanel.add(mainCentrePanel,BorderLayout.CENTER);
 		mainMenuPanel.add(logoutPanel,BorderLayout.SOUTH);
@@ -209,7 +229,7 @@ public class Shop extends JFrame {
 	public boolean changeToMainMenu(){
 		container.removeAll();
 		
-		container.add(mainMenuPanel);
+		container.add(mainMenuPane);
 		
 		validate();
 
