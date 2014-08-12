@@ -22,7 +22,7 @@ public class Supplier {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name= name;
 	}
 
 	public int getId() {
@@ -41,4 +41,19 @@ public class Supplier {
 		this.products = products;
 	}
 	
+	public boolean checkPrice (Product product, double minPrice)
+	{
+		boolean priceLess = false;
+		for (Product test:products)
+		{
+			if (test.getName().equals(product.getName())&& 
+					test.getSupplierPrice()<minPrice)
+			{
+				priceLess= true;
+			}
+		}
+		return priceLess ;
+		//main: Loop that goes through all suppliers checking their prices
+		//if return true then suppier for product is set to that supplier
+	}
 }
