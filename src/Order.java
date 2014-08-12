@@ -12,8 +12,17 @@ public class Order extends Invoice{
 	public Order(int id, ArrayList<Product> products, Supplier supplier) {
 		super(id, products);
 		this.supplier = supplier;
+		calculatePrice();
 	}
 
+	public void calculatePrice(){
+		double price = 0;
+		for(Product product: super.getProducts()){
+			price += product.getSupplierPrice();
+		}
+		super.setTotalPrice(price);
+	}
+	
 	public Supplier getSupplier() {
 		return supplier;
 	}
