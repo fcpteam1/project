@@ -13,16 +13,30 @@ import javax.swing.JButton;
 
 public class Shop extends JFrame {
 	
-	private JPanel loginPanel,framePanel,emptyPanel;
+	
+	// all components used for the login screen
+	private JPanel loginPanel,framePanel,centreLoginPanel,loginSubmitPanel;
 	private JTextField loginUsername, loginPassword;
 	private Container container;
 	private JButton submit;
-	private JLabel empty;
+	private JLabel usernameLabel,passwordLabel;
+	// all components used for login screen
 	
-	
-	
+	// main menu screen
 	private JPanel mainMenuPanel,mainCentrePanel,customerPanel,userPanel,salePanel,stockPanel,logoutPanel;
 	private JButton customerButton,saleButton,userButton,stockButton,logoutButton;
+	// main menu screen
+	
+	
+	// customer gui components
+	
+	// customer gui components
+	
+	
+	// user gui components
+	
+	// user gui components
+	
 	
 	public Shop(){
 		
@@ -76,23 +90,25 @@ public class Shop extends JFrame {
 		mainMenuPanel.add(mainCentrePanel,BorderLayout.CENTER);
 		mainMenuPanel.add(logoutPanel,BorderLayout.SOUTH);
 		
-		
+		//////////////////////////////////////////
 		//main
+		//////////////////////////////////////////
 		
 		
-		
-		empty=new JLabel("Hello");
-		emptyPanel=new JPanel();
+		//////////////////////////////////////////
+		//login screen
+		//////////////////////////////////////////
 		framePanel=new JPanel();
 		framePanel.setLayout(new GridLayout(3,3,10,10));
-		emptyPanel.add(empty);
 		
 		submit=new JButton("SUBMIT");
 		container=getContentPane();
 		loginPanel=new JPanel();
-		loginPanel.setLayout(new GridLayout(3,1,5,10));
+		loginPanel.setLayout(new GridLayout(3,2,5,10));
 		loginUsername=new JTextField("username",20);
 		loginPassword=new JTextField("password",20);
+		usernameLabel=new JLabel("username:");
+		passwordLabel=new JLabel("password:");
 		
 		
 		submit.addActionListener(new ActionListener(){
@@ -101,19 +117,35 @@ public class Shop extends JFrame {
 			}
 		});
 		
+		loginPanel.add(usernameLabel);
 		loginPanel.add(loginUsername);
+		loginPanel.add(passwordLabel);
 		loginPanel.add(loginPassword);
-		loginPanel.add(submit);
+		//loginPanel.add(submit);
+		
+		loginSubmitPanel=new JPanel();
+		loginSubmitPanel.setLayout(new FlowLayout());
+		loginSubmitPanel.add(submit);
+		
+		centreLoginPanel=new JPanel();
+		centreLoginPanel.setLayout(new BorderLayout());
+		
+		centreLoginPanel.add(loginPanel,BorderLayout.CENTER);
+		centreLoginPanel.add(loginSubmitPanel,BorderLayout.SOUTH);
+		
 		
 		framePanel.add(new JPanel());
 		framePanel.add(new JPanel());
 		framePanel.add(new JPanel());
 		framePanel.add(new JPanel());
-		framePanel.add(loginPanel,BorderLayout.CENTER);
+		framePanel.add(centreLoginPanel);
 		framePanel.add(new JPanel());
 		framePanel.add(new JPanel());
 		framePanel.add(new JPanel());
 		framePanel.add(new JPanel());
+		////////////////////////////////////////////////
+		//login screen
+		////////////////////////////////////////////////
 		
 		container.add(framePanel);
 		
@@ -122,23 +154,31 @@ public class Shop extends JFrame {
 	}
 	
 	
-	public void changeToMainMenu(){
+	public boolean changeToMainMenu(){
 		container.removeAll();
 		
 		container.add(mainMenuPanel);
 		
 		validate();
+
+		repaint();
+		
+		return true;
 		
 	}
 	
 	
-	public void logout(){
+	public boolean logout(){
 		
 		container.removeAll();
 		
 		container.add(framePanel);
 		
 		validate();
+		
+		repaint();
+		
+		return true;
 	}
 	
 	public static void main(String []args){
