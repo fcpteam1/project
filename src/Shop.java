@@ -36,7 +36,7 @@ public class Shop extends JFrame {
 	private JPanel mainMenuPanel,mainCentrePanel,customerPanel,userPanel,salePanel,stockPanel,logoutPanel,productPanel,supplierPanel,orderPanel,invoicePanel;
 	private JButton customerButton,saleButton,userButton,stockButton,productButton,supplierButton,orderButton,invoiceButton,logoutButton;
 	private JLabel customerLabel,saleLabel,userLabel,stockLabel,productLabel,supplierLabel,invoiceLabel,orderLabel;
-	// main menu screen
+	// main menu screen    // customer panels, buttons text fields etc, can all be made from another class
 	
 	
 	// customer gui components
@@ -131,7 +131,7 @@ public class Shop extends JFrame {
 		tabbedPanel.addTab("Stocks",stockPanel);
 		tabbedPanel.addTab("Orders",orderPanel);
 		tabbedPanel.addTab("Invoices",invoicePanel);
-		tabbedPanel.addTab("Suppliers",supplierPanel);
+		tabbedPanel.addTab("Suppliers",supplierPanel);// these panels can be got through another class getter
 		
 		mainMenuPane.add(tabbedPanel,BorderLayout.CENTER);
 		
