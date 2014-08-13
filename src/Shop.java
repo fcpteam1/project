@@ -146,7 +146,7 @@ public class Shop extends JFrame {
 		});
 		logoutPanel.add(logoutButton);
 		
-		
+		mainMenuPane.add(logoutPanel,BorderLayout.SOUTH);
 		
 		/*
 		mainCentrePanel.add(customerPanel);
@@ -159,8 +159,8 @@ public class Shop extends JFrame {
 		mainCentrePanel.add(orderPanel);
 		*/
 		
-		mainMenuPanel.add(mainCentrePanel,BorderLayout.CENTER);
-		mainMenuPanel.add(logoutPanel,BorderLayout.SOUTH);
+		//mainMenuPanel.add(mainCentrePanel,BorderLayout.CENTER);
+		//mainMenuPanel.add(logoutPanel,BorderLayout.SOUTH);
 		
 		//////////////////////////////////////////
 		//main
