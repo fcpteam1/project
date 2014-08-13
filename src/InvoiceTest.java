@@ -11,9 +11,14 @@ public class InvoiceTest {
 	ArrayList<Stock> stocks = new ArrayList<Stock>();
 	Invoice invoice;
 	Stock s1 = new Stock("apple", .20, .40, 10);
+	Stock s2 = new Stock("banana", .15, .30, 12);
+	Stock s3 = new Stock("orange", .10, .20, 20);
 	
 	@Before
 	public void setUp() throws Exception {
+		stocks.add(s1);
+		stocks.add(s2);
+		stocks.add(s3);
 		invoice = new Invoice(stocks);
 	}
 	
