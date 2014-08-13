@@ -5,15 +5,23 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class Shop extends JFrame {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// all components used for the login screen
 	private JPanel loginPanel,framePanel,centreLoginPanel,loginSubmitPanel;
 	private JTextField loginUsername, loginPassword;
@@ -23,9 +31,12 @@ public class Shop extends JFrame {
 	// all components used for login screen
 	
 	// main menu screen
-	private JPanel mainMenuPanel,mainCentrePanel,customerPanel,userPanel,salePanel,stockPanel,logoutPanel;
-	private JButton customerButton,saleButton,userButton,stockButton,logoutButton;
-	// main menu screen
+	private JTabbedPane tabbedPanel;
+	private JPanel mainMenuPane;
+	private JPanel mainMenuPanel,mainCentrePanel,customerPanel,userPanel,salePanel,stockPanel,logoutPanel,productPanel,supplierPanel,orderPanel,invoicePanel;
+	private JButton customerButton,saleButton,userButton,stockButton,productButton,supplierButton,orderButton,invoiceButton,logoutButton;
+	private JLabel customerLabel,saleLabel,userLabel,stockLabel,productLabel,supplierLabel,invoiceLabel,orderLabel;
+	// main menu screen    // customer panels, buttons text fields etc, can all be made from another class
 	
 	
 	// customer gui components
@@ -51,23 +62,79 @@ public class Shop extends JFrame {
 		mainMenuPanel.setLayout(new BorderLayout());
 		
 		mainCentrePanel=new JPanel();
-		mainCentrePanel.setLayout(new GridLayout(2,2,5,5));
+		mainCentrePanel.setLayout(new GridLayout(2,4,20,20));
 		
 		customerPanel=new JPanel();
 		customerButton=new JButton("CUSTOMERS");
-		customerPanel.add(customerButton);
+		customerPanel.setLayout(new BorderLayout());
+		customerPanel.add(customerButton,BorderLayout.NORTH);
+		customerLabel=new JLabel(new ImageIcon("icon.png"));
+		customerPanel.add(customerLabel,BorderLayout.CENTER);
 		
 		salePanel=new JPanel();
 		saleButton=new JButton("SALES");
-		salePanel.add(saleButton);
+		salePanel.setLayout(new BorderLayout());
+		salePanel.add(saleButton,BorderLayout.NORTH);
+		saleLabel=new JLabel(new ImageIcon("icon.png"));
+		salePanel.add(saleLabel,BorderLayout.CENTER);
 		
 		userPanel=new JPanel();
 		userButton=new JButton("USERS");
-		userPanel.add(userButton);
+		userPanel.setLayout(new BorderLayout());
+		userPanel.add(userButton,BorderLayout.NORTH);
+		userLabel=new JLabel(new ImageIcon("icon.png"));
+		userPanel.add(userLabel,BorderLayout.CENTER);
 		
 		stockPanel=new JPanel();
 		stockButton=new JButton("STOCK");
-		stockPanel.add(stockButton);
+		stockPanel.setLayout(new BorderLayout());
+		stockPanel.add(stockButton,BorderLayout.NORTH);
+		stockLabel=new JLabel(new ImageIcon("icon.png"));
+		stockPanel.add(stockLabel,BorderLayout.CENTER);
+		
+		productPanel=new JPanel();
+		productButton=new JButton("PRODUCTS");
+		productPanel.setLayout(new BorderLayout());
+		productPanel.add(productButton,BorderLayout.NORTH);
+		productLabel=new JLabel(new ImageIcon("icon.png"));
+		productPanel.add(productLabel,BorderLayout.CENTER);
+		
+		supplierPanel=new JPanel();
+		supplierButton=new JButton("SUPPLIERS");
+		supplierPanel.setLayout(new BorderLayout());
+		supplierPanel.add(supplierButton,BorderLayout.NORTH);
+		supplierLabel=new JLabel(new ImageIcon("icon.png"));
+		supplierPanel.add(supplierLabel,BorderLayout.CENTER);
+		
+		invoicePanel=new JPanel();
+		invoiceButton=new JButton("INVOICES");
+		invoicePanel.setLayout(new BorderLayout());
+		invoicePanel.add(invoiceButton,BorderLayout.NORTH);
+		invoiceLabel=new JLabel(new ImageIcon("icon.png"));
+		invoicePanel.add(invoiceLabel,BorderLayout.CENTER);
+		
+		orderPanel=new JPanel();
+		orderButton=new JButton("ORDERS");
+		orderPanel.setLayout(new BorderLayout());
+		orderPanel.add(orderButton,BorderLayout.NORTH);
+		orderLabel=new JLabel(new ImageIcon("icon.png"));
+		orderPanel.add(orderLabel,BorderLayout.CENTER);
+		
+		tabbedPanel=new JTabbedPane();
+		mainMenuPane=new JPanel();
+		mainMenuPane.setLayout(new BorderLayout());
+		
+		tabbedPanel.addTab("Customers",customerPanel);
+		tabbedPanel.addTab("Users",userPanel);
+		tabbedPanel.addTab("Product",productPanel);
+		tabbedPanel.addTab("Sales",salePanel);
+		tabbedPanel.addTab("Stocks",stockPanel);
+		tabbedPanel.addTab("Orders",orderPanel);
+		tabbedPanel.addTab("Invoices",invoicePanel);
+		tabbedPanel.addTab("Suppliers",supplierPanel);// these panels can be got through another class getter
+		
+		mainMenuPane.add(tabbedPanel,BorderLayout.CENTER);
+		
 		
 		logoutPanel=new JPanel();
 		logoutPanel.setLayout(new FlowLayout());
@@ -81,11 +148,16 @@ public class Shop extends JFrame {
 		
 		
 		
-		
+		/*
 		mainCentrePanel.add(customerPanel);
 		mainCentrePanel.add(salePanel);
 		mainCentrePanel.add(userPanel);
 		mainCentrePanel.add(stockPanel);
+		mainCentrePanel.add(productPanel);
+		mainCentrePanel.add(supplierPanel);
+		mainCentrePanel.add(invoicePanel);
+		mainCentrePanel.add(orderPanel);
+		*/
 		
 		mainMenuPanel.add(mainCentrePanel,BorderLayout.CENTER);
 		mainMenuPanel.add(logoutPanel,BorderLayout.SOUTH);
@@ -157,7 +229,7 @@ public class Shop extends JFrame {
 	public boolean changeToMainMenu(){
 		container.removeAll();
 		
-		container.add(mainMenuPanel);
+		container.add(mainMenuPane);
 		
 		validate();
 
