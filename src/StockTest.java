@@ -5,6 +5,7 @@ import org.junit.Test;
 
 
 public class StockTest {
+	/*
 	Product product = new Product("Apple", 2.00,1.00,12);
 	Product product1 = new Product("Orange",4.00,2.00,24);
 	Stock stock; 
@@ -35,5 +36,5 @@ public class StockTest {
 		stock.setQuantity(50);
 		assertEquals(50,stock.getQuantity());
 	}
-
+*/
 }

@@ -5,36 +5,25 @@ import java.util.Date;
 
 public class Invoice {
 
-	private int id;
 	private Date date = new Date();
 	private DateFormat format = DateFormat.getDateInstance();
-	private ArrayList<Product> products = new ArrayList<Product>();
+	private ArrayList<Stock> stocks = new ArrayList<Stock>();
 	private double totalPrice;
 	
 	public Invoice(){
-		this.id = 0;
 		this.totalPrice = 0;
 	}
 	
-	public Invoice(int id, ArrayList<Product> products){
-		this.id = id;
-		this.products = products;
+	public Invoice(ArrayList<Stock> stocks){
+		this.stocks = stocks;
 	}
 
-	public int getId() {
-		return id;
+	public ArrayList<Stock> getStocks() {
+		return stocks;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public ArrayList<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(ArrayList<Product> products) {
-		this.products = products;
+	public void setStocks(ArrayList<Stock> stocks) {
+		this.stocks = stocks;
 	}
 
 	public double getTotalPrice() {

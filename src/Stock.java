@@ -1,25 +1,19 @@
 
-public class Stock {
+public class Stock extends Product{
 	
-	private Product product;
+	private double customerPrice;
 	private int quantity;
 	
 	public Stock() {
-		this.product = new Product();
+		super();
+		this.customerPrice = 0;
 		this.quantity = 0;
 	}
 
-	public Stock(Product product, int quantity) {
-		this.product = product;
+	public Stock(String name, double supplierPrice, double customerPrice, int quantity) {
+		super(name, supplierPrice);
+		this.customerPrice = customerPrice;
 		this.quantity = quantity;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
 	}
 
 	public int getQuantity() {
@@ -28,6 +22,14 @@ public class Stock {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public double getCustomerPrice() {
+		return customerPrice;
+	}
+
+	public void setCustomerPrice(double customerPrice) {
+		this.customerPrice = customerPrice;
 	}
 	
 }
