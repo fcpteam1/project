@@ -1,16 +1,14 @@
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class OrderTest {
 
-	ArrayList<Product> products = new ArrayList<Product>();
-	Order order;
-	Supplier supplier;
+	private ArrayList<Product> products = new ArrayList<Product>();
+	private Order order;
+	private Supplier supplier;
 	@Before
 	public void setUp() throws Exception {
 		Product p1 = new Product("Apple", 50, 25, 1);
