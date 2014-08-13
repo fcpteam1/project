@@ -29,18 +29,43 @@ public class OrderTest {
 	}
 
 	@Test
+	public void testSetSupplier() {
+		assertEquals(supplier, order.getSupplier());
+	}
+	
+	@Test
 	public void testGetId() {
 		assertEquals(1, order.getId());
 	}
 
+	@Test
+	public void testSetId() {
+		assertEquals(1, order.getId());
+	}
+	
 	@Test
 	public void testGetProducts() {
 		assertEquals(products, order.getProducts());
 	}
 
 	@Test
+	public void testSetProducts() {
+		assertEquals(products, order.getProducts());
+	}
+	
+	@Test
 	public void testGetTotalPrice() {
 		assertEquals(70, order.getTotalPrice(), 0.0);
 	}
 
+	@Test
+	public void testSetTotalPrice() {
+		assertEquals(70, order.getTotalPrice(), 0.0);
+	}
+	
+	@Test
+	public void testCalculatePrice(){
+		
+	}
+	
 }
