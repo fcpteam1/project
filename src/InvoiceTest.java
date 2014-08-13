@@ -6,19 +6,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class InvoiceTest {
+	//TODO
 
-	ArrayList<Product> products = new ArrayList<Product>();
+	ArrayList<Stock> stocks = new ArrayList<Stock>();
 	Invoice invoice;
+	Stock s1 = new Stock("apple", .20, .40, 10);
 	
 	@Before
 	public void setUp() throws Exception {
-		Product p1 = new Product("Apple", 50, 25, 1);
-		Product p2 = new Product("Apple", 50, 25, 1);
-		Product p3 = new Product("Banana", 40, 20, 2);
-		products.add(p1);
-		products.add(p2);
-		products.add(p3);
-		invoice = new Invoice(1, products);
+		invoice = new Invoice(stocks);
 	}
 	
 	@Test
@@ -27,13 +23,20 @@ public class InvoiceTest {
 	}
 	
 	@Test
-	public void testGetProducts() {
-		assertEquals(products, invoice.getProducts());
+	public void testSetTotalPrice() {
+		invoice.setTotalPrice(20);
+		assertEquals(20, invoice.getTotalPrice(), 0.0);
 	}
 	
 	@Test
-	public void testGetId(){
-		assertEquals(1, invoice.getId());
+	public void testGetStocks() {
+		assertEquals(stocks, invoice.getStocks());
 	}
-
+	
+	@Test
+	public void testSetStocks() {
+		stocks.remove(2);
+		invoice.setStocks(stocks);
+		assertEquals(stocks, invoice.getStocks());
+	}
 }

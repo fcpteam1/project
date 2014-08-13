@@ -2,33 +2,43 @@ import java.util.ArrayList;
 
 public class Order extends Invoice{
 
-	private Supplier supplier;
+	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
+	private int id;
 	
 	public Order(){
 		super();
-		this.supplier = new Supplier();
+		this.id = 0;
 	}
 	
-	public Order(int id, ArrayList<Product> products, Supplier supplier) {
-		super(id, products);
-		this.supplier = supplier;
+	public Order(int id, ArrayList<Stock> stocks, ArrayList<Supplier> suppliers) {
+		super(stocks);
+		this.id = id;
+		this.suppliers = suppliers;
 		calculatePrice();
 	}
-
+	
 	public void calculatePrice(){
 		double price = 0;
-		for(Product product: super.getProducts()){
-			price += product.getSupplierPrice();
+		//TODO - Loop to find cheapest price in list of suppliers
+		for(Stock stock: super.getStocks()){
+			price += stock.getSupplierPrice();
 		}
 		super.setTotalPrice(price);
 	}
-	
-	public Supplier getSupplier() {
-		return supplier;
+
+	public ArrayList<Supplier> getSuppliers() {
+		return suppliers;
 	}
 
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
+	public void setSuppliers(ArrayList<Supplier> suppliers) {
+		this.suppliers = suppliers;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }
