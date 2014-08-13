@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class Stock {
+public class Stock extends Product {
 	
 	private Product product;
 	private int quantity;
@@ -17,6 +17,7 @@ public class Stock {
 	}
 
 	public Stock(Product product, int quantity) {
+		super (product.getName(), product.getId());
 		this.product = product;
 		this.quantity = quantity;
 		DateFormat df= new SimpleDateFormat ("dd/MM/yyyy");
