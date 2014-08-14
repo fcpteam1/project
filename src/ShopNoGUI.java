@@ -8,13 +8,15 @@ public class ShopNoGUI {
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
-	private String username, password, choice;
+	private String username, password, choice,customerName,customerNumber,customerAddress;
+	private int customerId;
 	private Scanner input = new Scanner(System.in);
 	
 	boolean loopAuthentication = true;
 	boolean adminRunning;
 	boolean userRunning;
 	boolean loginCorrect;
+	boolean createCustomerRun = true;
 
 	public ShopNoGUI() throws IOException{
 		
@@ -102,7 +104,7 @@ public class ShopNoGUI {
 	
 	public void checkLogin(){
 		while(loopAuthentication == true){
-			System.out.println("Please enter your Username: ");
+			System.out.println("\nPlease enter your Username: ");
 				username = input.nextLine();
 				System.out.println("Please enter your Password: ");
 				password = input.nextLine(); 
@@ -388,6 +390,10 @@ public class ShopNoGUI {
 				customerMenu();
 				break;
 		}
+			if(choice.equals("2")){
+				createNewCustomer();
+				break;
+			}
 		}
 		while (userRunning){
 			System.out.println("\nCustomer Menu\n\n1: View Customers\n2: Create Customers\n3: Edit Customers\n4: Exit");
@@ -398,6 +404,10 @@ public class ShopNoGUI {
 				}
 			customerMenu();
 			break;
+			}
+			if(choice.equals("2")){
+				createNewCustomer();
+				break;
 			}
 		}
 		}
@@ -437,6 +447,40 @@ public class ShopNoGUI {
 			
 		}
 		return true;
+	}
+	
+	public void createNewCustomer(){
+		System.out.println("Please enter Customer name: ");
+		customerName = input.nextLine();
+		System.out.println("Please enter  ");
+		customerName = input.nextLine();
+		System.out.println("Please enter Customer name: ");
+		customerName = input.nextLine();
+		System.out.println("Please enter Customer name: ");
+		customerName = input.nextLine();
+		
+		/*int customerSize = customers.size();
+		int size = 1;
+		boolean check = false; 
+		while(createCustomerRun == true){
+			for(Customer customer  : customers){
+				if(accountNumber == account.getAccountNumber()){
+					System.out.println("please enter different account number");
+					break;
+				}
+				else if(accSize == size){
+					System.out.println("Please enter PIN");
+					pin = input.nextInt();
+					check = true;
+				}
+				size++;
+			}
+			if(check){
+				bank.accounts.add(new Account(pin, accountNumber));
+				accountRun = false;
+				System.out.println("Account added.");
+			}
+		}*/
 	}
 	
 	public static void main(String[] args) throws IOException {
