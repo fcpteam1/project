@@ -11,6 +11,8 @@ public class ShopNoGUI {
 	private String username, password, choice,customerName,customerNumber,customerAddress;
 	private int customerId;
 	private Scanner input = new Scanner(System.in);
+	private Scanner input2 = new Scanner(System.in);
+	private Scanner input3 = new Scanner(System.in);
 	
 	boolean loopAuthentication = true;
 	boolean adminRunning;
@@ -233,43 +235,46 @@ public class ShopNoGUI {
 			}
 			if(choice.equals("2")){
 				createNewCustomer();
+				customerMenu();
 				break;
 			}
 		}
 		}
 	
 	public void createNewCustomer(){
-		System.out.println("Please enter Customer name: ");
+		System.out.println("Please enter customer name: ");
 		customerName = input.nextLine();
-		System.out.println("Please enter  ");
-		customerName = input.nextLine();
-		System.out.println("Please enter Customer name: ");
-		customerName = input.nextLine();
-		System.out.println("Please enter Customer name: ");
-		customerName = input.nextLine();
+		System.out.println("Please enter customer id: ");
+		customerId = input.nextInt();
+		System.out.println("Please enter Customer number: ");
+		customerNumber = input2.nextLine();
+		System.out.println("Please enter Customer address: ");
+		customerAddress = input3.nextLine();
 		
-		/*int customerSize = customers.size();
+		int customerSize = customers.size();
 		int size = 1;
 		boolean check = false; 
 		while(createCustomerRun == true){
 			for(Customer customer  : customers){
-				if(accountNumber == account.getAccountNumber()){
-					System.out.println("please enter different account number");
+				if(customerName.equals(customer.getName()) && (customerAddress.equals(customer.getAddress()))){
+					System.out.println("Already a Customer!!");
+					customerMenu();
 					break;
 				}
-				else if(accSize == size){
-					System.out.println("Please enter PIN");
-					pin = input.nextInt();
+				else if(customerSize == size){
 					check = true;
 				}
 				size++;
 			}
 			if(check){
-				bank.accounts.add(new Account(pin, accountNumber));
-				accountRun = false;
-				System.out.println("Account added.");
+				customers.add(new Customer(customerName,customerId,customerNumber,customerAddress));
+				createCustomerRun = false;
+				System.out.println("Customer added.");
+				createCustomerRun = false;
 			}
-		}*/
+			
+		}
+		
 	}
 	
 	public static void main(String[] args) throws IOException {
