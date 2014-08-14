@@ -1,9 +1,13 @@
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
-
 public class ShopNoGUI {
+	
+	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
+	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 	private String username, password, choice;
 	private Scanner input = new Scanner(System.in);
 	
@@ -11,21 +15,89 @@ public class ShopNoGUI {
 	boolean adminRunning;
 	boolean userRunning;
 	boolean loginCorrect;
-	
-	public ShopNoGUI(){
-		createUsers();
-		checkLogin();
-		mainMenu();
-	}
-	
-	public void createUsers(){
-		User user1 = new User("ShaneFlynn88","Password11",123,true);
-		User user2 = new User("NiallSull21","Password11",123,true);
-		User user3 = new User("DarenKane21","Password11",123,false);
-		users.add(user1);
-		users.add(user2);
-		users.add(user3);
+
+	public ShopNoGUI() throws IOException{
 		
+			
+			loadCustomers("CustomerList");
+			loadUsers("UserList");
+			loadSuppliers("SuppliersProductListFiles", "SupplierList");
+			
+		
+		for (Customer c : customers)
+		System.out.println(c.getName() + ", " + c.getAddress() );
+		for (User u : users)
+		System.out.println((u.getUsername() + ", " + u.getId()));
+		for (Supplier s : suppliers)
+		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
+	
+			checkLogin();
+			mainMenu();
+	
+	}
+
+	
+	public void loadSuppliers(String SuppliersProductFiles,String SupplierListFile)throws IOException {
+		
+	Scanner scan1= new Scanner(new File(SuppliersProductFiles));
+	Scanner scan2= new Scanner(new File(SupplierListFile)).useDelimiter("\\,");
+	
+		while(scan1.hasNext() && scan2.hasNext()){
+			
+			ArrayList<Product> supplierProducts = new ArrayList<Product>();
+			
+			String name = scan2.next();
+			int id = scan2.nextInt();
+			String number = scan2.next();
+			String address = scan2.next();
+			Supplier supplier = new Supplier(name, id, number, address, supplierProducts);
+			
+			File file = new File(scan1.next());
+			Scanner scan3 = new Scanner(file);
+			
+				while (scan3.hasNext()) {
+					
+					String item = scan3.next();
+					double supplierPrice = scan3.nextDouble();
+					Product product = new Product(item, supplierPrice);
+					supplier.getProducts().add(product);	
+				}
+			scan3.close();
+			suppliers.add(supplier);		
+		}
+		
+	scan2.close();
+	scan1.close();	
+	}
+		
+	
+	public void loadUsers(String fileName)throws IOException {
+			
+		Scanner in= new Scanner(new File(fileName));
+			while(in.hasNext()){
+				int id = in.nextInt();
+				String username = in.next();
+				String password = in.next();
+				boolean admin = in.nextBoolean();
+				User user = new User(username, password, id, admin);
+				users.add(user);	
+			}
+		in.close();
+		}
+	
+	
+	public void loadCustomers(String fileName) throws IOException {
+		
+	Scanner in= new Scanner(new File(fileName)).useDelimiter("\\,");
+		while(in.hasNext()){
+			String name = in.next();
+			int id = in.nextInt();
+			String number = in.next();
+			String address = in.next();
+			Customer customer = new Customer(name, id, number, address);
+			customers.add(customer);
+			}
+	in.close();
 	}
 	
 	public void checkLogin(){
@@ -67,6 +139,7 @@ public class ShopNoGUI {
 			choice = input.nextLine();
 			if(choice.equals("1")){
 				System.out.println("Customer Selected\n");
+				customerMenu();
 				break;
 			}else if(choice.equals("2")){
 				System.out.println("Suppliers Selected\n");
@@ -128,11 +201,20 @@ public class ShopNoGUI {
 			}
 		}
 	}
-		
 	
-	public static void main(String[] args) {
+	public void customerMenu(){
+		while (adminRunning){
+			System.out.println("\nCustomer Menu\n\n1: View Customers\n2: Create Customers\n3: Edit Customers\n4: Delete Customers");
+			
+		}
+		while (userRunning){
+			System.out.println("\nCustomer Menu\n\n1: View Customers\n2: Create Customers\n3: Edit Customers");
+			
+		}	
+	}
+	
+	public static void main(String[] args) throws IOException {
 		new ShopNoGUI();
-
 	}
 
 }
