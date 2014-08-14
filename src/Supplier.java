@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Supplier {
 
-	private String name;
+	private String name, number, address;
 	private int id;
 	ArrayList<Product> products = new ArrayList<Product>();
 	
@@ -11,7 +11,7 @@ public class Supplier {
 		this.id = 0;
 	}
 	
-	public Supplier(String name, int id, ArrayList<Product> products){
+	public Supplier(String name, int id,String number, String address, ArrayList<Product> products){
 		this.name = name;
 		this.id = id;
 		this.products = products;
@@ -39,6 +39,22 @@ public class Supplier {
 
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 }
