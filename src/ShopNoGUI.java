@@ -178,6 +178,7 @@ public class ShopNoGUI {
 			choice = input.nextLine();
 			if(choice.equals("1")){
 				System.out.println("Customer Selected");
+				customerMenu();
 				break;
 			}else if(choice.equals("2")){
 				System.out.println("Suppliers Selected");
@@ -198,7 +199,7 @@ public class ShopNoGUI {
 				checkLogin();
 				break;
 			}else {
-				System.out.println("/nIncorrect Input!! Please try again");
+				System.out.println("/nIncorrect Input!! Pleae try again");
 			}
 		}
 	}
@@ -376,14 +377,28 @@ public class ShopNoGUI {
 	
 	public void customerMenu(){
 		while (adminRunning){
-			System.out.println("\nCustomer Menu\n\n1: View Customers\n2: Create Customers\n3: Edit Customers\n4: Delete Customers");
-			
+			System.out.println("\nCustomer Menu\n\n1: View Customers\n2: Create Customers\n3: Edit Customers\n4: Delete Customers\n5: Exit");
+			choice = input.nextLine();
+			if(choice.equals("1")){
+				for (Customer customer: customers){
+					System.out.println("\nCustomer: " + customer.getName() + "\nId: " + customer.getId() + "\nNumber: " + customer.getNumber() + "\nAddress: " + customer.getAddress());
+				}
+				customerMenu();
+				break;
+		}
 		}
 		while (userRunning){
-			System.out.println("\nCustomer Menu\n\n1: View Customers\n2: Create Customers\n3: Edit Customers");
-			
-		}	
-	}
+			System.out.println("\nCustomer Menu\n\n1: View Customers\n2: Create Customers\n3: Edit Customers\n4: Exit");
+			choice = input.nextLine();
+			if(choice.equals("1")){
+				for (Customer customer: customers){
+					System.out.println("\nCustomer: " + customer.getName() + "\nId: " + customer.getId() + "\nNumber: " + customer.getNumber() + "\nAddress: " + customer.getAddress());
+				}
+			customerMenu();
+			break;
+			}
+		}
+		}
 	
 	public static void main(String[] args) throws IOException {
 		new ShopNoGUI();
