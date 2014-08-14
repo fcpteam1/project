@@ -143,6 +143,7 @@ public class ShopNoGUI {
 				break;
 			}else if(choice.equals("2")){
 				System.out.println("Suppliers Selected\n");
+				supplierMenu();
 				break;
 			}else if(choice.equals("3")){
 				System.out.println("Product Selected\n");
@@ -181,6 +182,7 @@ public class ShopNoGUI {
 				break;
 			}else if(choice.equals("2")){
 				System.out.println("Suppliers Selected");
+				supplierMenu();
 				break;
 			}else if(choice.equals("3")){
 				System.out.println("Product Selected");
@@ -383,6 +385,43 @@ public class ShopNoGUI {
 			System.out.println("\nCustomer Menu\n\n1: View Customers\n2: Create Customers\n3: Edit Customers");
 			
 		}	
+	}
+	
+	
+	public void supplierMenu(){
+		int option=0;
+		boolean stayInMenu=true;
+		
+		while(stayInMenu){
+			
+			option=0;
+			while( (option!=1) && (option!=2)){
+				System.out.println("\n(1) View Suppliers\n(2) Exit");
+				option=input.nextInt();
+			}
+		
+			switch(option){
+			case(1):
+				System.out.println("\nDisplay Suppliers");
+				listSuppliers();
+				break;
+			case(2):
+				System.out.println("\nExit supplier menu");
+				stayInMenu=false;
+			
+			}
+		
+		}
+		
+	}
+	
+	
+	public boolean listSuppliers(){
+		for(Supplier supplier : suppliers){
+			System.out.println("\n"+supplier.getName()+ " "+supplier.getNumber()+ "\n"+supplier.getAddress());
+			
+		}
+		return true;
 	}
 	
 	public static void main(String[] args) throws IOException {
