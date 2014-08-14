@@ -173,9 +173,8 @@ public class ShopNoGUI {
 				adminRunning = false;
 				loopAuthentication = true;
 				checkLogin();
-				break;
 			}else {
-				System.out.println("/nIncorrect Input!! Please try again");
+				System.out.println("\nIncorrect Input!! Please try again");
 			}
 		}
 		while (userRunning){
@@ -203,7 +202,6 @@ public class ShopNoGUI {
 				userRunning = false;
 				loopAuthentication = true;
 				checkLogin();
-				break;
 			}else {
 				System.out.println("/nIncorrect Input!! Pleae try again");
 			}
