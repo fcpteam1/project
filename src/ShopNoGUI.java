@@ -147,6 +147,7 @@ public class ShopNoGUI {
 				break;
 			}else if(choice.equals("2")){
 				System.out.println("Suppliers Selected\n");
+				supplierMenu();
 				break;
 			}else if(choice.equals("3")){
 				System.out.println("Product Selected\n");
@@ -165,15 +166,15 @@ public class ShopNoGUI {
 				break;
 			}else if(choice.equals("8")){
 				System.out.println("Users Selected\n");
+				AdminUserMenu();
 				break;
 			}else if(choice.equals("9")){
 				System.out.println("Logout Selected\n");
 				adminRunning = false;
 				loopAuthentication = true;
 				checkLogin();
-				break;
 			}else {
-				System.out.println("/nIncorrect Input!! Please try again");
+				System.out.println("\nIncorrect Input!! Please try again");
 			}
 		}
 		while (userRunning){
@@ -185,6 +186,7 @@ public class ShopNoGUI {
 				break;
 			}else if(choice.equals("2")){
 				System.out.println("Suppliers Selected");
+				supplierMenu();
 				break;
 			}else if(choice.equals("3")){
 				System.out.println("Product Selected");
@@ -200,11 +202,181 @@ public class ShopNoGUI {
 				userRunning = false;
 				loopAuthentication = true;
 				checkLogin();
-				break;
 			}else {
 				System.out.println("/nIncorrect Input!! Pleae try again");
 			}
 		}
+	}
+	
+	
+	public void AdminUserMenu(){
+		
+		boolean stayInUserMenu=true;
+		int option=0;
+		
+		while(stayInUserMenu){
+			option=0;
+			while( (option!=1) && (option!=2) && (option!=3) && (option!=4) && (option!=5) ){
+				System.out.println("\nWhat would you like to do\n(1) Create new User\n(2) Delete User\n(3) Edit User\n(4) List Users\n(5) Exit");
+				option=input.nextInt();
+				
+			}
+			
+			switch(option){
+			
+			case(1):
+				System.out.println("\nCreate User");
+				createUser();
+				break;
+			case(2):
+				System.out.println("\nDelete User");
+				deleteUser();
+				break;
+			case(3):
+				System.out.println("\nUpdate User");
+				updateUser();
+				break;
+			case(4):
+				System.out.println("\nList Users");
+				listUsers();
+				break;
+			case(5):
+				stayInUserMenu=false;
+				break;
+			
+			}
+			
+		}
+		
+		
+	}
+	
+	
+	public boolean createUser(){
+		
+		String username="";
+		String password="";
+		String password1="";
+		
+		System.out.println("\nPrint username");
+		username=input.next();
+		System.out.println("\nPrint password");
+		password=input.next();
+		
+		System.out.println("\nReprint password");
+		password1=input.next();
+		
+		if(password.equals(password1))
+		{
+			String admin="";
+			System.out.println("\nIs user an admin ( Y or N )");
+			admin=input.next();
+			if(admin.charAt(0)=='y')
+				users.add(new User(username,password,123,true));
+			else
+				users.add(new User(username,password,123,false));
+		}
+		else
+			System.out.println("\nPasswords don't match");
+		
+		
+		return true;
+	}
+		
+	public boolean deleteUser(){
+		
+		String username="";
+		boolean foundUser=false;
+		int userIndex=0;
+		
+		System.out.println("\nWhich user would you like to delete (Select by user name)");
+		username=input.next();
+		
+		for(User user : users){
+			
+			if(user.getUsername().equals(username)){
+				foundUser=true;
+				break;
+			}
+			userIndex++;
+		}
+		
+		if(foundUser==true)
+			users.remove(userIndex);
+		
+		else
+			System.out.println("\nCould not find user");
+		
+		
+		return true;
+	}
+	
+	public boolean listUsers(){
+		
+		for(User user : users){
+			System.out.println("\n"+user.getUsername()+" "+user.getPassword()+" "+user.getId());
+		}
+		
+		return true;
+	}
+	
+	public boolean updateUser(){
+		
+		String username="";
+		int option=0;
+		int userIndex=0;
+		boolean userFound=false;
+		
+		System.out.println("\nWhich user would you like to change");
+		username=input.next();
+		
+		for(User user : users){
+			
+			if(user.getUsername().equals(username)){
+				userFound=true;
+				break;
+			}
+			userIndex++;
+		}
+		if(userFound){
+			
+			while( (option!=1) && (option!=2) ){
+				System.out.println("\n(1) Edit username\n(2) Edit password");
+				option=input.nextInt();
+			}
+			
+			if(option==1){
+				String usernameChange="";
+				System.out.println("\n Change username to: ");
+				usernameChange=input.next();
+				users.get(userIndex).setUsername(usernameChange);
+				System.out.println("User name changed !!");
+				
+			}
+			
+			if(option==2){
+				String passwordChange="";
+				String passwordChange1="";
+				System.out.println("\n Change password to: ");
+				passwordChange=input.next();
+				System.out.println("\n Change username to: ");
+				passwordChange1=input.next();
+				
+				if(passwordChange.equals(passwordChange1)){
+					users.get(userIndex).setPassword(passwordChange);
+					System.out.println("\nPassword Updated");
+				}
+				else
+					System.out.println("\nPassword didn't match");
+				
+				
+			}
+			
+		}
+		else
+			System.out.println("\nCould Not find User");
+		
+		return true;
 	}
 	
 	public void customerMenu(){
@@ -240,6 +412,43 @@ public class ShopNoGUI {
 			}
 		}
 		}
+	
+	
+	public void supplierMenu(){
+		int option=0;
+		boolean stayInMenu=true;
+		
+		while(stayInMenu){
+			
+			option=0;
+			while( (option!=1) && (option!=2)){
+				System.out.println("\n(1) View Suppliers\n(2) Exit");
+				option=input.nextInt();
+			}
+		
+			switch(option){
+			case(1):
+				System.out.println("\nDisplay Suppliers");
+				listSuppliers();
+				break;
+			case(2):
+				System.out.println("\nExit supplier menu");
+				stayInMenu=false;
+			
+			}
+		
+		}
+		
+	}
+	
+	
+	public boolean listSuppliers(){
+		for(Supplier supplier : suppliers){
+			System.out.println("\n"+supplier.getName()+ " "+supplier.getNumber()+ "\n"+supplier.getAddress());
+			
+		}
+		return true;
+	}
 	
 	public void createNewCustomer(){
 		System.out.println("Please enter customer name: ");
