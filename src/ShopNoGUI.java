@@ -139,7 +139,7 @@ public class ShopNoGUI {
 	
 	public void mainMenu(){
 		while (adminRunning){
-			System.out.println("\nMain Menu\n\n1: Customers\n2: Suppliers\n3: Products\n4: Stock\n5: Orders\n6: Invoices\n7: Profit and Loss\n8: Users\n9: Logout");
+			System.out.println("\nMain Menu\n\n(1) Customers\n(2) Suppliers\n(3) Products\n(4) Stock\n(5) Orders\n(6) Invoices\n(7) Profit and Loss\n(8) Users\n(9) Logout");
 			choice = input.nextLine();
 			if(choice.equals("1")){
 				System.out.println("Customer Selected\n");
@@ -178,7 +178,7 @@ public class ShopNoGUI {
 			}
 		}
 		while (userRunning){
-			System.out.println("\nMain Menu\n\n1: Customers\n2: Suppliers\n3: Products\n4: Stock\n5: Orders\n6: Logout");
+			System.out.println("\nMain Menu\n\n(1) Customers\n(2) Suppliers\n(3) Products\n(4) Stock\n(5) Orders\n(6) Logout");
 			choice = input.nextLine();
 			if(choice.equals("1")){
 				System.out.println("Customer Selected");
@@ -381,7 +381,7 @@ public class ShopNoGUI {
 	
 	public void customerMenu(){
 		while (adminRunning){
-			System.out.println("\nCustomer Menu\n\n1: View Customers\n2: Create Customers\n3: Edit Customers\n4: Delete Customers\n5: Exit");
+			System.out.println("\nCustomer Menu\n\n(1) View Customers\n(2) Create Customers\n(3) Edit Customers\n(4) Delete Customers\n(5) Exit");
 			choice = input.nextLine();
 			if(choice.equals("1")){
 				for (Customer customer: customers){
@@ -394,9 +394,17 @@ public class ShopNoGUI {
 				createNewCustomer();
 				break;
 			}
+			if(choice.equals("3")){
+				editCustomer();
+				break;
+			}
+			if(choice.equals("4")){
+				deleteCustomer();
+				break;
+			}
 		}
 		while (userRunning){
-			System.out.println("\nCustomer Menu\n\n1: View Customers\n2: Create Customers\n3: Edit Customers\n4: Exit");
+			System.out.println("\nCustomer Menu\n\n(1) View Customers\n(2) Create Customers\n(3) Edit Customers\n(4) Exit");
 			choice = input.nextLine();
 			if(choice.equals("1")){
 				for (Customer customer: customers){
@@ -408,6 +416,10 @@ public class ShopNoGUI {
 			if(choice.equals("2")){
 				createNewCustomer();
 				customerMenu();
+				break;
+			}
+			if(choice.equals("3")){
+				editCustomer();
 				break;
 			}
 		}
@@ -485,6 +497,104 @@ public class ShopNoGUI {
 		}
 		
 	}
+	
+	public boolean editCustomer(){
+		
+		String customerName="";
+		int option=0;
+		int customerIndex=0;
+		boolean customerFound=false;
+		
+		System.out.println("\nWhich customer would you like to change");
+		customerName=input.next();
+		
+		for(Customer customer : customers){
+			
+			if(customer.getName().equals(customerName)){
+				customerFound=true;
+				break;
+			}
+			customerIndex++;
+		}
+		if(customerFound){
+			
+			while( (option!=1) && (option!=2) && (option!=3) && (option!=4) ){
+				System.out.println("\n(1) Edit name\n(2) Edit id\n(3) Edit Number\n(4) Edit address");
+				option=input.nextInt();
+			}
+			
+			if(option==1){
+				String nameChange="";
+				System.out.println("\nChange name to: ");
+				nameChange=input.next();
+				customers.get(customerIndex).setName(nameChange);
+				System.out.println("Customer name changed !!");
+				customerMenu();
+			}
+			
+			if(option==2){
+				int idChange;
+				System.out.println("\nChange id to: ");
+				idChange=input.nextInt();
+				customers.get(customerIndex).setId(idChange);
+				System.out.println("\nPassword Updated");
+				customerMenu();
+			}
+			
+			if(option==3){
+				String numberChange="";
+				System.out.println("\nChange number to: ");
+				numberChange=input.next();
+				customers.get(customerIndex).setNumber(numberChange);
+				System.out.println("Customer number changed !!");
+				customerMenu();
+				
+			}
+			
+			if(option==4){
+				String addressChange="";
+				System.out.println("\nChange address to: ");
+				addressChange=input.nextLine();
+				customers.get(customerIndex).setAddress(addressChange);
+				System.out.println("Customer address changed !!");
+				customerMenu();
+				
+			}	
+		}				
+
+		else
+			System.out.println("\nCould Not find Customer");
+		customerMenu();
+		return true;
+	}
+	
+	public boolean deleteCustomer(){
+		
+		String customerName="";
+		boolean foundCustomer=false;
+		int customerIndex=0;
+		
+		System.out.println("\nWhich customer would you like to delete (Select by customer name)");
+		customerName=input.next();
+		
+		for(Customer customer : customers){
+			
+			if(customer.getName().equals(customerName)){
+				foundCustomer=true;
+				break;
+			}
+			customerIndex++;
+		}
+		
+		if(foundCustomer==true)
+			customers.remove(customerIndex);
+		
+		else
+			System.out.println("\nCould not find customer");
+		customerMenu();
+		return true;
+	}
+	
 	
 	public static void main(String[] args) throws IOException {
 		new ShopNoGUI();
