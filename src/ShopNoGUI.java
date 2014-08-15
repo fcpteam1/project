@@ -421,8 +421,8 @@ public class ShopNoGUI {
 		while(stayInMenu){
 			
 			option=0;
-			while( (option!=1) && (option!=2)){
-				System.out.println("\n(1) View Suppliers\n(2) Exit");
+			while( (option!=1) && (option!=2) && (option!=3)){
+				System.out.println("\n(1) View Suppliers\n(2) View Supplier Products\n(3) Exit");
 				option=input.nextInt();
 			}
 		
@@ -432,6 +432,10 @@ public class ShopNoGUI {
 				listSuppliers();
 				break;
 			case(2):
+				System.out.println("\nDisplay supplier products");
+				listSupplierProducts();
+				break;
+			case(3):
 				System.out.println("\nExit supplier menu");
 				stayInMenu=false;
 			
@@ -447,6 +451,37 @@ public class ShopNoGUI {
 			System.out.println("\n"+supplier.getName()+ " "+supplier.getNumber()+ "\n"+supplier.getAddress());
 			
 		}
+		return true;
+	}
+	
+	public boolean listSupplierProducts(){
+		
+		String supName="";
+		boolean foundSup=false;
+		int index=0;
+		
+		System.out.println("\nWhich supplier product list would you like");
+		supName=input.next();
+		
+		for(Supplier supplier : suppliers){
+			
+			if(supplier.getName().equals(supName)){
+				foundSup=true;
+				break;
+			}
+			index++;
+		}
+		
+		if(foundSup){
+			
+			for(Product product : suppliers.get(index).getProducts()){
+				System.out.println(""+product.getName()+" "+product.getSupplierPrice());
+			}
+			
+		}
+		else
+			System.out.println("\nCould not find supplier");
+		
 		return true;
 	}
 	
