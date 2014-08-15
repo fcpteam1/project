@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class ShopNoGUI {
 	
+	private ArrayList<Order> orders = new ArrayList<Order>();
+	private ArrayList<Stock> stocks = new ArrayList<Stock>();
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
@@ -22,12 +24,10 @@ public class ShopNoGUI {
 
 	public ShopNoGUI() throws IOException{
 		
-			
-			loadCustomers("CustomerList");
-			loadUsers("UserList");
-			loadSuppliers("SuppliersProductListFiles", "SupplierList");
-			
-		
+		loadCustomers("CustomerList");
+		loadUsers("UserList");
+		loadSuppliers("SuppliersProductListFiles", "SupplierList");
+				
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
 		for (User u : users)
@@ -39,7 +39,6 @@ public class ShopNoGUI {
 			mainMenu();
 	
 	}
-
 	
 	public void loadSuppliers(String SuppliersProductFiles,String SupplierListFile)throws IOException {
 		
@@ -74,7 +73,6 @@ public class ShopNoGUI {
 	scan1.close();	
 	}
 		
-	
 	public void loadUsers(String fileName)throws IOException {
 			
 		Scanner in= new Scanner(new File(fileName));
@@ -88,7 +86,6 @@ public class ShopNoGUI {
 			}
 		in.close();
 		}
-	
 	
 	public void loadCustomers(String fileName) throws IOException {
 		
@@ -136,10 +133,9 @@ public class ShopNoGUI {
 		}
 	}
 	
-	
 	public void mainMenu(){
 		while (adminRunning){
-			System.out.println("\nMain Menu\n\n(1) Customers\n(2) Suppliers\n(3) Products\n(4) Stock\n(5) Orders\n(6) Invoices\n(7) Profit and Loss\n(8) Users\n(9) Logout");
+			System.out.println("\nMain Menu\n\n(1) Customers\n(2) Suppliers\n(3) Products\n(4) Stock\n(5) Orders\n(6) Sales\n(7) Invoices\n(8) Profit and Loss\n(9) Users\n(0) Logout");
 			choice = input.nextLine();
 			if(choice.equals("1")){
 				System.out.println("Customer Selected\n");
@@ -157,18 +153,23 @@ public class ShopNoGUI {
 				break;
 			}else if(choice.equals("5")){
 				System.out.println("Orders Selected\n");
+				orderMenu();
 				break;
 			}else if(choice.equals("6")){
-				System.out.println("Invoices Selected\n");
+				System.out.println("Sales Selected\n");
+				saleMenu();
 				break;
 			}else if(choice.equals("7")){
-				System.out.println("Profit and Loss Selected\n");
+				System.out.println("Invoices Selected\n");
 				break;
 			}else if(choice.equals("8")){
+				System.out.println("Profit and Loss Selected\n");
+				break;
+			}else if(choice.equals("9")){
 				System.out.println("Users Selected\n");
 				AdminUserMenu();
 				break;
-			}else if(choice.equals("9")){
+			}else if(choice.equals("0")){
 				System.out.println("Logout Selected\n");
 				adminRunning = false;
 				loopAuthentication = true;
@@ -178,7 +179,7 @@ public class ShopNoGUI {
 			}
 		}
 		while (userRunning){
-			System.out.println("\nMain Menu\n\n(1) Customers\n(2) Suppliers\n(3) Products\n(4) Stock\n(5) Orders\n(6) Logout");
+			System.out.println("\nMain Menu\n\n(1) Customers\n(2) Suppliers\n(3) Products\n(4) Stock\n(5) Sales\n(6) Logout");
 			choice = input.nextLine();
 			if(choice.equals("1")){
 				System.out.println("Customer Selected");
@@ -195,7 +196,8 @@ public class ShopNoGUI {
 				System.out.println("Stock Selected");
 				break;
 			}else if(choice.equals("5")){
-				System.out.println("Orders Selected");
+				System.out.println("Sales Selected");
+				saleMenu();
 				break;
 			}else if(choice.equals("6")){
 				System.out.println("Logout Selected");
@@ -250,7 +252,6 @@ public class ShopNoGUI {
 		
 		
 	}
-	
 	
 	public boolean createUser(){
 		
@@ -425,7 +426,6 @@ public class ShopNoGUI {
 		}
 		}
 	
-	
 	public void supplierMenu(){
 		int option=0;
 		boolean stayInMenu=true;
@@ -456,7 +456,6 @@ public class ShopNoGUI {
 		}
 		
 	}
-	
 	
 	public boolean listSuppliers(){
 		for(Supplier supplier : suppliers){
@@ -628,6 +627,100 @@ public class ShopNoGUI {
 			System.out.println("\nCould not find customer");
 		customerMenu();
 		return true;
+	}
+	
+	public void orderMenu(){
+		int choice = 0;
+		boolean run = true;
+		
+		while(run){	
+			while( (choice!=1) && (choice!=2) && (choice!=3)){
+				System.out.println("(1) Create Order\n (2) View Orders\n(3) Edit Order\n(4) Delete Order\n(5) Exit\n");
+				choice=input.nextInt();
+			}
+			
+			switch(choice){
+			case(1):
+				createOrder();
+				break;
+			case(2):
+				viewOrders();
+				break;
+			case(3):
+				editOrder();
+				break;
+			case(4):
+				deleteOrder();
+				break;
+			case(5):
+				run = false;
+			}
+		}
+	}
+	
+	public void createOrder(){
+		int id = 0;
+		boolean found = false;
+		boolean run = true;
+		boolean selecting = true;
+		String choice = "";
+		ArrayList<Product> orderList = new ArrayList<Product>();
+		Supplier currentSupplier = new Supplier();
+
+		while(run){	
+			System.out.println("Please enter supplier id: ");
+			id = input.nextInt();
+			for(Supplier supplier: suppliers){
+				if(supplier.getId()==id){
+					currentSupplier = supplier;
+					found = true;
+					break;
+				}
+			}
+			if(found){
+				while(selecting){
+					System.out.println("Please enter product name from list:");
+					for(Product product: currentSupplier.getProducts()){
+						System.out.println(product.getName() + product.getSupplierPrice() + "\n");
+					}
+					System.out.println("Enter 0 when finished.");
+					choice = input.next();
+					if(choice.equals("0")){
+						run = false;
+						selecting = false;
+						break;
+					}
+					System.out.println("Please enter quantity:");
+					int amount = input.nextInt();
+					for(Product product: currentSupplier.getProducts()){
+						if(product.getName().equals(choice)){
+							orderList.add(new Product(product.getName(), product.getSupplierPrice(), amount));
+						}
+					}
+				}
+			}
+		}
+		Order order = new Order(orders.size()+1, orderList, currentSupplier);
+		orders.add(order);
+	}
+	//TODO Darren
+	public void viewOrders(){
+		
+	}
+
+	//TODO Darren
+	public void editOrder(){
+		
+	}
+	
+	//TODO Darren
+	public void deleteOrder(){
+		
+	}
+	
+	//TODO Darren
+	public void saleMenu(){
+		
 	}
 	
 	

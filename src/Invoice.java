@@ -1,5 +1,4 @@
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -7,23 +6,10 @@ public class Invoice {
 
 	private Date date = new Date();
 	private DateFormat format = DateFormat.getDateInstance();
-	private ArrayList<Stock> stocks = new ArrayList<Stock>();
 	private double totalPrice;
 	
 	public Invoice(){
 		this.totalPrice = 0;
-	}
-	
-	public Invoice(ArrayList<Stock> stocks){
-		this.stocks = stocks;
-	}
-
-	public ArrayList<Stock> getStocks() {
-		return stocks;
-	}
-
-	public void setStocks(ArrayList<Stock> stocks) {
-		this.stocks = stocks;
 	}
 
 	public double getTotalPrice() {

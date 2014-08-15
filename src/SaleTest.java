@@ -11,9 +11,9 @@ public class SaleTest {
 
 	private ArrayList<Stock> stocks = new ArrayList<Stock>();
 	private Sale sale;
-	Stock s1 = new Stock("apple", .20, .40, 10);
-	Stock s2 = new Stock("banana", .15, .30, 12);
-	Stock s3 = new Stock("orange", .10, .20, 20);
+	Stock s1 = new Stock("apple", .20, 10);
+	Stock s2 = new Stock("banana", .15, 12);
+	Stock s3 = new Stock("orange", .10, 20);
 	Customer c1 = new Customer("Darren", 1, "0860547880", "Dublin");
 	Customer c2 = new Customer("Shane", 2, "0877746283", "Kildare");
 	
@@ -61,7 +61,7 @@ public class SaleTest {
 
 	@Test
 	public void testGetTotalPrice() {
-		assertEquals(11.60, sale.getTotalPrice(), 0.0);
+		assertEquals(12.60, sale.getTotalPrice(), 0.0);
 	}
 
 	@Test

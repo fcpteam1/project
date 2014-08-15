@@ -1,8 +1,13 @@
+import java.text.DateFormat;
+import java.util.Date;
+
 
 public class Stock extends Product{
 	
 	private double customerPrice;
 	private int quantity;
+	private Date date = new Date();
+	private DateFormat format = DateFormat.getDateInstance();
 	
 	public Stock() {
 		super();
@@ -10,12 +15,26 @@ public class Stock extends Product{
 		this.quantity = 0;
 	}
 
-	public Stock(String name, double supplierPrice, double customerPrice, int quantity) {
+	public Stock(String name, double supplierPrice, int quantity) {
 		super(name, supplierPrice);
-		this.customerPrice = customerPrice;
+		this.customerPrice = calculatePrice();
 		this.quantity = quantity;
 	}
 
+	public double calculatePrice(){
+		double price = 0;
+		if(super.getName().equals("apple")){
+			price = 0.50;
+		}
+		else if(super.getName().equals("orange")){
+			price = 0.20;
+		}
+		else if(super.getName().equals("banana")){
+			price = 0.30;
+		}
+		return price;
+	}
+	
 	public int getQuantity() {
 		return quantity;
 	}
@@ -30,6 +49,22 @@ public class Stock extends Product{
 
 	public void setCustomerPrice(double customerPrice) {
 		this.customerPrice = customerPrice;
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public DateFormat getFormat() {
+		return format;
+	}
+
+	public void setFormat(DateFormat format) {
+		this.format = format;
 	}
 	
 }

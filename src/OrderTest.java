@@ -7,20 +7,20 @@ import org.junit.Test;
 
 public class OrderTest {
 
-	private ArrayList<Stock> stocks = new ArrayList<Stock>();
+	private ArrayList<Product> products = new ArrayList<Product>();
 	private Order order;
-	Stock s1 = new Stock("apple", .20, .40, 10);
-	Stock s2 = new Stock("banana", .15, .30, 12);
-	Stock s3 = new Stock("orange", .10, .20, 20);
+	Product p1 = new Product("apple", .20, 10);
+	Product p2 = new Product("banana", .15, 12);
+	Product p3 = new Product("orange", .10, 20);
 	Supplier sup1 = new Supplier();
 	Supplier sup2 = new Supplier();
 	
 	@Before
 	public void setUp() throws Exception {
-		stocks.add(s1);
-		stocks.add(s2);
-		stocks.add(s3);
-		order = new Order(1, stocks, sup1);
+		products.add(p1);
+		products.add(p2);
+		products.add(p3);
+		order = new Order(1, products, sup1);
 	}
 	
 	@Test
@@ -46,15 +46,15 @@ public class OrderTest {
 	}
 	
 	@Test
-	public void testGetStocks() {
-		assertEquals(stocks, order.getStocks());
+	public void testGetProducts() {
+		assertEquals(products, order.getProducts());
 	}
 
 	@Test
 	public void testSetStocks() {
-		stocks.remove(0);
-		order.setStocks(stocks);
-		assertEquals(stocks, order.getStocks());
+		products.remove(0);
+		order.setProducts(products);
+		assertEquals(products, order.getProducts());
 	}
 	
 	@Test // Also tests calculatePrice()

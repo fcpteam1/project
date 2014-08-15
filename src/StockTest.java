@@ -10,12 +10,12 @@ public class StockTest {
 
 	@Before
 	public void setUp() throws Exception {
-		stock = new Stock("apple", 0.50, 0.75, 10);
+		stock = new Stock("apple", 0.50, 10);
 	}
 
 	@Test
 	public void testGetCustomerPrice(){
-		assertEquals(0.75, stock.getCustomerPrice(), 0.0);
+		assertEquals(0.50, stock.getCustomerPrice(), 0.0);
 	}
 	
 	@Test
