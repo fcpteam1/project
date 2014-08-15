@@ -5,25 +5,18 @@ import java.util.Date;
 <<<<<<< HEAD
 import java.util.HashMap;
 import java.util.Map;
-=======
->>>>>>> branch 'christine' of https://github.com/fcpteam1/project
 
 
-<<<<<<< HEAD
 public class Stock extends Product{
-=======
-public class Stock extends Product {
->>>>>>> branch 'christine' of https://github.com/fcpteam1/project
+
+	public class Stock extends Product {
 	
 	private double customerPrice;
 	private int quantity;
-<<<<<<< HEAD
 	private Date date = new Date();
 	private DateFormat format = DateFormat.getDateInstance();
-=======
 	private Date date;
 	private static boolean inStock= false;
->>>>>>> branch 'christine' of https://github.com/fcpteam1/project
 	
 	public Stock() {
 		super();
@@ -31,15 +24,13 @@ public class Stock extends Product {
 		this.quantity = 0;
 	}
 
-<<<<<<< HEAD
 	public Stock(String name, double supplierPrice, int quantity) {
 		super(name, supplierPrice);
 		this.customerPrice = calculatePrice();
-=======
+
 	public Stock(Product product, int quantity) {
 		super (product.getName(), product.getId());
 		this.product = product;
->>>>>>> branch 'christine' of https://github.com/fcpteam1/project
 		this.quantity = quantity;
 		DateFormat df= new SimpleDateFormat ("dd/MM/yyyy");
 		this.date= new Date();
@@ -83,7 +74,6 @@ public class Stock extends Product {
 		this.customerPrice = customerPrice;
 	}
 	
-<<<<<<< HEAD
 	public Date getDate() {
 		return date;
 	}
@@ -199,7 +189,7 @@ public class Stock extends Product {
 		System.out.println("\n*********************************");
 
 	}
-=======
+
 	public static boolean processSale (ArrayList <Stock> stocks, Product product, int quantity, int index)
 	{
 		for (int i =index; i< stocks.size(); i++)
@@ -274,5 +264,4 @@ public class Stock extends Product {
 	}
 
 
->>>>>>> branch 'christine' of https://github.com/fcpteam1/project
 }
