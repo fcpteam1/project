@@ -1,58 +1,73 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
 
+
 public class SaleTest {
 
+	private ArrayList<Stock> stocks = new ArrayList<Stock>();
+	private Sale sale;
+	Stock s1 = new Stock("apple", .20, .40, 10);
+	Stock s2 = new Stock("banana", .15, .30, 12);
+	Stock s3 = new Stock("orange", .10, .20, 20);
+	Customer c1 = new Customer("Darren", 1, "0860547880", "Dublin");
+	Customer c2 = new Customer("Shane", 2, "0877746283", "Kildare");
+	
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	@Test
-	public void testCalculatePrice() {
-		fail("Not yet implemented");
+		stocks.add(s1);
+		stocks.add(s2);
+		stocks.add(s3);
+		sale = new Sale(1, stocks, c1);
 	}
 
 	@Test
 	public void testGetCustomer() {
-		fail("Not yet implemented");
+		assertEquals(c1, sale.getCustomer());
 	}
 
 	@Test
 	public void testSetCustomer() {
-		fail("Not yet implemented");
+		sale.setCustomer(c2);
+		assertEquals(c2, sale.getCustomer());
 	}
 
 	@Test
 	public void testGetId() {
-		fail("Not yet implemented");
+		assertEquals(1, sale.getId());
 	}
 
 	@Test
 	public void testSetId() {
-		fail("Not yet implemented");
+		sale.setId(2);
+		assertEquals(2, sale.getId());
 	}
 
 	@Test
-	public void testGetProducts() {
-		fail("Not yet implemented");
+	public void testGetStocks() {
+		assertEquals(stocks, sale.getStocks());
 	}
 
 	@Test
-	public void testSetProducts() {
-		fail("Not yet implemented");
+	public void testSetStocks() {
+		stocks.remove(0);
+		sale.setStocks(stocks);
+		assertEquals(stocks, sale.getStocks());
 	}
 
 	@Test
 	public void testGetTotalPrice() {
-		fail("Not yet implemented");
+		assertEquals(11.60, sale.getTotalPrice(), 0.0);
 	}
 
 	@Test
 	public void testSetTotalPrice() {
-		fail("Not yet implemented");
+		sale.setTotalPrice(20);
+		assertEquals(20, sale.getTotalPrice(), 0.0);
 	}
 
 }

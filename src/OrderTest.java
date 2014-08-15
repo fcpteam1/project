@@ -6,33 +6,32 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class OrderTest {
-//TODO
-	/*
-	private ArrayList<Product> products = new ArrayList<Product>();
+
+	private ArrayList<Stock> stocks = new ArrayList<Stock>();
 	private Order order;
-	private Supplier supplier;
-	Product p1 = new Product("Apple", 50);
-	Product p2 = new Product("Apple", 50);
-	Product p3 = new Product("Banana", 40);
+	Stock s1 = new Stock("apple", .20, .40, 10);
+	Stock s2 = new Stock("banana", .15, .30, 12);
+	Stock s3 = new Stock("orange", .10, .20, 20);
+	Supplier sup1 = new Supplier();
+	Supplier sup2 = new Supplier();
+	
 	@Before
 	public void setUp() throws Exception {
-		products.add(p1);
-		products.add(p2);
-		products.add(p3);
-		supplier = new Supplier("Grogans", 1, products);
-		order = new Order(1, products, supplier);
+		stocks.add(s1);
+		stocks.add(s2);
+		stocks.add(s3);
+		order = new Order(1, stocks, sup1);
 	}
 	
 	@Test
 	public void testGetSupplier() {
-		assertEquals(supplier, order.getSupplier());
+		assertEquals(sup1, order.getSupplier());
 	}
 
 	@Test
 	public void testSetSupplier() {
-		Supplier testSupplier = new Supplier("Halfords", 2, products);
-		order.setSupplier(testSupplier);
-		assertEquals(testSupplier, order.getSupplier());
+		order.setSupplier(sup2);
+		assertEquals(sup2, order.getSupplier());
 	}
 	
 	@Test
@@ -47,20 +46,20 @@ public class OrderTest {
 	}
 	
 	@Test
-	public void testGetProducts() {
-		assertEquals(products, order.getProducts());
+	public void testGetStocks() {
+		assertEquals(stocks, order.getStocks());
 	}
 
 	@Test
-	public void testSetProducts() {
-		products.remove(2);
-		order.setProducts(products);
-		assertEquals(products, order.getProducts());
+	public void testSetStocks() {
+		stocks.remove(0);
+		order.setStocks(stocks);
+		assertEquals(stocks, order.getStocks());
 	}
 	
-	@Test
+	@Test // Also tests calculatePrice()
 	public void testGetTotalPrice() {
-		assertEquals(70, order.getTotalPrice(), 0.0);
+		assertEquals(5.8, order.getTotalPrice(), 0.0);
 	}
 
 	@Test
@@ -69,9 +68,4 @@ public class OrderTest {
 		assertEquals(20, order.getTotalPrice(), 0.0);
 	}
 	
-	@Test
-	public void testCalculatePrice(){
-		
-	}
-	*/
 }

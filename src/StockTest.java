@@ -5,30 +5,28 @@ import org.junit.Test;
 
 
 public class StockTest {
-	/*
-	Product product = new Product("Apple", 2.00,1.00,12);
-	Product product1 = new Product("Orange",4.00,2.00,24);
+
 	Stock stock; 
 
 	@Before
 	public void setUp() throws Exception {
-		stock = new Stock(product, 23);
+		stock = new Stock("apple", 0.50, 0.75, 10);
 	}
 
 	@Test
-	public void testGetProduct() {
-		assertEquals(product, stock.getProduct());
+	public void testGetCustomerPrice(){
+		assertEquals(0.75, stock.getCustomerPrice(), 0.0);
 	}
-
+	
 	@Test
-	public void testSetProduct() {
-		stock.setProduct(product1);
-		assertEquals(product1, stock.getProduct());
+	public void testSetCustomerPrice(){
+		stock.setCustomerPrice(.80);
+		assertEquals(0.80, stock.getCustomerPrice(), 0.0);		
 	}
-
+	
 	@Test
 	public void testGetQuantity() {
-		assertEquals(23, stock.getQuantity());
+		assertEquals(10, stock.getQuantity());
 	}
 
 	@Test
@@ -36,5 +34,26 @@ public class StockTest {
 		stock.setQuantity(50);
 		assertEquals(50,stock.getQuantity());
 	}
-*/
+	
+	@Test
+	public void testGetName(){
+		assertEquals("apple", stock.getName());
+	}
+	@Test
+	public void testSetName(){
+		stock.setName("banana");
+		assertEquals("banana", stock.getName());
+	}
+	
+	@Test
+	public void testGetSupplierPrice(){
+		assertEquals(0.50, stock.getSupplierPrice(), 0.0);
+	}
+	
+	@Test
+	public void testSetSupplierPrice(){
+		stock.setSupplierPrice(0.20);
+		assertEquals(0.20, stock.getSupplierPrice(), 0.0);
+	}
+	
 }

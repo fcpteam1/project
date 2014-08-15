@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Supplier {
 
 	private String name;
+	private String number;
 	private int id;
 	ArrayList<Product> products = new ArrayList<Product>();
 	
@@ -39,6 +40,14 @@ public class Supplier {
 
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	
 }
