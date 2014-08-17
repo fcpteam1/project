@@ -497,7 +497,7 @@ public class ShopNoGUI {
 		
 		while(run){	
 			while( (choice!=1) && (choice!=2) && (choice!=3)){
-				System.out.println("(1) Create Order\n (2) View Orders\n(3) Edit Order\n(4) Delete Order\n(5) Exit\n");
+				System.out.println("(1) Create Order\n (2) View Orders\n(3) Edit Order\n(4) Delete Order\n(5) Receive Order\n(6) Exit\n");
 				choice=input.nextInt();
 			}
 			
@@ -515,6 +515,8 @@ public class ShopNoGUI {
 				deleteOrder();
 				break;
 			case(5):
+				receiveOrder();
+			case(6):
 				run = false;
 			}
 		}
@@ -565,6 +567,40 @@ public class ShopNoGUI {
 		Order order = new Order(orders.size()+1, orderList, currentSupplier);
 		orders.add(order);
 	}
+	//TODO Darren
+	public void viewOrders(){
+	}
+	//TODO Darren
+	public void editOrder(){
+	}
+	//TODO Darren
+	public void deleteOrder(){
+	}
+	//TODO Darren
+	public void saleMenu(){
+	}
+	
+	public void receiveOrder() {
+		
+		int id;
+		
+		System.out.println("Please enter the order number: ");
+		
+		id = input.nextInt();
+		
+		for (Order order: orders) {
+			if (order.getId() == id) {
+				
+				order.setCurrent(false);
+				
+				for (Product product: orders.get(id).getProducts()) {
+					
+					stocks.add(new Stock(product.getName(),product.getSupplierPrice(),product.getQuantity()));
+				}	
+			}	
+		}	
+	}
+	
 	
 	public static void main(String[] args) throws IOException {
 		new ShopNoGUI();

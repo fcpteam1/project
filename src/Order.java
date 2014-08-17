@@ -4,6 +4,7 @@ public class Order extends Invoice{
 
 	private Supplier supplier; 
 	private int id;
+	private ArrayList<Product> products = new ArrayList<Product>();
 	boolean current;
 	
 	public Order(){
@@ -22,8 +23,8 @@ public class Order extends Invoice{
 	public void calculatePrice(){
 		double price = 0;
 		//TODO - Loop to find cheapest price in list of suppliers
-		for(Stock stock: super.getStocks()){
-			price += stock.getSupplierPrice();
+		for(Product product: products){
+			price += product.getSupplierPrice() * product.getQuantity();
 		}
 		super.setTotalPrice(price);
 	}
@@ -53,4 +54,13 @@ public class Order extends Invoice{
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(ArrayList<Product> products) {
+		this.products = products;
+	}
+	
 }
