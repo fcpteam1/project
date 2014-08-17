@@ -12,7 +12,7 @@ public class Order extends Invoice{
 	}
 	
 	public Order(int id, ArrayList<Product> products, Supplier supplier) {
-		super(products);
+		super();
 		this.id = id;
 		this.supplier = supplier;
 		current = true;
