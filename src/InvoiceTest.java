@@ -8,13 +8,13 @@ import org.junit.Test;
 public class InvoiceTest {
 	//TODO
 
-	ArrayList<Stock> stocks = new ArrayList<Stock>();
+	
 	Invoice invoice;
-	Stock s1 = new Stock("apple", .20, .40, 10);
+	Stock s1 = new Stock("apple", .20, 10);
 	
 	@Before
 	public void setUp() throws Exception {
-		invoice = new Invoice(stocks);
+		invoice = new Invoice();
 	}
 	
 	@Test
@@ -28,15 +28,7 @@ public class InvoiceTest {
 		assertEquals(20, invoice.getTotalPrice(), 0.0);
 	}
 	
-	@Test
-	public void testGetStocks() {
-		assertEquals(stocks, invoice.getStocks());
-	}
 	
-	@Test
-	public void testSetStocks() {
-		stocks.remove(2);
-		invoice.setStocks(stocks);
-		assertEquals(stocks, invoice.getStocks());
-	}
+	
+	
 }

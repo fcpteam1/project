@@ -515,7 +515,7 @@ public class ShopNoGUI {
 				deleteOrder();
 				break;
 			case(5):
-				receiveOrder();
+				receiveOrder( orders.get(0).getId());
 			case(6):
 				run = false;
 			}
@@ -567,6 +567,7 @@ public class ShopNoGUI {
 		Order order = new Order(orders.size()+1, orderList, currentSupplier);
 		orders.add(order);
 	}
+	
 	//TODO Darren
 	public void viewOrders(){
 	}
@@ -580,13 +581,13 @@ public class ShopNoGUI {
 	public void saleMenu(){
 	}
 	
-	public void receiveOrder() {
+	public void receiveOrder(int id) {
 		
-		int id;
+		//int id;
 		
-		System.out.println("Please enter the order number: ");
+		//System.out.println("Please enter the order number: ");
 		
-		id = input.nextInt();
+		//id = input.nextInt();
 		
 		for (Order order: orders) {
 			if (order.getId() == id) {
