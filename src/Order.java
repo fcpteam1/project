@@ -4,6 +4,7 @@ public class Order extends Invoice{
 
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 	private int id;
+	boolean current;
 	
 	public Order(){
 		super();
@@ -14,6 +15,7 @@ public class Order extends Invoice{
 		super(stocks);
 		this.id = id;
 		this.suppliers = suppliers;
+		current = true;
 		calculatePrice();
 	}
 	
