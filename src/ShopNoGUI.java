@@ -5,12 +5,20 @@ import java.util.Scanner;
 
 public class ShopNoGUI {
 	
+	
+	
+	
+	
+	private ArrayList<Order> orders = new ArrayList<Order>();
+	private ArrayList<Stock> stocks = new ArrayList<Stock>();
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 	private String username, password, choice,customerName,customerNumber,customerAddress;
 	private int customerId;
 	private Scanner input = new Scanner(System.in);
+	private Scanner input2 = new Scanner(System.in);
+	private Scanner input3 = new Scanner(System.in);
 	
 	boolean loopAuthentication = true;
 	boolean adminRunning;

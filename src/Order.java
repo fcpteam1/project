@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Order extends Invoice{
 
-	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
+	private Supplier supplier; 
 	private int id;
 	boolean current;
 	
@@ -11,10 +11,10 @@ public class Order extends Invoice{
 		this.id = 0;
 	}
 	
-	public Order(int id, ArrayList<Stock> stocks, ArrayList<Supplier> suppliers) {
-		super(stocks);
+	public Order(int id, ArrayList<Product> products, Supplier supplier) {
+		super(products);
 		this.id = id;
-		this.suppliers = suppliers;
+		this.supplier = supplier;
 		current = true;
 		calculatePrice();
 	}
@@ -28,12 +28,22 @@ public class Order extends Invoice{
 		super.setTotalPrice(price);
 	}
 
-	public ArrayList<Supplier> getSuppliers() {
-		return suppliers;
+	
+
+	public Supplier getSupplier() {
+		return supplier;
 	}
 
-	public void setSuppliers(ArrayList<Supplier> suppliers) {
-		this.suppliers = suppliers;
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+
+	public boolean isCurrent() {
+		return current;
+	}
+
+	public void setCurrent(boolean current) {
+		this.current = current;
 	}
 
 	public int getId() {
