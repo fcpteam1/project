@@ -2,6 +2,7 @@ public class Product {
 
 	private double supplierPrice;
 	private String name;
+	private int quantity;
 	
 	public Product() {
 		this.name = "";
@@ -11,6 +12,12 @@ public class Product {
 	public Product(String name, double supplierPrice) {
 		this.name = name;
 		this.supplierPrice = supplierPrice;
+	}
+	
+	public Product(String name, double supplierPrice, int quantity) {
+		this.name = name;
+		this.supplierPrice = supplierPrice;
+		this.quantity = quantity;
 	}
 	
 	public double getSupplierPrice() {
