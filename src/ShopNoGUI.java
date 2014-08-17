@@ -483,6 +483,81 @@ public class ShopNoGUI {
 		}*/
 	}
 	
+	public void orderMenu(){
+		int choice = 0;
+		boolean run = true;
+		
+		while(run){	
+			while( (choice!=1) && (choice!=2) && (choice!=3)){
+				System.out.println("(1) Create Order\n (2) View Orders\n(3) Edit Order\n(4) Delete Order\n(5) Exit\n");
+				choice=input.nextInt();
+			}
+			
+			switch(choice){
+			case(1):
+				createOrder();
+				break;
+			case(2):
+				viewOrders();
+				break;
+			case(3):
+				editOrder();
+				break;
+			case(4):
+				deleteOrder();
+				break;
+			case(5):
+				run = false;
+			}
+		}
+	}
+	
+	public void createOrder(){
+		int id = 0;
+		boolean found = false;
+		boolean run = true;
+		boolean selecting = true;
+		String choice = "";
+		ArrayList<Product> orderList = new ArrayList<Product>();
+		Supplier currentSupplier = new Supplier();
+
+		while(run){	
+			System.out.println("Please enter supplier id: ");
+			id = input.nextInt();
+			for(Supplier supplier: suppliers){
+				if(supplier.getId()==id){
+					currentSupplier = supplier;
+					found = true;
+					break;
+				}
+			}
+			if(found){
+				while(selecting){
+					System.out.println("Please enter product name from list:");
+					for(Product product: currentSupplier.getProducts()){
+						System.out.println(product.getName() + product.getSupplierPrice() + "\n");
+					}
+					System.out.println("Enter 0 when finished.");
+					choice = input.next();
+					if(choice.equals("0")){
+						run = false;
+						selecting = false;
+						break;
+					}
+					System.out.println("Please enter quantity:");
+					int amount = input.nextInt();
+					for(Product product: currentSupplier.getProducts()){
+						if(product.getName().equals(choice)){
+							orderList.add(new Product(product.getName(), product.getSupplierPrice(), amount));
+						}
+					}
+				}
+			}
+		}
+		Order order = new Order(orders.size()+1, orderList, currentSupplier);
+		orders.add(order);
+	}
+	
 	public static void main(String[] args) throws IOException {
 		new ShopNoGUI();
 	}
