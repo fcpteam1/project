@@ -6,33 +6,32 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class OrderTest {
-//TODO
-	/*
+
 	private ArrayList<Product> products = new ArrayList<Product>();
 	private Order order;
-	private Supplier supplier;
-	Product p1 = new Product("Apple", 50);
-	Product p2 = new Product("Apple", 50);
-	Product p3 = new Product("Banana", 40);
+	Product p1 = new Product("apple", .20, 10);
+	Product p2 = new Product("banana", .15, 12);
+	Product p3 = new Product("orange", .10, 20);
+	Supplier sup1 = new Supplier();
+	Supplier sup2 = new Supplier();
+	
 	@Before
 	public void setUp() throws Exception {
 		products.add(p1);
 		products.add(p2);
 		products.add(p3);
-		supplier = new Supplier("Grogans", 1, products);
-		order = new Order(1, products, supplier);
+		order = new Order(1, products, sup1);
 	}
 	
 	@Test
 	public void testGetSupplier() {
-		assertEquals(supplier, order.getSupplier());
+		assertEquals(sup1, order.getSupplier());
 	}
 
 	@Test
 	public void testSetSupplier() {
-		Supplier testSupplier = new Supplier("Halfords", 2, products);
-		order.setSupplier(testSupplier);
-		assertEquals(testSupplier, order.getSupplier());
+		order.setSupplier(sup2);
+		assertEquals(sup2, order.getSupplier());
 	}
 	
 	@Test
@@ -52,15 +51,15 @@ public class OrderTest {
 	}
 
 	@Test
-	public void testSetProducts() {
-		products.remove(2);
+	public void testSetStocks() {
+		products.remove(0);
 		order.setProducts(products);
 		assertEquals(products, order.getProducts());
 	}
 	
-	@Test
+	@Test // Also tests calculatePrice()
 	public void testGetTotalPrice() {
-		assertEquals(70, order.getTotalPrice(), 0.0);
+		assertEquals(5.8, order.getTotalPrice(), 0.0);
 	}
 
 	@Test
@@ -69,9 +68,4 @@ public class OrderTest {
 		assertEquals(20, order.getTotalPrice(), 0.0);
 	}
 	
-	@Test
-	public void testCalculatePrice(){
-		
-	}
-	*/
 }

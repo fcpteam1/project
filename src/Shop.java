@@ -99,13 +99,13 @@ public class Shop extends JFrame {
 		productLabel=new JLabel(new ImageIcon("icon.png"));
 		productPanel.add(productLabel,BorderLayout.CENTER);
 		
-		supplierPanel=new JPanel();
-		supplierButton=new JButton("SUPPLIERS");
+		supplierPanel=new SupplierGUI().getPanel();
+		/*supplierButton=new JButton("SUPPLIERS");
 		supplierPanel.setLayout(new BorderLayout());
 		supplierPanel.add(supplierButton,BorderLayout.NORTH);
 		supplierLabel=new JLabel(new ImageIcon("icon.png"));
 		supplierPanel.add(supplierLabel,BorderLayout.CENTER);
-		
+		*/
 		invoicePanel=new JPanel();
 		invoiceButton=new JButton("INVOICES");
 		invoicePanel.setLayout(new BorderLayout());

@@ -1,5 +1,4 @@
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -13,8 +12,6 @@ public class Invoice {
 		this.totalPrice = 0;
 	}
 	
-	
-
 	public double getTotalPrice() {
 		return totalPrice;
 	}
