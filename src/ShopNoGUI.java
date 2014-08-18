@@ -32,15 +32,18 @@ public class ShopNoGUI {
 			loadCustomers("CustomerList");
 			loadUsers("UserList");
 			loadSuppliers("SuppliersProductListFiles", "SupplierList");
+			loadStock("StockList");
 			
-		
+		/* display to check load methods
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
 		for (User u : users)
 		System.out.println((u.getUsername() + ", " + u.getId()));
 		for (Supplier s : suppliers)
 		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
-	
+		for (Stock  s: stocks)
+		System.out.println(s.getName() + " Quantity: " + s.getQuantity());
+		*/
 			checkLogin();
 			mainMenu();
 	
