@@ -37,6 +37,12 @@ public class Stock extends Product{
 
 	}
 	
+	public Stock(String name, double supplierPrice, int quantity, double customerPrice) {
+		super(name, supplierPrice);
+		this.customerPrice = customerPrice;
+		this.quantity = quantity;
+	}
+	
 	
 	
 	
