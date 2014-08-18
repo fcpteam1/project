@@ -15,6 +15,12 @@ public class Stock extends Product{
 		this.customerPrice = calculatePrice();
 	}
 	
+	public Stock(String name, double supplierPrice, int quantity, double customerPrice) {
+		super(name, supplierPrice);
+		this.customerPrice = customerPrice;
+		this.quantity = quantity;
+	}
+	
 	public double calculatePrice(){
 		double price = 0;
 			if(super.getName().equals("apple")){

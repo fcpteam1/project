@@ -110,6 +110,19 @@ public class ShopNoGUI {
 	in.close();
 	}
 	
+	public void loadStock(String fileName) throws IOException {
+	
+	Scanner in= new Scanner(new File(fileName));
+		while(in.hasNext()) {
+			String name = in.next();
+			double supplierPrice = in.nextDouble();
+			int quantity = in.nextInt();
+			double customerPrice = in.nextDouble();
+			Stock stock = new Stock(name, supplierPrice, quantity, customerPrice);
+			stocks.add(stock);
+		}
+	}
+	
 	public void checkLogin(){
 		while(loopAuthentication == true){
 			System.out.println("\nPlease enter your Username: ");
@@ -515,7 +528,7 @@ public class ShopNoGUI {
 				deleteOrder();
 				break;
 			case(5):
-				receiveOrder( orders.get(0).getId());
+				receiveOrder();
 			case(6):
 				run = false;
 			}
@@ -581,13 +594,13 @@ public class ShopNoGUI {
 	public void saleMenu(){
 	}
 	
-	public void receiveOrder(int id) {
+	public void receiveOrder() {
 		
-		//int id;
+		int id;
 		
-		//System.out.println("Please enter the order number: ");
+		System.out.println("Please enter the order number: ");
 		
-		//id = input.nextInt();
+		id = input.nextInt();
 		
 		for (Order order: orders) {
 			if (order.getId() == id) {
