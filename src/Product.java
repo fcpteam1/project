@@ -1,13 +1,15 @@
 public class Product {
 
-	private double supplierPrice;
+	private double supplierPrice,customerPrice;
 	private String name;
 	private int quantity;
+	private int id;
 	
 	public Product() {
 		this.name = "";
 		this.supplierPrice = 0;
 		this.quantity = 0;
+		this.id = 0;
 	}
 
 	public Product(String name, double supplierPrice) {
@@ -22,6 +24,12 @@ public class Product {
 		this.quantity = quantity;
 	}
 	
+	public Product(String name, double customerPrice, double supplierPrice, int id) {
+		this.name = name;
+		this.customerPrice = customerPrice;
+		this.supplierPrice = supplierPrice;
+		this.id = id;
+	}
 	
 	public double getSupplierPrice() {
 		return supplierPrice;
@@ -46,4 +54,14 @@ public class Product {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
 }

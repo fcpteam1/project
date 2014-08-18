@@ -474,6 +474,8 @@ public class ShopNoGUI {
 		System.out.println("\nWhich supplier product list would you like");
 		supName=input.next();
 		
+		
+		
 		for(Supplier supplier : suppliers){
 			
 			if(supplier.getName().equals(supName)){

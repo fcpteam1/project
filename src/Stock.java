@@ -2,21 +2,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-<<<<<<< HEAD
+
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class Stock extends Product{
 
-	public class Stock extends Product {
+	
 	
 	private double customerPrice;
 	private int quantity;
 	private Date date = new Date();
 	private DateFormat format = DateFormat.getDateInstance();
-	private Date date;
 	private static boolean inStock= false;
+	private Product product;
 	
 	public Stock() {
 		super();
@@ -27,7 +27,8 @@ public class Stock extends Product{
 	public Stock(String name, double supplierPrice, int quantity) {
 		super(name, supplierPrice);
 		this.customerPrice = calculatePrice();
-
+	}
+	
 	public Stock(Product product, int quantity) {
 		super (product.getName(), product.getId());
 		this.product = product;
@@ -36,13 +37,9 @@ public class Stock extends Product{
 		this.date= new Date();
 	}
 
-	public Date getDate() {
-		return date;
-	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+
+	
 
 	public double calculatePrice(){
 		double price = 0;
@@ -220,24 +217,7 @@ public class Stock extends Product{
 		return inStock;
 	}
 
-	public static void checkSellBy (ArrayList <Stock> stocks)
-	{
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = new Date();
-
-		long diff;
-		long diffDays; 
-
-		for (Stock temp:stocks)
-		{
-			diff= Math.abs(temp.getDate().getTime() - date.getTime());
-			diffDays= diff / (24 * 60 * 60 * 1000);
-			if (diffDays>=3)
-			{
-				stocks.remove(temp);
-			}
-		}
-	}
+	
 
 
 	public static void stockLevels (ArrayList <Stock> stocks, ArrayList <Product> products)
@@ -263,5 +243,15 @@ public class Stock extends Product{
 		System.out.println("\n*********************************");
 	}
 
+	
+	public Product getProduct() {
+		return product;
+	}
 
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
+	
+	
 }
