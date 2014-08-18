@@ -5,7 +5,8 @@ public class Order extends Invoice{
 	private Supplier supplier;
 	private int id;
 	private ArrayList<Product> products = new ArrayList<Product>();
-	
+	private boolean delivered = false;
+
 	public Order(){
 		super();
 		this.supplier = new Supplier();
@@ -64,5 +65,13 @@ public class Order extends Invoice{
 
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
+	}
+	
+	public boolean isDelivered() {
+		return delivered;
+	}
+
+	public void setDelivered(boolean delivered) {
+		this.delivered = delivered;
 	}
 }
