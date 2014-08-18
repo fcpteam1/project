@@ -22,6 +22,7 @@ public class Sale extends Invoice{
 
 	public void calculatePrice(){
 		double price = 0;
+		
 		for(Stock stock: stocks){
 			price += stock.getCustomerPrice() * stock.getQuantity();
 		}

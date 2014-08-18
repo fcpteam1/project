@@ -9,8 +9,7 @@ import java.util.Map;
 
 public class Stock extends Product{
 
-	
-	
+		
 	private double customerPrice;
 	private int quantity;
 	private Date date = new Date();
@@ -29,18 +28,19 @@ public class Stock extends Product{
 		this.customerPrice = calculatePrice();
 	}
 	
+	
 	public Stock(Product product, int quantity) {
 		super (product.getName(), product.getId());
 		this.product = product;
-		this.quantity = quantity;
 		DateFormat df= new SimpleDateFormat ("dd/MM/yyyy");
 		this.date= new Date();
+
 	}
-
-
-
 	
-
+	
+	
+	
+		
 	public double calculatePrice(){
 		double price = 0;
 		if(super.getName().equals("apple")){
@@ -69,7 +69,7 @@ public class Stock extends Product{
 
 	public void setCustomerPrice(double customerPrice) {
 		this.customerPrice = customerPrice;
-	}
+	}	
 	
 	public Date getDate() {
 		return date;

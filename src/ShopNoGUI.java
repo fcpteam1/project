@@ -23,7 +23,7 @@ public class ShopNoGUI {
 	boolean createCustomerRun = true;
 
 	public ShopNoGUI() throws IOException{
-		
+					
 		loadCustomers("CustomerList");
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
@@ -501,12 +501,12 @@ public class ShopNoGUI {
 	public void createNewCustomer(){
 		System.out.println("Please enter customer name: ");
 		customerName = input.nextLine();
-		System.out.println("Please enter customer id: ");
-		customerId = input.nextInt();
-		System.out.println("Please enter Customer number: ");
-		customerNumber = input2.nextLine();
-		System.out.println("Please enter Customer address: ");
-		customerAddress = input3.nextLine();
+		System.out.println("Please enter  ");
+		customerName = input.nextLine();
+		System.out.println("Please enter Customer name: ");
+		customerName = input.nextLine();
+		System.out.println("Please enter Customer name: ");
+		customerName = input.nextLine();
 		
 		int customerSize = customers.size();
 		int size = 1;
@@ -724,8 +724,8 @@ public class ShopNoGUI {
 	public void saleMenu(){
 		
 	}
-	
-	
+
+		
 	public static void main(String[] args) throws IOException {
 		new ShopNoGUI();
 	}
