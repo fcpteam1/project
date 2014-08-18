@@ -13,6 +13,7 @@ public class Sale extends Invoice{
 	}
 	
 	public Sale(int id, ArrayList<Stock> stocks, Customer customer) {
+		super();
 		this.stocks = stocks;
 		this.id = id;
 		this.customer = customer;
