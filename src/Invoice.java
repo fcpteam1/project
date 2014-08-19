@@ -11,7 +11,7 @@ public class Invoice {
 	public Invoice(){
 		this.totalPrice = 0;
 	}
-
+	
 	public double getTotalPrice() {
 		return totalPrice;
 	}
