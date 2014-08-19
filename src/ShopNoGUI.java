@@ -770,8 +770,16 @@ public class ShopNoGUI {
 	public void saleMenu(){
 		
 	}
-
+	
 		
+	public ArrayList<Stock> getStocks() {
+		return stocks;
+	}
+
+	public void setStocks(ArrayList<Stock> stocks) {
+		this.stocks = stocks;
+	}
+
 	public static void main(String[] args) throws IOException {
 		new ShopNoGUI();
 	}
