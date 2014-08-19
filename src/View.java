@@ -27,7 +27,7 @@ public class View extends JFrame {
 		mainmenu=new MainMenuGUI();
 		
 		thisContainer.add(login.getPanel());
-		
+		pack();
 		setVisible(true);
 		
 		

@@ -35,8 +35,8 @@ public class ShopNoGUI {
 		for (Supplier s : suppliers)
 		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
 	
-			checkLogin();
-			mainMenu();
+			//checkLogin();
+			//mainMenu();
 	
 	}
 	
@@ -730,4 +730,6 @@ public class ShopNoGUI {
 		new ShopNoGUI();
 	}
 
+	
+	
 }
