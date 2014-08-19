@@ -1,44 +1,27 @@
+
 public class Product {
 
-	private double supplierPrice,customerPrice;
+	private double supplierPrice;
 	private String name;
-	private int quantity;
-	private int id;
 	
 	public Product() {
 		this.name = "";
 		this.supplierPrice = 0;
-		this.quantity = 0;
-		this.id = 0;
 	}
 
-	public Product(String name, double supplierPrice) {
+	public Product(String name,double customerPrice) {
 		this.name = name;
-		this.supplierPrice = supplierPrice;
-		this.quantity = 0;
-	}
-	
-	public Product(String name, double supplierPrice, int quantity) {
-		this.name = name;
-		this.supplierPrice = supplierPrice;
-		this.quantity = quantity;
-	}
-	
-	public Product(String name, double customerPrice, double supplierPrice, int id) {
-		this.name = name;
-		this.customerPrice = customerPrice;
-		this.supplierPrice = supplierPrice;
-		this.id = id;
+		this.supplierPrice= customerPrice;
 	}
 	
 	public double getSupplierPrice() {
 		return supplierPrice;
 	}
 
-	public void setSupplierPrice(double supplierPrice) {
-		this.supplierPrice = supplierPrice;
+	public void setSupplierPrice(double customerPrice) {
+		this.supplierPrice = customerPrice;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -47,21 +30,5 @@ public class Product {
 		this.name = name;
 	}
 
-	public int getQuantity() {
-		return quantity;
-	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	
 }
