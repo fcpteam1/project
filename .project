@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>UserList2</name>
+			<type>1</type>
+			<location>C:/Users/Deirdre/Documents/FundamentalsProject/UserList2.dat</location>
+		</link>
+	</linkedResources>
 </projectDescription>
