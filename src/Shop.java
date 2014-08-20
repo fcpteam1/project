@@ -731,6 +731,9 @@ public class Shop {
 		return users;
 	}
 	
+	public ArrayList<Supplier> getSuppliers(){
+		return suppliers;
+	}
 
 }
 

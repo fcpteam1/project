@@ -15,6 +15,7 @@ public class View extends JFrame {
 	private LoginGUI login;
 	private MainMenuGUI mainmenu;
 	
+	
 	public View() {
 		// TODO Auto-generated constructor stub
 		
@@ -25,6 +26,7 @@ public class View extends JFrame {
 		
 		login=new LoginGUI();
 		mainmenu=new MainMenuGUI();
+		
 		
 		thisContainer.add(login.getPanel());
 		pack();

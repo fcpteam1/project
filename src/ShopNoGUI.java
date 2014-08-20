@@ -38,8 +38,8 @@ public class ShopNoGUI {
 		for (Stock s: stocks)
 		System.out.println(s.getName() + " Quantity: " + s.getQuantity());
 		*/
-			//checkLogin();
-			//mainMenu();
+			checkLogin();
+			mainMenu();
 	
 	}
 	
