@@ -18,6 +18,8 @@ public class MainMenuGUI {
 	
 	private CustomerGUI customerTab;
 	private UserGUI userTab;
+	private StockGui stockTab;
+
 	
 	public MainMenuGUI(){
 		
@@ -28,9 +30,12 @@ public class MainMenuGUI {
 		
 		customerTab=new CustomerGUI();
 		userTab=new UserGUI();
+		stockTab= new StockGui ();
+
 		
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
+		tabbedPane.addTab("Stock", stockTab.getPanel());
 		
 		framePanel.add(tabbedPane,BorderLayout.CENTER);
 		
@@ -127,6 +132,15 @@ public class MainMenuGUI {
 	}
 	
 	
+	public StockGui getStockTab() {
+		return stockTab;
+	}
+
+
+
+	public void setStockTab(StockGUI stockTab) {
+		this.stockTab = stockTab;
+	}
 	
 	
 }

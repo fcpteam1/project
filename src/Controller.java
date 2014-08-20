@@ -327,6 +327,9 @@ public class Controller {
 		view.getMainmenu().getUserTab().getEditButton().addActionListener(editUser);
 		view.getMainmenu().getUserTab().getEditSearchButton().addActionListener(editSearch);
 		
+		view.getMainmenu().getStockTab();
+		view.getMainmenu().getStockTab().getPanel();
+		
 		
 	}
 	
