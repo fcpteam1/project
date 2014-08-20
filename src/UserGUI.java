@@ -866,14 +866,4 @@ public class UserGUI {
 	public void setDeleteSearchButton(JButton deleteSearchButton) {
 		this.deleteSearchButton = deleteSearchButton;
 	}
-
-
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+ import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -173,7 +173,6 @@ public class ShopNoGUI {
 				break;
 			}else if(choice.equals("6")){
 				System.out.println("Sales Selected\n");
-				saleMenu();
 				break;
 			}else if(choice.equals("7")){
 				System.out.println("Invoices Selected\n");
@@ -213,7 +212,6 @@ public class ShopNoGUI {
 				break;
 			}else if(choice.equals("5")){
 				System.out.println("Sales Selected");
-				saleMenu();
 				break;
 			}else if(choice.equals("6")){
 				System.out.println("Logout Selected");
@@ -661,15 +659,6 @@ public class ShopNoGUI {
 			case(1):
 				createOrder();
 				break;
-			case(2):
-				viewOrders();
-				break;
-			case(3):
-				editOrder();
-				break;
-			case(4):
-				deleteOrder();
-				break;
 			case(5):
 				receiveOrder();
 				break;
@@ -744,25 +733,6 @@ public class ShopNoGUI {
 				}	
 			}	
 		}	
-	}
-	//TODO Darren
-	public void viewOrders(){
-		
-	}
-
-	//TODO Darren
-	public void editOrder(){
-		
-	}
-	
-	//TODO Darren
-	public void deleteOrder(){
-		
-	}
-	
-	//TODO Darren
-	public void saleMenu(){
-		
 	}
 
 		

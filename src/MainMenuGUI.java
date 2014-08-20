@@ -19,6 +19,7 @@ public class MainMenuGUI {
 	
 	private CustomerGUI customerTab;
 	private UserGUI userTab;
+	private OrderGUI orderTab;
 	
 	public MainMenuGUI(){
 		
@@ -29,9 +30,11 @@ public class MainMenuGUI {
 		
 		customerTab=new CustomerGUI();
 		userTab=new UserGUI();
+		orderTab = new OrderGUI();
 		
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
+		tabbedPane.addTab("Orders", orderTab.getPanel());
 		
 		framePanel.add(tabbedPane,BorderLayout.CENTER);
 		
@@ -50,6 +53,18 @@ public class MainMenuGUI {
 	
 	
 	
+	public OrderGUI getOrderTab() {
+		return orderTab;
+	}
+
+
+
+	public void setOrderTab(OrderGUI orderTab) {
+		this.orderTab = orderTab;
+	}
+
+
+
 	public JPanel getPanel(){
 		
 		return framePanel;

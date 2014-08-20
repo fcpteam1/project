@@ -15,7 +15,7 @@ public class Shop {
 	private Scanner input = new Scanner(System.in);
 	private Scanner input2 = new Scanner(System.in);
 	private Scanner input3 = new Scanner(System.in);
-	
+
 	boolean loopAuthentication = true;
 	boolean adminRunning;
 	boolean userRunning;
@@ -735,5 +735,17 @@ public class Shop {
 		return suppliers;
 	}
 
+	public ArrayList<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(ArrayList<Order> orders) {
+		this.orders = orders;
+	}
+
+	public void setSuppliers(ArrayList<Supplier> suppliers) {
+		this.suppliers = suppliers;
+	}
+	
 }
 

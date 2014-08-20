@@ -2,6 +2,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.EventListener;
 
 
 public class Controller {
@@ -12,7 +13,7 @@ public class Controller {
 	private ActionListener goToCreateUser,goToViewUser,goToEditUser;
 	private ActionListener deleteNext,deletePrevious,deleteUser,deleteSearch;
 	private ActionListener editNext,editPrevious,editUser,editSearch;
-	
+	private ActionListener createOrder, viewOrders, editOrder, deleteOrder;
 	
 	public Controller() throws IOException {
 		// TODO Auto-generated constructor stub
@@ -279,6 +280,37 @@ public class Controller {
 			}
 		};
 		
+		createOrder = new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				for(Supplier supplier: model.getShop().getSuppliers()){
+					System.out.println(supplier.getName());
+				}
+			}
+		};
+		
+		viewOrders = new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				for(Order order: model.getShop().getOrders()){
+					System.out.println("ID: " + order.getId());
+					System.out.println("Date: " + order.getDate());
+					System.out.println("Price: " + order.getTotalPrice());
+				}
+			}
+		};
+		
+		editOrder = new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+			}
+		};
+		
+		deleteOrder = new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+			}
+		};
+		
+		
 	}
 
 	
@@ -310,7 +342,6 @@ public class Controller {
 		view.getMainmenu().getUserTab().getCreateUser().addActionListener(createUserListener);
 		view.getMainmenu().getUserTab().getCreateBack().addActionListener(backToUserMenu);
 		
-		
 		view.getMainmenu().getUserTab().getViewUserButton().addActionListener(goToViewUser);
 		view.getMainmenu().getUserTab().getBackToUserFromView().addActionListener(backToUserMenu);
 		
@@ -328,7 +359,12 @@ public class Controller {
 		view.getMainmenu().getUserTab().getEditButton().addActionListener(editUser);
 		view.getMainmenu().getUserTab().getEditSearchButton().addActionListener(editSearch);
 		
-		
+		/*
+		view.getMainmenu().getOrderTab().getCreateButton().addActionListener(createOrder);
+		view.getMainmenu().getOrderTab().getViewButton().addActionListener(viewOrders);
+		view.getMainmenu().getOrderTab().getEditButton().addActionListener(editOrder);
+		view.getMainmenu().getOrderTab().getDeleteButton().addActionListener(deleteOrder);
+		*/
 	}
 	
 	/**

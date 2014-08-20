@@ -1,8 +1,14 @@
 
-public class OrderGUI {
+import javax.swing.JPanel;
 
-	public OrderGUI() {
-		// TODO Auto-generated constructor stub
+public class OrderGUI extends JPanel{
+
+	public OrderGUI(){
+		
 	}
-
+	
+	public JPanel getPanel(){
+		return new JPanel();
+	}
+	
 }
