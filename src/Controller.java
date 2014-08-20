@@ -1,10 +1,6 @@
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 
@@ -17,7 +13,6 @@ public class Controller {
 	private ActionListener deleteNext,deletePrevious,deleteUser,deleteSearch;
 	private ActionListener editNext,editPrevious,editUser,editSearch;
 	
-	private ActionListener viewSupplierListener,viewProductListener,nextSupplierListener,prevSupplierListener;
 	
 	public Controller() throws IOException {
 		// TODO Auto-generated constructor stub
@@ -284,82 +279,6 @@ public class Controller {
 			}
 		};
 		
-		
-		viewSupplierListener=new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				
-				Object userData[][]=new Object[model.getShop().getSuppliers().size()][4];
-				
-					
-					for(int i=0;i<model.getShop().getSuppliers().size();i++){
-						
-						userData[i][0]=model.getShop().getSuppliers().get(i).getName();
-						userData[i][1]=model.getShop().getSuppliers().get(i).getId();
-						userData[i][2]=model.getShop().getSuppliers().get(i).getNumber();
-						userData[i][3]=model.getShop().getSuppliers().get(i).getAddress();
-					}
-				
-				view.getMainmenu().getSupplierTab().setViewSupplierData(userData);
-				view.getMainmenu().getSupplierTab().focusViewSuppliers();
-				
-			}
-		};
-		
-		
-		viewSupplierListener=new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				
-				Object userData[][]=new Object[model.getShop().getSuppliers().size()][4];
-				
-					
-					for(int i=0;i<model.getShop().getSuppliers().size();i++){
-						
-						userData[i][0]=model.getShop().getSuppliers().get(i).getName();
-						userData[i][1]=model.getShop().getSuppliers().get(i).getId();
-						userData[i][2]=model.getShop().getSuppliers().get(i).getNumber();
-						userData[i][3]=model.getShop().getSuppliers().get(i).getAddress();
-					}
-				
-				view.getMainmenu().getSupplierTab().setViewSupplierData(userData);
-				view.getMainmenu().getSupplierTab().focusViewSuppliers();
-				
-			}
-		};
-		
-		viewProductListener=new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				
-				int current=view.getMainmenu().getSupplierTab().getCurrentSupplier();
-				
-				Object userData[][]=new Object[model.getShop().getSuppliers().get(current).getProducts().size()][3];
-				
-					
-					for(int i=0;i<model.getShop().getSuppliers().get(current).getProducts().size();i++){
-						
-						userData[i][0]=model.getShop().getSuppliers().get(current).getProducts().get(i).getName();
-						userData[i][1]=model.getShop().getSuppliers().get(current).getProducts().get(i).getId();
-						userData[i][2]=model.getShop().getSuppliers().get(current).getProducts().get(i).getSupplierPrice();
-						
-					}
-				
-				view.getMainmenu().getSupplierTab().setViewProductData(userData);
-				view.getMainmenu().getSupplierTab().focusViewProducts();
-				
-			}
-		};
-		
-		view.addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent e){
-				System.out.println("Exiting... maybe you should write some files");
-				try {
-					saveSystemState();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		
 	}
 
 	
@@ -409,43 +328,7 @@ public class Controller {
 		view.getMainmenu().getUserTab().getEditButton().addActionListener(editUser);
 		view.getMainmenu().getUserTab().getEditSearchButton().addActionListener(editSearch);
 		
-		view.getMainmenu().getSupplierTab().getViewSuppliers().addActionListener(viewSupplierListener);
-		view.getMainmenu().getSupplierTab().getViewSupplierProducts().addActionListener(viewProductListener);
 		
-		
-	}
-	
-	
-	public void saveSystemState() throws IOException{
-		
-		System.out.println("Attempting to save...");
-		
-		File f;
-		FileWriter fw;
-		BufferedWriter bw;
-		f=new File("SaveUsers.txt");
-		
-		fw=new FileWriter(f);
-		bw=new BufferedWriter(fw);
-		
-		for(User user :model.getShop().getUsers()){
-			bw.write(user.getUsername()+" "+user.getPassword()+" "+user.isAdmin());
-			bw.newLine();
-		}
-		
-		bw.close();
-		
-		
-		f=new File("SaveSuppliers");
-		fw=new FileWriter(f);
-		bw=new BufferedWriter(fw);
-		
-		for(Supplier supplier : model.getShop().getSuppliers()){
-			bw.write(supplier.getName()+","+supplier.getId()+","+supplier.getNumber()+","+supplier.getAddress());
-			
-		}
-		
-		bw.close();
 	}
 	
 	/**
