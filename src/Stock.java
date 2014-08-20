@@ -2,9 +2,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import test.Stock;
 
 
 public class Stock extends Product{
@@ -186,40 +187,29 @@ public class Stock extends Product {
 		}
 	}
 
-	public static void stockLevels (ArrayList <Stock> stockList)
+	public static Map<String, Integer> stockLevels (ArrayList <Stock> stockList)
 	{
 		Map<String, Integer> stockLevels = new HashMap<String, Integer>();
-		
+	
 		for (int i= 0; i<stockList.size(); i++)
 		{
 			int quantity=0;
-			for (int j= 0; j< stockList.size(); j++)
+			for (int j= i; j< stockList.size(); j++)
 			{
 				boolean inMap =stockLevels.containsKey(stockList.get(i).getName());
-				if (inMap)
+				if(inMap && j==i)
 				{
-					j=stockList.size();
+					j= stockList.size();
 				}
-				else if (stockList.get(i).getName().equals((stockList.get(j).getName())))
+				else if (stockList.get(i).getName().equals(stockList.get(j).getName()) )
 				{
-					quantity+=stockList.get(j).getQuantity();
-				}
-				
-				if (!inMap && !(j+1< stockLevels.size()))
-				{
+					quantity= quantity + stockList.get(j).getQuantity();
 					stockLevels.put(stockList.get(i).getName(), quantity);
-				}		
+				}
+
 			}
 		}
-		
-		System.out.println("Stock Levels\n*********************************");
-		for(Map.Entry<String, Integer > current : stockLevels.entrySet()) 
-		{
-		    System.out.println(current.getKey()+": "+ current.getValue());
-		}
-		System.out.println("\n*********************************");
-
+		return stockLevels;
 	}
-
 	
 }
