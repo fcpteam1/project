@@ -1,11 +1,12 @@
 import static org.junit.Assert.*;
+import model.User;
 
 import org.junit.Before;
 import org.junit.Test;
 
 
 public class UserTest {
-	User user = new User("flynnshane26","obliterated",2134,true);
+	User user = new User("flynnshane26","obliterated", true);
 	
 	@Before
 	public void setUp() throws Exception {
@@ -36,12 +37,6 @@ public class UserTest {
 	@Test
 	public void testGetId() {
 		assertEquals(2134, user.getId());
-	}
-
-	@Test
-	public void testSetId() {
-		user.setId(2222);
-		assertEquals(2222,user.getId());
 	}
 
 	@Test

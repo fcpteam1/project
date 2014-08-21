@@ -1,7 +1,12 @@
+package model;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+
+import GUI.UserFormEvent;
+import GUI.UserFormPanel;
+import GUI.UserTableModel;
 
 public class Shop {
 	
@@ -11,18 +16,44 @@ public class Shop {
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 	private String username, password, choice,customerName,customerNumber,customerAddress;
-	private int customerId;
+	private int customerId,tableIndex;
 	private Scanner input = new Scanner(System.in);
 	private Scanner input2 = new Scanner(System.in);
 	private Scanner input3 = new Scanner(System.in);
+	
+	private UserFormPanel formPanel ;
 	
 	boolean loopAuthentication = true;
 	boolean adminRunning;
 	boolean userRunning;
 	boolean loginCorrect;
 	boolean createCustomerRun = true;
+	
+	private String editUserUsername;
+	public String getEditUserUsername() {
+		return editUserUsername;
+	}
 
+	public void setEditUserUsername(String editUserUsername) {
+		this.editUserUsername = editUserUsername;
+	}
+
+	public String getEditUserPassword() {
+		return editUserPassword;
+	}
+
+	public void setEditUserPassword(String editUserPassword) {
+		this.editUserPassword = editUserPassword;
+	}
+
+	private String editUserPassword;
+
+	private static Shop ShopInstance=null;
+	
+	
 	public Shop() throws IOException{
+		
+		formPanel = new UserFormPanel();
 		
 		loadCustomers("CustomerList");
 		loadUsers("UserList");
@@ -38,6 +69,16 @@ public class Shop {
 			//checkLogin();
 			//mainMenu();
 	
+	}
+	
+	public static Shop getInstance() throws IOException{
+		
+		if(ShopInstance==null){
+			ShopInstance=new Shop();
+		
+		}
+		
+		return ShopInstance;
 	}
 	
 	public void loadSuppliers(String SuppliersProductFiles,String SupplierListFile)throws IOException {
@@ -81,7 +122,7 @@ public class Shop {
 				String username = in.next();
 				String password = in.next();
 				boolean admin = in.nextBoolean();
-				User user = new User(username, password, id, admin);
+				User user = new User(username, password, admin);
 				users.add(user);	
 			}
 		in.close();
@@ -273,9 +314,9 @@ public class Shop {
 			System.out.println("\nIs user an admin ( Y or N )");
 			admin=input.next();
 			if(admin.charAt(0)=='y')
-				users.add(new User(username,password,123,true));
+				users.add(new User(username,password,true));
 			else
-				users.add(new User(username,password,123,false));
+				users.add(new User(username,password,false));
 		}
 		else
 			System.out.println("\nPasswords don't match");
@@ -723,17 +764,81 @@ public class Shop {
 		
 	}
 	
-	
-	
-	
 	public ArrayList<User> getUsers(){
-		
 		return users;
 	}
 	
-	public ArrayList<Supplier> getSuppliers(){
+	public void addUser(UserFormEvent e) {
+		String username = e.getUsername();
+		String password = e.getPassword();
+		String id = e.getId();
+		Boolean admin = e.getAdmin();
+		
+		User user = new User(username, password, admin);
+				
+		users.add(user);
+	}
+	
+	public void removeUser(int index) {
+		users.remove(index);
+		int newCount = 0;
+		for (User user : users){
+			newCount++;
+			user.setId(newCount);
+		}
+	}
+	
+	public void editUser(int index) {
+		this.tableIndex = index;
+		for (User user: users){
+			if(user.getId() == (index)){
+				editUserUsername = user.getUsername();
+				editUserPassword = user.getPassword();
+			}
+		}
+	}
+	
+	public void NewEditUser(UserFormEvent ee) {
+		String username = ee.getUsername();
+		String password = ee.getPassword();
+		int id = tableIndex;
+		Boolean admin = ee.getAdmin();
+		
+		for (User user: users){
+			if(user.getId() == (tableIndex)){
+				user.setUsername(username);
+				user.setPassword(password);
+				user.setId(id);
+				user.setAdmin(admin);
+				
+				System.out.println(username + password + id + admin);
+			}
+		}
+	}
+
+	
+	public void sendEditUsername(){
+		formPanel.setEditDataUsername(editUserUsername);
+	}
+	
+	public void sendEditPassword(String editUserPassword){
+		formPanel.setEditDataPassword(editUserPassword);
+	}
+	
+	public ArrayList<Supplier> getSuppliers() {
 		return suppliers;
 	}
 
+	public void setSuppliers(ArrayList<Supplier> suppliers) {
+		this.suppliers = suppliers;
+	}
+
+	public ArrayList<Customer> getCustomers() {
+		return customers;
+	}
+	
+	
+	
+	
 }
 
