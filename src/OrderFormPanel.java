@@ -17,13 +17,10 @@ import javax.swing.border.Border;
 
 public class OrderFormPanel extends JPanel {
 
-	private JButton viewButton;
-	private JButton createButton;
-	private JButton editButton;
-	private JButton deleteButton;
 	private JLabel supplierLabel;
 	private JComboBox supplierCombo;
 	private JButton selectButton;
+	private JButton orderButton;
 	private OrderFormListener formListener;
 	private Controller controller;
 	private ArrayList<Order> orders;
@@ -72,7 +69,6 @@ public class OrderFormPanel extends JPanel {
 		Border innerBorder = BorderFactory.createTitledBorder("View Orders");
 		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-		System.out.println("In view panel.");
 	}
 	
 	public void createFormPanel(){
@@ -82,7 +78,6 @@ public class OrderFormPanel extends JPanel {
 		Border innerBorder = BorderFactory.createTitledBorder("Create Order");
 		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-		System.out.println("In create panel.");
 		supplierLabel = new JLabel("Supplier: ");
 		supplierCombo = new JComboBox();
 		selectButton = new JButton("Select");
@@ -147,6 +142,7 @@ public class OrderFormPanel extends JPanel {
 	}
 	
 	public void addProductSelect(OrderFormEvent ev){
+		this.removeAll();
 		Supplier thisSupplier = ev.getSupplier();
 		products = thisSupplier.getProducts();
 		Dimension dim = getPreferredSize();
@@ -189,8 +185,9 @@ public class OrderFormPanel extends JPanel {
 		gc.gridx = 1;
 		gc.insets = new Insets(0,0,0,0);
 		gc.anchor = GridBagConstraints.LINE_START;
-		add(selectButton, gc);
-		
+		add(orderButton, gc);
+		this.validate();
+		this.repaint();
 	}
 	
 	public void editFormPanel(){
@@ -200,7 +197,6 @@ public class OrderFormPanel extends JPanel {
 		Border innerBorder = BorderFactory.createTitledBorder("Edit Order");
 		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-		System.out.println("In edit panel.");
 	}
 	
 	public void deleteFormPanel(){
@@ -210,8 +206,16 @@ public class OrderFormPanel extends JPanel {
 		Border innerBorder = BorderFactory.createTitledBorder("Cancel Order");
 		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-		System.out.println("In delete panel.");
 	}	
+	
+	public void processFormPanel(){
+		Dimension dim = getPreferredSize();
+		dim.width = 300;
+		setPreferredSize(dim);
+		Border innerBorder = BorderFactory.createTitledBorder("Process Deliveryt");
+		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+	}
 	
 	public void setFormListener(OrderFormListener formListener) {
 		this.formListener = formListener;

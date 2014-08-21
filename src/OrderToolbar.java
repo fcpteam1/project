@@ -14,6 +14,7 @@ public class OrderToolbar extends JPanel implements ActionListener{
 	private JButton createButton;
 	private JButton editButton;
 	private JButton deleteButton;
+	private JButton processButton;
 	private OrderFormPanel mainPanel;
 	
 	public OrderToolbar(){
@@ -22,11 +23,13 @@ public class OrderToolbar extends JPanel implements ActionListener{
 		createButton = new JButton("Create Order\n");
 		editButton = new JButton("Edit Order\n");
 		deleteButton = new JButton("Delete Order\n");
+		processButton = new JButton("Process Order\n");
 		
 		viewButton.addActionListener(this);
 		createButton.addActionListener(this);
 		editButton.addActionListener(this);
 		deleteButton.addActionListener(this);
+		processButton.addActionListener(this);
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
@@ -34,6 +37,7 @@ public class OrderToolbar extends JPanel implements ActionListener{
 		add(createButton);
 		add(editButton);
 		add(deleteButton);
+		add(processButton);
 		
 	}
 	
@@ -65,6 +69,12 @@ public class OrderToolbar extends JPanel implements ActionListener{
 		else if(clicked==deleteButton){
 			mainPanel.removeAll();
 			mainPanel.deleteFormPanel();
+			mainPanel.validate();
+			mainPanel.repaint();
+		}
+		else if(clicked==processButton){
+			mainPanel.removeAll();
+			mainPanel.processFormPanel();
 			mainPanel.validate();
 			mainPanel.repaint();
 		}

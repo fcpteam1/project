@@ -22,9 +22,7 @@ public class OrderMainPanel extends JPanel {
 		model = new Model();
 		
 		orderToolbar.setMainPanel(orderFormPanel);
-		
-		
-	
+
 		orderTablePanel.setData(model.getShop().getOrders(), model.getShop().getSuppliers());
 		orderFormPanel.setData(model.getShop().getOrders(), model.getShop().getSuppliers());
 		
