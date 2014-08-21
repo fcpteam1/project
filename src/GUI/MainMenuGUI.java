@@ -17,10 +17,9 @@ public class MainMenuGUI {
 	
 	private CustomerGUI customerTab;
 	private UserMainPanel userTab;
-
 	private OrderMainPanel orderTab;
-
 	private SupplierGUI supplierTab;
+	private StockGUI stockTab;
 	
 public MainMenuGUI() throws IOException{
 		
@@ -35,11 +34,13 @@ public MainMenuGUI() throws IOException{
 		userTab=new UserMainPanel();
 		supplierTab = new SupplierGUI();
 		orderTab = new OrderMainPanel();
+		stockTab = new StockGUI();
 		
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
 		tabbedPane.addTab("Supplier",supplierTab.getMain());
 		tabbedPane.addTab("Orders", orderTab.getPanel());
+		tabbedPane.addTab("Stock", stockTab.getPanel());
 	
 		c.gridx=0;
 		c.gridy=0;
@@ -68,6 +69,10 @@ public MainMenuGUI() throws IOException{
 		
 	}
 	
+	public StockGUI getStockTab() {
+	return stockTab;
+	}
+
 	public JPanel getPanel(){
 		
 		return framePanel;

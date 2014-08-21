@@ -1,12 +1,12 @@
 package model;
+import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import GUI.OrderFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
+import GUI.UserTableModel;
 
 public class Shop {
 	
@@ -198,6 +198,7 @@ public class Shop {
 				break;
 			}else if(choice.equals("6")){
 				System.out.println("Sales Selected\n");
+				saleMenu();
 				break;
 			}else if(choice.equals("7")){
 				System.out.println("Invoices Selected\n");
@@ -237,6 +238,7 @@ public class Shop {
 				break;
 			}else if(choice.equals("5")){
 				System.out.println("Sales Selected");
+				saleMenu();
 				break;
 			}else if(choice.equals("6")){
 				System.out.println("Logout Selected");
@@ -682,6 +684,15 @@ public class Shop {
 			case(1):
 				createOrder();
 				break;
+			case(2):
+				viewOrders();
+				break;
+			case(3):
+				editOrder();
+				break;
+			case(4):
+				deleteOrder();
+				break;
 			case(5):
 				run = false;
 			}
@@ -733,7 +744,25 @@ public class Shop {
 		Order order = new Order(orders.size()+1, orderList, currentSupplier);
 		orders.add(order);
 	}
+	//TODO Darren
+	public void viewOrders(){
+		
+	}
 
+	//TODO Darren
+	public void editOrder(){
+		
+	}
+	
+	//TODO Darren
+	public void deleteOrder(){
+		
+	}
+	
+	//TODO Darren
+	public void saleMenu(){
+		
+	}
 	
 	public ArrayList<User> getUsers(){
 		return users;
@@ -788,6 +817,18 @@ public class Shop {
 	}
 
 	
+	public ArrayList<Order> getOrders() {
+		return orders;
+	}
+	
+	public ArrayList<Stock> getStock() {
+		return stocks;
+	}
+
+	public void setOrders(ArrayList<Order> orders) {
+		this.orders = orders;
+	}
+
 	public void sendEditUsername(){
 		formPanel.setEditDataUsername(editUserUsername);
 	}
@@ -808,35 +849,6 @@ public class Shop {
 		return customers;
 	}
 	
-	public void createOrder(OrderFormEvent e){
-		int id = e.getId();
-		ArrayList<Product> products = e.getProducts();
-		Supplier supplier = e.getSupplier();
-		Order order = new Order(id, products, supplier);
-		orders.add(order);
-	}
-	
-	public void viewOrders(OrderFormEvent e){
-		
-	}
-
-	public void editOrder(OrderFormEvent e){
-		
-	}
-	
-	public void deleteOrder(OrderFormEvent e){
-		
-	}
-
-
-	public ArrayList<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(ArrayList<Order> orders) {
-		this.orders = orders;
-	}
-
 	
 	
 	
