@@ -36,6 +36,27 @@ public class OrderMainPanel extends JPanel {
 				orderTablePanel.refresh();
 				model.getShop().viewOrders(e);
 			}
+
+			@Override
+			public void editOrderOccurred(OrderFormEvent e) {
+				model.getShop().editOrder(e);
+				orderTablePanel.refresh();
+				model.getShop().viewOrders(e);
+			}
+
+			@Override
+			public void deleteOrderOccurred(OrderFormEvent e) {
+				model.getShop().deleteOrder(e);
+				orderTablePanel.refresh();
+				model.getShop().viewOrders(e);
+			}
+
+			@Override
+			public void processOrderOccurred(OrderFormEvent e) {
+				model.getShop().processOrder(e);
+				orderTablePanel.refresh();
+				model.getShop().viewOrders(e);
+			}
 			
 		});
 		

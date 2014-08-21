@@ -776,6 +776,10 @@ public class Shop {
 		
 	}
 
+	public void processOrder(OrderFormEvent e){
+		
+	}
+	
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
