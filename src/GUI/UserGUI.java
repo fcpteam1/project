@@ -1,3 +1,4 @@
+/*package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -866,4 +867,15 @@ public class UserGUI {
 	public void setDeleteSearchButton(JButton deleteSearchButton) {
 		this.deleteSearchButton = deleteSearchButton;
 	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
 }
+*/

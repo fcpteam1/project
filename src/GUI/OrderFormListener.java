@@ -1,3 +1,4 @@
+package GUI;
 import java.util.EventListener;
 
 public interface OrderFormListener extends EventListener {

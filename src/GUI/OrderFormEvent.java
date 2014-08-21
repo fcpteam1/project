@@ -1,5 +1,9 @@
+package GUI;
 import java.util.ArrayList;
 import java.util.EventObject;
+
+import model.Product;
+import model.Supplier;
 
 public class OrderFormEvent extends EventObject {
 

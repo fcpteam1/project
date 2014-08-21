@@ -1,3 +1,4 @@
+package model;
 import java.io.IOException;
 
 public class Model {
@@ -6,7 +7,7 @@ public class Model {
 	
 	public Model() throws IOException {
 		// TODO Auto-generated constructor stub
-		shop=new Shop();
+		shop=Shop.getInstance();
 		
 	}
 

@@ -1,3 +1,4 @@
+package GUI;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,6 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import model.Order;
+import model.Product;
+import model.Supplier;
+
 public class OrderFormPanel extends JPanel {
 
 	private JLabel supplierLabel;
@@ -22,7 +27,6 @@ public class OrderFormPanel extends JPanel {
 	private JButton selectButton;
 	private JButton orderButton;
 	private OrderFormListener formListener;
-	private Controller controller;
 	private ArrayList<Order> orders;
 	private ArrayList<Supplier> suppliers;
 	private ArrayList<Product> products;

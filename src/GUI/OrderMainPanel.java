@@ -1,8 +1,10 @@
+package GUI;
 import java.awt.BorderLayout;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import model.Model;
 
 public class OrderMainPanel extends JPanel {	
 	private JPanel mainPanel;

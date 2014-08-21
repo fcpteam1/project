@@ -1,12 +1,13 @@
-
+package model;
 import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.IOException;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+
+import GUI.LoginGUI;
+import GUI.MainMenuGUI;
+import GUI.UserFormPanel;
 
 public class View extends JFrame {
 
@@ -15,8 +16,9 @@ public class View extends JFrame {
 	
 	private LoginGUI login;
 	private MainMenuGUI mainmenu;
+	private UserFormPanel formPanel;
 	
-	public View() {
+	public View() throws IOException {
 		// TODO Auto-generated constructor stub
 		
 		setSize(600,500);
@@ -26,6 +28,7 @@ public class View extends JFrame {
 		
 		login=new LoginGUI();
 		mainmenu=new MainMenuGUI();
+		formPanel=new UserFormPanel();
 		
 		thisContainer.add(login.getPanel());
 		pack();
@@ -50,7 +53,8 @@ public class View extends JFrame {
 		this.thisContainer = thisContainer;
 	}
 
-	public LoginGUI getLogin() {
+	public LoginGUI getLogin(){
+		formPanel.removeAll();
 		return login;
 	}
 

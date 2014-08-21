@@ -1,6 +1,10 @@
+package GUI;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
+
+import model.Order;
+import model.Supplier;
 
 
 public class OrderTableModel extends AbstractTableModel {

@@ -1,9 +1,14 @@
- import java.util.ArrayList;
+package model;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ShopNoGUI {
+import GUI.OrderFormEvent;
+import GUI.UserFormEvent;
+import GUI.UserFormPanel;
+
+public class Shop {
 	
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private ArrayList<Stock> stocks = new ArrayList<Stock>();
@@ -11,36 +16,69 @@ public class ShopNoGUI {
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 	private String username, password, choice,customerName,customerNumber,customerAddress;
-	private int customerId;
+	private int customerId,tableIndex;
 	private Scanner input = new Scanner(System.in);
 	private Scanner input2 = new Scanner(System.in);
 	private Scanner input3 = new Scanner(System.in);
+	
+	private UserFormPanel formPanel ;
 	
 	boolean loopAuthentication = true;
 	boolean adminRunning;
 	boolean userRunning;
 	boolean loginCorrect;
 	boolean createCustomerRun = true;
+	
+	private String editUserUsername;
+	public String getEditUserUsername() {
+		return editUserUsername;
+	}
 
-	public ShopNoGUI() throws IOException{
-					
+	public void setEditUserUsername(String editUserUsername) {
+		this.editUserUsername = editUserUsername;
+	}
+
+	public String getEditUserPassword() {
+		return editUserPassword;
+	}
+
+	public void setEditUserPassword(String editUserPassword) {
+		this.editUserPassword = editUserPassword;
+	}
+
+	private String editUserPassword;
+
+	private static Shop ShopInstance=null;
+	
+	
+	public Shop() throws IOException{
+		
+		formPanel = new UserFormPanel();
+		
 		loadCustomers("CustomerList");
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
-		loadStock("StockList");
-		/*	Print out to check arraylists full	
+				
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
 		for (User u : users)
 		System.out.println((u.getUsername() + ", " + u.getId()));
 		for (Supplier s : suppliers)
-		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());
-		for (Stock s: stocks)
-		System.out.println(s.getName() + " Quantity: " + s.getQuantity());
-		*/
-			checkLogin();
-			mainMenu();
+		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
 	
+			//checkLogin();
+			//mainMenu();
+	
+	}
+	
+	public static Shop getInstance() throws IOException{
+		
+		if(ShopInstance==null){
+			ShopInstance=new Shop();
+		
+		}
+		
+		return ShopInstance;
 	}
 	
 	public void loadSuppliers(String SuppliersProductFiles,String SupplierListFile)throws IOException {
@@ -84,7 +122,7 @@ public class ShopNoGUI {
 				String username = in.next();
 				String password = in.next();
 				boolean admin = in.nextBoolean();
-				User user = new User(username, password, id, admin);
+				User user = new User(username, password, admin);
 				users.add(user);	
 			}
 		in.close();
@@ -102,19 +140,6 @@ public class ShopNoGUI {
 			customers.add(customer);
 			}
 	in.close();
-	}
-	
-	public void loadStock(String fileName) throws IOException {
-		
-	Scanner in= new Scanner(new File(fileName));
-		while(in.hasNext()) {
-			String name = in.next();
-			double supplierPrice = in.nextDouble();
-			int quantity = in.nextInt();
-			double customerPrice = in.nextDouble();
-			Stock stock = new Stock(name, supplierPrice, quantity, customerPrice);
-			stocks.add(stock);
-		}
 	}
 	
 	public void checkLogin(){
@@ -287,9 +312,9 @@ public class ShopNoGUI {
 			System.out.println("\nIs user an admin ( Y or N )");
 			admin=input.next();
 			if(admin.charAt(0)=='y')
-				users.add(new User(username,password,123,true));
+				users.add(new User(username,password,true));
 			else
-				users.add(new User(username,password,123,false));
+				users.add(new User(username,password,false));
 		}
 		else
 			System.out.println("\nPasswords don't match");
@@ -488,8 +513,6 @@ public class ShopNoGUI {
 		System.out.println("\nWhich supplier product list would you like");
 		supName=input.next();
 		
-		
-		
 		for(Supplier supplier : suppliers){
 			
 			if(supplier.getName().equals(supName)){
@@ -515,12 +538,12 @@ public class ShopNoGUI {
 	public void createNewCustomer(){
 		System.out.println("Please enter customer name: ");
 		customerName = input.nextLine();
-		System.out.println("Please enter  ");
-		customerName = input.nextLine();
-		System.out.println("Please enter Customer name: ");
-		customerName = input.nextLine();
-		System.out.println("Please enter Customer name: ");
-		customerName = input.nextLine();
+		System.out.println("Please enter customer id: ");
+		customerId = input.nextInt();
+		System.out.println("Please enter Customer number: ");
+		customerNumber = input2.nextLine();
+		System.out.println("Please enter Customer address: ");
+		customerAddress = input3.nextLine();
 		
 		int customerSize = customers.size();
 		int size = 1;
@@ -651,7 +674,7 @@ public class ShopNoGUI {
 		
 		while(run){	
 			while( (choice!=1) && (choice!=2) && (choice!=3)){
-				System.out.println("(1) Create Order\n (2) View Orders\n(3) Edit Order\n(4) Delete Order\n(5) Receive Order (6)Exit\n");
+				System.out.println("(1) Create Order\n (2) View Orders\n(3) Edit Order\n(4) Delete Order\n(5) Exit\n");
 				choice=input.nextInt();
 			}
 			
@@ -660,9 +683,6 @@ public class ShopNoGUI {
 				createOrder();
 				break;
 			case(5):
-				receiveOrder();
-				break;
-			case(6):
 				run = false;
 			}
 		}
@@ -713,33 +733,112 @@ public class ShopNoGUI {
 		Order order = new Order(orders.size()+1, orderList, currentSupplier);
 		orders.add(order);
 	}
+
 	
-	public void receiveOrder() {
-		
-		int id;
-		
-		System.out.println("Please enter the order number: ");
-		
-		id = input.nextInt();
+	public ArrayList<User> getUsers(){
+		return users;
+	}
 	
-		for (Order order: orders) {
-			if (order.getId() == id) {
+	public void addUser(UserFormEvent e) {
+		String username = e.getUsername();
+		String password = e.getPassword();
+		String id = e.getId();
+		Boolean admin = e.getAdmin();
+		
+		User user = new User(username, password, admin);
 				
-				order.setCurrent(false);
+		users.add(user);
+	}
+	
+	public void removeUser(int index) {
+		users.remove(index);
+		int newCount = 0;
+		for (User user : users){
+			newCount++;
+			user.setId(newCount);
+		}
+	}
+	
+	public void editUser(int index) {
+		this.tableIndex = index;
+		for (User user: users){
+			if(user.getId() == (index)){
+				editUserUsername = user.getUsername();
+				editUserPassword = user.getPassword();
+			}
+		}
+	}
+	
+	public void NewEditUser(UserFormEvent ee) {
+		String username = ee.getUsername();
+		String password = ee.getPassword();
+		int id = tableIndex;
+		Boolean admin = ee.getAdmin();
+		
+		for (User user: users){
+			if(user.getId() == (tableIndex)){
+				user.setUsername(username);
+				user.setPassword(password);
+				user.setId(id);
+				user.setAdmin(admin);
 				
-				for (Product product: orders.get(id).getProducts()) {
-					
-					stocks.add(new Stock(product.getName(),product.getSupplierPrice(),product.getQuantity()));
-				}	
-			}	
-		}	
+				System.out.println(username + password + id + admin);
+			}
+		}
 	}
 
-		
-	public static void main(String[] args) throws IOException {
-		new ShopNoGUI();
+	
+	public void sendEditUsername(){
+		formPanel.setEditDataUsername(editUserUsername);
+	}
+	
+	public void sendEditPassword(String editUserPassword){
+		formPanel.setEditDataPassword(editUserPassword);
+	}
+	
+	public ArrayList<Supplier> getSuppliers() {
+		return suppliers;
 	}
 
+	public void setSuppliers(ArrayList<Supplier> suppliers) {
+		this.suppliers = suppliers;
+	}
+
+	public ArrayList<Customer> getCustomers() {
+		return customers;
+	}
+	
+	public void createOrder(OrderFormEvent e){
+		int id = e.getId();
+		ArrayList<Product> products = e.getProducts();
+		Supplier supplier = e.getSupplier();
+		Order order = new Order(id, products, supplier);
+		orders.add(order);
+	}
+	
+	public void viewOrders(OrderFormEvent e){
+		
+	}
+
+	public void editOrder(OrderFormEvent e){
+		
+	}
+	
+	public void deleteOrder(OrderFormEvent e){
+		
+	}
+
+
+	public ArrayList<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(ArrayList<Order> orders) {
+		this.orders = orders;
+	}
+
+	
 	
 	
 }
+

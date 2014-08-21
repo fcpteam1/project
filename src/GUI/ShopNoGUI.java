@@ -1,9 +1,10 @@
-import java.util.ArrayList;
+package GUI;
+/*import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Shop {
+public class ShopNoGUI {
 	
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private ArrayList<Stock> stocks = new ArrayList<Stock>();
@@ -15,26 +16,29 @@ public class Shop {
 	private Scanner input = new Scanner(System.in);
 	private Scanner input2 = new Scanner(System.in);
 	private Scanner input3 = new Scanner(System.in);
-
+	
 	boolean loopAuthentication = true;
 	boolean adminRunning;
 	boolean userRunning;
 	boolean loginCorrect;
 	boolean createCustomerRun = true;
 
-	public Shop() throws IOException{
-		
+	public ShopNoGUI() throws IOException{
+					
 		loadCustomers("CustomerList");
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
-				
+		loadStock("StockList");
+			Print out to check arraylists full	
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
 		for (User u : users)
 		System.out.println((u.getUsername() + ", " + u.getId()));
 		for (Supplier s : suppliers)
-		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
-	
+		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());
+		for (Stock s: stocks)
+		System.out.println(s.getName() + " Quantity: " + s.getQuantity());
+		
 			//checkLogin();
 			//mainMenu();
 	
@@ -101,6 +105,19 @@ public class Shop {
 	in.close();
 	}
 	
+	public void loadStock(String fileName) throws IOException {
+		
+	Scanner in= new Scanner(new File(fileName));
+		while(in.hasNext()) {
+			String name = in.next();
+			double supplierPrice = in.nextDouble();
+			int quantity = in.nextInt();
+			double customerPrice = in.nextDouble();
+			Stock stock = new Stock(name, supplierPrice, quantity, customerPrice);
+			stocks.add(stock);
+		}
+	}
+	
 	public void checkLogin(){
 		while(loopAuthentication == true){
 			System.out.println("\nPlease enter your Username: ");
@@ -153,9 +170,11 @@ public class Shop {
 				break;
 			}else if(choice.equals("5")){
 				System.out.println("Orders Selected\n");
+				orderMenu();
 				break;
 			}else if(choice.equals("6")){
 				System.out.println("Sales Selected\n");
+				saleMenu();
 				break;
 			}else if(choice.equals("7")){
 				System.out.println("Invoices Selected\n");
@@ -195,6 +214,7 @@ public class Shop {
 				break;
 			}else if(choice.equals("5")){
 				System.out.println("Sales Selected");
+				saleMenu();
 				break;
 			}else if(choice.equals("6")){
 				System.out.println("Logout Selected");
@@ -206,6 +226,7 @@ public class Shop {
 			}
 		}
 	}
+	
 	
 	public void AdminUserMenu(){
 		
@@ -470,6 +491,8 @@ public class Shop {
 		System.out.println("\nWhich supplier product list would you like");
 		supName=input.next();
 		
+		
+		
 		for(Supplier supplier : suppliers){
 			
 			if(supplier.getName().equals(supName)){
@@ -495,12 +518,12 @@ public class Shop {
 	public void createNewCustomer(){
 		System.out.println("Please enter customer name: ");
 		customerName = input.nextLine();
-		System.out.println("Please enter customer id: ");
-		customerId = input.nextInt();
-		System.out.println("Please enter Customer number: ");
-		customerNumber = input2.nextLine();
-		System.out.println("Please enter Customer address: ");
-		customerAddress = input3.nextLine();
+		System.out.println("Please enter  ");
+		customerName = input.nextLine();
+		System.out.println("Please enter Customer name: ");
+		customerName = input.nextLine();
+		System.out.println("Please enter Customer name: ");
+		customerName = input.nextLine();
 		
 		int customerSize = customers.size();
 		int size = 1;
@@ -625,46 +648,130 @@ public class Shop {
 		return true;
 	}
 	
-	public void createOrder(OrderFormEvent e){
-		int id = e.getId();
-		ArrayList<Product> products = e.getProducts();
-		Supplier supplier = e.getSupplier();
-		Order order = new Order(id, products, supplier);
+	public void orderMenu(){
+		int choice = 0;
+		boolean run = true;
+		
+		while(run){	
+			while( (choice!=1) && (choice!=2) && (choice!=3)){
+				System.out.println("(1) Create Order\n (2) View Orders\n(3) Edit Order\n(4) Delete Order\n(5) Receive Order (6)Exit\n");
+				choice=input.nextInt();
+			}
+			
+			switch(choice){
+			case(1):
+				createOrder();
+				break;
+			case(2):
+				viewOrders();
+				break;
+			case(3):
+				editOrder();
+				break;
+			case(4):
+				deleteOrder();
+				break;
+			case(5):
+				receiveOrder();
+				break;
+			case(6):
+				run = false;
+			}
+		}
+	}
+	
+	public void createOrder(){
+		int id = 0;
+		boolean found = false;
+		boolean run = true;
+		boolean selecting = true;
+		String choice = "";
+		ArrayList<Product> orderList = new ArrayList<Product>();
+		Supplier currentSupplier = new Supplier();
+
+		while(run){	
+			System.out.println("Please enter supplier id: ");
+			id = input.nextInt();
+			for(Supplier supplier: suppliers){
+				if(supplier.getId()==id){
+					currentSupplier = supplier;
+					found = true;
+					break;
+				}
+			}
+			if(found){
+				while(selecting){
+					System.out.println("Please enter product name from list:");
+					for(Product product: currentSupplier.getProducts()){
+						System.out.println(product.getName() + product.getSupplierPrice() + "\n");
+					}
+					System.out.println("Enter 0 when finished.");
+					choice = input.next();
+					if(choice.equals("0")){
+						run = false;
+						selecting = false;
+						break;
+					}
+					System.out.println("Please enter quantity:");
+					int amount = input.nextInt();
+					for(Product product: currentSupplier.getProducts()){
+						if(product.getName().equals(choice)){
+							orderList.add(new Product(product.getName(), product.getSupplierPrice(), amount));
+						}
+					}
+				}
+			}
+		}
+		Order order = new Order(orders.size()+1, orderList, currentSupplier);
 		orders.add(order);
 	}
 	
-	public void viewOrders(OrderFormEvent e){
+	public void receiveOrder() {
+		
+		int id;
+		
+		System.out.println("Please enter the order number: ");
+		
+		id = input.nextInt();
+	
+		for (Order order: orders) {
+			if (order.getId() == id) {
+				
+				order.setCurrent(false);
+				
+				for (Product product: orders.get(id).getProducts()) {
+					
+					stocks.add(new Stock(product.getName(),product.getSupplierPrice(),product.getQuantity()));
+				}	
+			}	
+		}	
+	}
+	//TODO Darren
+	public void viewOrders(){
 		
 	}
 
-	public void editOrder(OrderFormEvent e){
+	//TODO Darren
+	public void editOrder(){
 		
 	}
 	
-	public void deleteOrder(OrderFormEvent e){
+	//TODO Darren
+	public void deleteOrder(){
 		
-	}
-		
-	public ArrayList<User> getUsers(){
-		
-		return users;
 	}
 	
-	public ArrayList<Supplier> getSuppliers(){
-		return suppliers;
+	//TODO Darren
+	public void saleMenu(){
+		
 	}
 
-	public ArrayList<Order> getOrders() {
-		return orders;
+		
+	public static void main(String[] args) throws IOException {
+		new ShopNoGUI();
 	}
 
-	public void setOrders(ArrayList<Order> orders) {
-		this.orders = orders;
-	}
-
-	public void setSuppliers(ArrayList<Supplier> suppliers) {
-		this.suppliers = suppliers;
-	}
+	
 	
 }
-
+*/
