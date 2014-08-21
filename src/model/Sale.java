@@ -1,3 +1,4 @@
+package model;
 import java.util.ArrayList;
 
 public class Sale extends Invoice{

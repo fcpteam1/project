@@ -4,17 +4,17 @@ public class Supplier {
 
 	private String name;
 	private int id;
-	ArrayList<Product> products = new ArrayList<Product>();
+	ArrayList<Stock> stocks = new ArrayList<Stock>();
 	
 	public Supplier(){
 		this.name = "";
 		this.id = 0;
 	}
 	
-	public Supplier(String name, int id, ArrayList<Product> products){
+	public Supplier(String name, int id, ArrayList<Stock> stocks){
 		this.name = name;
 		this.id = id;
-		this.products = products;
+		this.stocks= stocks;
 	}
 
 	public String getName() {
@@ -33,20 +33,20 @@ public class Supplier {
 		this.id = id;
 	}
 
-	public ArrayList<Product> getProducts() {
-		return products;
+	public ArrayList<Stock> getStocks() {
+		return stocks;
 	}
 
-	public void setProducts(ArrayList<Product> products) {
-		this.products = products;
+	public void setStocks(ArrayList<Stock> stockd) {
+		this.stocks = stocks;
 	}
 	
-	public boolean checkPrice (Product product, double minPrice)
+	public boolean checkPrice (Stock stock, double minPrice)
 	{
 		boolean priceLess = false;
-		for (Product test:products)
+		for (Stock test:stocks)
 		{
-			if (test.getName().equals(product.getName())&& 
+			if (test.getName().equals(stock.getName())&& 
 					test.getSupplierPrice()<minPrice)
 			{
 				priceLess= true;

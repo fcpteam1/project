@@ -1,4 +1,6 @@
 import static org.junit.Assert.assertEquals;
+import model.Invoice;
+
 import org.junit.Before;
 import org.junit.Test;
 

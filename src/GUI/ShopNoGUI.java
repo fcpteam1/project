@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+package GUI;
+/*import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -28,7 +29,7 @@ public class ShopNoGUI {
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
 		loadStock("StockList");
-		/*	Print out to check arraylists full	
+			Print out to check arraylists full	
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
 		for (User u : users)
@@ -37,7 +38,7 @@ public class ShopNoGUI {
 		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());
 		for (Stock s: stocks)
 		System.out.println(s.getName() + " Quantity: " + s.getQuantity());
-		*/
+		
 			//checkLogin();
 			//mainMenu();
 	
@@ -773,3 +774,4 @@ public class ShopNoGUI {
 	
 	
 }
+*/
