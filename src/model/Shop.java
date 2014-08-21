@@ -730,7 +730,7 @@ public class Shop {
 				}
 			}
 		}
-		Order order = new Order(orders.size()+1, orderList, currentSupplier);
+		Order order = new Order(orderList, currentSupplier);
 		orders.add(order);
 	}
 
@@ -809,10 +809,9 @@ public class Shop {
 	}
 	
 	public void createOrder(OrderFormEvent e){
-		int id = e.getId();
 		ArrayList<Product> products = e.getProducts();
 		Supplier supplier = e.getSupplier();
-		Order order = new Order(id, products, supplier);
+		Order order = new Order(products, supplier);
 		orders.add(order);
 	}
 	
@@ -827,7 +826,6 @@ public class Shop {
 	public void deleteOrder(OrderFormEvent e){
 		
 	}
-
 
 	public ArrayList<Order> getOrders() {
 		return orders;

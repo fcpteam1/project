@@ -10,8 +10,7 @@ import model.Supplier;
 public class OrderTableModel extends AbstractTableModel {
 	
 	private ArrayList<Order> orders;
-	private ArrayList<Supplier> suppliers;
-	private String[] columnNames = {"Product","Price", "Quantity"};
+	private String[] columnNames = {"ID","Supplier", "Total Price", "Ordered", "Delivered"};
 	
 	public OrderTableModel(){
 	}
@@ -23,7 +22,6 @@ public class OrderTableModel extends AbstractTableModel {
 
 	public void setData(ArrayList<Order> orders, ArrayList<Supplier> suppliers) {
 		this.orders = orders;
-		this.suppliers = suppliers;
 	}
 
 	@Override
@@ -33,20 +31,23 @@ public class OrderTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 3;
+		return 5;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Order order = orders.get(rowIndex); 
 		
 		switch(columnIndex) {
 		case 0:
-			return order.getProducts().get(rowIndex).getName();
+			return orders.get(rowIndex).getId();
 		case 1:
-			return order.getProducts().get(rowIndex).getSupplierPrice();
+			return orders.get(rowIndex).getSupplier().getName();
 		case 2:
-			return order.getProducts().get(rowIndex).getQuantity();
+			return orders.get(rowIndex).getTotalPrice();
+		case 3:
+			return orders.get(rowIndex).getDate();
+		case 4:
+			return !orders.get(rowIndex).isCurrent();
 		}
 		
 		return null;

@@ -13,6 +13,7 @@ public class OrderTablePanel extends JPanel {
 	
 	private JTable table;
 	private OrderTableModel tableModel;
+	private OrderFormPanel formPanel;
 	
 	public OrderTablePanel() {
 		
@@ -25,6 +26,10 @@ public class OrderTablePanel extends JPanel {
 	
 	}
 		
+	public void setFormPanel(OrderFormPanel formPanel){
+		this.formPanel = formPanel;
+	}
+	
 	public void setData(ArrayList<Order> orders, ArrayList<Supplier> suppliers) {
 		tableModel.setData(orders, suppliers);
 	}
