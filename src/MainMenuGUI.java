@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -19,7 +20,7 @@ public class MainMenuGUI {
 	
 	private CustomerGUI customerTab;
 	private UserGUI userTab;
-	private OrderGUI orderTab;
+	private OrderMainPanel orderTab;
 	
 	public MainMenuGUI(){
 		
@@ -30,7 +31,12 @@ public class MainMenuGUI {
 		
 		customerTab=new CustomerGUI();
 		userTab=new UserGUI();
-		orderTab = new OrderGUI();
+		try {
+			orderTab = new OrderMainPanel();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
@@ -53,13 +59,13 @@ public class MainMenuGUI {
 	
 	
 	
-	public OrderGUI getOrderTab() {
+	public OrderMainPanel getOrderTab() {
 		return orderTab;
 	}
 
 
 
-	public void setOrderTab(OrderGUI orderTab) {
+	public void setOrderTab(OrderMainPanel orderTab) {
 		this.orderTab = orderTab;
 	}
 
