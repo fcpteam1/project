@@ -55,6 +55,7 @@ public class UserTablePanel extends JPanel {
 		removeItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
+				System.out.println("Row: " + row);
 				if(userTableListener != null) {
 					userTableListener.rowDeleted(row);
 				}

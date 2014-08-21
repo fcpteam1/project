@@ -248,9 +248,6 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getLogin().getSubmit().addActionListener(loginListener);
 		view.getMainmenu().getLogoutButton().addActionListener(logoutListener);
 		
-		view.getMainmenu().getUserTab();
-		view.getMainmenu().getUserTab().getPanel();
-		
 		view.getMainmenu().getSupplierTab().getSupplierButton().addActionListener(viewSupplier);
 		view.getMainmenu().getSupplierTab().getProductButton().addActionListener(viewProducts);
 		view.getMainmenu().getSupplierTab().getNext().addActionListener(nextSupplier);

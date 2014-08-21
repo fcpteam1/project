@@ -1,12 +1,13 @@
 package model;
+import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import GUI.OrderFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
+import GUI.UserTableModel;
 
 public class Shop {
 	
@@ -669,71 +670,8 @@ public class Shop {
 	}
 	
 	public void orderMenu(){
-		int choice = 0;
-		boolean run = true;
 		
-		while(run){	
-			while( (choice!=1) && (choice!=2) && (choice!=3)){
-				System.out.println("(1) Create Order\n (2) View Orders\n(3) Edit Order\n(4) Delete Order\n(5) Exit\n");
-				choice=input.nextInt();
-			}
-			
-			switch(choice){
-			case(1):
-				createOrder();
-				break;
-			case(5):
-				run = false;
-			}
-		}
 	}
-	
-	public void createOrder(){
-		int id = 0;
-		boolean found = false;
-		boolean run = true;
-		boolean selecting = true;
-		String choice = "";
-		ArrayList<Product> orderList = new ArrayList<Product>();
-		Supplier currentSupplier = new Supplier();
-
-		while(run){	
-			System.out.println("Please enter supplier id: ");
-			id = input.nextInt();
-			for(Supplier supplier: suppliers){
-				if(supplier.getId()==id){
-					currentSupplier = supplier;
-					found = true;
-					break;
-				}
-			}
-			if(found){
-				while(selecting){
-					System.out.println("Please enter product name from list:");
-					for(Product product: currentSupplier.getProducts()){
-						System.out.println(product.getName() + product.getSupplierPrice() + "\n");
-					}
-					System.out.println("Enter 0 when finished.");
-					choice = input.next();
-					if(choice.equals("0")){
-						run = false;
-						selecting = false;
-						break;
-					}
-					System.out.println("Please enter quantity:");
-					int amount = input.nextInt();
-					for(Product product: currentSupplier.getProducts()){
-						if(product.getName().equals(choice)){
-							orderList.add(new Product(product.getName(), product.getSupplierPrice(), amount));
-						}
-					}
-				}
-			}
-		}
-		Order order = new Order(orderList, currentSupplier);
-		orders.add(order);
-	}
-
 	
 	public ArrayList<User> getUsers(){
 		return users;
@@ -753,11 +691,13 @@ public class Shop {
 	public void removeUser(int index) {
 		users.remove(index);
 		int newCount = 0;
-		for (User user : users){
-			newCount++;
-			user.setId(newCount);
+		for(User user: users){
+			user.setId(newCount++);
+			System.out.println("username: " + user.getUsername() + "ID: " + user.getId());
+			
 		}
-	}
+		}
+	
 	
 	public void editUser(int index) {
 		this.tableIndex = index;
@@ -788,6 +728,15 @@ public class Shop {
 	}
 
 	
+	public ArrayList<Order> getOrders() {
+		return orders;
+	}
+	
+	public ArrayList<Stock> getStock() {
+		return stocks;
+	}
+
+
 	public void sendEditUsername(){
 		formPanel.setEditDataUsername(editUserUsername);
 	}
@@ -827,16 +776,9 @@ public class Shop {
 		
 	}
 
-	public ArrayList<Order> getOrders() {
-		return orders;
-	}
-
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
-
-	
-	
 	
 }
 
