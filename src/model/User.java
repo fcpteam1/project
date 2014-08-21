@@ -1,8 +1,16 @@
 package model;
 public class User {
 
-	private static int count = 0  ;
+	private static int count = 0;
 	
+	public static int getCount() {
+		return count;
+	}
+
+	public static void setCount(int count) {
+		User.count = count;
+	}
+
 	private String username;
 	private String password;
 	private int id;

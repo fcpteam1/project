@@ -782,11 +782,13 @@ public class Shop {
 	public void removeUser(int index) {
 		users.remove(index);
 		int newCount = 0;
-		for (User user : users){
-			newCount++;
-			user.setId(newCount);
+		for(User user: users){
+			user.setId(newCount++);
+			System.out.println("username: " + user.getUsername() + "ID: " + user.getId());
+			
 		}
-	}
+		}
+	
 	
 	public void editUser(int index) {
 		this.tableIndex = index;
