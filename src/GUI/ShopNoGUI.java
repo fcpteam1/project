@@ -1,5 +1,5 @@
+package GUI;
 /*import java.util.ArrayList;
-import java.io.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -16,7 +16,6 @@ public class ShopNoGUI {
 	private Scanner input = new Scanner(System.in);
 	private Scanner input2 = new Scanner(System.in);
 	private Scanner input3 = new Scanner(System.in);
-	private String userFile = "UserList2";
 	
 	boolean loopAuthentication = true;
 	boolean adminRunning;
@@ -30,7 +29,7 @@ public class ShopNoGUI {
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
 		loadStock("StockList");
-		//	Print out to check arraylists full	
+			Print out to check arraylists full	
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
 		for (User u : users)
@@ -40,8 +39,8 @@ public class ShopNoGUI {
 		for (Stock s: stocks)
 		System.out.println(s.getName() + " Quantity: " + s.getQuantity());
 		
-			checkLogin();
-			mainMenu();
+			//checkLogin();
+			//mainMenu();
 	
 	}
 	
@@ -79,13 +78,12 @@ public class ShopNoGUI {
 	}
 		
 	public void loadUsers(String fileName)throws IOException {
-	
+			
 		Scanner in= new Scanner(new File(fileName));
 			while(in.hasNext()){
-				
+				int id = in.nextInt();
 				String username = in.next();
 				String password = in.next();
-				int id = in.nextInt();
 				boolean admin = in.nextBoolean();
 				User user = new User(username, password, id, admin);
 				users.add(user);	
@@ -152,7 +150,7 @@ public class ShopNoGUI {
 		}
 	}
 	
-	public void mainMenu() throws IOException{
+	public void mainMenu(){
 		while (adminRunning){
 			System.out.println("\nMain Menu\n\n(1) Customers\n(2) Suppliers\n(3) Products\n(4) Stock\n(5) Orders\n(6) Sales\n(7) Invoices\n(8) Profit and Loss\n(9) Users\n(0) Logout");
 			choice = input.nextLine();
@@ -230,7 +228,7 @@ public class ShopNoGUI {
 	}
 	
 	
-	public void AdminUserMenu() throws IOException{
+	public void AdminUserMenu(){
 		
 		boolean stayInUserMenu=true;
 		int option=0;
@@ -272,12 +270,11 @@ public class ShopNoGUI {
 		
 	}
 	
-	public boolean createUser()throws IOException{
+	public boolean createUser(){
 		
 		String username="";
 		String password="";
 		String password1="";
-		int id = 123;
 		
 		System.out.println("\nPrint username");
 		username=input.next();
@@ -289,15 +286,13 @@ public class ShopNoGUI {
 		
 		if(password.equals(password1))
 		{
-			
 			String admin="";
 			System.out.println("\nIs user an admin ( Y or N )");
 			admin=input.next();
-			if(admin.charAt(0)=='y') 
-				users.add(new User(username,password,id,true));
-			else 
-				users.add(new User(username,password,id,false));
-				
+			if(admin.charAt(0)=='y')
+				users.add(new User(username,password,123,true));
+			else
+				users.add(new User(username,password,123,false));
 		}
 		else
 			System.out.println("\nPasswords don't match");
@@ -770,19 +765,13 @@ public class ShopNoGUI {
 	public void saleMenu(){
 		
 	}
-	
+
 		
-	public ArrayList<Stock> getStocks() {
-		return stocks;
-	}
-
-	public void setStocks(ArrayList<Stock> stocks) {
-		this.stocks = stocks;
-	}
-
 	public static void main(String[] args) throws IOException {
 		new ShopNoGUI();
 	}
 
+	
+	
 }
 */

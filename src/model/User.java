@@ -1,4 +1,15 @@
+package model;
 public class User {
+
+	private static int count = 0;
+	
+	public static int getCount() {
+		return count;
+	}
+
+	public static void setCount(int count) {
+		User.count = count;
+	}
 
 	private String username;
 	private String password;
@@ -11,11 +22,13 @@ public class User {
 		this.id = 0;
 	}
 
-	public User(String username, String password, int id, boolean admin) {
+	public User(String username, String password, boolean admin) {
 		this.username = username;
 		this.password = password;
-		this.id = id;
 		this.admin = admin;
+		this.id = count;
+		
+		count++;
 	}
 
 	public String getUsername() {

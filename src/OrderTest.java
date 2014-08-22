@@ -2,6 +2,10 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import model.Order;
+import model.Product;
+import model.Supplier;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +24,7 @@ public class OrderTest {
 		products.add(p1);
 		products.add(p2);
 		products.add(p3);
-		order = new Order(1, products, sup1);
+		order = new Order(products, sup1);
 	}
 	
 	@Test

@@ -2,6 +2,10 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import model.Customer;
+import model.Sale;
+import model.Stock;
+
 import org.junit.Before;
 import org.junit.Test;
 

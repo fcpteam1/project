@@ -1,24 +1,27 @@
+package model;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class Stock extends Product{
-
-		
+public class Stock extends Product {
+	private static ArrayList<Stock> stockList;
+	private Model stockModel;
 	private double customerPrice;
+
 	private int quantity;
+
 	private Date date = new Date();
 	private DateFormat format = DateFormat.getDateInstance();
 	private static boolean inStock= false;
 	private Product product;
+
 	
 	public Stock() {
 		super();
+		stockList = stockModel.getShop().getStock();
 		this.customerPrice = 0;
 		this.quantity = 0;
 	}
@@ -41,11 +44,10 @@ public class Stock extends Product{
 		super(name, supplierPrice);
 		this.customerPrice = customerPrice;
 		this.quantity = quantity;
+		DateFormat df= new SimpleDateFormat ("dd/MM/yyyy");
+		this.date= new Date();
 	}
-	
-	
-	
-	
+
 		
 	public double calculatePrice(){
 		double price = 0;
@@ -87,12 +89,19 @@ public class Stock extends Product{
 
 	public DateFormat getFormat() {
 		return format;
-	}
+	} 
 
 	public void setFormat(DateFormat format) {
 		this.format = format;
 	}
-	
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
 	public static void checkStock(ArrayList <Stock> salesList, ArrayList <Stock> stockList, int quantity)
 	{
@@ -139,7 +148,7 @@ public class Stock extends Product{
 		return inStock;
 	}
 
-	public static void checkSellBy (ArrayList <Stock> stockList)
+	public static void checkSellBy ()
 	{
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date current = new Date();
@@ -157,107 +166,32 @@ public class Stock extends Product{
 			}
 		}
 	}
-
-	public static void stockLevels (ArrayList <Stock> stockList)
+	
+	
+	public static Map<String, Integer> stockLevels ()
 	{
 		Map<String, Integer> stockLevels = new HashMap<String, Integer>();
-		
+	
 		for (int i= 0; i<stockList.size(); i++)
 		{
 			int quantity=0;
-			for (int j= 0; j< stockList.size(); j++)
+			for (int j= i; j<stockList.size(); j++)
 			{
 				boolean inMap =stockLevels.containsKey(stockList.get(i).getName());
-				if (inMap)
+				if(inMap && j==i)
 				{
-					j=stockList.size();
+					j= stockList.size();
 				}
-				else if (stockList.get(i).getName().equals((stockList.get(j).getName())))
+				else if (stockList.get(i).getName().equals(stockList.get(j).getName()) )
 				{
-					quantity+=stockList.get(j).getQuantity();
-				}
-				
-				if (!inMap && !(j+1< stockLevels.size()))
-				{
+					quantity= quantity + stockList.get(j).getQuantity();
 					stockLevels.put(stockList.get(i).getName(), quantity);
-				}		
+				}
+
 			}
 		}
-		
-		System.out.println("Stock Levels\n*********************************");
-		for(Map.Entry<String, Integer > current : stockLevels.entrySet()) 
-		{
-		    System.out.println(current.getKey()+": "+ current.getValue());
-		}
-		System.out.println("\n*********************************");
-
+		return stockLevels;
 	}
-
-	public static boolean processSale (ArrayList <Stock> stocks, Product product, int quantity, int index)
-	{
-		for (int i =index; i< stocks.size(); i++)
-		{
-			if (stocks.get(i).getProduct().getId()==product.getId())
-			{
-				if (stocks.get(i).getQuantity()>quantity)
-				{
-					stocks.get(i).setQuantity(stocks.get(i).getQuantity()-quantity);
-					inStock= true;
-					i=stocks.size();
-				}
-				else if (stocks.get(i).getQuantity()==quantity)
-				{
-					stocks.remove(stocks.get(i));
-					inStock= true;
-					i=stocks.size();
-
-				}
-				else
-				{
-					quantity-= stocks.get(i).getQuantity();
-					stocks.remove(stocks.get(i));
-					processSale(stocks, product, quantity, i);
-				}
-			}
-		}
-		return inStock;
-	}
-
-	
-
-
-	public static void stockLevels (ArrayList <Stock> stocks, ArrayList <Product> products)
-	{
-		System.out.println("Stock Levels\n*********************************");
-		for (int i= 0; i<products.size(); i++)
-		{
-			int quantity=0;
-			for (int j= 0; j< stocks.size(); j++)
-			{
-				if (products.get(i).getId()== stocks.get(j).getProduct().getId())
-				{
-					quantity++;
-				}
-			}
-			
-			if(quantity>0)
-			{
-				System.out.println("\nProduct: "+products.get(i).getName()+
-									" "+ quantity);
-			}
-		}
-		System.out.println("\n*********************************");
-	}
-
-	
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-	
-	
 	
 }
+
