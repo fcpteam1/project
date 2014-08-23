@@ -1,13 +1,14 @@
 package model;
-import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import GUI.OrderFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
-import GUI.UserTableModel;
 
 public class Shop {
 	
@@ -59,6 +60,7 @@ public class Shop {
 		loadCustomers("CustomerList");
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
+		loadStock("StockList");
 				
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
@@ -66,11 +68,12 @@ public class Shop {
 		System.out.println((u.getUsername() + ", " + u.getId()));
 		for (Supplier s : suppliers)
 		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
+		}
 	
 			//checkLogin();
 			//mainMenu();
 	
-	}
+	
 	
 	public static Shop getInstance() throws IOException{
 		
@@ -142,6 +145,22 @@ public class Shop {
 			}
 	in.close();
 	}
+	
+	public void loadStock(String fileName) throws IOException {
+		
+		Scanner in= new Scanner(new File(fileName));
+			while(in.hasNext()){
+				String name = in.next();
+				double supplierPrice = in.nextDouble();
+				int quantity = in.nextInt();
+				double customerPrice = in.nextDouble();
+				Stock stock = new Stock(name, supplierPrice, quantity, customerPrice);
+				stocks.add(stock);
+				}
+		in.close();
+		}
+	
+	
 	
 	public void checkLogin(){
 		while(loopAuthentication == true){
@@ -733,6 +752,7 @@ public class Shop {
 	}
 	
 	public ArrayList<Stock> getStock() {
+			
 		return stocks;
 	}
 
@@ -779,6 +799,12 @@ public class Shop {
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
+	
+	private void stockLevels() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }
 
