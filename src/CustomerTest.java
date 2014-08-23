@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CustomerTest {
-	Customer customer = new Customer("Shane Flynn", 1234, "087233222",
+	Customer customer = new Customer("Shane Flynn", "087233222",
 			"282 duncourt road");
 
 	@Before

@@ -18,8 +18,8 @@ public class SaleTest {
 	Stock s1 = new Stock("apple", .20, 10);
 	Stock s2 = new Stock("banana", .15, 12);
 	Stock s3 = new Stock("orange", .10, 20);
-	Customer c1 = new Customer("Darren", 1, "0860547880", "Dublin");
-	Customer c2 = new Customer("Shane", 2, "0877746283", "Kildare");
+	Customer c1 = new Customer("Darren", "0860547880", "Dublin");
+	Customer c2 = new Customer("Shane", "0877746283", "Kildare");
 	
 	@Before
 	public void setUp() throws Exception {

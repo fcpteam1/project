@@ -180,43 +180,8 @@ public class Controller {
 					view.getMainmenu().getSupplierTab().focusViewProducts();
 					
 				}
-				
-				
 			}
 		};
-		
-		
-		btnViewCustomers = new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent e) 
-            {
-                view.getMainmenu().getCustomerTab().changeToViewAllCustomers();
-            }
-        };
-         
-        btnSubmitNewCustomer = new ActionListener() 
-        {
-            @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                String id = view.getMainmenu().getCustomerTab().getTxtId().getText();
-                String name = view.getMainmenu().getCustomerTab().getTxtName().getText();
-                String phone = view.getMainmenu().getCustomerTab().getTxtPhone().getText();
-                String address = view.getMainmenu().getCustomerTab().getTxtAddress().getText();
-                System.out.println(id + " "  + name + " "  + phone + " "  +address);
-                int thisID = Integer.getInteger(id);
-                Customer customer = new Customer( name, thisID, phone, address);
-                model.getShop().getCustomers().add(customer);
-            }
-        };
-         
-        btnAddCustomer = new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent e) 
-            {
-                view.getMainmenu().getCustomerTab().changeToAddNewCustomer();
-            }
-        };
 	}
 
 		
@@ -239,10 +204,6 @@ public Object[][] fillProductsForSupplier(int current){
 		return data;
 	}
 		
-	
-
-	
-	
 	public void addListenersToButtons(){
 		
 		view.getLogin().getSubmit().addActionListener(loginListener);
@@ -253,12 +214,6 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().getNext().addActionListener(nextSupplier);
 		view.getMainmenu().getSupplierTab().getPrevious().addActionListener(prevSupplier);
 		view.getMainmenu().getSupplierTab().getSearch().addActionListener(searchSupplier);
-		
-		view.getMainmenu().getCustomerTab().getBtnSubmitNewCustomer().addActionListener(btnSubmitNewCustomer);
-        view.getMainmenu().getCustomerTab().getBtnViewCustomers().addActionListener(btnViewCustomers);
-        view.getMainmenu().getCustomerTab().getBtnAddCustomer().addActionListener(btnAddCustomer);
-         
-		
 	}
 	
 	/**

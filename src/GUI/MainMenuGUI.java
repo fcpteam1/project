@@ -15,7 +15,7 @@ public class MainMenuGUI {
 	private JPanel logoutPanel;
 	private JButton logoutButton;
 	
-	private CustomerGUI customerTab;
+	private CustomerMainPanel customerTab;
 	private UserMainPanel userTab;
 	private OrderMainPanel orderTab;
 	private SupplierGUI supplierTab;
@@ -30,7 +30,7 @@ public MainMenuGUI() throws IOException{
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
-		customerTab=new CustomerGUI();
+		customerTab=new CustomerMainPanel();
 		userTab=new UserMainPanel();
 		supplierTab = new SupplierGUI();
 		orderTab = new OrderMainPanel();
@@ -69,80 +69,68 @@ public MainMenuGUI() throws IOException{
 		
 	}
 	
-	public StockGUI getStockTab() {
-	return stockTab;
-	}
-
-	public JPanel getPanel(){
-		
-		return framePanel;
-	}
-
-	public JPanel getFramePanel() {
-		return framePanel;
-	}
-
-	public void setFramePanel(JPanel framePanel) {
-		this.framePanel = framePanel;
-	}
-
-	public JTabbedPane getTabbedPane() {
-		return tabbedPane;
-	}
-
-	public void setTabbedPane(JTabbedPane tabbedPane) {
-		this.tabbedPane = tabbedPane;
-	}
-
-	public JPanel getLogoutPanel() {
-		return logoutPanel;
-	}
-
-	public void setLogoutPanel(JPanel logoutPanel) {
-		this.logoutPanel = logoutPanel;
-	}
-
-	public JButton getLogoutButton() {
-		return logoutButton;
-	}
-
-	public void setLogoutButton(JButton logoutButton) {
-		this.logoutButton = logoutButton;
-	}
-
-	public CustomerGUI getCustomerTab() {
-		return customerTab;
-	}
-
-	public void setCustomerTab(CustomerGUI customerTab) {
-		this.customerTab = customerTab;
-	}
-
-	public UserMainPanel getUserTab() {
-		return userTab;
-	}
-
-	public void setUserTab(UserMainPanel userTab) {
-		this.userTab = userTab;
-	}
-
-	public SupplierGUI getSupplierTab() {
-		return supplierTab;
-	}
-
-	public void setSupplierTab(SupplierGUI supplierTab) {
-		this.supplierTab = supplierTab;
-	}
+public JPanel getPanel(){
 	
-	public OrderMainPanel getOrderTab() {
-		return orderTab;
-	}
+	return framePanel;
+}
 
-	public void setOrderTab(OrderMainPanel orderTab) {
-		this.orderTab = orderTab;
-	}
+public JPanel getFramePanel() {
+	return framePanel;
+}
 
-	
-	
-	
+public void setFramePanel(JPanel framePanel) {
+	this.framePanel = framePanel;
+}
+
+public JTabbedPane getTabbedPane() {
+	return tabbedPane;
+}
+
+public void setTabbedPane(JTabbedPane tabbedPane) {
+	this.tabbedPane = tabbedPane;
+}
+
+public JPanel getLogoutPanel() {
+	return logoutPanel;
+}
+
+public void setLogoutPanel(JPanel logoutPanel) {
+	this.logoutPanel = logoutPanel;
+}
+
+public JButton getLogoutButton() {
+	return logoutButton;
+}
+
+public void setLogoutButton(JButton logoutButton) {
+	this.logoutButton = logoutButton;
+}
+
+public CustomerMainPanel getCustomerTab() {
+	return customerTab;
+}
+
+public void setCustomerTab(CustomerMainPanel customerTab) {
+	this.customerTab = customerTab;
+}
+
+public UserMainPanel getUserTab() {
+	return userTab;
+}
+
+public void setUserTab(UserMainPanel userTab) {
+	this.userTab = userTab;
+}
+
+public SupplierGUI getSupplierTab() {
+	return supplierTab;
+}
+
+public void setSupplierTab(SupplierGUI supplierTab) {
+	this.supplierTab = supplierTab;
+}
+
+
+
+
 }

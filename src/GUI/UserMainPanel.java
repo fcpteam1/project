@@ -53,14 +53,12 @@ public class UserMainPanel extends JPanel {
 			public void formEventOccurred(UserFormEvent e){
 				model.getShop().addUser(e);
 				userTablePanel.refresh();
-				model.getShop().listUsers();
 			}
 
 			@Override
 			public void editFormEventOccurred(UserFormEvent ee) {
 				model.getShop().NewEditUser(ee);
 				userTablePanel.refresh();
-				model.getShop().listUsers();
 			}
 			
 		});
