@@ -27,6 +27,9 @@ public class OrderFormPanel extends JPanel {
 	private JComboBox supplierCombo;
 	private JButton selectButton;
 	private JButton orderButton;
+	private JButton editButton;
+	private JButton deleteButton;
+	private JButton processButton;
 	private OrderFormListener formListener;
 	private ArrayList<Order> orders;
 	private ArrayList<Supplier> suppliers;
@@ -221,6 +224,8 @@ public class OrderFormPanel extends JPanel {
 		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 		setVisible(true);
+
+		editButton = new JButton("Edit Order");
 	}
 	
 	public void deleteFormPanel(){
@@ -231,16 +236,18 @@ public class OrderFormPanel extends JPanel {
 		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 		setVisible(true);
+		editButton = new JButton("Delete Order");
 	}	
 	
 	public void processFormPanel(){
 		Dimension dim = getPreferredSize();
 		dim.width = 300;
 		setPreferredSize(dim);
-		Border innerBorder = BorderFactory.createTitledBorder("Process Delivery");
+		Border innerBorder = BorderFactory.createTitledBorder("Process Order");
 		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 		setVisible(true);
+		editButton = new JButton("Process Order");
 	}
 	
 	public void setFormListener(OrderFormListener formListener) {
