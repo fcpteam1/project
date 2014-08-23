@@ -1,14 +1,14 @@
 package model;
-import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import GUI.CustomerFormEvent;
 import GUI.CustomerFormPanel;
+import GUI.OrderFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
-import GUI.UserTableModel;
 
 public class Shop {
 	
@@ -82,6 +82,7 @@ public class Shop {
 		loadCustomers("CustomerList");
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
+		loadStock("StockList");
 				
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
@@ -89,11 +90,12 @@ public class Shop {
 		System.out.println((u.getUsername() + ", " + u.getId()));
 		for (Supplier s : suppliers)
 		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
+		}
 	
 			//checkLogin();
 			//mainMenu();
 	
-	}
+	
 	
 	public static Shop getInstance() throws IOException{
 		
@@ -185,6 +187,26 @@ public class Shop {
 	public void saleMenu(){
 		
 	}
+	public void loadStock(String fileName) throws IOException {
+		
+		Scanner in= new Scanner(new File(fileName));
+			while(in.hasNext()){
+				String name = in.next();
+				double supplierPrice = in.nextDouble();
+				int quantity = in.nextInt();
+				double customerPrice = in.nextDouble();
+				Stock stock = new Stock(name, supplierPrice, quantity, customerPrice);
+				stocks.add(stock);
+				}
+		in.close();
+		}
+	
+	
+	
+	
+	public void orderMenu(){
+		
+	}
 	
 	public ArrayList<User> getUsers(){
 		return users;
@@ -254,12 +276,10 @@ public class Shop {
 	}
 	
 	public ArrayList<Stock> getStock() {
+			
 		return stocks;
 	}
 
-	public void setOrders(ArrayList<Order> orders) {
-		this.orders = orders;
-	}
 
 	public ArrayList<Supplier> getSuppliers() {
 		return suppliers;
@@ -273,13 +293,13 @@ public class Shop {
 		return customers;
 	}
 	
+
 	public void addCustomer(CustomerFormEvent e) {
 		String name = e.getName();
 		String number = e.getNumber();
 		String address = e.getAddress();
 		
 		Customer customer = new Customer(name, number, address);
-				
 		customers.add(customer);
 	}
 	
@@ -320,7 +340,6 @@ public class Shop {
 		}
 	}
 
-	
 	public void sendCustomerEditName(String editCustomerName){
 		customerFormPanel.setEditDataName(editCustomerName);
 		System.out.println("Edit name sent");
@@ -335,5 +354,37 @@ public class Shop {
 		System.out.println("Edit address sent");
 	}	
 	
+	public void createOrder(OrderFormEvent e){
+		ArrayList<Product> products = e.getProducts();
+		Supplier supplier = e.getSupplier();
+		Order order = new Order(products, supplier);
+		orders.add(order);
+	}
+	
+	public void viewOrders(OrderFormEvent e){
+		
+	}
+
+	public void editOrder(OrderFormEvent e){
+		
+	}
+	
+	public void deleteOrder(OrderFormEvent e){
+		
+	}
+
+	public void processOrder(OrderFormEvent e){
+		
+	}
+	
+	public void setOrders(ArrayList<Order> orders) {
+		this.orders = orders;
+	}
+	
+	private void stockLevels() {
+		// TODO Auto-generated method stub
+		
+	}
 }
+	
 

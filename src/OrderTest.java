@@ -24,7 +24,7 @@ public class OrderTest {
 		products.add(p1);
 		products.add(p2);
 		products.add(p3);
-		order = new Order(1, products, sup1);
+		order = new Order(products, sup1);
 	}
 	
 	@Test

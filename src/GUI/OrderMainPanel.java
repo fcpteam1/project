@@ -22,22 +22,43 @@ public class OrderMainPanel extends JPanel {
 		orderFormPanel = new OrderFormPanel();
 		orderTablePanel = new OrderTablePanel();
 		model = new Model();
-		
-		orderToolbar.setMainPanel(orderFormPanel);
 
+		orderToolbar.setMainPanel(orderFormPanel);
+		orderTablePanel.setFormPanel(orderFormPanel);
 		orderTablePanel.setData(model.getShop().getOrders(), model.getShop().getSuppliers());
+
 		orderFormPanel.setData(model.getShop().getOrders(), model.getShop().getSuppliers());
-		
 		orderFormPanel.setFormListener(new OrderFormListener(){
 
 			@Override
-			public void formEventOccurred(OrderFormEvent e){
-				orderFormPanel.viewFormPanel();
+			public void createOrderOccurred(OrderFormEvent e){
+				model.getShop().createOrder(e);
+				orderTablePanel.refresh();
+				model.getShop().viewOrders(e);
+			}
+
+			@Override
+			public void editOrderOccurred(OrderFormEvent e) {
+				model.getShop().editOrder(e);
+				orderTablePanel.refresh();
+				model.getShop().viewOrders(e);
+			}
+
+			@Override
+			public void deleteOrderOccurred(OrderFormEvent e) {
+				model.getShop().deleteOrder(e);
+				orderTablePanel.refresh();
+				model.getShop().viewOrders(e);
+			}
+
+			@Override
+			public void processOrderOccurred(OrderFormEvent e) {
+				model.getShop().processOrder(e);
+				orderTablePanel.refresh();
+				model.getShop().viewOrders(e);
 			}
 			
 		});
-		
-		orderToolbar.setMainPanel(orderFormPanel);;
 		
 		mainPanel.add(orderFormPanel, BorderLayout.WEST);
 		mainPanel.add(orderToolbar, BorderLayout.NORTH);

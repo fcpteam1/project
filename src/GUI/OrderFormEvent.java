@@ -7,7 +7,6 @@ import model.Supplier;
 
 public class OrderFormEvent extends EventObject {
 
-	private int id;
 	private Supplier supplier;
 	private double totalPrice;
 	private ArrayList<Product> products;
@@ -16,11 +15,9 @@ public class OrderFormEvent extends EventObject {
 		super(source);
 	}
 	
-	public OrderFormEvent(Object source, int id, Supplier supplier, double totalPrice, ArrayList<Product> products) {
+	public OrderFormEvent(Object source, Supplier supplier, ArrayList<Product> products) {
 		super(source);
-		this.id = id;
 		this.supplier = supplier;
-		this.totalPrice = totalPrice;
 		this.products = products;
 	}
 
@@ -29,14 +26,6 @@ public class OrderFormEvent extends EventObject {
 		this.supplier = supplier;
 	}
 	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public Supplier getSupplier() {
 		return supplier;
 	}

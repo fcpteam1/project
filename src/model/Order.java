@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Order extends Invoice{
 
+	private static int count = 0;
 	private Supplier supplier; 
 	private int id;
 	private ArrayList<Product> products = new ArrayList<Product>();
@@ -15,12 +16,14 @@ public class Order extends Invoice{
 	}
 	
 	
-	public Order(int id, ArrayList<Product> products, Supplier supplier) {
+	public Order(ArrayList<Product> products, Supplier supplier) {
 		super();
-		this.id = id;
+		this.id = count;
 		this.supplier = supplier;
+		this.products = products;
 		current = true;
 		calculatePrice();
+		count++;
 	}
 	
 	public void calculatePrice(){
