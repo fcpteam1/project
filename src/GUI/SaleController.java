@@ -5,19 +5,21 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class SaleController extends JFrame {
+public class SaleController extends JPanel {
 	
+	private JPanel mainPanel;
 	private JButton button;
 	private SaleTextPanel textPanel;
-	private  SaleToolbar toolbar;
+	private SaleToolbar toolbar;
 	private SaleFormPanel formPanel;
 	private String[] items;
 	private JComboBox comboBox;
 
 	public SaleController() throws IOException {
-		super("Sale GUI");
-		setLayout(new BorderLayout());
+		mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
 		
 		toolbar = new SaleToolbar();
 		button = new JButton("Enter");
@@ -40,10 +42,10 @@ public class SaleController extends JFrame {
 			}
 		});
 		
-		add(toolbar,BorderLayout.NORTH);
+		mainPanel.add(toolbar,BorderLayout.NORTH);
 		//add(button, BorderLayout.SOUTH);
-		add(textPanel,BorderLayout.CENTER); 
-		add(formPanel,BorderLayout.WEST);
+		mainPanel.add(textPanel,BorderLayout.CENTER); 
+		mainPanel.add(formPanel,BorderLayout.WEST);
 		
 		/*
 		button.addActionListener( new ActionListener(){
@@ -66,9 +68,12 @@ public class SaleController extends JFrame {
          comboBox = new JComboBox(items);
 		*/
 		setSize(800,800); //set frames size in pixels
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
-        
+	}
+	
+
+	public JPanel getPanel(){
+		return mainPanel;
+	
 	}
 
 }

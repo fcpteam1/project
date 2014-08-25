@@ -22,10 +22,7 @@ public class MainMenuGUI {
 	private OrderMainPanel orderTab;
 	private SupplierGUI supplierTab;
 	private StockGUI stockTab;
-	
-	private ImageIcon tab1Icon;
-	private ImageIcon tab2Icon;
-	private ImageIcon tab3Icon;
+	private SaleController saleTab;
 	
 public MainMenuGUI() throws IOException{
 		
@@ -41,25 +38,21 @@ public MainMenuGUI() throws IOException{
 		supplierTab = new SupplierGUI();
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
-	/*	
-		 tab1Icon = new ImageIcon(
-	                this.getClass().getResource("/images/customers.png"));
-		 tab2Icon = new ImageIcon(
-	                this.getClass().getResource("/order.png"));
-	     tab3Icon = new ImageIcon(
-	                this.getClass().getResource("/supplier.png"));
-	 */
-		tabbedPane.addTab("Customers",tab1Icon,customerTab.getPanel());
+		saleTab = new SaleController();
+	
+		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
-		tabbedPane.addTab("Supplier",tab3Icon,supplierTab.getMain());
-		tabbedPane.addTab("Orders",tab2Icon, orderTab.getPanel());
+		tabbedPane.addTab("Supplier",supplierTab.getMain());
+		tabbedPane.addTab("Orders", orderTab.getPanel());
 		tabbedPane.addTab("Stock", stockTab.getPanel());
+		tabbedPane.addTab("Sales", saleTab.getPanel());
 	
 		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
 		tabbedPane.setIconAt(1, createIcon("/images/user.png"));
 		tabbedPane.setIconAt(2, createIcon("/images/supplier.png"));
 		tabbedPane.setIconAt(3, createIcon("/images/order.png"));
 		tabbedPane.setIconAt(4, createIcon("/images/stock.png"));
+		tabbedPane.setIconAt(5, createIcon("/images/sale.png"));
 		
 		c.gridx=0;
 		c.gridy=0;
