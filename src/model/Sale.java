@@ -2,7 +2,7 @@ package model;
 import java.util.ArrayList;
 
 public class Sale extends Invoice{
-
+	private static int count = 0;
 	private Customer customer;
 	private int id;
 	private ArrayList<Stock> stocks = new ArrayList<Stock>();
@@ -13,12 +13,13 @@ public class Sale extends Invoice{
 		this.id = 0;
 	}
 	
-	public Sale(int id, ArrayList<Stock> stocks, Customer customer) {
+	public Sale( ArrayList<Stock> stocks, Customer customer) {
 		super();
 		this.stocks = stocks;
-		this.id = id;
+		this.id = count;
 		this.customer = customer;
 		calculatePrice();
+		count++;
 	}
 
 	public void calculatePrice(){

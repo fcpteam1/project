@@ -12,7 +12,7 @@ public class SaleGui {
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run() {
 				try {
-					new SaleController();
+					new SaleMainPanel();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

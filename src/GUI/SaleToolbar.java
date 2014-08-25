@@ -1,44 +1,58 @@
 package GUI;
 import java.awt.FlowLayout;
 import java.awt.event.*;
+import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class SaleToolbar extends JPanel implements ActionListener {
-	private JButton helloBut;
-	private JButton goodbyeBut;
-	private SaleStringListener  textListener;
+public class SaleToolbar extends JPanel implements ActionListener 
+ {
+	private JButton createSale, viewSale, deleteSale, editSale;
+	private SaleFormPanel mainPanel;
 	
 	public SaleToolbar()  {
-		helloBut = new JButton("Hello");
-		goodbyeBut = new JButton("BYe");
+		createSale = new JButton("Add Sale");
+		viewSale = new JButton("View Sales");  
+		deleteSale = new JButton("Delete Sale");
+		editSale = new JButton("Edit Sale");
 		
-		helloBut.addActionListener(this);
-		goodbyeBut.addActionListener(this);
+		createSale.addActionListener(this);
+		viewSale.addActionListener(this);
+		deleteSale.addActionListener(this);
+		editSale.addActionListener(this);
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
+		setBorder(BorderFactory.createEtchedBorder());
 		
-		add(helloBut);
-		add(goodbyeBut);
+		add(createSale);
+		add(viewSale);
+		add(deleteSale);
+		add(editSale);
+		
 	}
 	
-	public void setStringListener(SaleStringListener listener) {
-			this.textListener = listener;
+	public void setMainPanel(SaleFormPanel formPanel){
+		this.mainPanel = formPanel;
 	}
-		
-	public void actionPerformed(ActionEvent event) {
-		JButton clicked = (JButton)event.getSource();
-			if (clicked == helloBut) {
-				if(textListener != null){
-					textListener.textEmitted("Hello\n");
-				}
+	
+	
+	public void actionPerformed(ActionEvent e)  {
+		try
+		{
+			JButton clicked = (JButton) e.getSource();
+			if(clicked == createSale){
+				mainPanel.removeAll();
+				mainPanel.createCustomerPanel();
+				mainPanel.validate();
+				mainPanel.repaint();
 			}
-			else {
-				if(textListener != null){
-					textListener.textEmitted("Bye\n");
-				}
-			}
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
 	}
 
 }

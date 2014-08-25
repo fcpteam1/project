@@ -26,7 +26,7 @@ public class SaleTest {
 		stocks.add(s1);
 		stocks.add(s2);
 		stocks.add(s3);
-		sale = new Sale(1, stocks, c1);
+		sale = new Sale( stocks, c1);
 	}
 
 	@Test

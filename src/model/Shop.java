@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import GUI.OrderFormEvent;
+import GUI.SaleFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
 import GUI.UserTableModel;
@@ -16,6 +17,7 @@ public class Shop {
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
+	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private String username, password, choice,customerName,customerNumber,customerAddress;
 	private int customerId,tableIndex;
 	private Scanner input = new Scanner(System.in);
@@ -735,6 +737,10 @@ public class Shop {
 	public ArrayList<Stock> getStock() {
 		return stocks;
 	}
+	public ArrayList<Sale> getSales() {
+		return sales;
+	}
+	
 
 
 	public void sendEditUsername(){
@@ -755,6 +761,14 @@ public class Shop {
 
 	public ArrayList<Customer> getCustomers() {
 		return customers;
+	}
+	
+	public void createSale(SaleFormEvent e) {
+		
+	ArrayList<Stock> stocks = e.getStockList();
+	Customer customer = e.getCustomer();
+	Sale sale = new Sale(stocks, customer);
+	sales.add(sale);
 	}
 	
 	public void createOrder(OrderFormEvent e){
