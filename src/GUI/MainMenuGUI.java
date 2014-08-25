@@ -3,7 +3,9 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.IOException;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -21,6 +23,10 @@ public class MainMenuGUI {
 	private SupplierGUI supplierTab;
 	private StockGUI stockTab;
 	
+	private ImageIcon tab1Icon;
+	private ImageIcon tab2Icon;
+	private ImageIcon tab3Icon;
+	
 public MainMenuGUI() throws IOException{
 		
 		framePanel=new JPanel();
@@ -35,13 +41,26 @@ public MainMenuGUI() throws IOException{
 		supplierTab = new SupplierGUI();
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
-		
-		tabbedPane.addTab("Customers",customerTab.getPanel());
+	/*	
+		 tab1Icon = new ImageIcon(
+	                this.getClass().getResource("/images/customers.png"));
+		 tab2Icon = new ImageIcon(
+	                this.getClass().getResource("/order.png"));
+	     tab3Icon = new ImageIcon(
+	                this.getClass().getResource("/supplier.png"));
+	 */
+		tabbedPane.addTab("Customers",tab1Icon,customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
-		tabbedPane.addTab("Supplier",supplierTab.getMain());
-		tabbedPane.addTab("Orders", orderTab.getPanel());
+		tabbedPane.addTab("Supplier",tab3Icon,supplierTab.getMain());
+		tabbedPane.addTab("Orders",tab2Icon, orderTab.getPanel());
 		tabbedPane.addTab("Stock", stockTab.getPanel());
 	
+		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
+		tabbedPane.setIconAt(1, createIcon("/images/user.png"));
+		tabbedPane.setIconAt(2, createIcon("/images/supplier.png"));
+		tabbedPane.setIconAt(3, createIcon("/images/order.png"));
+		tabbedPane.setIconAt(4, createIcon("/images/stock.png"));
+		
 		c.gridx=0;
 		c.gridy=0;
 		c.gridheight=2;
@@ -130,7 +149,16 @@ public void setSupplierTab(SupplierGUI supplierTab) {
 	this.supplierTab = supplierTab;
 }
 
+private ImageIcon createIcon(String path) {
+	URL url = getClass().getResource(path);
 
+	if (url == null) {
+		System.out.println("Unable to load image: " + path);
+	}
+	
+	ImageIcon icon = new ImageIcon(url);
 
+	return icon;
 
+}
 }
