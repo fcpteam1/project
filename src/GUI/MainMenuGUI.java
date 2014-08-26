@@ -49,7 +49,7 @@ public MainMenuGUI() throws IOException{
 		tabbedPane.addTab("Stock", stockTab.getPanel());
 		tabbedPane.addTab("Sales", saleTab.getPanel());
 		tabbedPane.addTab("Profit & Loss", profitAndLossTab.getPanel());
-	
+		
 		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
 		tabbedPane.setIconAt(1, createIcon("/images/user.png"));
 		tabbedPane.setIconAt(2, createIcon("/images/supplier.png"));
