@@ -25,6 +25,10 @@ public class Customer {
 		count++;
 	}
 	
+	public String toString() {
+		return getName();
+	}
+
 	public String getName() {
 		return name;
 	}

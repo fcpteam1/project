@@ -22,7 +22,7 @@ public class MainMenuGUI {
 	private OrderMainPanel orderTab;
 	private SupplierGUI supplierTab;
 	private StockGUI stockTab;
-	private SaleController saleTab;
+	private SaleMainPanel saleTab;
 	
 public MainMenuGUI() throws IOException{
 		
@@ -38,7 +38,7 @@ public MainMenuGUI() throws IOException{
 		supplierTab = new SupplierGUI();
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
-		saleTab = new SaleController();
+		saleTab = new SaleMainPanel();
 	
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());

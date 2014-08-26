@@ -7,6 +7,7 @@ import java.util.Scanner;
 import GUI.CustomerFormEvent;
 import GUI.CustomerFormPanel;
 import GUI.OrderFormEvent;
+import GUI.SaleFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
 
@@ -17,6 +18,7 @@ public class Shop {
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
+	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private String username, password, choice,customerName,customerNumber,customerAddress,editUserPassword,editUserUsername;
 	private String editCustomerName, editCustomerNumber, editCustomerAddress;
 	private int customerId,tableIndex;
@@ -83,7 +85,7 @@ public class Shop {
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
 		loadStock("StockList");
-				
+
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
 		for (User u : users)
@@ -139,6 +141,19 @@ public class Shop {
 	scan2.close();
 	scan1.close();	
 	}
+	
+	public void loadStock(String fileName) throws IOException {
+		
+	Scanner in= new Scanner(new File(fileName));
+		while(in.hasNext()) {
+			String name = in.next();
+			double supplierPrice = in.nextDouble();
+			int quantity = in.nextInt();
+			double customerPrice = in.nextDouble();
+			Stock stock = new Stock(name, supplierPrice, quantity, customerPrice);
+			stocks.add(stock);
+		}
+	}
 		
 	public void loadUsers(String fileName)throws IOException {
 			
@@ -187,22 +202,6 @@ public class Shop {
 	public void saleMenu(){
 		
 	}
-	public void loadStock(String fileName) throws IOException {
-		
-		Scanner in= new Scanner(new File(fileName));
-			while(in.hasNext()){
-				String name = in.next();
-				double supplierPrice = in.nextDouble();
-				int quantity = in.nextInt();
-				double customerPrice = in.nextDouble();
-				Stock stock = new Stock(name, supplierPrice, quantity, customerPrice);
-				stocks.add(stock);
-				}
-		in.close();
-		}
-	
-	
-	
 	
 	public void orderMenu(){
 		
@@ -282,6 +281,10 @@ public class Shop {
 			
 		return stocks;
 	}
+	public ArrayList<Sale> getSales() {
+		return sales;
+	}
+	
 
 
 	public ArrayList<Supplier> getSuppliers() {
@@ -361,6 +364,14 @@ public class Shop {
 		customerFormPanel.setEditDataAddress(editCustomerAddress);
 		System.out.println("Edit address sent");
 	}	
+	
+	public void createSale(SaleFormEvent e) {
+		
+	ArrayList<Stock> stocks = e.getStockList();
+	Customer customer = e.getCustomer();
+	Sale sale = new Sale(stocks, customer);
+	sales.add(sale);
+	}
 	
 	public void createOrder(OrderFormEvent e){
 		ArrayList<Product> products = e.getProducts();
