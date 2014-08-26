@@ -10,7 +10,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -26,6 +28,9 @@ public class SupplierGUI  {
 	
 	private JButton search,next,previous,supplierButton,productButton;
 	private JTextField searchText,supplierText;
+	private JMenuItem viewProducts;
+	private JPopupMenu viewProductsPopup;
+	
 	boolean supplier;
 	int current=0;
 	public SupplierGUI() {
@@ -33,6 +38,10 @@ public class SupplierGUI  {
 		
 		supplierNames=new String[]{"Name","Id","Phone","Address"};
 		productNames=new String[]{"Name","Id","Supplier Price"};
+		
+		viewProducts=new JMenuItem("View Supplier Products");
+		viewProductsPopup=new JPopupMenu();
+		viewProductsPopup.add(viewProducts);
 		
 		showPanel=new JPanel();
 		showPanel.setLayout(new GridBagLayout());
@@ -113,6 +122,7 @@ public class SupplierGUI  {
 		supplierData[0][3]="null";
 		
 		viewSupplierTabel=new JTable(supplierData,supplierNames);
+		viewSupplierTabel.add(viewProductsPopup);
 		viewScroll=new JScrollPane(viewSupplierTabel);
 		c.gridx=0;
 		c.gridy=0;
@@ -156,6 +166,8 @@ public class SupplierGUI  {
 		c.weighty=0.1;
 		c.anchor=GridBagConstraints.PAGE_END;
 		showPanel.add(supplierTextPanel,c);
+		
+		
 		
 		search.setEnabled(false);
 		next.setEnabled(false);
@@ -401,6 +413,37 @@ public class SupplierGUI  {
 	public void setSearchText(JTextField searchText) {
 		this.searchText = searchText;
 	}
+
+
+	public JTable getViewSupplierTabel() {
+		return viewSupplierTabel;
+	}
+
+
+	public void setViewSupplierTabel(JTable viewSupplierTabel) {
+		this.viewSupplierTabel = viewSupplierTabel;
+	}
+
+
+	public JPopupMenu getViewProductsPopup() {
+		return viewProductsPopup;
+	}
+
+
+	public void setViewProductsPopup(JPopupMenu viewProductsPopup) {
+		this.viewProductsPopup = viewProductsPopup;
+	}
+
+
+	public JMenuItem getViewProducts() {
+		return viewProducts;
+	}
+
+
+	public void setViewProducts(JMenuItem viewProducts) {
+		this.viewProducts = viewProducts;
+	}
+	
 	
 	
 }

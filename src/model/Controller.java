@@ -1,6 +1,9 @@
 package model;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 
@@ -12,6 +15,9 @@ public class Controller {
 	private ActionListener viewSupplier,viewProducts,nextSupplier,prevSupplier,searchSupplier;
 	private ActionListener btnSubmitNewCustomer, btnViewCustomers, btnAddCustomer;
 	
+	private MouseAdapter supplierTableListener;
+	private ActionListener menuViewSupplier;
+	
 	public Controller() throws IOException {
 		// TODO Auto-generated constructor stub
 		
@@ -19,7 +25,7 @@ public class Controller {
 		model=new Model();
 		addListeners();
 		addListenersToButtons();
-		
+	
 	}
 	
 	
@@ -54,6 +60,7 @@ public class Controller {
 				
 				view.getLogin().getLoginUsername().setText("");
 				view.getLogin().getLoginPassword().setText("");
+				viewSuppliers();
 			}
 		
 		};
@@ -73,20 +80,7 @@ public class Controller {
 		viewSupplier=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
-				Object data[][]=new Object[model.getShop().getSuppliers().size()][4];
-				
-				for(int i=0;i<model.getShop().getSuppliers().size();i++){
-					data[i][0]=model.getShop().getSuppliers().get(i).getName();
-					data[i][1]=model.getShop().getSuppliers().get(i).getId();
-					data[i][2]=model.getShop().getSuppliers().get(i).getNumber();
-					data[i][3]=model.getShop().getSuppliers().get(i).getAddress();
-				}
-				view.getMainmenu().getSupplierTab().setSupplierData(data);
-				view.getMainmenu().getSupplierTab().focusViewSuppliers();
-				
-				view.getMainmenu().getSupplierTab().getNext().setEnabled(false);
-				view.getMainmenu().getSupplierTab().getPrevious().setEnabled(false);
-				view.getMainmenu().getSupplierTab().getSearch().setEnabled(false);
+				viewSuppliers();
 				
 			}
 		};
@@ -94,16 +88,7 @@ public class Controller {
 		viewProducts=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
-				int current=view.getMainmenu().getSupplierTab().getCurrent();
-				
-				Object data[][]=fillProductsForSupplier(current);
-				view.getMainmenu().getSupplierTab().getSupplierText().setText(model.getShop().getSuppliers().get(current).getName());
-				view.getMainmenu().getSupplierTab().setProductData(data);
-				view.getMainmenu().getSupplierTab().focusViewProducts();
-				
-				view.getMainmenu().getSupplierTab().getNext().setEnabled(true);
-				view.getMainmenu().getSupplierTab().getPrevious().setEnabled(true);
-				view.getMainmenu().getSupplierTab().getSearch().setEnabled(true);
+				viewProducts();
 			}
 		};
 		
@@ -182,6 +167,37 @@ public class Controller {
 				}
 			}
 		};
+		
+		
+		
+		
+		supplierTableListener=new MouseAdapter(){
+				public void mousePressed(MouseEvent e) {
+				
+				int row = view.getMainmenu().getSupplierTab().getViewSupplierTabel().rowAtPoint(e.getPoint());
+				
+				System.out.println("Row "+row);
+				
+				view.getMainmenu().getSupplierTab().getViewSupplierTabel().getSelectionModel().setSelectionInterval(row, row);
+				
+				if(e.getButton() == MouseEvent.BUTTON3){
+					view.getMainmenu().getSupplierTab().getViewProductsPopup().show(view.getMainmenu().getSupplierTab().getViewSupplierTabel(), e.getX(),e.getY());
+					System.out.println("MOUSE event 3");
+				}
+			}
+			
+		};
+		
+		menuViewSupplier=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				int index=view.getMainmenu().getSupplierTab().getViewSupplierTabel().getSelectedRow();
+				view.getMainmenu().getSupplierTab().setCurrent(index);
+				viewProducts();
+				
+			}
+			
+		};
 	}
 
 		
@@ -214,8 +230,43 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().getNext().addActionListener(nextSupplier);
 		view.getMainmenu().getSupplierTab().getPrevious().addActionListener(prevSupplier);
 		view.getMainmenu().getSupplierTab().getSearch().addActionListener(searchSupplier);
+		view.getMainmenu().getSupplierTab().getViewSupplierTabel().addMouseListener(supplierTableListener);
+		view.getMainmenu().getSupplierTab().getViewProducts().addActionListener(menuViewSupplier);
+		
 	}
 	
+	
+	public void viewSuppliers(){
+		
+		Object data[][]=new Object[model.getShop().getSuppliers().size()][4];
+		
+		for(int i=0;i<model.getShop().getSuppliers().size();i++){
+			data[i][0]=model.getShop().getSuppliers().get(i).getName();
+			data[i][1]=model.getShop().getSuppliers().get(i).getId();
+			data[i][2]=model.getShop().getSuppliers().get(i).getNumber();
+			data[i][3]=model.getShop().getSuppliers().get(i).getAddress();
+		}
+		view.getMainmenu().getSupplierTab().setSupplierData(data);
+		view.getMainmenu().getSupplierTab().focusViewSuppliers();
+		view.getMainmenu().getSupplierTab().getViewSupplierTabel().addMouseListener(supplierTableListener);
+		view.getMainmenu().getSupplierTab().getNext().setEnabled(false);
+		view.getMainmenu().getSupplierTab().getPrevious().setEnabled(false);
+		view.getMainmenu().getSupplierTab().getSearch().setEnabled(false);
+	}
+	
+	
+	public void viewProducts(){
+		int current=view.getMainmenu().getSupplierTab().getCurrent();
+		
+		Object data[][]=fillProductsForSupplier(current);
+		view.getMainmenu().getSupplierTab().getSupplierText().setText(model.getShop().getSuppliers().get(current).getName());
+		view.getMainmenu().getSupplierTab().setProductData(data);
+		view.getMainmenu().getSupplierTab().focusViewProducts();
+		
+		view.getMainmenu().getSupplierTab().getNext().setEnabled(true);
+		view.getMainmenu().getSupplierTab().getPrevious().setEnabled(true);
+		view.getMainmenu().getSupplierTab().getSearch().setEnabled(true);
+	}
 	/**
 	 * @param args
 	 * @throws IOException 
