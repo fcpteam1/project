@@ -7,6 +7,7 @@ import java.util.Scanner;
 import GUI.CustomerFormEvent;
 import GUI.CustomerFormPanel;
 import GUI.OrderFormEvent;
+import GUI.SaleFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
 
@@ -17,6 +18,7 @@ public class Shop {
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
+	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private String username, password, choice,customerName,customerNumber,customerAddress,editUserPassword,editUserUsername;
 	private String editCustomerName, editCustomerNumber, editCustomerAddress;
 	private int customerId,tableIndex;
@@ -282,6 +284,10 @@ public class Shop {
 			
 		return stocks;
 	}
+	public ArrayList<Sale> getSales() {
+		return sales;
+	}
+	
 
 
 	public ArrayList<Supplier> getSuppliers() {
@@ -361,6 +367,14 @@ public class Shop {
 		customerFormPanel.setEditDataAddress(editCustomerAddress);
 		System.out.println("Edit address sent");
 	}	
+	
+	public void createSale(SaleFormEvent e) {
+		
+	ArrayList<Stock> stocks = e.getStockList();
+	Customer customer = e.getCustomer();
+	Sale sale = new Sale(stocks, customer);
+	sales.add(sale);
+	}
 	
 	public void createOrder(OrderFormEvent e){
 		ArrayList<Product> products = e.getProducts();
