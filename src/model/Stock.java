@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Stock extends Product {
-	private static ArrayList<Stock> stockList = new ArrayList<>();
+	private static ArrayList<Stock> stockList = new ArrayList<Stock>();
 	private double customerPrice;
 
 	private int quantity;
