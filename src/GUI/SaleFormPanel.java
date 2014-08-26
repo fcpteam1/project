@@ -1,5 +1,6 @@
 package GUI;
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -183,6 +184,8 @@ public class SaleFormPanel extends JPanel {
 						}
 					}
 				}
+				//clear stock list from previous runs
+				saleStockList.clear();
 				//Loop through ordered stock names and link to actual product
 				int i = 0;
 				for(String name: stockNames){

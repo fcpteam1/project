@@ -61,7 +61,8 @@ public class Shop {
 		loadCustomers("CustomerList");
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
-				
+		loadStock("StockList");
+		
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
 		for (User u : users)
@@ -115,6 +116,19 @@ public class Shop {
 		
 	scan2.close();
 	scan1.close();	
+	}
+	
+	public void loadStock(String fileName) throws IOException {
+		
+	Scanner in= new Scanner(new File(fileName));
+		while(in.hasNext()) {
+			String name = in.next();
+			double supplierPrice = in.nextDouble();
+			int quantity = in.nextInt();
+			double customerPrice = in.nextDouble();
+			Stock stock = new Stock(name, supplierPrice, quantity, customerPrice);
+			stocks.add(stock);
+		}
 	}
 		
 	public void loadUsers(String fileName)throws IOException {
