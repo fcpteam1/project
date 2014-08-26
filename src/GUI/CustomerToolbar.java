@@ -18,7 +18,7 @@ public class CustomerToolbar extends JPanel implements ActionListener  {
 		
 		createButton.addActionListener(this);
 		
-		setLayout(new FlowLayout(FlowLayout.CENTER));
+		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		add(createButton);
 			
