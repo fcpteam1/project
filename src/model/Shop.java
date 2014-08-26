@@ -7,6 +7,7 @@ import java.util.Scanner;
 import GUI.CustomerFormEvent;
 import GUI.CustomerFormPanel;
 import GUI.OrderFormEvent;
+import GUI.OrderFormPanel;
 import GUI.SaleFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
@@ -28,6 +29,7 @@ public class Shop {
 	
 	private UserFormPanel userFormPanel ;
 	private CustomerFormPanel customerFormPanel;
+	private OrderFormPanel orderFormPanel;
 	
 	boolean loopAuthentication = true;
 	boolean adminRunning;
@@ -80,6 +82,7 @@ public class Shop {
 		
 		userFormPanel = new UserFormPanel();
 		customerFormPanel = new CustomerFormPanel();
+		orderFormPanel = new OrderFormPanel();
 		
 		loadCustomers("CustomerList");
 		loadUsers("UserList");
@@ -181,30 +184,6 @@ public class Shop {
 			customers.add(customer);
 			}
 	in.close();
-	}
-	
-	//TODO Darren
-	public void viewOrders(){
-		
-	}
-
-	//TODO Darren
-	public void editOrder(){
-		
-	}
-	
-	//TODO Darren
-	public void deleteOrder(){
-		
-	}
-	
-	//TODO Darren
-	public void saleMenu(){
-		
-	}
-	
-	public void orderMenu(){
-		
 	}
 	
 	public ArrayList<User> getUsers(){
@@ -384,16 +363,25 @@ public class Shop {
 		
 	}
 
-	public void editOrder(OrderFormEvent e){
-		
+	public void editOrder(OrderFormEvent e, int id){
+		for(Order order: orders){
+			if(order.getId() == id){
+				order.setProducts(e.getProducts());
+				order.calculatePrice();
+			}
+		}
 	}
 	
-	public void deleteOrder(OrderFormEvent e){
-		
+	public void deleteOrder(int index){
+		orders.remove(index);
+		int newCount = 0;
+		for (Order order : orders){
+			order.setId(newCount++);
+		}
 	}
 
-	public void processOrder(OrderFormEvent e){
-		
+	public void processOrder(int index){
+		orders.get(index).setCurrent(false);
 	}
 	
 	public void setOrders(ArrayList<Order> orders) {

@@ -16,7 +16,6 @@ import javax.swing.JTable;
 import model.Shop;
 import model.User;
 
-
 public class UserTablePanel extends JPanel {
 	
 	private JTable table;
@@ -24,7 +23,6 @@ public class UserTablePanel extends JPanel {
 	private JPopupMenu popup;
 	private UserTableListener userTableListener;
 	private UserFormPanel formPanel ;
-	
 	
 	public UserTablePanel() {
 		
