@@ -21,19 +21,10 @@ public class SaleMainPanel extends JFrame {
 	private SaleTablePanel tablePanel;
 	private Model model;
 	
-	public  SaleMainPanel() throws IOException {
-		
-		super("Sale GUI");
-		setLayout(new BorderLayout());
-		
+	public  SaleMainPanel() throws IOException {		
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
-		
-		add(mainPanel,BorderLayout.CENTER);
-		setSize(1200,500);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
-		
+
 		toolBar = new SaleToolbar();
 		formPanel = new SaleFormPanel();
 		tablePanel = new SaleTablePanel();

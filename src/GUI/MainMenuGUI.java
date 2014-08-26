@@ -46,6 +46,7 @@ public MainMenuGUI() throws IOException{
 		tabbedPane.addTab("Orders", orderTab.getPanel());
 		tabbedPane.addTab("Stock", stockTab.getPanel());
 		tabbedPane.addTab("Sales", saleTab.getPanel());
+		tabbedPane.addTab("Profit & Loss", stockTab.getPanel());
 	
 		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
 		tabbedPane.setIconAt(1, createIcon("/images/user.png"));
@@ -53,6 +54,7 @@ public MainMenuGUI() throws IOException{
 		tabbedPane.setIconAt(3, createIcon("/images/order.png"));
 		tabbedPane.setIconAt(4, createIcon("/images/stock.png"));
 		tabbedPane.setIconAt(5, createIcon("/images/sale.png"));
+		tabbedPane.setIconAt(6, createIcon("/images/profitandloss.png"));
 		
 		c.gridx=0;
 		c.gridy=0;
