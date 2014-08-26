@@ -3,6 +3,7 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -19,8 +20,8 @@ public class StockGUI extends JPanel {
 	private JPanel stockPanel;
 	private Model stockModel;
 	 
-    public StockGUI()
-    {
+    public StockGUI() throws IOException {
+    
     	
             textArea = new JTextArea(5, 20);
             stockPanel= new JPanel ();
