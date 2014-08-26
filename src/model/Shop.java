@@ -218,9 +218,14 @@ public class Shop {
 		String id = e.getId();
 		Boolean admin = e.getAdmin();
 		
-		User user = new User(username, password, admin);
+		User newUser = new User(username, password, admin);
 				
-		users.add(user);
+		users.add(newUser);
+		
+		int newCount = 0;
+		for(User user: users){
+			user.setId(newCount++);
+		}
 	}
 	
 	public void removeUser(int index) {
@@ -228,10 +233,8 @@ public class Shop {
 		int newCount = 0;
 		for(User user: users){
 			user.setId(newCount++);
-			System.out.println("username: " + user.getUsername() + "ID: " + user.getId());
-			
 		}
-		}
+	}
 	
 	public void editUser(int index) {
 		this.tableIndex = index;
@@ -299,8 +302,13 @@ public class Shop {
 		String number = e.getNumber();
 		String address = e.getAddress();
 		
-		Customer customer = new Customer(name, number, address);
-		customers.add(customer);
+		Customer newCustomer = new Customer(name, number, address);
+		customers.add(newCustomer);
+		
+		int newCount = 0;
+		for (Customer customer : customers){
+			customer.setId(newCount++);
+		}
 	}
 	
 	public void removeCustomer(int index) {
