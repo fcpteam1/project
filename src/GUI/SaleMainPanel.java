@@ -62,6 +62,7 @@ public class SaleMainPanel extends JFrame {
 					for (int i=0; i < stockItems.size(); i++) {
 						textPanel.appendText(stockItems.get(i).getName() + "  Quantity: " + stockItems.get(i).getQuantity()+ "\n");
 					}
+				textPanel.appendText("\n------Sale Complete-------\n");
 			}
 		});
 	}
