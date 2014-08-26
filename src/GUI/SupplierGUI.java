@@ -5,9 +5,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -16,10 +18,14 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 
 public class SupplierGUI  {
 
+	
+	
+	
 	private JPanel showPanel,buttonsPanel,tablePanel,borderPanel,nextPrevPanel,supplierTextPanel,holder;
 	private JTable viewSupplierTabel;
 	private JScrollPane viewScroll;
@@ -28,20 +34,40 @@ public class SupplierGUI  {
 	
 	private JButton search,next,previous,supplierButton,productButton;
 	private JTextField searchText,supplierText;
-	private JMenuItem viewProducts;
+	private JMenuItem viewProducts,editSupplier,addProducts;
 	private JPopupMenu viewProductsPopup;
+	
+	
+	//add products
+	private JPanel addProductsPanel;
+	private JTextField productName,supplierPrice;
+	private JLabel productNameLabel,supplierPriceLabel;
+	private JButton addProduct,exitProductPanel;
+	
+	// edit supplier name etc
+	private JPanel editSupplierPanel;
+	private JTextField supplierName,supplierPhone,supplierAddress;
+	private JButton editSupName,editSupPhone,editSupAddress,exitEditPanel;
+	private JLabel editNameLabel,editPhoneLabel,editAddressLabel;
+	
 	
 	boolean supplier;
 	int current=0;
 	public SupplierGUI() {
 		// TODO Auto-generated constructor stub
 		
+		addNewProducts();
+		editSupplier();
 		supplierNames=new String[]{"Name","Id","Phone","Address"};
 		productNames=new String[]{"Name","Id","Supplier Price"};
 		
 		viewProducts=new JMenuItem("View Supplier Products");
+		editSupplier=new JMenuItem("Edit Supplier");
+		addProducts=new JMenuItem("Add Product");
 		viewProductsPopup=new JPopupMenu();
 		viewProductsPopup.add(viewProducts);
+		viewProductsPopup.add(editSupplier);
+		viewProductsPopup.add(addProducts);
 		
 		showPanel=new JPanel();
 		showPanel.setLayout(new GridBagLayout());
@@ -302,6 +328,162 @@ public class SupplierGUI  {
 		
 	}
 
+	
+	public void addNewProducts(){
+		addProductsPanel=new JPanel();
+		
+		JPanel namePanel=new JPanel();
+		JPanel pricePanel=new JPanel();
+		
+		addProductsPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c=new GridBagConstraints();
+		
+		productName=new JTextField(15);
+		supplierPrice=new JTextField(15);
+		productNameLabel=new JLabel("New Product Name");
+		supplierPriceLabel=new JLabel("Supplier Price");
+		addProduct=new JButton("Add Product");
+		exitProductPanel=new JButton("Exit Panel");
+		
+		
+		Border titleBorder=BorderFactory.createTitledBorder("New Product");
+		
+		addProductsPanel.setBorder(titleBorder);
+		/*addProductsPanel.add(productNameLabel);
+		addProductsPanel.add(productName);
+		addProductsPanel.add(supplierPriceLabel);
+		addProductsPanel.add(supplierPrice);
+		addProductsPanel.add(exitProductPanel);
+		addProductsPanel.add(addProduct);*/
+		
+		c.gridx=0;
+		c.gridy=0;
+		c.gridheight=1;
+		c.gridwidth=1;
+		c.weightx=1;
+		c.weighty=1;
+		c.anchor=GridBagConstraints.WEST;
+		addProductsPanel.add(productNameLabel,c);
+		
+		c.gridx=1;
+		c.gridy=0;
+		c.anchor=GridBagConstraints.EAST;
+		addProductsPanel.add(productName,c);
+		
+		c.gridx=0;
+		c.gridy=1;
+		c.anchor=GridBagConstraints.WEST;
+		addProductsPanel.add(supplierPriceLabel,c);
+		
+		c.gridx=1;
+		c.gridy=1;
+		c.anchor=GridBagConstraints.EAST;
+		addProductsPanel.add(supplierPrice,c);
+		
+		c.gridx=0;
+		c.gridy=2;
+		c.anchor=GridBagConstraints.WEST;
+		addProductsPanel.add(exitProductPanel,c);
+		
+		c.gridx=1;
+		c.gridy=2;
+		c.anchor=GridBagConstraints.EAST;
+		addProductsPanel.add(addProduct,c);
+		
+	}
+	
+	public void editSupplier(){
+		
+		editSupplierPanel=new JPanel();
+		editSupplierPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c=new GridBagConstraints();
+		
+		JPanel editPanel=new JPanel();
+		editPanel.setLayout(new GridBagLayout());
+		
+		supplierName=new JTextField(15);
+		supplierPhone=new JTextField(15);
+		supplierAddress=new JTextField(15);
+		
+		editSupName=new JButton("Edit Name");
+		editSupPhone=new JButton("Edit Phone");
+		editSupAddress=new JButton("Edit Address");
+		exitEditPanel=new JButton("Exit Panel");
+		
+		editNameLabel=new JLabel("New Name");
+		editPhoneLabel=new JLabel("New Phone");
+		editAddressLabel=new JLabel("New Address");
+		
+		Border titleBorder=BorderFactory.createTitledBorder("Edit Supplier");
+		editSupplierPanel.setBorder(titleBorder);
+		
+		
+		c.gridx=0;
+		c.gridy=0;
+		c.gridheight=1;
+		c.gridwidth=1;
+		c.weightx=1;
+		c.weighty=1;
+		c.anchor=GridBagConstraints.WEST;
+		editPanel.add(editNameLabel,c);
+		
+		c.gridx=1;
+		c.gridy=0;
+		c.anchor=GridBagConstraints.CENTER;
+		editPanel.add(supplierName,c);
+		
+		c.gridx=2;
+		c.gridy=0;
+		c.anchor=GridBagConstraints.EAST;
+		editPanel.add(editSupName,c);
+		
+		c.gridx=0;
+		c.gridy=1;
+		c.anchor=GridBagConstraints.WEST;
+		editPanel.add(editPhoneLabel,c);
+		
+		c.gridx=1;
+		c.gridy=1;
+		c.anchor=GridBagConstraints.CENTER;
+		editPanel.add(supplierPhone,c);
+		
+		c.gridx=2;
+		c.gridy=1;
+		c.anchor=GridBagConstraints.EAST;
+		editPanel.add(editSupPhone,c);
+		
+		c.gridx=0;
+		c.gridy=2;
+		c.anchor=GridBagConstraints.WEST;
+		editPanel.add(editAddressLabel,c);
+		
+		c.gridx=1;
+		c.gridy=2;
+		c.anchor=GridBagConstraints.CENTER;
+		editPanel.add(supplierAddress,c);
+		
+		c.gridx=2;
+		c.gridy=2;
+		c.anchor=GridBagConstraints.EAST;
+		editPanel.add(editSupAddress,c);
+		
+		
+		
+		c.gridx=0;
+		c.gridy=0;
+		c.gridwidth=3;
+		c.gridheight=2;
+		c.anchor=GridBagConstraints.CENTER;
+		editSupplierPanel.add(editPanel,c);
+		
+		c.gridx=0;
+		c.gridy=2;
+		c.gridwidth=1;
+		c.gridheight=1;
+		c.anchor=GridBagConstraints.WEST;
+		editSupplierPanel.add(exitEditPanel,c);
+		
+	}
 
 	public int getCurrent() {
 		return current;
@@ -443,6 +625,62 @@ public class SupplierGUI  {
 	public void setViewProducts(JMenuItem viewProducts) {
 		this.viewProducts = viewProducts;
 	}
+
+
+	public JMenuItem getEditSupplier() {
+		return editSupplier;
+	}
+
+
+	public void setEditSupplier(JMenuItem editSupplier) {
+		this.editSupplier = editSupplier;
+	}
+	
+	public void showAddProductPanel(){
+		
+		tablePanel.add(addProductsPanel,BorderLayout.WEST);
+		tablePanel.validate();
+		tablePanel.repaint();
+		
+	
+	}
+	
+	public void removeAddProductsPanel(){
+		
+		tablePanel.remove(addProductsPanel);
+		tablePanel.validate();
+		tablePanel.repaint();
+	}
+
+	
+	public void showEditPanel(){
+		tablePanel.remove(1);
+		tablePanel.add(editSupplierPanel,BorderLayout.WEST);
+		tablePanel.validate();
+		tablePanel.repaint();
+	}
+	
+	public void removeEditPanel(){
+		
+		tablePanel.remove(editSupplierPanel);
+		tablePanel.validate();
+		tablePanel.repaint();
+	}
+
+	public JMenuItem getAddProducts() {
+		return addProducts;
+	}
+
+
+	public void setAddProducts(JMenuItem addProducts) {
+		this.addProducts = addProducts;
+	}
+
+
+	public JButton getExitProductPanel() {
+		return exitProductPanel;
+	}
+	
 	
 	
 	

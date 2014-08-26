@@ -16,7 +16,8 @@ public class Controller {
 	private ActionListener btnSubmitNewCustomer, btnViewCustomers, btnAddCustomer;
 	
 	private MouseAdapter supplierTableListener;
-	private ActionListener menuViewSupplier;
+	private ActionListener menuViewSupplier,menuEditSupplier,menuAddProduct;
+	private ActionListener exitProductPanel;
 	
 	public Controller() throws IOException {
 		// TODO Auto-generated constructor stub
@@ -45,14 +46,17 @@ public class Controller {
 				
 				System.out.println("Username "+username+",password "+pass);
 				boolean correctUser=false;
+				boolean admin=false;
 				for(User user : model.getShop().getUsers()){
 					if(username.equals(user.getUsername()) && pass.equals(user.getPassword())){
 						correctUser=true;
+						admin=user.isAdmin();
 						break;
 					}	
 				}
 				if(correctUser){
 					view.changeToMaineMenu();
+					view.getMainmenu().addTabs(admin);
 				}
 				else
 					System.out.println("Not a valid user");
@@ -70,7 +74,7 @@ public class Controller {
 			
 			public void actionPerformed(ActionEvent e){
 				view.logout();
-				
+				view.getMainmenu().removeTabs();
 			}
 			
 		};
@@ -198,6 +202,30 @@ public class Controller {
 			}
 			
 		};
+		
+		menuEditSupplier=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				view.getMainmenu().getSupplierTab().showEditPanel();
+				
+			}
+			
+		};
+		
+		menuAddProduct=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				view.getMainmenu().getSupplierTab().showAddProductPanel();
+				
+			}
+			
+		};
+		
+		exitProductPanel=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				view.getMainmenu().getSupplierTab().removeAddProductsPanel();
+				
+			}
+			
+		};
 	}
 
 		
@@ -232,6 +260,10 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().getSearch().addActionListener(searchSupplier);
 		view.getMainmenu().getSupplierTab().getViewSupplierTabel().addMouseListener(supplierTableListener);
 		view.getMainmenu().getSupplierTab().getViewProducts().addActionListener(menuViewSupplier);
+		view.getMainmenu().getSupplierTab().getEditSupplier().addActionListener(menuEditSupplier);
+		view.getMainmenu().getSupplierTab().getAddProducts().addActionListener(menuAddProduct);
+		view.getMainmenu().getSupplierTab().getExitProductPanel().addActionListener(exitProductPanel);
+		
 		
 	}
 	

@@ -24,6 +24,8 @@ public class MainMenuGUI {
 	private StockGUI stockTab;
 	private SaleController saleTab;
 	
+	private boolean adminLogged=false;
+	
 public MainMenuGUI() throws IOException{
 		
 		framePanel=new JPanel();
@@ -39,7 +41,7 @@ public MainMenuGUI() throws IOException{
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
 		saleTab = new SaleController();
-	
+	/*
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
 		tabbedPane.addTab("Supplier",supplierTab.getMain());
@@ -53,7 +55,7 @@ public MainMenuGUI() throws IOException{
 		tabbedPane.setIconAt(3, createIcon("/images/order.png"));
 		tabbedPane.setIconAt(4, createIcon("/images/stock.png"));
 		tabbedPane.setIconAt(5, createIcon("/images/sale.png"));
-		
+		*/
 		c.gridx=0;
 		c.gridy=0;
 		c.gridheight=2;
@@ -154,4 +156,58 @@ private ImageIcon createIcon(String path) {
 	return icon;
 
 }
+
+public void addTabs(boolean admin){
+	
+	adminLogged=admin;
+	
+	if(admin){
+		tabbedPane.addTab("Customers",customerTab.getPanel());
+		tabbedPane.addTab("Users",userTab.getPanel());
+		tabbedPane.addTab("Supplier",supplierTab.getMain());
+		tabbedPane.addTab("Orders", orderTab.getPanel());
+		tabbedPane.addTab("Stock", stockTab.getPanel());
+		tabbedPane.addTab("Sales", saleTab.getPanel());
+	
+		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
+		tabbedPane.setIconAt(1, createIcon("/images/user.png"));
+		tabbedPane.setIconAt(2, createIcon("/images/supplier.png"));
+		tabbedPane.setIconAt(3, createIcon("/images/order.png"));
+		tabbedPane.setIconAt(4, createIcon("/images/stock.png"));
+		tabbedPane.setIconAt(5, createIcon("/images/sale.png"));
+	}
+	else{
+		tabbedPane.addTab("Customers",customerTab.getPanel());
+		//tabbedPane.addTab("Users",userTab.getPanel());
+		tabbedPane.addTab("Supplier",supplierTab.getMain());
+		//tabbedPane.addTab("Orders", orderTab.getPanel());
+		tabbedPane.addTab("Stock", stockTab.getPanel());
+		tabbedPane.addTab("Sales", saleTab.getPanel());
+	
+		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
+		//tabbedPane.setIconAt(1, createIcon("/images/user.png"));
+		tabbedPane.setIconAt(1, createIcon("/images/supplier.png"));
+		//tabbedPane.setIconAt(3, createIcon("/images/order.png"));
+		tabbedPane.setIconAt(2, createIcon("/images/stock.png"));
+		tabbedPane.setIconAt(3, createIcon("/images/sale.png"));
+	}
+	
+}
+
+public void removeTabs(){
+	tabbedPane.removeAll();
+}
+
+public boolean isAdminLogged() {
+	return adminLogged;
+}
+
+public void setAdminLogged(boolean adminLogged) {
+	this.adminLogged = adminLogged;
+}
+
+	
+
+	
+
 }
