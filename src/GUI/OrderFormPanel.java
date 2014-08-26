@@ -172,6 +172,7 @@ public class OrderFormPanel extends JPanel {
 		
 		orderButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				orderProducts.clear();
 				ArrayList<Integer> quantities = new ArrayList<Integer>();
 				ArrayList<String> productNames = new ArrayList<String>();
 				//Get ordered products and associated quantities
