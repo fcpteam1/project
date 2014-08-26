@@ -1,3 +1,4 @@
+
 package GUI;
 import java.awt.FlowLayout;
 import java.awt.event.*;
@@ -56,3 +57,4 @@ public class SaleToolbar extends JPanel implements ActionListener
 	}
 
 }
+

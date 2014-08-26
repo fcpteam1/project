@@ -1,3 +1,4 @@
+
 package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -224,4 +225,5 @@ public class SaleFormPanel extends JPanel {
 	
 	
 }
+
 

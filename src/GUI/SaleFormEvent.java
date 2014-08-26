@@ -1,3 +1,4 @@
+
 package GUI;
 import java.util.ArrayList;
 import java.util.EventObject;
@@ -46,3 +47,5 @@ public class SaleFormEvent extends EventObject{
 	}
 	
 }
+
+

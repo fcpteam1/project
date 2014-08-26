@@ -1,14 +1,15 @@
 package model;
-import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import GUI.CustomerFormEvent;
+import GUI.CustomerFormPanel;
 import GUI.OrderFormEvent;
 import GUI.SaleFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
-import GUI.UserTableModel;
 
 public class Shop {
 	
@@ -18,27 +19,27 @@ public class Shop {
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
-	private String username, password, choice,customerName,customerNumber,customerAddress;
+	private String username, password, choice,customerName,customerNumber,customerAddress,editUserPassword,editUserUsername;
+	private String editCustomerName, editCustomerNumber, editCustomerAddress;
 	private int customerId,tableIndex;
 	private Scanner input = new Scanner(System.in);
 	private Scanner input2 = new Scanner(System.in);
 	private Scanner input3 = new Scanner(System.in);
 	
-	private UserFormPanel formPanel ;
+	private UserFormPanel userFormPanel ;
+	private CustomerFormPanel customerFormPanel;
 	
 	boolean loopAuthentication = true;
 	boolean adminRunning;
 	boolean userRunning;
 	boolean loginCorrect;
-	boolean createCustomerRun = true;
 	
-	private String editUserUsername;
-	public String getEditUserUsername() {
-		return editUserUsername;
-	}
-
 	public void setEditUserUsername(String editUserUsername) {
 		this.editUserUsername = editUserUsername;
+	}
+	
+	public String getEditUserUsername() {
+		return editUserUsername;
 	}
 
 	public String getEditUserPassword() {
@@ -48,19 +49,42 @@ public class Shop {
 	public void setEditUserPassword(String editUserPassword) {
 		this.editUserPassword = editUserPassword;
 	}
+	
+	public String getEditCustomerName() {
+		return editCustomerName;
+	}
 
-	private String editUserPassword;
+	public void setEditCustomerName(String editCustomerName) {
+		this.editCustomerName = editCustomerName;
+	}
+
+	public String getEditCustomerNumber() {
+		return editCustomerNumber;
+	}
+
+	public void setEditCustomerNumber(String editCustomerNumber) {
+		this.editCustomerNumber = editCustomerNumber;
+	}
+
+	public String getEditCustomerAddress() {
+		return editCustomerAddress;
+	}
+
+	public void setEditCustomerAddress(String editCustomerAddress) {
+		this.editCustomerAddress = editCustomerAddress;
+	}
 
 	private static Shop ShopInstance=null;
 	
-	
 	public Shop() throws IOException{
 		
-		formPanel = new UserFormPanel();
+		userFormPanel = new UserFormPanel();
+		customerFormPanel = new CustomerFormPanel();
 		
 		loadCustomers("CustomerList");
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
+		loadStock("StockList");
 				
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
@@ -68,11 +92,12 @@ public class Shop {
 		System.out.println((u.getUsername() + ", " + u.getId()));
 		for (Supplier s : suppliers)
 		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
+		}
 	
 			//checkLogin();
 			//mainMenu();
 	
-	}
+	
 	
 	public static Shop getInstance() throws IOException{
 		
@@ -139,537 +164,47 @@ public class Shop {
 			int id = in.nextInt();
 			String number = in.next();
 			String address = in.next();
-			Customer customer = new Customer(name, id, number, address);
+			Customer customer = new Customer(name, number, address);
 			customers.add(customer);
 			}
 	in.close();
 	}
 	
-	public void checkLogin(){
-		while(loopAuthentication == true){
-			System.out.println("\nPlease enter your Username: ");
-				username = input.nextLine();
-				System.out.println("Please enter your Password: ");
-				password = input.nextLine(); 
-				for(User user: users){
-					if((username.equals(user.getUsername())) && (password.equals(user.getPassword()))){
-						loginCorrect = true;
-						System.out.println("login name and password correct");
-						if((loginCorrect == true && (user.isAdmin() == true))){
-							System.out.println("Admin Logged in");
-							adminRunning = true;
-							userRunning = false;
-							loopAuthentication = false;
-						}
-						else if((loginCorrect == true && (user.isAdmin() == false))){
-							System.out.println("User Logged in");
-							adminRunning = false;
-							userRunning = true;
-							loopAuthentication = false;
-						}
-					}
-				}
-				if (loginCorrect == false){
-						System.out.println("Inccorect Login");
-						adminRunning = false;
-						userRunning = false;
-				}
-		}
-	}
-	
-	public void mainMenu(){
-		while (adminRunning){
-			System.out.println("\nMain Menu\n\n(1) Customers\n(2) Suppliers\n(3) Products\n(4) Stock\n(5) Orders\n(6) Sales\n(7) Invoices\n(8) Profit and Loss\n(9) Users\n(0) Logout");
-			choice = input.nextLine();
-			if(choice.equals("1")){
-				System.out.println("Customer Selected\n");
-				customerMenu();
-				break;
-			}else if(choice.equals("2")){
-				System.out.println("Suppliers Selected\n");
-				supplierMenu();
-				break;
-			}else if(choice.equals("3")){
-				System.out.println("Product Selected\n");
-				break;
-			}else if(choice.equals("4")){
-				System.out.println("Stock Selected\n");
-				break;
-			}else if(choice.equals("5")){
-				System.out.println("Orders Selected\n");
-				orderMenu();
-				break;
-			}else if(choice.equals("6")){
-				System.out.println("Sales Selected\n");
-				break;
-			}else if(choice.equals("7")){
-				System.out.println("Invoices Selected\n");
-				break;
-			}else if(choice.equals("8")){
-				System.out.println("Profit and Loss Selected\n");
-				break;
-			}else if(choice.equals("9")){
-				System.out.println("Users Selected\n");
-				AdminUserMenu();
-				break;
-			}else if(choice.equals("0")){
-				System.out.println("Logout Selected\n");
-				adminRunning = false;
-				loopAuthentication = true;
-				checkLogin();
-			}else {
-				System.out.println("\nIncorrect Input!! Please try again");
-			}
-		}
-		while (userRunning){
-			System.out.println("\nMain Menu\n\n(1) Customers\n(2) Suppliers\n(3) Products\n(4) Stock\n(5) Sales\n(6) Logout");
-			choice = input.nextLine();
-			if(choice.equals("1")){
-				System.out.println("Customer Selected");
-				customerMenu();
-				break;
-			}else if(choice.equals("2")){
-				System.out.println("Suppliers Selected");
-				supplierMenu();
-				break;
-			}else if(choice.equals("3")){
-				System.out.println("Product Selected");
-				break;
-			}else if(choice.equals("4")){
-				System.out.println("Stock Selected");
-				break;
-			}else if(choice.equals("5")){
-				System.out.println("Sales Selected");
-				break;
-			}else if(choice.equals("6")){
-				System.out.println("Logout Selected");
-				userRunning = false;
-				loopAuthentication = true;
-				checkLogin();
-			}else {
-				System.out.println("/nIncorrect Input!! Pleae try again");
-			}
-		}
-	}
-	
-	
-	public void AdminUserMenu(){
-		
-		boolean stayInUserMenu=true;
-		int option=0;
-		
-		while(stayInUserMenu){
-			option=0;
-			while( (option!=1) && (option!=2) && (option!=3) && (option!=4) && (option!=5) ){
-				System.out.println("\nWhat would you like to do\n(1) Create new User\n(2) Delete User\n(3) Edit User\n(4) List Users\n(5) Exit");
-				option=input.nextInt();
-				
-			}
-			
-			switch(option){
-			
-			case(1):
-				System.out.println("\nCreate User");
-				createUser();
-				break;
-			case(2):
-				System.out.println("\nDelete User");
-				deleteUser();
-				break;
-			case(3):
-				System.out.println("\nUpdate User");
-				updateUser();
-				break;
-			case(4):
-				System.out.println("\nList Users");
-				listUsers();
-				break;
-			case(5):
-				stayInUserMenu=false;
-				break;
-			
-			}
-			
-		}
-		
+	//TODO Darren
+	public void viewOrders(){
 		
 	}
-	
-	public boolean createUser(){
-		
-		String username="";
-		String password="";
-		String password1="";
-		
-		System.out.println("\nPrint username");
-		username=input.next();
-		System.out.println("\nPrint password");
-		password=input.next();
-		
-		System.out.println("\nReprint password");
-		password1=input.next();
-		
-		if(password.equals(password1))
-		{
-			String admin="";
-			System.out.println("\nIs user an admin ( Y or N )");
-			admin=input.next();
-			if(admin.charAt(0)=='y')
-				users.add(new User(username,password,true));
-			else
-				users.add(new User(username,password,false));
-		}
-		else
-			System.out.println("\nPasswords don't match");
-		
-		
-		return true;
-	}
-		
-	public boolean deleteUser(){
-		
-		String username="";
-		boolean foundUser=false;
-		int userIndex=0;
-		
-		System.out.println("\nWhich user would you like to delete (Select by user name)");
-		username=input.next();
-		
-		for(User user : users){
-			
-			if(user.getUsername().equals(username)){
-				foundUser=true;
-				break;
-			}
-			userIndex++;
-		}
-		
-		if(foundUser==true)
-			users.remove(userIndex);
-		
-		else
-			System.out.println("\nCould not find user");
-		
-		
-		return true;
-	}
-	
-	public boolean listUsers(){
-		
-		for(User user : users){
-			System.out.println("\n"+user.getUsername()+" "+user.getPassword()+" "+user.getId());
-		}
-		
-		return true;
-	}
-	
-	public boolean updateUser(){
-		
-		String username="";
-		int option=0;
-		int userIndex=0;
-		boolean userFound=false;
-		
-		System.out.println("\nWhich user would you like to change");
-		username=input.next();
-		
-		for(User user : users){
-			
-			if(user.getUsername().equals(username)){
-				userFound=true;
-				break;
-			}
-			userIndex++;
-		}
-		if(userFound){
-			
-			while( (option!=1) && (option!=2) ){
-				System.out.println("\n(1) Edit username\n(2) Edit password");
-				option=input.nextInt();
-			}
-			
-			if(option==1){
-				String usernameChange="";
-				System.out.println("\n Change username to: ");
-				usernameChange=input.next();
-				users.get(userIndex).setUsername(usernameChange);
-				System.out.println("User name changed !!");
-				
-			}
-			
-			if(option==2){
-				String passwordChange="";
-				String passwordChange1="";
-				System.out.println("\n Change password to: ");
-				passwordChange=input.next();
-				System.out.println("\n Change username to: ");
-				passwordChange1=input.next();
-				
-				if(passwordChange.equals(passwordChange1)){
-					users.get(userIndex).setPassword(passwordChange);
-					System.out.println("\nPassword Updated");
-				}
-				else
-					System.out.println("\nPassword didn't match");
-				
-				
-			}
-			
-		}
-		else
-			System.out.println("\nCould Not find User");
-		
-		return true;
-	}
-	
-	public void customerMenu(){
-		while (adminRunning){
-			System.out.println("\nCustomer Menu\n\n(1) View Customers\n(2) Create Customers\n(3) Edit Customers\n(4) Delete Customers\n(5) Exit");
-			choice = input.nextLine();
-			if(choice.equals("1")){
-				for (Customer customer: customers){
-					System.out.println("\nCustomer: " + customer.getName() + "\nId: " + customer.getId() + "\nNumber: " + customer.getNumber() + "\nAddress: " + customer.getAddress());
-				}
-				customerMenu();
-				break;
-		}
-			if(choice.equals("2")){
-				createNewCustomer();
-				break;
-			}
-			if(choice.equals("3")){
-				editCustomer();
-				break;
-			}
-			if(choice.equals("4")){
-				deleteCustomer();
-				break;
-			}
-		}
-		while (userRunning){
-			System.out.println("\nCustomer Menu\n\n(1) View Customers\n(2) Create Customers\n(3) Edit Customers\n(4) Exit");
-			choice = input.nextLine();
-			if(choice.equals("1")){
-				for (Customer customer: customers){
-					System.out.println("\nCustomer: " + customer.getName() + "\nId: " + customer.getId() + "\nNumber: " + customer.getNumber() + "\nAddress: " + customer.getAddress());
-				}
-			customerMenu();
-			break;
-			}
-			if(choice.equals("2")){
-				createNewCustomer();
-				customerMenu();
-				break;
-			}
-			if(choice.equals("3")){
-				editCustomer();
-				break;
-			}
-		}
-		}
-	
-	public void supplierMenu(){
-		int option=0;
-		boolean stayInMenu=true;
-		
-		while(stayInMenu){
-			
-			option=0;
-			while( (option!=1) && (option!=2) && (option!=3)){
-				System.out.println("\n(1) View Suppliers\n(2) View Supplier Products\n(3) Exit");
-				option=input.nextInt();
-			}
-		
-			switch(option){
-			case(1):
-				System.out.println("\nDisplay Suppliers");
-				listSuppliers();
-				break;
-			case(2):
-				System.out.println("\nDisplay supplier products");
-				listSupplierProducts();
-				break;
-			case(3):
-				System.out.println("\nExit supplier menu");
-				stayInMenu=false;
-			
-			}
-		
-		}
-		
-	}
-	
-	public boolean listSuppliers(){
-		for(Supplier supplier : suppliers){
-			System.out.println("\n"+supplier.getName()+ " "+supplier.getNumber()+ "\n"+supplier.getAddress());
-			
-		}
-		return true;
-	}
-	
-	public boolean listSupplierProducts(){
-		
-		String supName="";
-		boolean foundSup=false;
-		int index=0;
-		
-		System.out.println("\nWhich supplier product list would you like");
-		supName=input.next();
-		
-		for(Supplier supplier : suppliers){
-			
-			if(supplier.getName().equals(supName)){
-				foundSup=true;
-				break;
-			}
-			index++;
-		}
-		
-		if(foundSup){
-			
-			for(Product product : suppliers.get(index).getProducts()){
-				System.out.println(""+product.getName()+" "+product.getSupplierPrice());
-			}
-			
-		}
-		else
-			System.out.println("\nCould not find supplier");
-		
-		return true;
-	}
-	
-	public void createNewCustomer(){
-		System.out.println("Please enter customer name: ");
-		customerName = input.nextLine();
-		System.out.println("Please enter customer id: ");
-		customerId = input.nextInt();
-		System.out.println("Please enter Customer number: ");
-		customerNumber = input2.nextLine();
-		System.out.println("Please enter Customer address: ");
-		customerAddress = input3.nextLine();
-		
-		int customerSize = customers.size();
-		int size = 1;
-		boolean check = false; 
-		while(createCustomerRun == true){
-			for(Customer customer  : customers){
-				if(customerName.equals(customer.getName()) && (customerAddress.equals(customer.getAddress()))){
-					System.out.println("Already a Customer!!");
-					customerMenu();
-					break;
-				}
-				else if(customerSize == size){
-					check = true;
-				}
-				size++;
-			}
-			if(check){
-				customers.add(new Customer(customerName,customerId,customerNumber,customerAddress));
-				createCustomerRun = false;
-				System.out.println("Customer added.");
-				createCustomerRun = false;
-			}
-			
-		}
-		
-	}
-	
-	public boolean editCustomer(){
-		
-		String customerName="";
-		int option=0;
-		int customerIndex=0;
-		boolean customerFound=false;
-		
-		System.out.println("\nWhich customer would you like to change");
-		customerName=input.next();
-		
-		for(Customer customer : customers){
-			
-			if(customer.getName().equals(customerName)){
-				customerFound=true;
-				break;
-			}
-			customerIndex++;
-		}
-		if(customerFound){
-			
-			while( (option!=1) && (option!=2) && (option!=3) && (option!=4) ){
-				System.out.println("\n(1) Edit name\n(2) Edit id\n(3) Edit Number\n(4) Edit address");
-				option=input.nextInt();
-			}
-			
-			if(option==1){
-				String nameChange="";
-				System.out.println("\nChange name to: ");
-				nameChange=input.next();
-				customers.get(customerIndex).setName(nameChange);
-				System.out.println("Customer name changed !!");
-				customerMenu();
-			}
-			
-			if(option==2){
-				int idChange;
-				System.out.println("\nChange id to: ");
-				idChange=input.nextInt();
-				customers.get(customerIndex).setId(idChange);
-				System.out.println("\nPassword Updated");
-				customerMenu();
-			}
-			
-			if(option==3){
-				String numberChange="";
-				System.out.println("\nChange number to: ");
-				numberChange=input.next();
-				customers.get(customerIndex).setNumber(numberChange);
-				System.out.println("Customer number changed !!");
-				customerMenu();
-				
-			}
-			
-			if(option==4){
-				String addressChange="";
-				System.out.println("\nChange address to: ");
-				addressChange=input.nextLine();
-				customers.get(customerIndex).setAddress(addressChange);
-				System.out.println("Customer address changed !!");
-				customerMenu();
-				
-			}	
-		}				
 
-		else
-			System.out.println("\nCould Not find Customer");
-		customerMenu();
-		return true;
+	//TODO Darren
+	public void editOrder(){
+		
 	}
 	
-	public boolean deleteCustomer(){
+	//TODO Darren
+	public void deleteOrder(){
 		
-		String customerName="";
-		boolean foundCustomer=false;
-		int customerIndex=0;
-		
-		System.out.println("\nWhich customer would you like to delete (Select by customer name)");
-		customerName=input.next();
-		
-		for(Customer customer : customers){
-			
-			if(customer.getName().equals(customerName)){
-				foundCustomer=true;
-				break;
-			}
-			customerIndex++;
-		}
-		
-		if(foundCustomer==true)
-			customers.remove(customerIndex);
-		
-		else
-			System.out.println("\nCould not find customer");
-		customerMenu();
-		return true;
 	}
+	
+	//TODO Darren
+	public void saleMenu(){
+		
+	}
+	public void loadStock(String fileName) throws IOException {
+		
+		Scanner in= new Scanner(new File(fileName));
+			while(in.hasNext()){
+				String name = in.next();
+				double supplierPrice = in.nextDouble();
+				int quantity = in.nextInt();
+				double customerPrice = in.nextDouble();
+				Stock stock = new Stock(name, supplierPrice, quantity, customerPrice);
+				stocks.add(stock);
+				}
+		in.close();
+		}
+	
+	
+	
 	
 	public void orderMenu(){
 		
@@ -685,9 +220,14 @@ public class Shop {
 		String id = e.getId();
 		Boolean admin = e.getAdmin();
 		
-		User user = new User(username, password, admin);
+		User newUser = new User(username, password, admin);
 				
-		users.add(user);
+		users.add(newUser);
+		
+		int newCount = 0;
+		for(User user: users){
+			user.setId(newCount++);
+		}
 	}
 	
 	public void removeUser(int index) {
@@ -695,11 +235,8 @@ public class Shop {
 		int newCount = 0;
 		for(User user: users){
 			user.setId(newCount++);
-			System.out.println("username: " + user.getUsername() + "ID: " + user.getId());
-			
 		}
-		}
-	
+	}
 	
 	public void editUser(int index) {
 		this.tableIndex = index;
@@ -728,6 +265,15 @@ public class Shop {
 			}
 		}
 	}
+	
+	public void sendEditUsername(){
+		userFormPanel.setEditDataUsername(editUserUsername);
+	}
+	
+	public void sendEditPassword(String editUserPassword){
+		userFormPanel.setEditDataPassword(editUserPassword);
+	}
+	
 
 	
 	public ArrayList<Order> getOrders() {
@@ -735,6 +281,7 @@ public class Shop {
 	}
 	
 	public ArrayList<Stock> getStock() {
+			
 		return stocks;
 	}
 	public ArrayList<Sale> getSales() {
@@ -743,14 +290,6 @@ public class Shop {
 	
 
 
-	public void sendEditUsername(){
-		formPanel.setEditDataUsername(editUserUsername);
-	}
-	
-	public void sendEditPassword(String editUserPassword){
-		formPanel.setEditDataPassword(editUserPassword);
-	}
-	
 	public ArrayList<Supplier> getSuppliers() {
 		return suppliers;
 	}
@@ -762,6 +301,72 @@ public class Shop {
 	public ArrayList<Customer> getCustomers() {
 		return customers;
 	}
+	
+
+	public void addCustomer(CustomerFormEvent e) {
+		String name = e.getName();
+		String number = e.getNumber();
+		String address = e.getAddress();
+		
+		Customer newCustomer = new Customer(name, number, address);
+		customers.add(newCustomer);
+		
+		int newCount = 0;
+		for (Customer customer : customers){
+			customer.setId(newCount++);
+		}
+	}
+	
+	public void removeCustomer(int index) {
+		customers.remove(index);
+		int newCount = 0;
+		for (Customer customer : customers){
+			customer.setId(newCount++);
+		}
+	}
+	
+	public void editCustomer(int index) {
+		this.tableIndex = index;
+		for (Customer customer: customers){
+			if(customer.getId() == (index)){
+				editCustomerName = customer.getName();
+				editCustomerNumber = customer.getNumber();
+				editCustomerAddress = customer.getAddress();
+			}
+		}
+	}
+	
+	public void NewEditCustomer(CustomerFormEvent ee) {
+		String name = ee.getName();
+		String number = ee.getNumber();
+		int id = tableIndex;
+		String address = ee.getAddress();
+		
+		for (Customer customer: customers){
+			if(customer.getId() == (tableIndex)){
+				customer.setName(name);
+				customer.setNumber(number);
+				customer.setId(id);
+				customer.setAddress(address);
+				
+				System.out.println(name + number + id + address);
+			}
+		}
+	}
+
+	public void sendCustomerEditName(String editCustomerName){
+		customerFormPanel.setEditDataName(editCustomerName);
+		System.out.println("Edit name sent");
+	}
+	
+	public void sendCustomerEditNumber(String editCustomerNumber){
+		customerFormPanel.setEditDataNumber(editCustomerNumber);
+		System.out.println("Edit number sent");
+	}
+	public void sendCustomerEditAddress(String editCustomerAddress){
+		customerFormPanel.setEditDataAddress(editCustomerAddress);
+		System.out.println("Edit address sent");
+	}	
 	
 	public void createSale(SaleFormEvent e) {
 		
@@ -798,5 +403,10 @@ public class Shop {
 		this.orders = orders;
 	}
 	
+	private void stockLevels() {
+		// TODO Auto-generated method stub
+		
+	}
 }
+	
 

@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Stock extends Product {
-	private static ArrayList<Stock> stockList;
-	private Model stockModel;
+	private static ArrayList<Stock> stockList = new ArrayList<>();
 	private double customerPrice;
 
 	private int quantity;
@@ -17,11 +16,11 @@ public class Stock extends Product {
 	private DateFormat format = DateFormat.getDateInstance();
 	private static boolean inStock= false;
 	private Product product;
+	private static Model stockModel;
 
 	
 	public Stock() {
 		super();
-		stockList = stockModel.getShop().getStock();
 		this.customerPrice = 0;
 		this.quantity = 0;
 	}
@@ -152,7 +151,6 @@ public class Stock extends Product {
 	{
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date current = new Date();
-
 		long diff;
 		long diffDays; 
 
@@ -170,7 +168,12 @@ public class Stock extends Product {
 	
 	public static Map<String, Integer> stockLevels ()
 	{
+		for (Stock stock: stockList){
+			System.out.println(stock.getName() + "" + stock.calculatePrice());
+		}
+		
 		Map<String, Integer> stockLevels = new HashMap<String, Integer>();
+	
 	
 		for (int i= 0; i<stockList.size(); i++)
 		{
