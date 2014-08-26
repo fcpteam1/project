@@ -2,6 +2,8 @@ package model;
 
 public class Customer {
 	
+	private static int count = 0;
+	
 	private String name;
 	private int id;
 	private String number;
@@ -14,12 +16,15 @@ public class Customer {
 		this.address = "";
 	}
 
-	public Customer(String name, int id, String number, String address) {
+	public Customer(String name,String number, String address) {
 		this.name = name;
-		this.id = id;
+		this.id = count;
 		this.number = number;
 		this.address = address;
+		
+		count++;
 	}
+	
 	public String toString() {
 		return getName();
 	}
@@ -55,5 +60,14 @@ public class Customer {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	public static int getCount() {
+		return count;
+	}
+
+	public static void setCount(int count) {
+		Customer.count = count;
+	}
+	
 
 }

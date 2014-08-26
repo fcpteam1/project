@@ -56,11 +56,11 @@ public class SaleMainPanel extends JFrame {
 			public void createSaleOccurred(SaleFormEvent e) {
 						
 				model.getShop().createSale(e);	
-						
+				System.out.println(model.getShop().getSales().get(0).getTotalPrice());		
 				tablePanel.refresh();
-				ArrayList<Stock> saleStockItems = e.getStockList();
-					for (int i=0; i < saleStockItems.size(); i++) {
-						textPanel.appendText(saleStockItems.get(i).getName() + "  Quantity: " + saleStockItems.get(i).getQuantity()+ "\n");
+				ArrayList<Stock> stockItems = e.getStockList();
+					for (int i=0; i < stockItems.size(); i++) {
+						textPanel.appendText(stockItems.get(i).getName() + "  Quantity: " + stockItems.get(i).getQuantity()+ "\n");
 					}
 				textPanel.appendText("\n------Sale Complete-------\n");
 			}

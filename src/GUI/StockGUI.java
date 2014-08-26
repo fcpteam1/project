@@ -38,7 +38,7 @@ public class StockGUI extends JPanel {
             {
                 public void actionPerformed(ActionEvent arg0) 
                 {
-                    Map <String , Integer> stockLevels= stockModel.getStock().stockLevels();
+                    Map <String , Integer> stockLevels= Stock.stockLevels();
                     textArea.append("Stock Levels:");
                     for(Map.Entry<String, Integer > current : stockLevels.entrySet()) 
                     {
