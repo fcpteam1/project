@@ -20,7 +20,10 @@ public class Customer {
 		this.number = number;
 		this.address = address;
 	}
-	
+	public String toString() {
+		return getName();
+	}
+
 	public String getName() {
 		return name;
 	}
