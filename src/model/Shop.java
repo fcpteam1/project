@@ -228,6 +228,7 @@ public void loadOrders(String inPutFile) {
 		in.close();
 		}
 	
+
 	public void loadCustomers(String fileName) throws IOException {
 		
 	Scanner in= new Scanner(new File(fileName)).useDelimiter("\\,");
@@ -240,7 +241,9 @@ public void loadOrders(String inPutFile) {
 			customers.add(customer);
 			}
 	in.close();
+	
 	}
+
 	
 	public ArrayList<User> getUsers(){
 		return users;
