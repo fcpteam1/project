@@ -25,7 +25,7 @@ public class MainMenuGUI {
 	private SaleMainPanel saleTab;
 	private ProfitAndLossMainPanel profitAndLossTab;
 	
-	private boolean adminLogged=false;
+	protected boolean adminLogged=false;
 	
 public MainMenuGUI() throws IOException{
 		
