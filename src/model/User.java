@@ -1,5 +1,5 @@
 package model;
-public class User {
+public class User implements java.io.Serializable {
 
 	private static int count = 0;
 	

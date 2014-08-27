@@ -3,7 +3,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 
-public class Invoice {
+public class Invoice implements java.io.Serializable{
 
 	private Date date = new Date();
 	private DateFormat format = DateFormat.getDateInstance();
