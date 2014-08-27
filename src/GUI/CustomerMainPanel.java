@@ -32,8 +32,10 @@ public class CustomerMainPanel extends JPanel {
 		
 		customerTablePanel.setCustomerTableListener(new CustomerTableListener(){
 
+			
 			@Override
 			public void rowDeleted(int row) {
+				
 				model.getShop().removeCustomer(row);	
 				customerTablePanel.refresh();
 			}

@@ -15,7 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import model.Customer;
+import model.Model;
 import model.Shop;
+import model.User;
+import model.View;
 
 public class CustomerTablePanel extends JPanel{
 	private JTable table;
@@ -23,31 +26,43 @@ public class CustomerTablePanel extends JPanel{
 	private JPopupMenu popup;
 	private CustomerTableListener customerTableListener;
 	private CustomerFormPanel formPanel ;
-	
+	private User user;
+	private Model model;
+	private View view;
 	
 	public CustomerTablePanel() {
 		
+	
 		tableModel = new CustomerTableModel();
+		user = new User();
 		table = new JTable(tableModel);
 		popup = new JPopupMenu();
 		
+		
+		
 		JMenuItem removeItem = new JMenuItem("Delete User");
 		JMenuItem editItem = new JMenuItem("Edit User");
+		
+		String username=view.getLogin().getLoginUsername().getText();
+		char[] password = view.getLogin().getLoginPassword().getPassword();
+		
+		
+		
 		popup.add(removeItem);
 		popup.add(editItem);
 		
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				
-				int row = table.rowAtPoint(e.getPoint());
-				
-				table.getSelectionModel().setSelectionInterval(row, row);
-				
-				if(e.getButton() == MouseEvent.BUTTON3){
-					popup.show(table, e.getX(),e.getY());
-				}
+				System.out.println("User.isAdmin(): "+user.isAdmin());
+					int row = table.rowAtPoint(e.getPoint());
+					
+					table.getSelectionModel().setSelectionInterval(row, row);
+					
+					if(e.getButton() == MouseEvent.BUTTON3){
+						popup.show(table, e.getX(),e.getY());
+					}					
 			}
-			
 		});
 		
 		
