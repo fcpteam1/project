@@ -16,9 +16,7 @@ public class Stock extends Product {
 	private DateFormat format = DateFormat.getDateInstance();
 	private static boolean inStock= false;
 	private Product product;
-	private static Model stockModel;
 
-	
 	public Stock() {
 		super();
 		this.customerPrice = 0;
@@ -103,7 +101,8 @@ public class Stock extends Product {
 	}
 
 	public static void checkStock(ArrayList <Stock> salesList, ArrayList <Stock> stockList, int quantity)
-	{
+	{	
+		
 		for (Stock temp: salesList)
 		{
 			if (!processSale(temp,stockList, quantity, 0))

@@ -23,6 +23,7 @@ public class MainMenuGUI {
 	private SupplierGUI supplierTab;
 	private StockGUI stockTab;
 	private SaleMainPanel saleTab;
+	private ProfitAndLossMainPanel profitAndLossTab;
 	
 	private boolean adminLogged=false;
 	
@@ -41,6 +42,7 @@ public MainMenuGUI() throws IOException{
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
 		saleTab = new SaleMainPanel();
+		profitAndLossTab = new ProfitAndLossMainPanel();
 	/*
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
@@ -48,15 +50,15 @@ public MainMenuGUI() throws IOException{
 		tabbedPane.addTab("Orders", orderTab.getPanel());
 		tabbedPane.addTab("Stock", stockTab.getPanel());
 		tabbedPane.addTab("Sales", saleTab.getPanel());
-		//tabbedPane.addTab("Profit & Loss", stockTab.getPanel());
-	
+		tabbedPane.addTab("Profit & Loss", profitAndLossTab.getPanel());
+		
 		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
 		tabbedPane.setIconAt(1, createIcon("/images/user.png"));
 		tabbedPane.setIconAt(2, createIcon("/images/supplier.png"));
 		tabbedPane.setIconAt(3, createIcon("/images/order.png"));
 		tabbedPane.setIconAt(4, createIcon("/images/stock.png"));
 		tabbedPane.setIconAt(5, createIcon("/images/sale.png"));
-		//tabbedPane.setIconAt(6, createIcon("/images/profitandloss.png"));
+		tabbedPane.setIconAt(6, createIcon("/images/profitandloss.png"));
 		*/
 		c.gridx=0;
 		c.gridy=0;
@@ -170,6 +172,7 @@ public void addTabs(boolean admin){
 		tabbedPane.addTab("Orders", orderTab.getPanel());
 		tabbedPane.addTab("Stock", stockTab.getPanel());
 		tabbedPane.addTab("Sales", saleTab.getPanel());
+		tabbedPane.addTab("Profit & Loss", profitAndLossTab.getPanel());
 	
 		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
 		tabbedPane.setIconAt(1, createIcon("/images/user.png"));
@@ -177,6 +180,7 @@ public void addTabs(boolean admin){
 		tabbedPane.setIconAt(3, createIcon("/images/order.png"));
 		tabbedPane.setIconAt(4, createIcon("/images/stock.png"));
 		tabbedPane.setIconAt(5, createIcon("/images/sale.png"));
+		tabbedPane.setIconAt(6, createIcon("/images/profitandloss.png"));
 	}
 	else{
 		tabbedPane.addTab("Customers",customerTab.getPanel());

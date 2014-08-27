@@ -1,11 +1,11 @@
 package GUI;
 import java.awt.BorderLayout;
-
 import java.io.IOException;
 
 import javax.swing.JPanel;
 
 import model.Model;
+import model.Order;
 
 public class OrderMainPanel extends JPanel {	
 	private JPanel mainPanel;
@@ -28,6 +28,28 @@ public class OrderMainPanel extends JPanel {
 		orderTablePanel.setFormPanel(orderFormPanel);
 		orderTablePanel.setData(model.getShop().getOrders(), model.getShop().getSuppliers());
 
+		orderTablePanel.setOrderTableListener(new OrderTableListener(){
+
+			@Override
+			public void rowDeleted(int row) {
+				model.getShop().deleteOrder(row);
+				orderTablePanel.refresh();
+			}
+
+			@Override
+			public void rowEdited(int row) {
+				orderFormPanel.setEditedOrder(model.getShop().getOrders().get(row));
+				orderFormPanel.editFormPanel();
+				orderTablePanel.refresh();
+			}
+			
+			@Override
+			public void rowProcessed(int row) {
+				model.getShop().processOrder(row);
+				orderTablePanel.refresh();
+			}
+		});
+		
 		orderFormPanel.setData(model.getShop().getOrders(), model.getShop().getSuppliers());
 		orderFormPanel.setFormListener(new OrderFormListener(){
 
@@ -37,24 +59,9 @@ public class OrderMainPanel extends JPanel {
 				orderTablePanel.refresh();
 				model.getShop().viewOrders(e);
 			}
-
 			@Override
-			public void editOrderOccurred(OrderFormEvent e) {
-				model.getShop().editOrder(e);
-				orderTablePanel.refresh();
-				model.getShop().viewOrders(e);
-			}
-
-			@Override
-			public void deleteOrderOccurred(OrderFormEvent e) {
-				model.getShop().deleteOrder(e);
-				orderTablePanel.refresh();
-				model.getShop().viewOrders(e);
-			}
-
-			@Override
-			public void processOrderOccurred(OrderFormEvent e) {
-				model.getShop().processOrder(e);
+			public void editOrderOccurred(OrderFormEvent e, int id){
+				model.getShop().editOrder(e, id);
 				orderTablePanel.refresh();
 				model.getShop().viewOrders(e);
 			}

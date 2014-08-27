@@ -20,7 +20,7 @@ public class OrderFormEvent extends EventObject {
 		this.supplier = supplier;
 		this.products = products;
 	}
-
+	
 	public OrderFormEvent(Object source, Supplier supplier) {
 		super(source);
 		this.supplier = supplier;

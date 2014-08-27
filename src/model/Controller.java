@@ -17,7 +17,9 @@ public class Controller {
 	
 	private MouseAdapter supplierTableListener;
 	private ActionListener menuViewSupplier,menuEditSupplier,menuAddProduct,menuEditSupplierFromProduct,addProductFromProducts;
-	private ActionListener exitProductPanel,exitSupplierPanel;
+	private ActionListener exitProductPanel,exitSupplierPanel,exitCreatePanel;
+	private ActionListener updateSupName,updateSupPhone,updateSupAddress,addProduct;
+	private ActionListener createSupButton,deleteSupButton,editSupButton,addSupButton;
 	
 	public Controller() throws IOException {
 		// TODO Auto-generated constructor stub
@@ -262,6 +264,73 @@ public class Controller {
 			}
 			
 		};
+		
+		
+		updateSupName=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				model.getShop().getSuppliers().get(view.getMainmenu().getSupplierTab().getCurrent()).setName(view.getMainmenu().getSupplierTab().getSupplierName().getText());
+				
+			}
+			
+		};
+		
+		updateSupPhone=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				model.getShop().getSuppliers().get(view.getMainmenu().getSupplierTab().getCurrent()).setNumber(view.getMainmenu().getSupplierTab().getSupplierPhone().getText());
+				
+			}
+			
+		};
+		
+		updateSupAddress=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				model.getShop().getSuppliers().get(view.getMainmenu().getSupplierTab().getCurrent()).setAddress(view.getMainmenu().getSupplierTab().getSupplierAddress().getText());
+				
+			}
+			
+		};
+		
+		addProduct=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				int current = view.getMainmenu().getSupplierTab().getCurrent();
+				
+				String name=view.getMainmenu().getSupplierTab().getProductName().getText();
+				String price=view.getMainmenu().getSupplierTab().getSupplierPrice().getText();
+				
+				double supPrice=Double.parseDouble(price);
+				
+				model.getShop().getSuppliers().get(current).getProducts().add(new Product(name,supPrice));
+				
+			}
+			
+		};
+		
+		createSupButton=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+			}
+		};
+		
+		deleteSupButton=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+			}
+		};
+		
+		editSupButton=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+			}
+		};
+		
+		addSupButton=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+			}
+		};
 	}
 
 		
@@ -302,7 +371,9 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().getAddProductFromProducts().addActionListener(addProductFromProducts);
 		view.getMainmenu().getSupplierTab().getEditSupplierFromProducts().addActionListener(menuEditSupplierFromProduct);
 		
-		
+		view.getMainmenu().getSupplierTab().getEditSupName().addActionListener(updateSupName);
+		view.getMainmenu().getSupplierTab().getEditSupPhone().addActionListener(updateSupPhone);
+		view.getMainmenu().getSupplierTab().getEditSupAddress().addActionListener(updateSupAddress);
 		
 		
 		
@@ -325,6 +396,10 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().getNext().setEnabled(false);
 		view.getMainmenu().getSupplierTab().getPrevious().setEnabled(false);
 		view.getMainmenu().getSupplierTab().getSearch().setEnabled(false);
+		view.getMainmenu().getSupplierTab().getAdd().setEnabled(false);
+		view.getMainmenu().getSupplierTab().getDelete().setEnabled(true);
+		view.getMainmenu().getSupplierTab().getEdit().setEnabled(true);
+		view.getMainmenu().getSupplierTab().getCreate().setEnabled(true);
 	}
 	
 	
@@ -345,6 +420,10 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().getNext().setEnabled(true);
 		view.getMainmenu().getSupplierTab().getPrevious().setEnabled(true);
 		view.getMainmenu().getSupplierTab().getSearch().setEnabled(true);
+		view.getMainmenu().getSupplierTab().getAdd().setEnabled(true);
+		view.getMainmenu().getSupplierTab().getDelete().setEnabled(false);
+		view.getMainmenu().getSupplierTab().getEdit().setEnabled(true);
+		view.getMainmenu().getSupplierTab().getCreate().setEnabled(false);
 		
 		view.getMainmenu().getSupplierTab().getViewSupplierTabel().addMouseListener(supplierTableListener);
 		

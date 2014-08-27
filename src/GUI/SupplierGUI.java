@@ -35,7 +35,7 @@ public class SupplierGUI  {
 	
 	private JButton search,next,previous,supplierButton,productButton;
 	private JTextField searchText,supplierText;
-	private JMenuItem viewProducts,editSupplier,addProducts,editSupplierFromProducts,addProductFromProducts;
+	private JMenuItem viewProducts,editSupplier,addProducts,editSupplierFromProducts,addProductFromProducts,deleteSupplier;
 	private JPopupMenu viewProductsPopup;
 	
 	
@@ -71,6 +71,7 @@ public class SupplierGUI  {
 		viewProducts=new JMenuItem("View Supplier Products");
 		editSupplier=new JMenuItem("Edit Supplier");
 		addProducts=new JMenuItem("Add Product");
+		deleteSupplier=new JMenuItem("Delete Supplier");
 		editSupplierFromProducts=new JMenuItem("Edit this Supplier");
 		addProductFromProducts=new JMenuItem("Creat new Product");
 		viewProductsPopup=new JPopupMenu();
@@ -297,7 +298,7 @@ public class SupplierGUI  {
 		viewProductsPopup.add(viewProducts);
 		viewProductsPopup.add(editSupplier);
 		viewProductsPopup.add(addProducts);
-		
+		viewProductsPopup.add(deleteSupplier);
 		
 		supplier=true;
 		
@@ -784,6 +785,26 @@ public class SupplierGUI  {
 
 	public JButton getExitEditPanel() {
 		return exitEditPanel;
+	}
+
+
+	public JButton getEditSupName() {
+		return editSupName;
+	}
+
+
+	public JButton getEditSupPhone() {
+		return editSupPhone;
+	}
+
+
+	public JButton getEditSupAddress() {
+		return editSupAddress;
+	}
+
+
+	public JTextField getProductName() {
+		return productName;
 	}
 	
 	
