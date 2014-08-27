@@ -29,12 +29,13 @@ public class SupplierGUI  {
 	private JPanel showPanel,buttonsPanel,tablePanel,borderPanel,nextPrevPanel,supplierTextPanel,holder;
 	private JTable viewSupplierTabel;
 	private JScrollPane viewScroll;
+	private JButton edit,create,add,delete;
 	Object supplierData[][],productData[][];
 	String supplierNames[],productNames[];
 	
 	private JButton search,next,previous,supplierButton,productButton;
 	private JTextField searchText,supplierText;
-	private JMenuItem viewProducts,editSupplier,addProducts;
+	private JMenuItem viewProducts,editSupplier,addProducts,editSupplierFromProducts,addProductFromProducts;
 	private JPopupMenu viewProductsPopup;
 	
 	
@@ -50,6 +51,12 @@ public class SupplierGUI  {
 	private JButton editSupName,editSupPhone,editSupAddress,exitEditPanel;
 	private JLabel editNameLabel,editPhoneLabel,editAddressLabel;
 	
+	//create supplier
+	private JPanel createSupplierPanel;
+	private JTextField createName,createPhone,createAdress;
+	private JLabel createNameLabel,createPhoneLabel,createAdressLabel;
+	private JButton createSupplierButton,exitCreatePanelButton;
+	
 	
 	boolean supplier;
 	int current=0;
@@ -64,10 +71,10 @@ public class SupplierGUI  {
 		viewProducts=new JMenuItem("View Supplier Products");
 		editSupplier=new JMenuItem("Edit Supplier");
 		addProducts=new JMenuItem("Add Product");
+		editSupplierFromProducts=new JMenuItem("Edit this Supplier");
+		addProductFromProducts=new JMenuItem("Creat new Product");
 		viewProductsPopup=new JPopupMenu();
-		viewProductsPopup.add(viewProducts);
-		viewProductsPopup.add(editSupplier);
-		viewProductsPopup.add(addProducts);
+		
 		
 		showPanel=new JPanel();
 		showPanel.setLayout(new GridBagLayout());
@@ -99,6 +106,10 @@ public class SupplierGUI  {
 		supplierText=new JTextField(25);
 		supplierTextPanel.add(supplierText);
 		
+		edit=new JButton("Edit Supplier");
+		create=new JButton("Create Supplier");
+		add=new JButton("Add Products");
+		delete=new JButton("Delete Supplier");
 		
 		GridBagConstraints c=new GridBagConstraints();
 		
@@ -108,6 +119,20 @@ public class SupplierGUI  {
 		c.weighty=1;
 		c.anchor=GridBagConstraints.CENTER;
 		buttonsPanel.add(supplierButton,c);
+		
+		JPanel crudPanel=new JPanel();
+		crudPanel.setLayout(new FlowLayout());
+		crudPanel.add(edit);
+		crudPanel.add(create);
+		crudPanel.add(delete);
+		crudPanel.add(add);
+		
+		c.gridx=1;
+		c.gridy=0;
+		c.weightx=1;
+		c.weighty=1;
+		c.anchor=GridBagConstraints.CENTER;
+		buttonsPanel.add(crudPanel,c);
 		
 		c.gridx=2;
 		c.gridy=0;
@@ -148,7 +173,6 @@ public class SupplierGUI  {
 		supplierData[0][3]="null";
 		
 		viewSupplierTabel=new JTable(supplierData,supplierNames);
-		viewSupplierTabel.add(viewProductsPopup);
 		viewScroll=new JScrollPane(viewSupplierTabel);
 		c.gridx=0;
 		c.gridy=0;
@@ -158,6 +182,7 @@ public class SupplierGUI  {
 		c.weighty=1;
 		c.anchor=GridBagConstraints.FIRST_LINE_START;
 		tablePanel.add(viewScroll,BorderLayout.CENTER);
+		tablePanel.add(new JPanel(),BorderLayout.WEST);
 		
 		c.gridx=1;
 		c.gridy=2;
@@ -192,6 +217,7 @@ public class SupplierGUI  {
 		c.weighty=0.1;
 		c.anchor=GridBagConstraints.PAGE_END;
 		showPanel.add(supplierTextPanel,c);
+		
 		
 		
 		
@@ -232,6 +258,7 @@ public class SupplierGUI  {
 		c.weighty=1;
 		c.anchor=GridBagConstraints.FIRST_LINE_START;
 		tablePanel.add(viewScroll,BorderLayout.CENTER);
+		tablePanel.add(new JPanel(),BorderLayout.WEST);
 		tablePanel.validate();
 		tablePanel.repaint();
 		
@@ -266,6 +293,12 @@ public class SupplierGUI  {
 		showPanel.revalidate();
 		showPanel.repaint();
 		
+		viewProductsPopup.removeAll();
+		viewProductsPopup.add(viewProducts);
+		viewProductsPopup.add(editSupplier);
+		viewProductsPopup.add(addProducts);
+		
+		
 		supplier=true;
 		
 	}
@@ -290,6 +323,7 @@ public class SupplierGUI  {
 		c.weighty=1;
 		c.anchor=GridBagConstraints.FIRST_LINE_START;
 		tablePanel.add(viewScroll,BorderLayout.CENTER);
+		tablePanel.add(new JPanel(),BorderLayout.WEST);
 		tablePanel.validate();
 		tablePanel.repaint();
 		
@@ -325,6 +359,11 @@ public class SupplierGUI  {
 		showPanel.repaint();
 		
 		supplier=false;
+		
+		viewProductsPopup.removeAll();
+		
+		viewProductsPopup.add(editSupplierFromProducts);
+		viewProductsPopup.add(addProductFromProducts);
 		
 	}
 
@@ -484,6 +523,13 @@ public class SupplierGUI  {
 		editSupplierPanel.add(exitEditPanel,c);
 		
 	}
+	
+	
+	public void createSupplier(){
+		
+		
+		
+	}
 
 	public int getCurrent() {
 		return current;
@@ -637,7 +683,8 @@ public class SupplierGUI  {
 	}
 	
 	public void showAddProductPanel(){
-		
+		BorderLayout layout = (BorderLayout) tablePanel.getLayout();
+		tablePanel.remove(layout.getLayoutComponent(BorderLayout.WEST));
 		tablePanel.add(addProductsPanel,BorderLayout.WEST);
 		tablePanel.validate();
 		tablePanel.repaint();
@@ -648,13 +695,15 @@ public class SupplierGUI  {
 	public void removeAddProductsPanel(){
 		
 		tablePanel.remove(addProductsPanel);
+		tablePanel.add(new JPanel(),BorderLayout.WEST);
 		tablePanel.validate();
 		tablePanel.repaint();
 	}
 
 	
 	public void showEditPanel(){
-		tablePanel.remove(1);
+		BorderLayout layout = (BorderLayout) tablePanel.getLayout();
+		tablePanel.remove(layout.getLayoutComponent(BorderLayout.WEST));
 		tablePanel.add(editSupplierPanel,BorderLayout.WEST);
 		tablePanel.validate();
 		tablePanel.repaint();
@@ -663,6 +712,7 @@ public class SupplierGUI  {
 	public void removeEditPanel(){
 		
 		tablePanel.remove(editSupplierPanel);
+		tablePanel.add(new JPanel(),BorderLayout.WEST);
 		tablePanel.validate();
 		tablePanel.repaint();
 	}
@@ -679,6 +729,61 @@ public class SupplierGUI  {
 
 	public JButton getExitProductPanel() {
 		return exitProductPanel;
+	}
+
+
+	public JButton getEdit() {
+		return edit;
+	}
+
+
+	public JButton getCreate() {
+		return create;
+	}
+
+
+	public JButton getAdd() {
+		return add;
+	}
+
+
+	public JButton getDelete() {
+		return delete;
+	}
+
+
+	public JMenuItem getEditSupplierFromProducts() {
+		return editSupplierFromProducts;
+	}
+
+
+	public JMenuItem getAddProductFromProducts() {
+		return addProductFromProducts;
+	}
+
+
+	public JTextField getSupplierPrice() {
+		return supplierPrice;
+	}
+
+
+	public JTextField getSupplierPhone() {
+		return supplierPhone;
+	}
+
+
+	public JTextField getSupplierAddress() {
+		return supplierAddress;
+	}
+
+
+	public JTextField getSupplierName() {
+		return supplierName;
+	}
+
+
+	public JButton getExitEditPanel() {
+		return exitEditPanel;
 	}
 	
 	

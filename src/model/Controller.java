@@ -16,8 +16,8 @@ public class Controller {
 	private ActionListener btnSubmitNewCustomer, btnViewCustomers, btnAddCustomer;
 	
 	private MouseAdapter supplierTableListener;
-	private ActionListener menuViewSupplier,menuEditSupplier,menuAddProduct;
-	private ActionListener exitProductPanel;
+	private ActionListener menuViewSupplier,menuEditSupplier,menuAddProduct,menuEditSupplierFromProduct,addProductFromProducts;
+	private ActionListener exitProductPanel,exitSupplierPanel;
 	
 	public Controller() throws IOException {
 		// TODO Auto-generated constructor stub
@@ -26,7 +26,7 @@ public class Controller {
 		model=new Model();
 		addListeners();
 		addListenersToButtons();
-	
+		viewSuppliers();
 	}
 	
 	
@@ -205,7 +205,12 @@ public class Controller {
 		
 		menuEditSupplier=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				int index=view.getMainmenu().getSupplierTab().getViewSupplierTabel().getSelectedRow();
+				view.getMainmenu().getSupplierTab().setCurrent(index);
 				view.getMainmenu().getSupplierTab().showEditPanel();
+				view.getMainmenu().getSupplierTab().getSupplierName().setText(model.getShop().getSuppliers().get(index).getName());
+				view.getMainmenu().getSupplierTab().getSupplierPhone().setText(model.getShop().getSuppliers().get(index).getNumber());
+				view.getMainmenu().getSupplierTab().getSupplierAddress().setText(model.getShop().getSuppliers().get(index).getAddress());
 				
 			}
 			
@@ -213,6 +218,8 @@ public class Controller {
 		
 		menuAddProduct=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				int index=view.getMainmenu().getSupplierTab().getViewSupplierTabel().getSelectedRow();
+				view.getMainmenu().getSupplierTab().setCurrent(index);
 				view.getMainmenu().getSupplierTab().showAddProductPanel();
 				
 			}
@@ -222,6 +229,35 @@ public class Controller {
 		exitProductPanel=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				view.getMainmenu().getSupplierTab().removeAddProductsPanel();
+				
+			}
+			
+		};
+		
+		exitSupplierPanel=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				view.getMainmenu().getSupplierTab().removeEditPanel();
+				
+			}
+			
+		};
+		
+		menuEditSupplierFromProduct=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				int index=view.getMainmenu().getSupplierTab().getCurrent();
+				view.getMainmenu().getSupplierTab().showEditPanel();
+				view.getMainmenu().getSupplierTab().getSupplierName().setText(model.getShop().getSuppliers().get(index).getName());
+				view.getMainmenu().getSupplierTab().getSupplierPhone().setText(model.getShop().getSuppliers().get(index).getNumber());
+				view.getMainmenu().getSupplierTab().getSupplierAddress().setText(model.getShop().getSuppliers().get(index).getAddress());
+				
+			}
+			
+		};
+		
+		addProductFromProducts=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				view.getMainmenu().getSupplierTab().showAddProductPanel();
 				
 			}
 			
@@ -236,11 +272,11 @@ public Object[][] fillProductsForSupplier(int current){
 		Object data[][]=new Object[model.getShop().getSuppliers().get(current).getProducts().size()][3];
 		
 		for(int i=0;i<model.getShop().getSuppliers().get(current).getProducts().size();i++){
-			System.out.println(i);
+			
 			data[i][0]=model.getShop().getSuppliers().get(current).getProducts().get(i).getName();
-			System.out.println(i);
+			
 			data[i][1]=model.getShop().getSuppliers().get(current).getProducts().get(i).getId();
-			System.out.println(i);
+			
 			data[i][2]=model.getShop().getSuppliers().get(current).getProducts().get(i).getSupplierPrice();
 			
 		}
@@ -258,11 +294,16 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().getNext().addActionListener(nextSupplier);
 		view.getMainmenu().getSupplierTab().getPrevious().addActionListener(prevSupplier);
 		view.getMainmenu().getSupplierTab().getSearch().addActionListener(searchSupplier);
-		view.getMainmenu().getSupplierTab().getViewSupplierTabel().addMouseListener(supplierTableListener);
 		view.getMainmenu().getSupplierTab().getViewProducts().addActionListener(menuViewSupplier);
 		view.getMainmenu().getSupplierTab().getEditSupplier().addActionListener(menuEditSupplier);
 		view.getMainmenu().getSupplierTab().getAddProducts().addActionListener(menuAddProduct);
 		view.getMainmenu().getSupplierTab().getExitProductPanel().addActionListener(exitProductPanel);
+		view.getMainmenu().getSupplierTab().getExitEditPanel().addActionListener(exitSupplierPanel);
+		view.getMainmenu().getSupplierTab().getAddProductFromProducts().addActionListener(addProductFromProducts);
+		view.getMainmenu().getSupplierTab().getEditSupplierFromProducts().addActionListener(menuEditSupplierFromProduct);
+		
+		
+		
 		
 		
 	}
@@ -288,6 +329,12 @@ public Object[][] fillProductsForSupplier(int current){
 	
 	
 	public void viewProducts(){
+		
+		
+	
+		if(view.getMainmenu().getSupplierTab().getViewSupplierTabel().getSelectedRow() >-1){
+			view.getMainmenu().getSupplierTab().setCurrent(view.getMainmenu().getSupplierTab().getViewSupplierTabel().getSelectedRow());
+		}
 		int current=view.getMainmenu().getSupplierTab().getCurrent();
 		
 		Object data[][]=fillProductsForSupplier(current);
@@ -298,6 +345,10 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().getNext().setEnabled(true);
 		view.getMainmenu().getSupplierTab().getPrevious().setEnabled(true);
 		view.getMainmenu().getSupplierTab().getSearch().setEnabled(true);
+		
+		view.getMainmenu().getSupplierTab().getViewSupplierTabel().addMouseListener(supplierTableListener);
+		
+		
 	}
 	/**
 	 * @param args
