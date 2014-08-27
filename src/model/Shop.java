@@ -1,6 +1,10 @@
 package model;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,6 +27,10 @@ public class Shop {
 	private String username, password, choice,customerName,customerNumber,customerAddress,editUserPassword,editUserUsername;
 	private String editCustomerName, editCustomerNumber, editCustomerAddress;
 	private int customerId,tableIndex;
+	private FileOutputStream fileOut;
+	private ObjectOutputStream out; 
+	private FileInputStream fileIn;
+	private ObjectInputStream in;
 	private Scanner input = new Scanner(System.in);
 	private Scanner input2 = new Scanner(System.in);
 	private Scanner input3 = new Scanner(System.in);
@@ -88,14 +96,20 @@ public class Shop {
 		loadUsers("UserList");
 		loadSuppliers("SuppliersProductListFiles", "SupplierList");
 		loadStock("StockList");
-
+		loadSales("sales.ser");
+		loadOrders("orders.ser");
+	}
+		/*for (Sale s : sales)
+			System.out.println(s.getCustomer() + " : From sales.ser");
+		for (Order o : orders)
+			System.out.println(o.getSupplier() + " : From orders.ser");
 		for (Customer c : customers)
 		System.out.println(c.getName() + ", " + c.getAddress() );
 		for (User u : users)
 		System.out.println((u.getUsername() + ", " + u.getId()));
 		for (Supplier s : suppliers)
 		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
-		}
+		}*/
 	
 			//checkLogin();
 			//mainMenu();
@@ -110,6 +124,48 @@ public class Shop {
 		}
 		
 		return ShopInstance;
+	}
+	
+	public void loadSales(String inPutFile) {
+		
+		try {
+			FileInputStream fileIn = new FileInputStream(inPutFile);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+				
+					sales = (ArrayList<Sale>)in.readObject();
+					
+					in.close();
+					fileIn.close();
+			}
+		
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+		catch(ClassNotFoundException c){
+			System.out.println("Sale class not found");
+			c.printStackTrace();
+		}
+	}
+	
+public void loadOrders(String inPutFile) {
+		
+		try {
+			FileInputStream fileIn = new FileInputStream(inPutFile);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+				
+					orders = (ArrayList<Order>)in.readObject();
+					
+					in.close();
+					fileIn.close();
+			}
+		
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+		catch(ClassNotFoundException c){
+			System.out.println("Order class not found");
+			c.printStackTrace();
+		}
 	}
 	
 	public void loadSuppliers(String SuppliersProductFiles,String SupplierListFile)throws IOException {
@@ -350,6 +406,17 @@ public class Shop {
 	Customer customer = e.getCustomer();
 	Sale sale = new Sale(stocks, customer);
 	sales.add(sale);
+	
+	try {
+		FileOutputStream fileOut = new FileOutputStream("sales.ser");
+		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+		out.writeObject(sales);
+		out.close();
+		fileOut.close();
+	}
+	catch(IOException i) {
+		i.printStackTrace();
+	}
 	}
 	
 	public void createOrder(OrderFormEvent e){
@@ -357,6 +424,17 @@ public class Shop {
 		Supplier supplier = e.getSupplier();
 		Order order = new Order(products, supplier);
 		orders.add(order);
+		
+		try {
+			FileOutputStream fileOut = new FileOutputStream("orders.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(orders);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
 	}
 	
 	public void viewOrders(OrderFormEvent e){
