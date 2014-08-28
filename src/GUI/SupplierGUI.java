@@ -24,7 +24,7 @@ import javax.swing.border.Border;
 
 public class SupplierGUI  {
 
-	
+	private boolean adminLogged=false;
 	
 	
 	private JPanel showPanel,buttonsPanel,tablePanel,borderPanel,nextPrevPanel,supplierTextPanel,holder;
@@ -82,8 +82,9 @@ public class SupplierGUI  {
 		addProducts=new JMenuItem("Add Product");
 		deleteSupplier=new JMenuItem("Delete Supplier");
 		editSupplierFromProducts=new JMenuItem("Edit this Supplier");
-		addProductFromProducts=new JMenuItem("Creat new Product");
+		addProductFromProducts=new JMenuItem("Create new Product");
 		viewProductsPopup=new JPopupMenu();
+		
 		
 		
 		showPanel=new JPanel();
@@ -309,6 +310,24 @@ public class SupplierGUI  {
 		viewProductsPopup.add(addProducts);
 		viewProductsPopup.add(deleteSupplier);
 		
+		next.setEnabled(false);
+		previous.setEnabled(false);
+		search.setEnabled(false);
+		
+		if(adminLogged==true){
+		add.setEnabled(false);
+		delete.setEnabled(true);
+		edit.setEnabled(true);
+		create.setEnabled(true);
+		}
+		else{
+			add.setEnabled(false);
+			delete.setEnabled(false);
+			edit.setEnabled(false);
+			create.setEnabled(false);
+			
+		}
+		
 		supplier=true;
 		
 	}
@@ -374,6 +393,23 @@ public class SupplierGUI  {
 		
 		viewProductsPopup.add(editSupplierFromProducts);
 		viewProductsPopup.add(addProductFromProducts);
+		
+		
+		next.setEnabled(true);
+		previous.setEnabled(true);
+		search.setEnabled(true);
+		if(adminLogged==true){
+		add.setEnabled(true);
+		delete.setEnabled(false);
+		edit.setEnabled(true);
+		create.setEnabled(false);
+		}
+		else{
+			add.setEnabled(false);
+			delete.setEnabled(false);
+			edit.setEnabled(false);
+			create.setEnabled(false);
+		}
 		
 	}
 
@@ -631,7 +667,7 @@ public class SupplierGUI  {
 	
 	public void deletePanel(){
 		
-		deletePanel=new JPanel();
+		/*deletePanel=new JPanel();
 		deletePanel.setLayout(new BorderLayout());
 		warning=new JLabel();
 		yes=new JButton("YES");
@@ -653,7 +689,7 @@ public class SupplierGUI  {
 		deleteFrame.getContentPane().add(deletePanel);
 		deleteFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
-		deleteFrame.setVisible(false);
+		deleteFrame.setVisible(false);*/
 		
 	}
 
@@ -1008,6 +1044,31 @@ public class SupplierGUI  {
 	}
 	
 	
-	
+	public void setAdminLogged(boolean admin){
+		adminLogged=admin;
+		System.out.println(adminLogged);
+		
+		editSupplier.setEnabled(admin);
+		addProducts.setEnabled(admin);
+		deleteSupplier.setEnabled(admin);
+		editSupplierFromProducts.setEnabled(admin);
+		addProductFromProducts.setEnabled(admin);
+			
+		
+		
+		if(adminLogged==true){
+			add.setEnabled(false);
+			delete.setEnabled(true);
+			edit.setEnabled(true);
+			create.setEnabled(true);
+			}
+			else{
+				add.setEnabled(false);
+				delete.setEnabled(false);
+				edit.setEnabled(false);
+				create.setEnabled(false);
+				
+			}
+	}
 	
 }

@@ -446,13 +446,7 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().setSupplierData(data);
 		view.getMainmenu().getSupplierTab().focusViewSuppliers();
 		view.getMainmenu().getSupplierTab().getViewSupplierTabel().addMouseListener(supplierTableListener);
-		view.getMainmenu().getSupplierTab().getNext().setEnabled(false);
-		view.getMainmenu().getSupplierTab().getPrevious().setEnabled(false);
-		view.getMainmenu().getSupplierTab().getSearch().setEnabled(false);
-		view.getMainmenu().getSupplierTab().getAdd().setEnabled(false);
-		view.getMainmenu().getSupplierTab().getDelete().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getEdit().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getCreate().setEnabled(true);
+		
 	}
 	
 	
@@ -470,13 +464,7 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().setProductData(data);
 		view.getMainmenu().getSupplierTab().focusViewProducts();
 		
-		view.getMainmenu().getSupplierTab().getNext().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getPrevious().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getSearch().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getAdd().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getDelete().setEnabled(false);
-		view.getMainmenu().getSupplierTab().getEdit().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getCreate().setEnabled(false);
+		
 		
 		view.getMainmenu().getSupplierTab().getViewSupplierTabel().addMouseListener(supplierTableListener);
 		
