@@ -1,4 +1,5 @@
 package GUI;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -28,8 +29,13 @@ public class MainMenuGUI {
 	
 public MainMenuGUI() throws IOException{
 		
+		
 		framePanel=new JPanel();
 		framePanel.setLayout(new GridBagLayout());
+		Dimension dim = new Dimension();
+		dim.width = 600;
+		dim.height = 600;
+		framePanel.setSize(dim);
 		
 		tabbedPane=new JTabbedPane();
 		
@@ -66,8 +72,6 @@ public MainMenuGUI() throws IOException{
 		c.weighty=0.1;
 		c.anchor=GridBagConstraints.LAST_LINE_END;
 		framePanel.add(logoutPanel,c);
-		
-		
 	}
 	
 public JPanel getPanel(){
