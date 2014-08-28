@@ -52,7 +52,7 @@ public class ProfitFormPanel extends JPanel {
 		
 	
 		
-		todayBtn = new JButton("Todays Sales");
+		todayBtn = new JButton("Todays sales");
 		dailyBtn = new JButton ("Daily sales");
 		weeklyBtn = new JButton ("Weekly sales");
 		monthlyBtn = new JButton ("Monthly sales");
@@ -138,10 +138,10 @@ setPreferredSize(dim);
 
 
 
-todayBtn = new JButton("Todays Sales");
-dailyBtn = new JButton ("Daily sales");
-weeklyBtn = new JButton ("Weekly sales");
-monthlyBtn = new JButton ("Monthly sales");
+todayBtn = new JButton("Todays expenditures");
+dailyBtn = new JButton ("Daily expenditures");
+weeklyBtn = new JButton ("Weekly expenditures");
+monthlyBtn = new JButton ("Monthly expenditures");
 
 
 /*submitBtn.addActionListener(new ActionListener() {
@@ -224,10 +224,10 @@ setPreferredSize(dim);
 
 
 
-todayBtn = new JButton("Todays Sales");
-dailyBtn = new JButton ("Daily sales");
-weeklyBtn = new JButton ("Weekly sales");
-monthlyBtn = new JButton ("Monthly sales");
+todayBtn = new JButton("Todays profits");
+dailyBtn = new JButton ("Daily profit");
+weeklyBtn = new JButton ("Weekly profit");
+monthlyBtn = new JButton ("Monthly profit");
 
 
 /*submitBtn.addActionListener(new ActionListener() {

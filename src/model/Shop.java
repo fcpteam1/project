@@ -363,22 +363,15 @@ public void loadCustomers(String inPutFile) {
 	
 	public void removeUser(int index) {
 		users.remove(index);
-		int newCount = 0;
-		for(User user: users){
-			user.setId(newCount++);
-		}
+		writeUser(userFile);
 	}
 	
 	public void editUser(int index) {
 		this.tableIndex = index;
-		for (User user: users){
-			if(user.getId() == (index)){
-				editUserUsername = user.getUsername();
-				editUserPassword = user.getPassword();
-			}
-		}
-	}
-	
+				editUserUsername = users.get(index).getUsername();
+				editUserPassword = users.get(index).getPassword();
+				}
+		
 	public void NewEditUser(UserFormEvent ee) {
 		String username = ee.getUsername();
 		String password = ee.getPassword();
@@ -395,6 +388,7 @@ public void loadCustomers(String inPutFile) {
 				System.out.println(username + password + id + admin);
 			}
 		}
+		writeUser(userFile);
 	}
 	
 	public void sendEditUsername(){
@@ -451,22 +445,15 @@ public void loadCustomers(String inPutFile) {
 	
 	public void removeCustomer(int index) {
 		customers.remove(index);
-		int newCount = 0;
-		for (Customer customer : customers){
-			customer.setId(newCount++);
-		}
+		writeCustomer(customerFile);
 	}
 	
 	public void editCustomer(int index) {
 		this.tableIndex = index;
-		for (Customer customer: customers){
-			if(customer.getId() == (index)){
-				editCustomerName = customer.getName();
-				editCustomerNumber = customer.getNumber();
-				editCustomerAddress = customer.getAddress();
+				editCustomerName = customers.get(index).getName();
+				editCustomerNumber = customers.get(index).getNumber();
+				editCustomerAddress = customers.get(index).getAddress();
 			}
-		}
-	}
 	
 	public void NewEditCustomer(CustomerFormEvent ee) {
 		String name = ee.getName();
@@ -484,6 +471,7 @@ public void loadCustomers(String inPutFile) {
 				System.out.println(name + number + id + address);
 			}
 		}
+		writeCustomer(customerFile);
 	}
 
 	public void sendCustomerEditName(String editCustomerName){

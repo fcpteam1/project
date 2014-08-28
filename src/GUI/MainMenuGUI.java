@@ -24,7 +24,6 @@ public class MainMenuGUI {
 	private StockGUI stockTab;
 	private SaleMainPanel saleTab;
 	private ProfitMainPanel profitAndLossTab;
-	
 	protected boolean adminLogged=false;
 	
 public MainMenuGUI() throws IOException{
@@ -42,7 +41,6 @@ public MainMenuGUI() throws IOException{
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
 		saleTab = new SaleMainPanel();
-		
 		profitAndLossTab = new ProfitMainPanel();
 	/*
 		tabbedPane.addTab("Customers",customerTab.getPanel());
