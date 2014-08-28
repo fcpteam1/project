@@ -23,7 +23,7 @@ public class MainMenuGUI {
 	private SupplierGUI supplierTab;
 	private StockGUI stockTab;
 	private SaleMainPanel saleTab;
-	private ProfitMainPanel profitAndLossTab;
+	private FinancialMainPanel profitAndLossTab;
 	protected boolean adminLogged=false;
 	
 public MainMenuGUI() throws IOException{
@@ -41,7 +41,7 @@ public MainMenuGUI() throws IOException{
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
 		saleTab = new SaleMainPanel();
-		profitAndLossTab = new ProfitMainPanel();
+		profitAndLossTab = new FinancialMainPanel();
 
 
 		c.gridx=0;
@@ -153,12 +153,13 @@ public void addTabs(boolean admin){
 	if(admin){
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
+		
 		tabbedPane.addTab("Supplier",supplierTab.getMain());
 		supplierTab.setAdminLogged(adminLogged);
 		tabbedPane.addTab("Orders", orderTab.getPanel());
 		tabbedPane.addTab("Stock", stockTab.getPanel());
 		tabbedPane.addTab("Sales", saleTab.getPanel());
-		tabbedPane.addTab("Profit & Loss", profitAndLossTab.getPanel());
+		tabbedPane.addTab("Financials", profitAndLossTab.getPanel());
 	
 		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
 		tabbedPane.setIconAt(1, createIcon("/images/user.png"));

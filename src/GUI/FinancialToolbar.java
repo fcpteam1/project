@@ -8,14 +8,14 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class ProfitToolbar extends JPanel implements ActionListener  {
+public class FinancialToolbar extends JPanel implements ActionListener  {
 	private JButton saleButton;
 	private JButton profitButton;
 	private JButton expenditureButton;
 	
-	private ProfitFormPanel formPanel ;
+	private FinancialFormPanel formPanel ;
 	
-	public ProfitToolbar(){
+	public FinancialToolbar(){
 		setBorder(BorderFactory.createEtchedBorder());
 		saleButton = new JButton("Sales");
 		expenditureButton = new JButton("Expenditures");
@@ -33,7 +33,7 @@ public class ProfitToolbar extends JPanel implements ActionListener  {
 			
 	}
 	
-	public void setFormPanel(ProfitFormPanel formPanel){
+	public void setFormPanel(FinancialFormPanel formPanel){
 		this.formPanel = formPanel;
 	}
 

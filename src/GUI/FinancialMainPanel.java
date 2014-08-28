@@ -7,19 +7,19 @@ import javax.swing.JPanel;
 
 import model.Model;
 
-public class ProfitMainPanel {
+public class FinancialMainPanel {
 	private JPanel mainPanel;
-	private ProfitToolbar profitToolbar;
-	private ProfitFormPanel profitFormPanel;
+	private FinancialToolbar profitToolbar;
+	private FinancialFormPanel profitFormPanel;
 	private Model model;
 	
-	public ProfitMainPanel() throws IOException{
+	public FinancialMainPanel() throws IOException{
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		
 		
-		profitToolbar = new ProfitToolbar();
-		profitFormPanel = new ProfitFormPanel();	
+		profitToolbar = new FinancialToolbar();
+		profitFormPanel = new FinancialFormPanel();	
 		model = new Model();
 		
 		profitToolbar.setFormPanel(profitFormPanel);
