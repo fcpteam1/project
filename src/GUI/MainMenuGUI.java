@@ -23,7 +23,7 @@ public class MainMenuGUI {
 	private SupplierGUI supplierTab;
 	private StockGUI stockTab;
 	private SaleMainPanel saleTab;
-	private ProfitAndLossMainPanel profitAndLossTab;
+//	private ProfitAndLossMainPanel profitAndLossTab;
 	
 public MainMenuGUI() throws IOException{
 		
@@ -40,7 +40,7 @@ public MainMenuGUI() throws IOException{
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
 		saleTab = new SaleMainPanel();
-		profitAndLossTab = new ProfitAndLossMainPanel();
+		//profitAndLossTab = new ProfitAndLossMainPanel();
 	
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
@@ -48,7 +48,7 @@ public MainMenuGUI() throws IOException{
 		tabbedPane.addTab("Orders", orderTab.getPanel());
 		tabbedPane.addTab("Stock", stockTab.getPanel());
 		tabbedPane.addTab("Sales", saleTab.getPanel());
-		tabbedPane.addTab("Profit & Loss", profitAndLossTab.getPanel());
+		//tabbedPane.addTab("Profit & Loss", profitAndLossTab.getPanel());
 		
 		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
 		tabbedPane.setIconAt(1, createIcon("/images/user.png"));
