@@ -23,7 +23,7 @@ public class MainMenuGUI {
 	private SupplierGUI supplierTab;
 	private StockGUI stockTab;
 	private SaleMainPanel saleTab;
-	private ProfitAndLossMainPanel profitAndLossTab;
+	private ProfitMainPanel profitAndLossTab;
 	
 	private boolean adminLogged=false;
 	
@@ -42,7 +42,7 @@ public MainMenuGUI() throws IOException{
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
 		saleTab = new SaleMainPanel();
-		profitAndLossTab = new ProfitAndLossMainPanel();
+		profitAndLossTab = new ProfitMainPanel();
 	/*
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
