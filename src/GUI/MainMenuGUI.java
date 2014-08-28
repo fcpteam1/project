@@ -43,7 +43,6 @@ public MainMenuGUI() throws IOException{
 		saleTab = new SaleMainPanel();
 		profitAndLossTab = new FinancialMainPanel();
 
-
 		c.gridx=0;
 		c.gridy=0;
 		c.gridheight=2;
