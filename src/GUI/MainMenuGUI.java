@@ -25,7 +25,7 @@ public class MainMenuGUI {
 	private SaleMainPanel saleTab;
 	private ProfitMainPanel profitAndLossTab;
 	
-	private boolean adminLogged=false;
+	protected boolean adminLogged=false;
 	
 public MainMenuGUI() throws IOException{
 		
@@ -165,10 +165,12 @@ public void addTabs(boolean admin){
 	
 	adminLogged=admin;
 	
+	tabbedPane.removeAll();
 	if(admin){
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		tabbedPane.addTab("Users",userTab.getPanel());
 		tabbedPane.addTab("Supplier",supplierTab.getMain());
+		supplierTab.setAdminLogged(adminLogged);
 		tabbedPane.addTab("Orders", orderTab.getPanel());
 		tabbedPane.addTab("Stock", stockTab.getPanel());
 		tabbedPane.addTab("Sales", saleTab.getPanel());
@@ -186,6 +188,7 @@ public void addTabs(boolean admin){
 		tabbedPane.addTab("Customers",customerTab.getPanel());
 		//tabbedPane.addTab("Users",userTab.getPanel());
 		tabbedPane.addTab("Supplier",supplierTab.getMain());
+		supplierTab.setAdminLogged(adminLogged);
 		//tabbedPane.addTab("Orders", orderTab.getPanel());
 		tabbedPane.addTab("Stock", stockTab.getPanel());
 		tabbedPane.addTab("Sales", saleTab.getPanel());
@@ -197,6 +200,9 @@ public void addTabs(boolean admin){
 		tabbedPane.setIconAt(2, createIcon("/images/stock.png"));
 		tabbedPane.setIconAt(3, createIcon("/images/sale.png"));
 	}
+	
+	tabbedPane.validate();
+	tabbedPane.repaint();
 	
 }
 

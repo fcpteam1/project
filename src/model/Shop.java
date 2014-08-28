@@ -26,6 +26,12 @@ public class Shop {
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private String username, password, choice,customerName,customerNumber,customerAddress,editUserPassword,editUserUsername;
 	private String editCustomerName, editCustomerNumber, editCustomerAddress;
+	private String saleFile = "sales.ser";
+	private String orderFile = "orders.ser";
+	private String customerFile = "customers.ser";
+	private String userFile = "users.ser";
+	private String supplierFile = "suppliers.ser";
+	private String stockFile = "stocks.ser";
 	private int customerId,tableIndex;
 	private FileOutputStream fileOut;
 	private ObjectOutputStream out; 
@@ -92,12 +98,12 @@ public class Shop {
 		customerFormPanel = new CustomerFormPanel();
 		orderFormPanel = new OrderFormPanel();
 		
-		loadCustomers("customers.ser");
-		loadUsers("users.ser");
-		loadSuppliers("suppliers.ser");
-		loadStock("stocks.ser");
-		loadSales("sales.ser");
-		loadOrders("orders.ser");
+		loadCustomers(customerFile);
+		loadUsers(userFile);
+		loadSuppliers(supplierFile);
+		loadStock(stockFile);
+		loadSales(saleFile);
+		loadOrders(orderFile);
 	
 		/*for (Sale s : sales)
 			System.out.println(s.getCustomer() + " : From sales.ser");
@@ -256,7 +262,83 @@ public void loadCustomers(String inPutFile) {
 	}
 }
 	
+	public void writeSale(String saleFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(saleFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(sales);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	public void writeOrder(String orderFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(orderFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(orders);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
 
+	public void writeCustomer(String customerFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(customerFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(customers);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	public void writeStock(String stockFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(stockFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(stocks);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	public void writeSupplier(String supplierFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(supplierFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(suppliers);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	public void writeUser(String userFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(userFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(users);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
 	
 	public ArrayList<User> getUsers(){
 		return users;
@@ -275,6 +357,7 @@ public void loadCustomers(String inPutFile) {
 		int newCount = 0;
 		for(User user: users){
 			user.setId(newCount++);
+		writeUser(userFile);
 		}
 	}
 	
@@ -362,6 +445,7 @@ public void loadCustomers(String inPutFile) {
 		int newCount = 0;
 		for (Customer customer : customers){
 			customer.setId(newCount++);
+		writeCustomer(customerFile);
 		}
 	}
 	
@@ -418,21 +502,16 @@ public void loadCustomers(String inPutFile) {
 	
 	public void createSale(SaleFormEvent e) {
 		
-	ArrayList<Stock> stocks = e.getStockList();
-	Customer customer = e.getCustomer();
-	Sale sale = new Sale(stocks, customer);
-	sales.add(sale);
-	
-	try {
-		FileOutputStream fileOut = new FileOutputStream("sales.ser");
-		ObjectOutputStream out = new ObjectOutputStream(fileOut);
-		out.writeObject(sales);
-		out.close();
-		fileOut.close();
-	}
-	catch(IOException i) {
-		i.printStackTrace();
-	}
+		ArrayList<Stock> stocks = e.getStockList();
+		Customer customer = e.getCustomer();
+		Sale sale = new Sale(stocks, customer);
+		sales.add(sale);
+		
+		int newCount = 0;
+			for (Sale s : sales){
+				s.setId(newCount++);
+			}
+		writeSale(saleFile);
 	}
 	
 	public void createOrder(OrderFormEvent e){
@@ -441,16 +520,7 @@ public void loadCustomers(String inPutFile) {
 		Order order = new Order(products, supplier);
 		orders.add(order);
 		
-		try {
-			FileOutputStream fileOut = new FileOutputStream("orders.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(orders);
-			out.close();
-			fileOut.close();
-		}
-		catch(IOException i) {
-			i.printStackTrace();
-		}
+		writeOrder(orderFile);
 	}
 	
 	public void viewOrders(OrderFormEvent e){

@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 
 public class Controller {
 
@@ -20,6 +22,8 @@ public class Controller {
 	private ActionListener exitProductPanel,exitSupplierPanel,exitCreatePanel;
 	private ActionListener updateSupName,updateSupPhone,updateSupAddress,addProduct;
 	private ActionListener createSupButton,deleteSupButton,editSupButton,addSupButton;
+	private ActionListener createSupplier;
+	
 	
 	public Controller() throws IOException {
 		// TODO Auto-generated constructor stub
@@ -244,6 +248,14 @@ public class Controller {
 			
 		};
 		
+		exitCreatePanel=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				view.getMainmenu().getSupplierTab().removeCreateSupplierPanel();
+				
+			}
+			
+		};
+		
 		menuEditSupplierFromProduct=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				int index=view.getMainmenu().getSupplierTab().getCurrent();
@@ -310,25 +322,59 @@ public class Controller {
 		
 		createSupButton=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				
+				view.getMainmenu().getSupplierTab().showCreateSupplierPanel();
 			}
 		};
 		
 		deleteSupButton=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
+				if(view.getMainmenu().getSupplierTab().getViewSupplierTabel().getSelectedRow() >-1){
+					int index=view.getMainmenu().getSupplierTab().getViewSupplierTabel().getSelectedRow();
+					
+					String warning="";
+					warning="Are you sure you want to delete supplier"+model.getShop().getSuppliers().get(index).toString();
+					
+					
+					int n = JOptionPane.showConfirmDialog(
+						    view.getMainmenu().getSupplierTab().getDeleteFrame(),
+						    warning,
+						    "An Inane Question",
+						    JOptionPane.YES_NO_OPTION);
+					
+					
+					if(n==JOptionPane.YES_OPTION){
+						model.getShop().getSuppliers().remove(index);
+					}
+				}
+					
 			}
 		};
 		
 		editSupButton=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				
+				int index=view.getMainmenu().getSupplierTab().getCurrent();
+				view.getMainmenu().getSupplierTab().showEditPanel();
+				view.getMainmenu().getSupplierTab().getSupplierName().setText(model.getShop().getSuppliers().get(index).getName());
+				view.getMainmenu().getSupplierTab().getSupplierPhone().setText(model.getShop().getSuppliers().get(index).getNumber());
+				view.getMainmenu().getSupplierTab().getSupplierAddress().setText(model.getShop().getSuppliers().get(index).getAddress());
 			}
 		};
 		
 		addSupButton=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				view.getMainmenu().getSupplierTab().showAddProductPanel();
+			}
+		};
+		
+		createSupplier=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
 				
+				Supplier supplier=new Supplier();
+				supplier.setName(view.getMainmenu().getSupplierTab().getCreateName().getText());
+				supplier.setNumber(view.getMainmenu().getSupplierTab().getCreatePhone().getText());
+				supplier.setAddress(view.getMainmenu().getSupplierTab().getCreateAddress().getText());
+				model.getShop().getSuppliers().add(supplier);
 			}
 		};
 	}
@@ -374,7 +420,14 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().getEditSupName().addActionListener(updateSupName);
 		view.getMainmenu().getSupplierTab().getEditSupPhone().addActionListener(updateSupPhone);
 		view.getMainmenu().getSupplierTab().getEditSupAddress().addActionListener(updateSupAddress);
-		
+		view.getMainmenu().getSupplierTab().getCreate().addActionListener(createSupButton);
+		view.getMainmenu().getSupplierTab().getCreateSupplierButton().addActionListener(createSupplier);
+		view.getMainmenu().getSupplierTab().getDelete().addActionListener(deleteSupButton);
+		view.getMainmenu().getSupplierTab().getDeleteSupplier().addActionListener(deleteSupButton);
+		view.getMainmenu().getSupplierTab().getEdit().addActionListener(editSupButton);
+		view.getMainmenu().getSupplierTab().getAdd().addActionListener(addSupButton);
+		view.getMainmenu().getSupplierTab().getAddProduct().addActionListener(addProduct);
+		view.getMainmenu().getSupplierTab().getExitCreatePanelButton().addActionListener(exitCreatePanel);
 		
 		
 	}
@@ -393,13 +446,7 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().setSupplierData(data);
 		view.getMainmenu().getSupplierTab().focusViewSuppliers();
 		view.getMainmenu().getSupplierTab().getViewSupplierTabel().addMouseListener(supplierTableListener);
-		view.getMainmenu().getSupplierTab().getNext().setEnabled(false);
-		view.getMainmenu().getSupplierTab().getPrevious().setEnabled(false);
-		view.getMainmenu().getSupplierTab().getSearch().setEnabled(false);
-		view.getMainmenu().getSupplierTab().getAdd().setEnabled(false);
-		view.getMainmenu().getSupplierTab().getDelete().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getEdit().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getCreate().setEnabled(true);
+		
 	}
 	
 	
@@ -417,13 +464,7 @@ public Object[][] fillProductsForSupplier(int current){
 		view.getMainmenu().getSupplierTab().setProductData(data);
 		view.getMainmenu().getSupplierTab().focusViewProducts();
 		
-		view.getMainmenu().getSupplierTab().getNext().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getPrevious().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getSearch().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getAdd().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getDelete().setEnabled(false);
-		view.getMainmenu().getSupplierTab().getEdit().setEnabled(true);
-		view.getMainmenu().getSupplierTab().getCreate().setEnabled(false);
+		
 		
 		view.getMainmenu().getSupplierTab().getViewSupplierTabel().addMouseListener(supplierTableListener);
 		
