@@ -382,6 +382,10 @@ public class Shop {
 
 	public void processOrder(int index){
 		orders.get(index).setCurrent(false);
+		for(Product product: orders.get(index).getProducts()){
+			Stock stock = new Stock(product, product.getQuantity());
+			stocks.add(stock);
+		}
 	}
 	
 	public void setOrders(ArrayList<Order> orders) {
