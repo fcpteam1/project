@@ -1,4 +1,5 @@
 package GUI;
+
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
@@ -6,15 +7,15 @@ import javax.swing.table.AbstractTableModel;
 import model.Order;
 import model.Supplier;
 
-
 public class OrderTableModel extends AbstractTableModel {
-	
+
 	private ArrayList<Order> orders;
-	private String[] columnNames = {"ID","Supplier", "Total Price", "Ordered", "Delivered"};
-	
-	public OrderTableModel(){
+	private String[] columnNames = { "ID", "Supplier", "Total Price",
+			"Ordered", "Delivered" };
+
+	public OrderTableModel() {
 	}
-	
+
 	@Override
 	public String getColumnName(int column) {
 		return columnNames[column];
@@ -36,8 +37,8 @@ public class OrderTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		
-		switch(columnIndex) {
+
+		switch (columnIndex) {
 		case 0:
 			return orders.get(rowIndex).getId();
 		case 1:
@@ -49,7 +50,7 @@ public class OrderTableModel extends AbstractTableModel {
 		case 4:
 			return !orders.get(rowIndex).isCurrent();
 		}
-		
+
 		return null;
 	}
 

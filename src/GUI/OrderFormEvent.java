@@ -1,4 +1,5 @@
 package GUI;
+
 import java.util.ArrayList;
 import java.util.EventObject;
 
@@ -10,22 +11,23 @@ public class OrderFormEvent extends EventObject {
 	private Supplier supplier;
 	private double totalPrice;
 	private ArrayList<Product> products;
-	
+
 	public OrderFormEvent(Object source) {
 		super(source);
 	}
-	
-	public OrderFormEvent(Object source, Supplier supplier, ArrayList<Product> products) {
+
+	public OrderFormEvent(Object source, Supplier supplier,
+			ArrayList<Product> products) {
 		super(source);
 		this.supplier = supplier;
 		this.products = products;
 	}
-	
+
 	public OrderFormEvent(Object source, Supplier supplier) {
 		super(source);
 		this.supplier = supplier;
 	}
-	
+
 	public Supplier getSupplier() {
 		return supplier;
 	}

@@ -10,20 +10,21 @@ import model.Sale;
 public class SaleTableModel extends AbstractTableModel {
 
 	private ArrayList<Sale> sales;
-	private String[] columnNames = {"Sale Id", "Customer Name", "Date", "Total Price"};
-	
+	private String[] columnNames = { "Sale Id", "Customer Name", "Date",
+			"Total Price" };
+
 	public SaleTableModel() {
-		
+
 	}
-	
+
 	public void setData(ArrayList<Sale> sales) {
 		this.sales = sales;
 	}
-	
+
 	public String getColumnName(int column) {
 		return columnNames[column];
 	}
-	
+
 	public int getColumnCount() {
 		return 4;
 	}
@@ -33,8 +34,8 @@ public class SaleTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		switch(columnIndex) {
-		
+		switch (columnIndex) {
+
 		case 0:
 			return sales.get(rowIndex).getId();
 		case 1:
@@ -46,7 +47,5 @@ public class SaleTableModel extends AbstractTableModel {
 		}
 		return null;
 	}
-	
-	
 
 }

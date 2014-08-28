@@ -10,16 +10,16 @@ import javax.swing.JTable;
 import model.Sale;
 
 public class SaleTablePanel extends JPanel {
-	
+
 	private JTable table;
 	private SaleTableModel tableModel;
 	private SaleFormPanel formPanel;
-	
+
 	public SaleTablePanel() {
-		
+
 		tableModel = new SaleTableModel();
 		table = new JTable(tableModel);
-		
+
 		setLayout(new BorderLayout());
 		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
@@ -27,11 +27,11 @@ public class SaleTablePanel extends JPanel {
 	public void setData(ArrayList<Sale> sales) {
 		tableModel.setData(sales);
 	}
-	
+
 	public void setFormPanel(SaleFormPanel formPanel) {
 		this.formPanel = formPanel;
 	}
-	
+
 	public void refresh() {
 		tableModel.fireTableDataChanged();
 	}

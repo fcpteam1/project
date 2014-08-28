@@ -1,8 +1,9 @@
 package model;
+
 public class User implements java.io.Serializable {
 
 	private static int count = 0;
-	
+
 	public static int getCount() {
 		return count;
 	}
@@ -15,7 +16,7 @@ public class User implements java.io.Serializable {
 	private String password;
 	private int id;
 	private boolean admin = false;
-	
+
 	public User() {
 		this.username = "";
 		this.password = "";
@@ -27,7 +28,7 @@ public class User implements java.io.Serializable {
 		this.password = password;
 		this.admin = admin;
 		this.id = count;
-		
+
 		count++;
 	}
 
@@ -62,7 +63,5 @@ public class User implements java.io.Serializable {
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
-	
-	
-	
+
 }

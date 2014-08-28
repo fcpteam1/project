@@ -3,301 +3,227 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import model.Model;
+import model.Order;
+import model.Sale;
 
 public class FinancialFormPanel extends JPanel {
-	private JButton todayBtn,dailyBtn,weeklyBtn,monthlyBtn;
-	private CustomerFormListener customerFormListener; 
+	private JButton todayBtn, dailyBtn, weeklyBtn, monthlyBtn;
+	private CustomerFormListener customerFormListener;
 	private Model model;
-	
-	/*private ArrayList<sales> sales;
-	private ArrayList<Profit> profits;
-	private ArrayList<Expendature> expendatures;*/
-	
-	public FinancialFormPanel(){
-		
+
+	private ArrayList<Sale> sales;
+	private ArrayList<Order> orders;
+
+	public FinancialFormPanel() {
+
 	}
-	
-	/*public void setSaleData(ArrayList<sales> sales) {
+
+	public void setSaleData(ArrayList<Sale> sales) {
 		this.sales = sales;
 	}
-	
-	public void setProfitData(ArrayList<Profit> profits) {
-		this.profits = profits;
-	}
-	
-	public void setExpendatureData(ArrayList<Expendature> expendatures) {
-		this.expendatures = expendatures;
-	}*/
-	
 
-	
-//////////////////////Sales////////////////////////
-	
-	public void SalesFormPanel(){
+	public void setOrderData(ArrayList<Order> orders) {
+		this.orders = orders;
+	}
+
+	// ////////////////////Sales////////////////////////
+
+	public void SalesFormPanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
 		setPreferredSize(dim);
-		
-	
-		
+
 		todayBtn = new JButton("Todays sales");
-		dailyBtn = new JButton ("Daily sales");
-		weeklyBtn = new JButton ("Weekly sales");
-		monthlyBtn = new JButton ("Monthly sales");
-				
-		
-		/*submitBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String name = nameField.getText();
-				String number = numberField.getText();
-				String address = addressField.getText(); 
-				
-				CustomerFormEvent ev = new CustomerFormEvent(this, name, number, address);
-				
-				if(customerFormListener != null){
-					customerFormListener.formEventOccurred(ev);
-				}
-			}
-			
-		});
-		*/
-		
-		
+		dailyBtn = new JButton("Daily sales");
+		weeklyBtn = new JButton("Weekly sales");
+		monthlyBtn = new JButton("Monthly sales");
+
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-		
+
 		setLayout(new GridBagLayout());
-		
+
 		GridBagConstraints gc = new GridBagConstraints();
-		
-		///////// First row ////////
-		
+
+		// /////// First row ////////
+
 		gc.gridy = 0;
 		gc.weightx = 1;
 		gc.weighty = 1;
-		
+
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(todayBtn, gc);
-		
-		///////// Second row ////////
-		
-		gc.gridy ++;
-		
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
 		gc.weightx = 1;
 		gc.weighty = 1;
-		
+
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(dailyBtn, gc);
-		
-		///////// Third row /////////
-		
-		gc.gridy ++;
-		
+
+		// /////// Third row /////////
+
+		gc.gridy++;
+
 		gc.weightx = 1;
 		gc.weighty = 1;
-		
+
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(weeklyBtn, gc);
-		
-		///////// Fifth row ////////
-		
-		gc.gridy ++;
-		
+
+		// /////// Fifth row ////////
+
+		gc.gridy++;
+
 		gc.weightx = 1;
 		gc.weighty = 2;
-		
+
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(monthlyBtn, gc);
 	}
 
+	// ////////////////////Expenditures////////////////////////
 
-//////////////////////Expenditures////////////////////////
+	public void ExpendituresFormPanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
 
-public void ExpendituresFormPanel(){
-Dimension dim = getPreferredSize();
-dim.width = 250;
-setPreferredSize(dim);
+		todayBtn = new JButton("Todays expenditures");
+		dailyBtn = new JButton("Daily expenditures");
+		weeklyBtn = new JButton("Weekly expenditures");
+		monthlyBtn = new JButton("Monthly expenditures");
 
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
+		setLayout(new GridBagLayout());
 
+		GridBagConstraints gc = new GridBagConstraints();
 
-todayBtn = new JButton("Todays expenditures");
-dailyBtn = new JButton ("Daily expenditures");
-weeklyBtn = new JButton ("Weekly expenditures");
-monthlyBtn = new JButton ("Monthly expenditures");
+		// /////// First row ////////
 
+		gc.gridy = 0;
+		gc.weightx = 1;
+		gc.weighty = 2;
 
-/*submitBtn.addActionListener(new ActionListener() {
-public void actionPerformed(ActionEvent e) {
-String name = nameField.getText();
-String number = numberField.getText();
-String address = addressField.getText(); 
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(todayBtn, gc);
 
-CustomerFormEvent ev = new CustomerFormEvent(this, name, number, address);
+		// /////// Second row ////////
 
-if(customerFormListener != null){
-customerFormListener.formEventOccurred(ev);
-}
-}
+		gc.gridy++;
 
-});
-*/
+		gc.weightx = 1;
+		gc.weighty = 2;
 
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(dailyBtn, gc);
 
-Border innerBorder = BorderFactory.createTitledBorder("Sales");
-Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+		// /////// Third row /////////
 
-setLayout(new GridBagLayout());
+		gc.gridy++;
 
-GridBagConstraints gc = new GridBagConstraints();
+		gc.weightx = 1;
+		gc.weighty = 2;
 
-///////// First row ////////
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(weeklyBtn, gc);
 
-gc.gridy = 0;
-gc.weightx = 1;
-gc.weighty = 2;
+		// /////// Fifth row ////////
 
-gc.gridx = 1;
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-add(todayBtn, gc);
+		gc.gridy++;
 
-///////// Second row ////////
+		gc.weightx = 1;
+		gc.weighty = 2;
 
-gc.gridy ++;
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(monthlyBtn, gc);
+	}
 
-gc.weightx = 1;
-gc.weighty = 2;
+	// ////////////////////Profit////////////////////////
 
-gc.gridx = 1;
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-add(dailyBtn, gc);
+	public void ProfitFormPanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
 
-///////// Third row /////////
+		todayBtn = new JButton("Todays profits");
+		dailyBtn = new JButton("Daily profit");
+		weeklyBtn = new JButton("Weekly profit");
+		monthlyBtn = new JButton("Monthly profit");
 
-gc.gridy ++;
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
-gc.weightx = 1;
-gc.weighty = 2;
+		setLayout(new GridBagLayout());
 
-gc.gridx = 1;
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-add(weeklyBtn, gc);
+		GridBagConstraints gc = new GridBagConstraints();
 
-///////// Fifth row ////////
+		// /////// First row ////////
 
-gc.gridy ++;
+		gc.gridy = 0;
+		gc.weightx = 1;
+		gc.weighty = 2;
 
-gc.weightx = 1;
-gc.weighty = 2;
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(todayBtn, gc);
 
-gc.gridx = 1;
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-add(monthlyBtn, gc);
-}
+		// /////// Second row ////////
 
+		gc.gridy++;
 
-//////////////////////Profit////////////////////////
+		gc.weightx = 1;
+		gc.weighty = 2;
 
-public void ProfitFormPanel(){
-Dimension dim = getPreferredSize();
-dim.width = 250;
-setPreferredSize(dim);
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(dailyBtn, gc);
 
+		// /////// Third row /////////
 
+		gc.gridy++;
 
+		gc.weightx = 1;
+		gc.weighty = 2;
 
-todayBtn = new JButton("Todays profits");
-dailyBtn = new JButton ("Daily profit");
-weeklyBtn = new JButton ("Weekly profit");
-monthlyBtn = new JButton ("Monthly profit");
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(weeklyBtn, gc);
 
+		// /////// Fifth row ////////
 
-/*submitBtn.addActionListener(new ActionListener() {
-public void actionPerformed(ActionEvent e) {
-String name = nameField.getText();
-String number = numberField.getText();
-String address = addressField.getText(); 
+		gc.gridy++;
 
-CustomerFormEvent ev = new CustomerFormEvent(this, name, number, address);
+		gc.weightx = 1;
+		gc.weighty = 2;
 
-if(customerFormListener != null){
-customerFormListener.formEventOccurred(ev);
-}
-}
-
-});
-*/
-
-
-Border innerBorder = BorderFactory.createTitledBorder("Sales");
-Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-
-setLayout(new GridBagLayout());
-
-GridBagConstraints gc = new GridBagConstraints();
-
-///////// First row ////////
-
-gc.gridy = 0;
-gc.weightx = 1;
-gc.weighty = 2;
-
-gc.gridx = 1;
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-add(todayBtn, gc);
-
-///////// Second row ////////
-
-gc.gridy ++;
-
-gc.weightx = 1;
-gc.weighty = 2;
-
-gc.gridx = 1;
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-add(dailyBtn, gc);
-
-///////// Third row /////////
-
-gc.gridy ++;
-
-gc.weightx = 1;
-gc.weighty = 2;
-
-gc.gridx = 1;
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-add(weeklyBtn, gc);
-
-///////// Fifth row ////////
-
-gc.gridy ++;
-
-gc.weightx = 1;
-gc.weighty = 2;
-
-gc.gridx = 1;
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-add(monthlyBtn, gc);
-}
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(monthlyBtn, gc);
+	}
 
 }
-

@@ -1,18 +1,18 @@
 package model;
+
 import java.text.DateFormat;
 import java.util.Date;
 
-
-public class Invoice implements java.io.Serializable{
+public class Invoice implements java.io.Serializable {
 
 	private Date date = new Date();
 	private DateFormat format = DateFormat.getDateInstance();
 	private double totalPrice;
-	
-	public Invoice(){
+
+	public Invoice() {
 		this.totalPrice = 0;
 	}
-	
+
 	public double getTotalPrice() {
 		return totalPrice;
 	}
