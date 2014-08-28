@@ -50,6 +50,17 @@ public class OrderToolbar extends JPanel implements ActionListener{
 			formPanel.validate();
 			formPanel.repaint();
 		}
+		if(clicked==currentButton){
+			formPanel.removeAll();
+			listener.showCurrent();
+			formPanel.validate();
+			formPanel.repaint();
+		}if(clicked==previousButton){
+			formPanel.removeAll();
+			listener.showPrevious();
+			formPanel.validate();
+			formPanel.repaint();
+		}
 	}
 
 }

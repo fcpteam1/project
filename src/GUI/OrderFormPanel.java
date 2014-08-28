@@ -28,14 +28,17 @@ public class OrderFormPanel extends JPanel {
 	private JButton selectButton;
 	private JButton orderButton;
 	private Order editedOrder;
+	private ArrayList<Product> editedProducts = new ArrayList<Product>();
+	private ArrayList<Product> editedSupplierProducts = new ArrayList<Product>();
 	private JButton editButton;
 	private OrderFormListener formListener;
 	private ArrayList<Order> orders;
+	private ArrayList<Order> currentOrders;
+	private ArrayList<Order> previousOrders;
 	private ArrayList<Supplier> suppliers;
 	private ArrayList<Product> products;
 	private Supplier thisSupplier;
 	private ArrayList<Product> orderProducts = new ArrayList<Product>();
-	private ArrayList<Product> editedProducts = new ArrayList<Product>();
 	int size;
 	JLabel[] names;
 	JLabel[] prices;
@@ -228,28 +231,23 @@ public class OrderFormPanel extends JPanel {
 		GridBagConstraints gc = new GridBagConstraints();
 		
 		editButton = new JButton("Edit Order");
-		Supplier supplier = editedOrder.getSupplier();
-		products = supplier.getProducts();
-		size = products.size();
+		size = editedSupplierProducts.size();
 		names = new JLabel[size];
 		prices = new JLabel[size];
 		fields = new JTextField[size];
 		
 		//Dynamically create labels and text fields for products
 		for(int i=0; i<size; i++){
-			names[i] = new JLabel(products.get(i).getName());
-			System.out.println(products.get(i).getName());
-			prices[i] = new JLabel(": \u20ac" + Double.toString(products.get(i).getSupplierPrice()*100.00/100.00) + " each");
-			System.out.println(Double.toString(products.get(i).getSupplierPrice()*100.00/100.00));
+			names[i] = new JLabel(editedSupplierProducts.get(i).getName());
+			prices[i] = new JLabel(": \u20ac" + Double.toString(editedSupplierProducts.get(i).getSupplierPrice()*100.00/100.00) + " each");
 			fields[i] = new JTextField(3);
 			for(Product product: editedProducts){
-
-				System.out.println(String.valueOf(editedProducts.get(i).getQuantity()));
-				if(names[i].getText().equals(product.getName())){
+				if(editedSupplierProducts.get(i).getName().equals(product.getName())){
 					fields[i].setText(String.valueOf(editedProducts.get(i).getQuantity()));
 					break;
 				}
 			}
+			
 			gc.gridy = i;
 			gc.weightx = 1;
 			gc.weighty = 0.1;
@@ -278,11 +276,9 @@ public class OrderFormPanel extends JPanel {
 		gc.gridx = 1;
 		gc.insets = new Insets(0,0,0,0);
 		gc.anchor = GridBagConstraints.LINE_START;
-		add(editButton, gc);
-		
 		editButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				orderProducts.clear();
+				editedProducts.clear();
 				ArrayList<Integer> quantities = new ArrayList<Integer>();
 				ArrayList<String> productNames = new ArrayList<String>();
 				//Get ordered products and associated quantities
@@ -299,26 +295,29 @@ public class OrderFormPanel extends JPanel {
 				//Loop through ordered product names and link to actual product
 				int i = 0;
 				for(String name: productNames){
-					for(Product product: products){
+					for(Product product: editedSupplierProducts){
 						if(product.getName().equals(name)){
 							product.setQuantity(quantities.get(i));
-							orderProducts.add(product);
+							editedProducts.add(product);
 						}
 					}
 					i++;
 				}
-				OrderFormEvent orderEvent = new OrderFormEvent(this, thisSupplier, orderProducts);
+				OrderFormEvent orderEvent = new OrderFormEvent(this, editedOrder.getSupplier(), editedProducts);
 				if(formListener != null){
 					formListener.editOrderOccurred(orderEvent, editedOrder.getId());
 				}
 				setVisible(false);
 			}
 		});
+		add(editButton, gc);
 		
 		this.validate();
 		this.repaint();
 	}
-		
+
+	
+	
 	public void setFormListener(OrderFormListener formListener) {
 		this.formListener = formListener;
 	}
@@ -329,6 +328,10 @@ public class OrderFormPanel extends JPanel {
 	
 	public void setEditedProducts(ArrayList<Product> products){
 		this.editedProducts = products;
+	}
+	
+	public void setEditedSupplierProducts(ArrayList<Product> editedSupplierProducts) {
+		this.editedSupplierProducts = editedSupplierProducts;
 	}
 	
 }

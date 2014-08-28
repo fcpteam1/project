@@ -1,10 +1,12 @@
 package GUI;
 import java.awt.BorderLayout;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import model.Model;
+import model.Order;
 
 public class OrderMainPanel extends JPanel {	
 	private JPanel mainPanel;
@@ -30,6 +32,8 @@ public class OrderMainPanel extends JPanel {
 			@Override
 			public void createOrder() {
 				orderFormPanel.removeAll();
+				orderTablePanel.setData(model.getShop().getOrders(), model.getShop().getSuppliers());
+				orderTablePanel.refresh();
 				orderFormPanel.createFormPanel();
 				orderFormPanel.validate();
 				orderFormPanel.repaint();
@@ -37,18 +41,28 @@ public class OrderMainPanel extends JPanel {
 
 			@Override
 			public void showCurrent() {
-				orderFormPanel.removeAll();
-				orderFormPanel.createFormPanel();
-				orderFormPanel.validate();
-				orderFormPanel.repaint();
+				orderFormPanel.setVisible(false);
+				ArrayList<Order> current = new ArrayList<Order>();
+				for(Order order: model.getShop().getOrders()){
+					if(order.isCurrent()){
+						current.add(order);
+					}
+				}
+				orderTablePanel.setData(current, model.getShop().getSuppliers());
+				orderTablePanel.refresh();
 			}
 
 			@Override
 			public void showPrevious() {
-				orderFormPanel.removeAll();
-				orderFormPanel.createFormPanel();
-				orderFormPanel.validate();
-				orderFormPanel.repaint();
+				orderFormPanel.setVisible(false);
+				ArrayList<Order> previous = new ArrayList<Order>();
+				for(Order order: model.getShop().getOrders()){
+					if(!order.isCurrent()){
+						previous.add(order);
+					}
+				}
+				orderTablePanel.setData(previous, model.getShop().getSuppliers());
+				orderTablePanel.refresh();
 			}
 			
 		});
@@ -68,6 +82,7 @@ public class OrderMainPanel extends JPanel {
 			public void rowEdited(int row) {
 				orderFormPanel.setEditedOrder(model.getShop().getOrders().get(row));
 				orderFormPanel.setEditedProducts(model.getShop().getOrders().get(row).getProducts());
+				orderFormPanel.setEditedSupplierProducts(model.getShop().getOrders().get(row).getSupplier().getProducts());
 				orderFormPanel.editFormPanel();
 				orderTablePanel.refresh();
 			}
@@ -92,7 +107,7 @@ public class OrderMainPanel extends JPanel {
 			public void editOrderOccurred(OrderFormEvent e, int id){
 				model.getShop().editOrder(e, id);
 				orderTablePanel.refresh();
-				model.getShop().viewOrders(e);
+				orderFormPanel.setVisible(false);
 			}
 			
 		});

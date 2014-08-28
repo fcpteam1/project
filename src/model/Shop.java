@@ -525,6 +525,10 @@ public void loadCustomers(String inPutFile) {
 				order.calculatePrice();
 			}
 		}
+		int newCount = 0;
+		for (Order newOrder : orders){
+			newOrder.setId(newCount++);
+		}
 
 		writeOrder(orderFile);
 	}
