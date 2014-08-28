@@ -23,13 +23,9 @@ public class MainMenuGUI {
 	private SupplierGUI supplierTab;
 	private StockGUI stockTab;
 	private SaleMainPanel saleTab;
-<<<<<<< HEAD
-//	private ProfitAndLossMainPanel profitAndLossTab;
-=======
 	private ProfitMainPanel profitAndLossTab;
 	
 	protected boolean adminLogged=false;
->>>>>>> refs/heads/master
 	
 public MainMenuGUI() throws IOException{
 		
@@ -46,10 +42,6 @@ public MainMenuGUI() throws IOException{
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
 		saleTab = new SaleMainPanel();
-<<<<<<< HEAD
-		//profitAndLossTab = new ProfitAndLossMainPanel();
-	
-=======
 		profitAndLossTab = new ProfitMainPanel();
 	/*
 >>>>>>> refs/heads/master
