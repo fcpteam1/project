@@ -507,7 +507,10 @@ public void loadCustomers(String inPutFile) {
 		Supplier supplier = e.getSupplier();
 		Order order = new Order(products, supplier);
 		orders.add(order);
-		
+		int newCount = 0;
+		for (Order newOrder : orders){
+			newOrder.setId(newCount++);
+		}
 		writeOrder(orderFile);
 	}
 	

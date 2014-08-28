@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.swing.JPanel;
 
 import model.Model;
-import model.Order;
 
 public class OrderMainPanel extends JPanel {	
 	private JPanel mainPanel;
@@ -24,7 +23,36 @@ public class OrderMainPanel extends JPanel {
 		orderTablePanel = new OrderTablePanel();
 		model = new Model();
 
-		orderToolbar.setMainPanel(orderFormPanel);
+		orderToolbar.setFormPanel(orderFormPanel);
+		
+		orderToolbar.setOrderToolbarListener(new OrderToolbarListener(){
+
+			@Override
+			public void createOrder() {
+				orderFormPanel.removeAll();
+				orderFormPanel.createFormPanel();
+				orderFormPanel.validate();
+				orderFormPanel.repaint();
+			}
+
+			@Override
+			public void showCurrent() {
+				orderFormPanel.removeAll();
+				orderFormPanel.createFormPanel();
+				orderFormPanel.validate();
+				orderFormPanel.repaint();
+			}
+
+			@Override
+			public void showPrevious() {
+				orderFormPanel.removeAll();
+				orderFormPanel.createFormPanel();
+				orderFormPanel.validate();
+				orderFormPanel.repaint();
+			}
+			
+		});
+		
 		orderTablePanel.setFormPanel(orderFormPanel);
 		orderTablePanel.setData(model.getShop().getOrders(), model.getShop().getSuppliers());
 
@@ -39,6 +67,7 @@ public class OrderMainPanel extends JPanel {
 			@Override
 			public void rowEdited(int row) {
 				orderFormPanel.setEditedOrder(model.getShop().getOrders().get(row));
+				orderFormPanel.setEditedProducts(model.getShop().getOrders().get(row).getProducts());
 				orderFormPanel.editFormPanel();
 				orderTablePanel.refresh();
 			}

@@ -35,6 +35,7 @@ public class OrderFormPanel extends JPanel {
 	private ArrayList<Product> products;
 	private Supplier thisSupplier;
 	private ArrayList<Product> orderProducts = new ArrayList<Product>();
+	private ArrayList<Product> editedProducts = new ArrayList<Product>();
 	int size;
 	JLabel[] names;
 	JLabel[] prices;
@@ -233,7 +234,52 @@ public class OrderFormPanel extends JPanel {
 		names = new JLabel[size];
 		prices = new JLabel[size];
 		fields = new JTextField[size];
-		//TODO fix error with edit text fields
+		
+		//Dynamically create labels and text fields for products
+		for(int i=0; i<size; i++){
+			names[i] = new JLabel(products.get(i).getName());
+			System.out.println(products.get(i).getName());
+			prices[i] = new JLabel(": \u20ac" + Double.toString(products.get(i).getSupplierPrice()*100.00/100.00) + " each");
+			System.out.println(Double.toString(products.get(i).getSupplierPrice()*100.00/100.00));
+			fields[i] = new JTextField(3);
+			for(Product product: editedProducts){
+
+				System.out.println(String.valueOf(editedProducts.get(i).getQuantity()));
+				if(names[i].getText().equals(product.getName())){
+					fields[i].setText(String.valueOf(editedProducts.get(i).getQuantity()));
+					break;
+				}
+			}
+			gc.gridy = i;
+			gc.weightx = 1;
+			gc.weighty = 0.1;
+			
+			gc.gridx = 0;
+			gc.fill = GridBagConstraints.NONE;
+			gc.anchor = GridBagConstraints.LINE_END;
+			gc.insets = new Insets(0,0,0,5);
+			add(names[i], gc);
+
+			gc.gridx = 1;
+			gc.insets = new Insets(0,0,0,0);
+			gc.anchor = GridBagConstraints.LINE_START;
+			add(prices[i], gc);
+			
+			gc.gridx = 2;
+			gc.insets = new Insets(0,0,0,0);
+			gc.anchor = GridBagConstraints.LINE_START;
+			add(fields[i], gc);
+		}
+		
+		gc.gridy++;
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+		
+		gc.gridx = 1;
+		gc.insets = new Insets(0,0,0,0);
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(editButton, gc);
+		
 		editButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				orderProducts.clear();
@@ -269,47 +315,6 @@ public class OrderFormPanel extends JPanel {
 			}
 		});
 		
-		//Dynamically create labels and text fields for products
-		for(int i=0; i<size; i++){
-			names[i] = new JLabel(products.get(i).getName());
-			prices[i] = new JLabel(": \u20ac" + Double.toString(products.get(i).getSupplierPrice()*100.00/100.00) + " each");
-			fields[i] = new JTextField(3);
-			for(Product product: editedOrder.getProducts()){
-				if(names[i].getText().equals(product.getName())){
-					fields[i].setText(String.valueOf(editedOrder.getProducts().get(i).getQuantity()));
-					break;
-				}
-			}
-			gc.gridy = i;
-			gc.weightx = 1;
-			gc.weighty = 0.1;
-			
-			gc.gridx = 0;
-			gc.fill = GridBagConstraints.NONE;
-			gc.anchor = GridBagConstraints.LINE_END;
-			gc.insets = new Insets(0,0,0,5);
-			add(names[i], gc);
-
-			gc.gridx = 1;
-			gc.insets = new Insets(0,0,0,0);
-			gc.anchor = GridBagConstraints.LINE_START;
-			add(prices[i], gc);
-			
-			gc.gridx = 2;
-			gc.insets = new Insets(0,0,0,0);
-			gc.anchor = GridBagConstraints.LINE_START;
-			add(fields[i], gc);
-		}
-		
-		gc.gridy++;
-		gc.weightx = 1;
-		gc.weighty = 0.1;
-		
-		gc.gridx = 1;
-		gc.insets = new Insets(0,0,0,0);
-		gc.anchor = GridBagConstraints.LINE_START;
-		add(editButton, gc);
-		
 		this.validate();
 		this.repaint();
 	}
@@ -322,77 +327,8 @@ public class OrderFormPanel extends JPanel {
 		this.editedOrder = order;
 	}
 	
+	public void setEditedProducts(ArrayList<Product> products){
+		this.editedProducts = products;
+	}
+	
 }
-
-/*
-//Next Row
-gc.gridy++;
-gc.weightx = 1;
-gc.weighty = 0.2;
-
-gc.gridx = 0;
-gc.anchor = GridBagConstraints.FIRST_LINE_END;
-gc.insets = new Insets(0,0,0,5);
-add(new JLabel("Age: "), gc);
-
-gc.gridx = 1;
-gc.insets = new Insets(0,0,0,0);
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//add(ageList, gc);
-
-//Next Row
-gc.gridy++;
-gc.weightx = 1;
-gc.weighty = 0.2;
-
-gc.gridx = 0;
-gc.anchor = GridBagConstraints.FIRST_LINE_END;
-gc.insets = new Insets(0,0,0,5);
-add(new JLabel("Employment: "), gc);
-
-gc.gridx = 1;
-gc.insets = new Insets(0,0,0,0);
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//add(empCombo, gc);
-
-//Next Row
-gc.gridy++;
-gc.weightx = 1;
-gc.weighty = 0.2;
-
-gc.gridx = 0;
-gc.anchor = GridBagConstraints.FIRST_LINE_END;
-gc.insets = new Insets(0,0,0,5);
-add(new JLabel("US Citizen: "), gc);
-
-gc.gridx = 1;
-gc.insets = new Insets(0,0,0,0);
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//add(citizenCheck, gc);
-
-//Next Row
-gc.gridy++;
-gc.weightx = 1;
-gc.weighty = 0.2;
-
-gc.gridx = 0;
-gc.anchor = GridBagConstraints.FIRST_LINE_END;
-gc.insets = new Insets(0,0,0,5);
-//add(taxLabel, gc);
-
-gc.gridx = 1;
-gc.insets = new Insets(0,0,0,0);
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//add(taxField, gc);
-
-//Next Row
-gc.gridy++;
-gc.weightx = 1;
-gc.weighty = 2;
-
-gc.gridx = 1;
-gc.insets = new Insets(0,0,0,0);
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//add(submitButton, gc);	
- * 
- */
