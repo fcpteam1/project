@@ -534,6 +534,8 @@ public void loadCustomers(String inPutFile) {
 				order.calculatePrice();
 			}
 		}
+
+		writeOrder(orderFile);
 	}
 	
 	public void deleteOrder(int index){
@@ -542,10 +544,14 @@ public void loadCustomers(String inPutFile) {
 		for (Order order : orders){
 			order.setId(newCount++);
 		}
+
+		writeOrder(orderFile);
 	}
 
 	public void processOrder(int index){
 		orders.get(index).setCurrent(false);
+
+		writeOrder(orderFile);
 	}
 	
 	public void setOrders(ArrayList<Order> orders) {
