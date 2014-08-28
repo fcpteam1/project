@@ -48,14 +48,50 @@ public class Stock extends Product implements java.io.Serializable{
 		
 	public double calculatePrice(){
 		double price = 0;
-		if(super.getName().equals("apple")){
-			price = 0.50;
+		if(super.getName().equals("Apple")){
+			price = 0.80;
 		}
-		else if(super.getName().equals("orange")){
-			price = 0.20;
+		else if(super.getName().equals("Apples")){
+			price = 0.80;
 		}
-		else if(super.getName().equals("banana")){
+		else if(super.getName().equals("Orange")){
 			price = 0.30;
+		}
+		else if(super.getName().equals("Banana")){
+			price = 0.30;
+		}
+		else if(super.getName().equals("Avocado")){
+			price = 0.80;
+		}
+		else if(super.getName().equals("Melon")){
+			price = 1.00;
+		}
+		else if(super.getName().equals("Grapes")){
+			price = 0.90;
+		}
+		else if(super.getName().equals("Pear")){
+			price = 0.30;
+		}
+		else if(super.getName().equals("Pears")){
+			price = 0.30;
+		}
+		else if(super.getName().equals("Mango")){
+			price = 1.00;
+		}
+		else if(super.getName().equals("Plum")){
+			price = 0.60;
+		}
+		else if(super.getName().equals("Strawberries")){
+			price = 2.00;
+		}
+		else if(super.getName().equals("Raspberries")){
+			price = 2.00;
+		}
+		else if(super.getName().equals("Blueberries")){
+			price = 2.50;
+		}
+		else if(super.getName().equals("Mandarins")){
+			price = 0.20;
 		}
 		return price;
 	}

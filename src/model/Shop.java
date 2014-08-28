@@ -522,6 +522,8 @@ public void loadCustomers(String inPutFile) {
 				order.calculatePrice();
 			}
 		}
+
+		writeOrder(orderFile);
 	}
 	
 	public void deleteOrder(int index){
@@ -530,10 +532,17 @@ public void loadCustomers(String inPutFile) {
 		for (Order order : orders){
 			order.setId(newCount++);
 		}
+
+		writeOrder(orderFile);
 	}
 
 	public void processOrder(int index){
 		orders.get(index).setCurrent(false);
+		for(Product product: orders.get(index).getProducts()){
+			Stock stock = new Stock(product, product.getQuantity());
+			stocks.add(stock);
+		}
+		writeOrder(orderFile);
 	}
 	
 	public void setOrders(ArrayList<Order> orders) {
