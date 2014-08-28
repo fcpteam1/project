@@ -1,7 +1,7 @@
 package model;
 import java.util.ArrayList;
 
-public class Supplier {
+public class Supplier implements java.io.Serializable {
 
 	private String name, number, address;
 	private int id;

@@ -1,6 +1,10 @@
 package model;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,7 +26,17 @@ public class Shop {
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private String username, password, choice,customerName,customerNumber,customerAddress,editUserPassword,editUserUsername;
 	private String editCustomerName, editCustomerNumber, editCustomerAddress;
+	private String saleFile = "sales.ser";
+	private String orderFile = "orders.ser";
+	private String customerFile = "customers.ser";
+	private String userFile = "users.ser";
+	private String supplierFile = "suppliers.ser";
+	private String stockFile = "stocks.ser";
 	private int customerId,tableIndex;
+	private FileOutputStream fileOut;
+	private ObjectOutputStream out; 
+	private FileInputStream fileIn;
+	private ObjectInputStream in;
 	private Scanner input = new Scanner(System.in);
 	private Scanner input2 = new Scanner(System.in);
 	private Scanner input3 = new Scanner(System.in);
@@ -78,28 +92,35 @@ public class Shop {
 
 	private static Shop ShopInstance=null;
 	
-	public Shop() throws IOException{
+	public Shop() {
 		
 		userFormPanel = new UserFormPanel();
 		customerFormPanel = new CustomerFormPanel();
 		orderFormPanel = new OrderFormPanel();
 		
-		loadCustomers("CustomerList");
-		loadUsers("UserList");
-		loadSuppliers("SuppliersProductListFiles", "SupplierList");
-		loadStock("StockList");
-
+		loadCustomers(customerFile);
+		loadUsers(userFile);
+		loadSuppliers(supplierFile);
+		loadStock(stockFile);
+		loadSales(saleFile);
+		loadOrders(orderFile);
+	
+		/*for (Sale s : sales)
+			System.out.println(s.getCustomer() + " : From sales.ser");
+		for (Order o : orders)
+			System.out.println(o.getSupplier() + " : From orders.ser");
 		for (Customer c : customers)
-		System.out.println(c.getName() + ", " + c.getAddress() );
+			System.out.println(c.getName() + ", " + c.getAddress() );
 		for (User u : users)
-		System.out.println((u.getUsername() + ", " + u.getId()));
+			System.out.println((u.getUsername() + ", " + u.getId()));
 		for (Supplier s : suppliers)
-		System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
-		}
+			System.out.println(s.getName() + " Product list size: " + s.getProducts().size());	
+		for (Stock stock : stocks)
+			System.out.println(stock.getName() + " Quantity: " + stock.getQuantity());*/
 	
 			//checkLogin();
 			//mainMenu();
-	
+	}
 	
 	
 	public static Shop getInstance() throws IOException{
@@ -112,78 +133,211 @@ public class Shop {
 		return ShopInstance;
 	}
 	
-	public void loadSuppliers(String SuppliersProductFiles,String SupplierListFile)throws IOException {
+	public void loadSales(String inPutFile) {
 		
-	Scanner scan1= new Scanner(new File(SuppliersProductFiles));
-	Scanner scan2= new Scanner(new File(SupplierListFile)).useDelimiter("\\,");
-	
-		while(scan1.hasNext() && scan2.hasNext()){
-			
-			ArrayList<Product> supplierProducts = new ArrayList<Product>();
-			
-			String name = scan2.next();
-			int id = scan2.nextInt();
-			String number = scan2.next();
-			String address = scan2.next();
-			Supplier supplier = new Supplier(name, id, number, address, supplierProducts);
-			
-			File file = new File(scan1.next());
-			Scanner scan3 = new Scanner(file);
-			
-				while (scan3.hasNext()) {
+		try {
+			FileInputStream fileIn = new FileInputStream(inPutFile);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+				
+					sales = (ArrayList<Sale>)in.readObject();
 					
-					String item = scan3.next();
-					double supplierPrice = scan3.nextDouble();
-					Product product = new Product(item, supplierPrice);
-					supplier.getProducts().add(product);	
-				}
-			scan3.close();
-			suppliers.add(supplier);		
-		}
+					in.close();
+					fileIn.close();
+			}
 		
-	scan2.close();
-	scan1.close();	
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+		catch(ClassNotFoundException c){
+			System.out.println("Sale class not found");
+			c.printStackTrace();
+		}
 	}
 	
-	public void loadStock(String fileName) throws IOException {
+public void loadOrders(String inPutFile) {
 		
-	Scanner in= new Scanner(new File(fileName));
-		while(in.hasNext()) {
-			String name = in.next();
-			double supplierPrice = in.nextDouble();
-			int quantity = in.nextInt();
-			double customerPrice = in.nextDouble();
-			Stock stock = new Stock(name, supplierPrice, quantity, customerPrice);
-			stocks.add(stock);
+		try {
+			FileInputStream fileIn = new FileInputStream(inPutFile);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+				
+					orders = (ArrayList<Order>)in.readObject();
+					
+					in.close();
+					fileIn.close();
+			}
+		
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+		catch(ClassNotFoundException c){
+			System.out.println("Order class not found");
+			c.printStackTrace();
 		}
 	}
-		
-	public void loadUsers(String fileName)throws IOException {
+
+public void loadSuppliers(String inPutFile) {
+	
+	try {
+		FileInputStream fileIn = new FileInputStream(inPutFile);
+		ObjectInputStream in = new ObjectInputStream(fileIn);
 			
-		Scanner in= new Scanner(new File(fileName));
-			while(in.hasNext()){
-				int id = in.nextInt();
-				String username = in.next();
-				String password = in.next();
-				boolean admin = in.nextBoolean();
-				User user = new User(username, password, admin);
-				users.add(user);	
-			}
-		in.close();
+				suppliers = (ArrayList<Supplier>)in.readObject();
+				
+				in.close();
+				fileIn.close();
 		}
 	
-	public void loadCustomers(String fileName) throws IOException {
+	catch(IOException i) {
+		i.printStackTrace();
+	}
+	catch(ClassNotFoundException c){
+		System.out.println("Supplier class not found");
+		c.printStackTrace();
+	}
+}
+
+public void loadUsers(String inPutFile) {
+	
+	try {
+		FileInputStream fileIn = new FileInputStream(inPutFile);
+		ObjectInputStream in = new ObjectInputStream(fileIn);
+			
+				users = (ArrayList<User>)in.readObject();
+				
+				in.close();
+				fileIn.close();
+		}
+	
+	catch(IOException i) {
+		i.printStackTrace();
+	}
+	catch(ClassNotFoundException c){
+		System.out.println("User class not found");
+		c.printStackTrace();
+	}
+}
+	
+
+	public void loadStock(String inPutFile) {
 		
-	Scanner in= new Scanner(new File(fileName)).useDelimiter("\\,");
-		while(in.hasNext()){
-			String name = in.next();
-			int id = in.nextInt();
-			String number = in.next();
-			String address = in.next();
-			Customer customer = new Customer(name, number, address);
-			customers.add(customer);
+		try {
+			FileInputStream fileIn = new FileInputStream(inPutFile);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+				
+					stocks = (ArrayList<Stock>)in.readObject();
+					
+					in.close();
+					fileIn.close();
 			}
-	in.close();
+		
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+		catch(ClassNotFoundException c){
+			System.out.println("Stock class not found");
+			c.printStackTrace();
+		}
+	}
+		
+	
+
+public void loadCustomers(String inPutFile) {
+	
+	try {
+		FileInputStream fileIn = new FileInputStream(inPutFile);
+		ObjectInputStream in = new ObjectInputStream(fileIn);
+			
+				customers = (ArrayList<Customer>)in.readObject();
+				
+				in.close();
+				fileIn.close();
+		}
+	
+	catch(IOException i) {
+		i.printStackTrace();
+	}
+	catch(ClassNotFoundException c){
+		System.out.println("Customer class not found");
+		c.printStackTrace();
+	}
+}
+	
+	public void writeSale(String saleFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(saleFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(sales);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	public void writeOrder(String orderFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(orderFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(orders);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
+
+	public void writeCustomer(String customerFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(customerFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(customers);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	public void writeStock(String stockFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(stockFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(stocks);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	public void writeSupplier(String supplierFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(supplierFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(suppliers);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	public void writeUser(String userFile){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(userFile);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(users);
+			out.close();
+			fileOut.close();
+		}
+		catch(IOException i) {
+			i.printStackTrace();
+		}
 	}
 	
 	public ArrayList<User> getUsers(){
@@ -203,6 +357,7 @@ public class Shop {
 		int newCount = 0;
 		for(User user: users){
 			user.setId(newCount++);
+		writeUser(userFile);
 		}
 	}
 	
@@ -290,6 +445,7 @@ public class Shop {
 		int newCount = 0;
 		for (Customer customer : customers){
 			customer.setId(newCount++);
+		writeCustomer(customerFile);
 		}
 	}
 	
@@ -346,10 +502,16 @@ public class Shop {
 	
 	public void createSale(SaleFormEvent e) {
 		
-	ArrayList<Stock> stocks = e.getStockList();
-	Customer customer = e.getCustomer();
-	Sale sale = new Sale(stocks, customer);
-	sales.add(sale);
+		ArrayList<Stock> stocks = e.getStockList();
+		Customer customer = e.getCustomer();
+		Sale sale = new Sale(stocks, customer);
+		sales.add(sale);
+		
+		int newCount = 0;
+			for (Sale s : sales){
+				s.setId(newCount++);
+			}
+		writeSale(saleFile);
 	}
 	
 	public void createOrder(OrderFormEvent e){
@@ -357,6 +519,8 @@ public class Shop {
 		Supplier supplier = e.getSupplier();
 		Order order = new Order(products, supplier);
 		orders.add(order);
+		
+		writeOrder(orderFile);
 	}
 	
 	public void viewOrders(OrderFormEvent e){
@@ -370,6 +534,8 @@ public class Shop {
 				order.calculatePrice();
 			}
 		}
+
+		writeOrder(orderFile);
 	}
 	
 	public void deleteOrder(int index){
@@ -378,6 +544,8 @@ public class Shop {
 		for (Order order : orders){
 			order.setId(newCount++);
 		}
+
+		writeOrder(orderFile);
 	}
 
 	public void processOrder(int index){
@@ -386,6 +554,7 @@ public class Shop {
 			Stock stock = new Stock(product, product.getQuantity());
 			stocks.add(stock);
 		}
+		writeOrder(orderFile);
 	}
 	
 	public void setOrders(ArrayList<Order> orders) {

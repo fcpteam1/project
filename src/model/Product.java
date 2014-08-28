@@ -1,5 +1,5 @@
 package model;
-public class Product {
+public class Product implements java.io.Serializable {
 
 	private double supplierPrice,customerPrice;
 	private String name;

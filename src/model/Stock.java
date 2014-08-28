@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Stock extends Product {
+public class Stock extends Product implements java.io.Serializable{
 	private static ArrayList<Stock> stockList = new ArrayList<Stock>();
 	private double customerPrice;
 

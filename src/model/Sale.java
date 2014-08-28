@@ -1,7 +1,7 @@
 package model;
 import java.util.ArrayList;
 
-public class Sale extends Invoice{
+public class Sale extends Invoice implements java.io.Serializable{
 	private static int count = 0;
 	private Customer customer;
 	private int id;
