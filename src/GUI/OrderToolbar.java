@@ -22,6 +22,7 @@ public class OrderToolbar extends JPanel implements ActionListener{
 		createButton = new JButton("Create");
 		currentButton = new JButton("Current");
 		previousButton = new JButton("Previous");
+		
 		createButton.addActionListener(this);
 		currentButton.addActionListener(this);
 		previousButton.addActionListener(this);
