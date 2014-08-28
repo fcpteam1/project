@@ -16,7 +16,7 @@ import javax.swing.border.Border;
 
 import model.Model;
 
-public class ProfitFormPanel extends JPanel {
+public class FinancialFormPanel extends JPanel {
 	private JButton todayBtn,dailyBtn,weeklyBtn,monthlyBtn;
 	private CustomerFormListener customerFormListener; 
 	private Model model;
@@ -25,7 +25,7 @@ public class ProfitFormPanel extends JPanel {
 	private ArrayList<Profit> profits;
 	private ArrayList<Expendature> expendatures;*/
 	
-	public ProfitFormPanel(){
+	public FinancialFormPanel(){
 		
 	}
 	
