@@ -192,7 +192,7 @@ public class SaleFormPanel extends JPanel {
 				for(String name: stockNames){
 					for(Stock  s: stocks){
 						if(s.getName().equals(name)){
-							s.setQuantity(quantities.get(i));
+							s.setQuantity(s.getQuantity()-quantities.get(i));
 							saleStockList.add(s);
 						}
 					}

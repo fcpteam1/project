@@ -28,9 +28,13 @@ public class OrderFormPanel extends JPanel {
 	private JButton selectButton;
 	private JButton orderButton;
 	private Order editedOrder;
+	private ArrayList<Product> editedProducts = new ArrayList<Product>();
+	private ArrayList<Product> editedSupplierProducts = new ArrayList<Product>();
 	private JButton editButton;
 	private OrderFormListener formListener;
 	private ArrayList<Order> orders;
+	private ArrayList<Order> currentOrders;
+	private ArrayList<Order> previousOrders;
 	private ArrayList<Supplier> suppliers;
 	private ArrayList<Product> products;
 	private Supplier thisSupplier;
@@ -227,59 +231,23 @@ public class OrderFormPanel extends JPanel {
 		GridBagConstraints gc = new GridBagConstraints();
 		
 		editButton = new JButton("Edit Order");
-		Supplier supplier = editedOrder.getSupplier();
-		products = supplier.getProducts();
-		size = products.size();
+		size = editedSupplierProducts.size();
 		names = new JLabel[size];
 		prices = new JLabel[size];
 		fields = new JTextField[size];
-		//TODO fix error with edit text fields
-		editButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				orderProducts.clear();
-				ArrayList<Integer> quantities = new ArrayList<Integer>();
-				ArrayList<String> productNames = new ArrayList<String>();
-				//Get ordered products and associated quantities
-				for(int i=0; i<size; i++){
-					if(!fields[i].getText().equals("")){
-						try{
-							quantities.add(Integer.valueOf(fields[i].getText()));
-							productNames.add(names[i].getText());
-						}catch(NumberFormatException nfEx){
-							System.out.println("Not an integer");
-						}
-					}
-				}
-				//Loop through ordered product names and link to actual product
-				int i = 0;
-				for(String name: productNames){
-					for(Product product: products){
-						if(product.getName().equals(name)){
-							product.setQuantity(quantities.get(i));
-							orderProducts.add(product);
-						}
-					}
-					i++;
-				}
-				OrderFormEvent orderEvent = new OrderFormEvent(this, thisSupplier, orderProducts);
-				if(formListener != null){
-					formListener.editOrderOccurred(orderEvent, editedOrder.getId());
-				}
-				setVisible(false);
-			}
-		});
 		
 		//Dynamically create labels and text fields for products
 		for(int i=0; i<size; i++){
-			names[i] = new JLabel(products.get(i).getName());
-			prices[i] = new JLabel(": \u20ac" + Double.toString(products.get(i).getSupplierPrice()*100.00/100.00) + " each");
+			names[i] = new JLabel(editedSupplierProducts.get(i).getName());
+			prices[i] = new JLabel(": \u20ac" + Double.toString(editedSupplierProducts.get(i).getSupplierPrice()*100.00/100.00) + " each");
 			fields[i] = new JTextField(3);
-			for(Product product: editedOrder.getProducts()){
-				if(names[i].getText().equals(product.getName())){
-					fields[i].setText(String.valueOf(editedOrder.getProducts().get(i).getQuantity()));
+			for(Product product: editedProducts){
+				if(editedSupplierProducts.get(i).getName().equals(product.getName())){
+					fields[i].setText(String.valueOf(editedProducts.get(i).getQuantity()));
 					break;
 				}
 			}
+			
 			gc.gridy = i;
 			gc.weightx = 1;
 			gc.weighty = 0.1;
@@ -308,12 +276,48 @@ public class OrderFormPanel extends JPanel {
 		gc.gridx = 1;
 		gc.insets = new Insets(0,0,0,0);
 		gc.anchor = GridBagConstraints.LINE_START;
+		editButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				editedProducts.clear();
+				ArrayList<Integer> quantities = new ArrayList<Integer>();
+				ArrayList<String> productNames = new ArrayList<String>();
+				//Get ordered products and associated quantities
+				for(int i=0; i<size; i++){
+					if(!fields[i].getText().equals("")){
+						try{
+							quantities.add(Integer.valueOf(fields[i].getText()));
+							productNames.add(names[i].getText());
+						}catch(NumberFormatException nfEx){
+							System.out.println("Not an integer");
+						}
+					}
+				}
+				//Loop through ordered product names and link to actual product
+				int i = 0;
+				for(String name: productNames){
+					for(Product product: editedSupplierProducts){
+						if(product.getName().equals(name)){
+							product.setQuantity(quantities.get(i));
+							editedProducts.add(product);
+						}
+					}
+					i++;
+				}
+				OrderFormEvent orderEvent = new OrderFormEvent(this, editedOrder.getSupplier(), editedProducts);
+				if(formListener != null){
+					formListener.editOrderOccurred(orderEvent, editedOrder.getId());
+				}
+				setVisible(false);
+			}
+		});
 		add(editButton, gc);
 		
 		this.validate();
 		this.repaint();
 	}
-		
+
+	
+	
 	public void setFormListener(OrderFormListener formListener) {
 		this.formListener = formListener;
 	}
@@ -322,77 +326,12 @@ public class OrderFormPanel extends JPanel {
 		this.editedOrder = order;
 	}
 	
+	public void setEditedProducts(ArrayList<Product> products){
+		this.editedProducts = products;
+	}
+	
+	public void setEditedSupplierProducts(ArrayList<Product> editedSupplierProducts) {
+		this.editedSupplierProducts = editedSupplierProducts;
+	}
+	
 }
-
-/*
-//Next Row
-gc.gridy++;
-gc.weightx = 1;
-gc.weighty = 0.2;
-
-gc.gridx = 0;
-gc.anchor = GridBagConstraints.FIRST_LINE_END;
-gc.insets = new Insets(0,0,0,5);
-add(new JLabel("Age: "), gc);
-
-gc.gridx = 1;
-gc.insets = new Insets(0,0,0,0);
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//add(ageList, gc);
-
-//Next Row
-gc.gridy++;
-gc.weightx = 1;
-gc.weighty = 0.2;
-
-gc.gridx = 0;
-gc.anchor = GridBagConstraints.FIRST_LINE_END;
-gc.insets = new Insets(0,0,0,5);
-add(new JLabel("Employment: "), gc);
-
-gc.gridx = 1;
-gc.insets = new Insets(0,0,0,0);
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//add(empCombo, gc);
-
-//Next Row
-gc.gridy++;
-gc.weightx = 1;
-gc.weighty = 0.2;
-
-gc.gridx = 0;
-gc.anchor = GridBagConstraints.FIRST_LINE_END;
-gc.insets = new Insets(0,0,0,5);
-add(new JLabel("US Citizen: "), gc);
-
-gc.gridx = 1;
-gc.insets = new Insets(0,0,0,0);
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//add(citizenCheck, gc);
-
-//Next Row
-gc.gridy++;
-gc.weightx = 1;
-gc.weighty = 0.2;
-
-gc.gridx = 0;
-gc.anchor = GridBagConstraints.FIRST_LINE_END;
-gc.insets = new Insets(0,0,0,5);
-//add(taxLabel, gc);
-
-gc.gridx = 1;
-gc.insets = new Insets(0,0,0,0);
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//add(taxField, gc);
-
-//Next Row
-gc.gridy++;
-gc.weightx = 1;
-gc.weighty = 2;
-
-gc.gridx = 1;
-gc.insets = new Insets(0,0,0,0);
-gc.anchor = GridBagConstraints.FIRST_LINE_START;
-//add(submitButton, gc);	
- * 
- */

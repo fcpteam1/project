@@ -12,6 +12,7 @@ public class FinancialToolbar extends JPanel implements ActionListener  {
 	private JButton saleButton;
 	private JButton profitButton;
 	private JButton expenditureButton;
+	private FinancialToolbarListener listener;
 	
 	private FinancialFormPanel formPanel ;
 	
@@ -37,13 +38,17 @@ public class FinancialToolbar extends JPanel implements ActionListener  {
 		this.formPanel = formPanel;
 	}
 
+	public void setFinancialToolbarListener(FinancialToolbarListener listener){
+		this.listener = listener;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton clicked = (JButton)e.getSource() ;
 		
 		if(clicked == saleButton) {
 			formPanel.removeAll();
-			formPanel.SalesFormPanel();
+			listener.saleSelected();
 			formPanel.validate();
 			formPanel.repaint();
 		}else if(clicked == expenditureButton) {

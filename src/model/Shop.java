@@ -507,7 +507,10 @@ public void loadCustomers(String inPutFile) {
 		Supplier supplier = e.getSupplier();
 		Order order = new Order(products, supplier);
 		orders.add(order);
-		
+		int newCount = 0;
+		for (Order newOrder : orders){
+			newOrder.setId(newCount++);
+		}
 		writeOrder(orderFile);
 	}
 	
@@ -521,6 +524,10 @@ public void loadCustomers(String inPutFile) {
 				order.setProducts(e.getProducts());
 				order.calculatePrice();
 			}
+		}
+		int newCount = 0;
+		for (Order newOrder : orders){
+			newOrder.setId(newCount++);
 		}
 
 		writeOrder(orderFile);
@@ -543,16 +550,13 @@ public void loadCustomers(String inPutFile) {
 			stocks.add(stock);
 		}
 		writeOrder(orderFile);
+		writeStock(stockFile);
 	}
 	
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
 	
-	private void stockLevels() {
-		// TODO Auto-generated method stub
-		
-	}
 }
 	
 
