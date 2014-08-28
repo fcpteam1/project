@@ -23,13 +23,8 @@ public class MainMenuGUI {
 	private SupplierGUI supplierTab;
 	private StockGUI stockTab;
 	private SaleMainPanel saleTab;
-<<<<<<< HEAD
-//	private ProfitAndLossMainPanel profitAndLossTab;
-=======
 	private ProfitMainPanel profitAndLossTab;
-	
 	protected boolean adminLogged=false;
->>>>>>> refs/heads/master
 	
 public MainMenuGUI() throws IOException{
 		
@@ -46,29 +41,9 @@ public MainMenuGUI() throws IOException{
 		orderTab = new OrderMainPanel();
 		stockTab = new StockGUI();
 		saleTab = new SaleMainPanel();
-<<<<<<< HEAD
-		//profitAndLossTab = new ProfitAndLossMainPanel();
-	
-=======
 		profitAndLossTab = new ProfitMainPanel();
-	/*
->>>>>>> refs/heads/master
-		tabbedPane.addTab("Customers",customerTab.getPanel());
-		tabbedPane.addTab("Users",userTab.getPanel());
-		tabbedPane.addTab("Supplier",supplierTab.getMain());
-		tabbedPane.addTab("Orders", orderTab.getPanel());
-		tabbedPane.addTab("Stock", stockTab.getPanel());
-		tabbedPane.addTab("Sales", saleTab.getPanel());
-		//tabbedPane.addTab("Profit & Loss", profitAndLossTab.getPanel());
-		
-		tabbedPane.setIconAt(0, createIcon("/images/customer.png"));
-		tabbedPane.setIconAt(1, createIcon("/images/user.png"));
-		tabbedPane.setIconAt(2, createIcon("/images/supplier.png"));
-		tabbedPane.setIconAt(3, createIcon("/images/order.png"));
-		tabbedPane.setIconAt(4, createIcon("/images/stock.png"));
-		tabbedPane.setIconAt(5, createIcon("/images/sale.png"));
-		tabbedPane.setIconAt(6, createIcon("/images/profitandloss.png"));
-		*/
+
+
 		c.gridx=0;
 		c.gridy=0;
 		c.gridheight=2;
