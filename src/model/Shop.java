@@ -550,16 +550,13 @@ public void loadCustomers(String inPutFile) {
 			stocks.add(stock);
 		}
 		writeOrder(orderFile);
+		writeStock(stockFile);
 	}
 	
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
 	
-	private void stockLevels() {
-		// TODO Auto-generated method stub
-		
-	}
 }
 	
 
