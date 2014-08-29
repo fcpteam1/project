@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+
+
 public class MainMenuGUI {
 
 	private JPanel framePanel;
@@ -27,7 +29,18 @@ public class MainMenuGUI {
 	
 	protected boolean adminLogged=false;
 	
-public MainMenuGUI() throws IOException{
+	private static MainMenuGUI instance;
+
+	public static MainMenuGUI getInstance() throws IOException{
+		
+		if(instance == null){
+			instance=new MainMenuGUI();
+		}
+		
+		return instance;
+	}
+	
+private MainMenuGUI() throws IOException{
 		
 		framePanel=new JPanel();
 		framePanel.setLayout(new GridBagLayout());

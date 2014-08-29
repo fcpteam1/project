@@ -27,7 +27,7 @@ public class View extends JFrame {
 		thisContainer=getContentPane();
 		
 		login=new LoginGUI();
-		mainmenu=new MainMenuGUI();
+		mainmenu=MainMenuGUI.getInstance();
 		formPanel=new UserFormPanel();
 		
 		thisContainer.add(login.getPanel());
