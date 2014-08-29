@@ -10,7 +10,7 @@ import model.Model;
 public class FinancialMainPanel {
 	private JPanel mainPanel;
 	private FinancialToolbar financialToolbar;
-	private FinancialFormPanel profitFormPanel;
+	private FinancialFormPanel financialFormPanel;
 	private FinancialTablePanel financialTablePanel;
 	private FinancialTableModel financialTableModel;
 	private Model model;
@@ -22,33 +22,40 @@ public class FinancialMainPanel {
 		financialTableModel = new FinancialTableModel();
 		financialTablePanel = new FinancialTablePanel();
 		financialToolbar = new FinancialToolbar();
-		profitFormPanel = new FinancialFormPanel();
+		financialFormPanel = new FinancialFormPanel();
 		model = new Model();
 
-		financialToolbar.setFormPanel(profitFormPanel);
+		financialToolbar.setFormPanel(financialFormPanel);
 		financialToolbar
 				.setFinancialToolbarListener(new FinancialToolbarListener() {
 
 					@Override
 					public void saleSelected() {
-						// financialTablePanel.setData();
+						financialFormPanel.removeAll();
+						financialFormPanel.SalesFormPanel();
+						financialFormPanel.validate();
+						financialFormPanel.repaint();
 					}
 
 					@Override
 					public void expendituresSelected() {
-						// TODO Auto-generated method stub
-
+						financialFormPanel.removeAll();
+						financialFormPanel.ExpendituresFormPanel();
+						financialFormPanel.validate();
+						financialFormPanel.repaint();
 					}
 
 					@Override
 					public void profitsSelected() {
-						// TODO Auto-generated method stub
-
+						financialFormPanel.removeAll();
+						financialFormPanel.ProfitFormPanel();
+						financialFormPanel.validate();
+						financialFormPanel.repaint();
 					}
 
 				});
 
-		mainPanel.add(profitFormPanel, BorderLayout.WEST);
+		mainPanel.add(financialFormPanel, BorderLayout.WEST);
 		mainPanel.add(financialToolbar, BorderLayout.NORTH);
 		mainPanel.setSize(600, 500);
 	}

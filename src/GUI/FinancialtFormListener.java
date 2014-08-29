@@ -1,5 +1,7 @@
 package GUI;
 
-public class FinancialtFormListener {
+import java.util.EventListener;
+
+public interface FinancialtFormListener extends EventListener {
 
 }

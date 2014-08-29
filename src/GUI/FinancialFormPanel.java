@@ -42,9 +42,8 @@ public class FinancialFormPanel extends JPanel {
 		setPreferredSize(dim);
 
 		todayBtn = new JButton("Todays sales");
-		dailyBtn = new JButton("Daily sales");
-		weeklyBtn = new JButton("Weekly sales");
-		monthlyBtn = new JButton("Monthly sales");
+		weeklyBtn = new JButton("This weeks sales");
+		monthlyBtn = new JButton("This Months sales");
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -69,29 +68,18 @@ public class FinancialFormPanel extends JPanel {
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 1;
+		gc.weighty = 100;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		add(dailyBtn, gc);
+		add(weeklyBtn, gc);
 
 		// /////// Third row /////////
 
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 1;
-
-		gc.gridx = 1;
-		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		add(weeklyBtn, gc);
-
-		// /////// Fifth row ////////
-
-		gc.gridy++;
-
-		gc.weightx = 1;
-		gc.weighty = 2;
+		gc.weighty = 1000000;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -106,9 +94,8 @@ public class FinancialFormPanel extends JPanel {
 		setPreferredSize(dim);
 
 		todayBtn = new JButton("Todays expenditures");
-		dailyBtn = new JButton("Daily expenditures");
-		weeklyBtn = new JButton("Weekly expenditures");
-		monthlyBtn = new JButton("Monthly expenditures");
+		weeklyBtn = new JButton("This weeks expenditures");
+		monthlyBtn = new JButton("This Months expenditures");
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -133,29 +120,18 @@ public class FinancialFormPanel extends JPanel {
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 2;
+		gc.weighty = 100;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		add(dailyBtn, gc);
+		add(weeklyBtn, gc);
 
 		// /////// Third row /////////
 
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 2;
-
-		gc.gridx = 1;
-		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		add(weeklyBtn, gc);
-
-		// /////// Fifth row ////////
-
-		gc.gridy++;
-
-		gc.weightx = 1;
-		gc.weighty = 2;
+		gc.weighty = 1000000;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -169,10 +145,9 @@ public class FinancialFormPanel extends JPanel {
 		dim.width = 250;
 		setPreferredSize(dim);
 
-		todayBtn = new JButton("Todays profits");
-		dailyBtn = new JButton("Daily profit");
-		weeklyBtn = new JButton("Weekly profit");
-		monthlyBtn = new JButton("Monthly profit");
+		todayBtn = new JButton("Todays profit");
+		weeklyBtn = new JButton("This weeks profit");
+		monthlyBtn = new JButton("This Months profit");
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -186,7 +161,7 @@ public class FinancialFormPanel extends JPanel {
 
 		gc.gridy = 0;
 		gc.weightx = 1;
-		gc.weighty = 2;
+		gc.weighty = 1;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -197,33 +172,21 @@ public class FinancialFormPanel extends JPanel {
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 2;
+		gc.weighty = 100;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		add(dailyBtn, gc);
+		add(weeklyBtn, gc);
 
 		// /////// Third row /////////
 
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 2;
-
-		gc.gridx = 1;
-		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		add(weeklyBtn, gc);
-
-		// /////// Fifth row ////////
-
-		gc.gridy++;
-
-		gc.weightx = 1;
-		gc.weighty = 2;
+		gc.weighty = 1000000;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(monthlyBtn, gc);
 	}
-
 }
