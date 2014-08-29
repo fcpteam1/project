@@ -7,13 +7,13 @@ import javax.swing.table.AbstractTableModel;
 import model.Order;
 import model.Supplier;
 
-public class OrderTableModel extends AbstractTableModel {
+public class FinancialExpendituresTableModel extends AbstractTableModel {
 
 	private ArrayList<Order> orders;
 	private String[] columnNames = { "ID", "Supplier", "Total Price",
 			"Ordered", "Delivered" };
 
-	public OrderTableModel() {
+	public FinancialExpendituresTableModel() {
 	}
 
 	@Override
@@ -53,5 +53,4 @@ public class OrderTableModel extends AbstractTableModel {
 
 		return null;
 	}
-
 }

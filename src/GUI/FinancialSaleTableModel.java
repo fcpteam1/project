@@ -4,16 +4,14 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import model.Customer;
 import model.Sale;
 
-public class SaleTableModel extends AbstractTableModel {
-
+public class FinancialSaleTableModel extends AbstractTableModel {
 	private ArrayList<Sale> sales;
 	private String[] columnNames = { "Sale Id", "Customer Name", "Date",
 			"Total Price" };
 
-	public SaleTableModel() {
+	public FinancialSaleTableModel() {
 
 	}
 

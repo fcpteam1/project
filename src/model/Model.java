@@ -1,15 +1,16 @@
 package model;
+
 import java.io.IOException;
 
 public class Model {
 
 	private Shop shop;
 	private Stock stock;
-	
+
 	public Model() throws IOException {
 		// TODO Auto-generated constructor stub
-		shop=Shop.getInstance();
-		
+		shop = Shop.getInstance();
+
 	}
 
 	public Shop getShop() {
@@ -19,12 +20,9 @@ public class Model {
 	public void setShop(Shop shop) {
 		this.shop = shop;
 	}
-	
+
 	public Stock getStock() {
 		return stock;
 	}
-
-	
-	
 
 }

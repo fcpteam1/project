@@ -1,4 +1,5 @@
 package model;
+
 import java.awt.Container;
 import java.io.IOException;
 
@@ -13,28 +14,27 @@ public class View extends JFrame {
 
 	JPanel currentPanel;
 	Container thisContainer;
-	
+
 	private LoginGUI login;
 	private MainMenuGUI mainmenu;
 	private UserFormPanel formPanel;
-	
+
 	public View() throws IOException {
 		// TODO Auto-generated constructor stub
-		
-		setSize(600,500);
+
+		setSize(600, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		thisContainer=getContentPane();
-		
-		login=new LoginGUI();
+		thisContainer = getContentPane();
+
+		login = new LoginGUI();
 		mainmenu=MainMenuGUI.getInstance();
-		formPanel=new UserFormPanel();
-		
+		formPanel = new UserFormPanel();
+
 		thisContainer.add(login.getPanel());
 		pack();
 		setVisible(true);
-		
-		
+
 	}
 
 	public JPanel getCurrentPanel() {
@@ -53,7 +53,7 @@ public class View extends JFrame {
 		this.thisContainer = thisContainer;
 	}
 
-	public LoginGUI getLogin(){
+	public LoginGUI getLogin() {
 		formPanel.removeAll();
 		return login;
 	}
@@ -69,25 +69,23 @@ public class View extends JFrame {
 	public void setMainmenu(MainMenuGUI mainmenu) {
 		this.mainmenu = mainmenu;
 	}
-	
-	
-	public void changeToMaineMenu(){
-		
+
+	public void changeToMaineMenu() {
+
 		thisContainer.removeAll();
 		thisContainer.add(mainmenu.getPanel());
-		
+
 		thisContainer.validate();
 		thisContainer.repaint();
 	}
-	
-	
-	public void logout(){
+
+	public void logout() {
 		thisContainer.removeAll();
 		thisContainer.add(login.getPanel());
-		
+
 		thisContainer.validate();
 		thisContainer.repaint();
-		
+
 	}
 
 }
