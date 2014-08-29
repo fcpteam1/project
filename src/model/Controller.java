@@ -67,8 +67,8 @@ public class Controller {
 					}
 				}
 				if (correctUser) {
-					view.changeToMaineMenu();
 					view.getMainmenu().addTabs(admin);
+					view.changeToMaineMenu();
 				} else
 					System.out.println("Not a valid user");
 

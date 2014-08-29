@@ -24,11 +24,11 @@ public class View extends JFrame {
 
 		setSize(600, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+		
 		thisContainer = getContentPane();
 
 		login = new LoginGUI();
-		mainmenu = new MainMenuGUI();
+		mainmenu=MainMenuGUI.getInstance();
 		formPanel = new UserFormPanel();
 
 		thisContainer.add(login.getPanel());
