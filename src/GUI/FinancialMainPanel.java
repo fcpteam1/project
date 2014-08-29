@@ -58,20 +58,20 @@ public class FinancialMainPanel {
 		
 			@Override
 			public void todaySaleSelected() {
-				financialTablePanel.setData(model.getShop().getNewTodaySales());
+				financialTablePanel.setData(model.getShop().getTodaySales());
 				financialTablePanel.refresh();
 			}
 
 			@Override
 			public void weekSaleSelected() {
-				financialTablePanel.setData(model.getShop().getNewTodaySales());
+				financialTablePanel.setData(model.getShop().getTodaySales());
 				financialTablePanel.refresh();
 				
 			}
 
 			@Override
 			public void monthSaleSelected() {
-				financialTablePanel.setData(model.getShop().getNewTodaySales());
+				financialTablePanel.setData(model.getShop().getTodaySales());
 				financialTablePanel.refresh();
 			}
 			
