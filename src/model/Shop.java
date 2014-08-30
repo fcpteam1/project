@@ -526,11 +526,13 @@ public class Shop {
 	}
 
 	public void processOrder(int index) {
-		orders.get(index).setCurrent(false);
-		for (Product product : orders.get(index).getProducts()) {
-			Stock stock = new Stock(product, product.getQuantity());
-			stocks.add(stock);
+		if (orders.get(index).isCurrent()) {
+			for (Product product : orders.get(index).getProducts()) {
+				Stock stock = new Stock(product, product.getQuantity());
+				stocks.add(stock);
+			}
 		}
+		orders.get(index).setCurrent(false);
 		writeOrder(orderFile);
 		writeStock(stockFile);
 	}
