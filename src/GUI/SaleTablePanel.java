@@ -56,6 +56,15 @@ public class SaleTablePanel extends JPanel {
 			}
 		});
 
+		editItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = table.getSelectedRow();
+				if (saleTableListener != null) {
+					saleTableListener.rowEdited(row);
+				}
+			}
+		});
+
 		setLayout(new BorderLayout());
 		add(new JScrollPane(table), BorderLayout.CENTER);
 	}

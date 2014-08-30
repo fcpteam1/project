@@ -47,8 +47,11 @@ public class SaleMainPanel extends JPanel {
 
 			@Override
 			public void rowEdited(int row) {
-				// TODO Auto-generated method stub
-
+				formPanel.setSaleToEdit(model.getShop().getSales().get(row));
+				formPanel.setSaleStockListToEdit(model.getShop().getSales()
+						.get(row).getStocks());
+				formPanel.editSaleSelectionPanel();
+				tablePanel.refresh();
 			}
 		});
 
@@ -66,7 +69,24 @@ public class SaleMainPanel extends JPanel {
 							+ "  Quantity: " + stockItems.get(i).getQuantity()
 							+ "\n");
 				}
-				textPanel.appendText("\n------Sale Complete-------\n");
+				textPanel.appendText("\n------Sale Edited-------\n");
+				textPanel.appendText("\n");
+			}
+
+			@Override
+			public void editSaleOccurred(SaleFormEvent e, int id) {
+
+				model.getShop().editSale(e, id);
+				tablePanel.refresh();
+				ArrayList<Stock> stockItems = e.getStockList();
+				for (int i = 0; i < stockItems.size(); i++) {
+					textPanel.appendText(stockItems.get(i).getName()
+							+ "  Quantity: " + stockItems.get(i).getQuantity()
+							+ "\n");
+				}
+				textPanel.appendText("\n------Sale Edited-------\n");
+				textPanel.appendText("\n");
+				tablePanel.setVisible(false);
 			}
 		});
 	}

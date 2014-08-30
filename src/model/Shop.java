@@ -598,6 +598,17 @@ public class Shop {
 		writeSale(saleFile);
 	}
 
+	public void editSale(SaleFormEvent e, int id) {
+
+		for (Sale s : sales) {
+			if (s.getId() == id) {
+				s.setStocks(e.getStockList());
+				s.calculatePrice();
+			}
+		}
+		writeSale(saleFile);
+	}
+
 	public void createOrder(OrderFormEvent e) {
 		ArrayList<Product> products = e.getProducts();
 		Supplier supplier = e.getSupplier();
