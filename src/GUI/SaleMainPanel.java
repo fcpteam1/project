@@ -4,14 +4,12 @@ import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import model.Model;
 import model.Stock;
 
-public class SaleMainPanel extends JFrame {
+public class SaleMainPanel extends JPanel {
 
 	private JPanel mainPanel;
 	private SaleToolbar toolBar;
@@ -38,8 +36,8 @@ public class SaleMainPanel extends JFrame {
 
 		mainPanel.add(toolBar, BorderLayout.NORTH);
 		mainPanel.add(formPanel, BorderLayout.WEST);
-		mainPanel.add(tablePanel, BorderLayout.EAST);
-		mainPanel.add(textPanel, BorderLayout.CENTER);
+		mainPanel.add(tablePanel, BorderLayout.CENTER);
+		mainPanel.add(textPanel, BorderLayout.EAST);
 
 		formPanel.setFormListener(new SaleFormListener() {
 
