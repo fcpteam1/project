@@ -1,14 +1,14 @@
 package model;
 
-public class Customer implements java.io.Serializable{
-	
+public class Customer implements java.io.Serializable {
+
 	private static int count = 0;
-	
+
 	private String name;
 	private int id;
 	private String number;
 	private String address;
-	
+
 	public Customer() {
 		this.name = "";
 		this.id = 0;
@@ -16,15 +16,15 @@ public class Customer implements java.io.Serializable{
 		this.address = "";
 	}
 
-	public Customer(String name,String number, String address) {
+	public Customer(String name, String number, String address) {
 		this.name = name;
 		this.id = count;
 		this.number = number;
 		this.address = address;
-		
+
 		count++;
 	}
-	
+
 	public String toString() {
 		return getName();
 	}
@@ -68,6 +68,5 @@ public class Customer implements java.io.Serializable{
 	public static void setCount(int count) {
 		Customer.count = count;
 	}
-	
 
 }

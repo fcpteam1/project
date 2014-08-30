@@ -1,19 +1,20 @@
 package model;
+
 import java.util.ArrayList;
 
-public class Sale extends Invoice implements java.io.Serializable{
+public class Sale extends Invoice implements java.io.Serializable {
 	private static int count = 0;
 	private Customer customer;
 	private int id;
 	private ArrayList<Stock> stocks = new ArrayList<Stock>();
-	
-	public Sale(){
+
+	public Sale() {
 		super();
 		this.customer = new Customer();
 		this.id = 0;
 	}
-	
-	public Sale( ArrayList<Stock> stocks, Customer customer) {
+
+	public Sale(ArrayList<Stock> stocks, Customer customer) {
 		super();
 		this.stocks = stocks;
 		this.id = count;
@@ -22,15 +23,15 @@ public class Sale extends Invoice implements java.io.Serializable{
 		count++;
 	}
 
-	public void calculatePrice(){
+	public void calculatePrice() {
 		double price = 0;
-		
-		for(Stock stock: stocks){
+
+		for (Stock stock : stocks) {
 			price += stock.getCustomerPrice() * stock.getQuantity();
 		}
 		super.setTotalPrice(price);
 	}
-	
+
 	public Customer getCustomer() {
 		return customer;
 	}

@@ -1,4 +1,4 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
@@ -9,8 +9,6 @@ import model.Stock;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
 public class SaleTest {
 
 	private ArrayList<Stock> stocks = new ArrayList<Stock>();
@@ -20,13 +18,13 @@ public class SaleTest {
 	Stock s3 = new Stock("orange", .10, 20);
 	Customer c1 = new Customer("Darren", "0860547880", "Dublin");
 	Customer c2 = new Customer("Shane", "0877746283", "Kildare");
-	
+
 	@Before
 	public void setUp() throws Exception {
 		stocks.add(s1);
 		stocks.add(s2);
 		stocks.add(s3);
-		sale = new Sale( stocks, c1);
+		sale = new Sale(stocks, c1);
 	}
 
 	@Test

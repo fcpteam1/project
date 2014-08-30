@@ -9,29 +9,59 @@ import model.Model;
 
 public class FinancialMainPanel {
 	private JPanel mainPanel;
-	private FinancialToolbar profitToolbar;
-	private FinancialFormPanel profitFormPanel;
+	private FinancialToolbar financialToolbar;
+	private FinancialFormPanel financialFormPanel;
+	private FinancialTablePanel financialTablePanel;
+	private FinancialTableModel financialTableModel;
 	private Model model;
-	
-	public FinancialMainPanel() throws IOException{
+
+	public FinancialMainPanel() throws IOException {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
-		
-		
-		profitToolbar = new FinancialToolbar();
-		profitFormPanel = new FinancialFormPanel();	
+
+		financialTableModel = new FinancialTableModel();
+		financialTablePanel = new FinancialTablePanel();
+		financialToolbar = new FinancialToolbar();
+		financialFormPanel = new FinancialFormPanel();
 		model = new Model();
-		
-		profitToolbar.setFormPanel(profitFormPanel);
-		
-		mainPanel.add(profitFormPanel, BorderLayout.WEST);
-		mainPanel.add(profitToolbar, BorderLayout.NORTH);
+
+		financialToolbar.setFormPanel(financialFormPanel);
+		financialToolbar
+				.setFinancialToolbarListener(new FinancialToolbarListener() {
+
+					@Override
+					public void saleSelected() {
+						financialFormPanel.removeAll();
+						financialFormPanel.SalesFormPanel();
+						financialFormPanel.validate();
+						financialFormPanel.repaint();
+					}
+
+					@Override
+					public void expendituresSelected() {
+						financialFormPanel.removeAll();
+						financialFormPanel.ExpendituresFormPanel();
+						financialFormPanel.validate();
+						financialFormPanel.repaint();
+					}
+
+					@Override
+					public void profitsSelected() {
+						financialFormPanel.removeAll();
+						financialFormPanel.ProfitFormPanel();
+						financialFormPanel.validate();
+						financialFormPanel.repaint();
+					}
+
+				});
+
+		mainPanel.add(financialFormPanel, BorderLayout.WEST);
+		mainPanel.add(financialToolbar, BorderLayout.NORTH);
 		mainPanel.setSize(600, 500);
 	}
-	
-	public JPanel getPanel(){
+
+	public JPanel getPanel() {
 		return mainPanel;
-		
+
 	}
 }
-

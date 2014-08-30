@@ -8,52 +8,57 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class FinancialToolbar extends JPanel implements ActionListener  {
+public class FinancialToolbar extends JPanel implements ActionListener {
 	private JButton saleButton;
 	private JButton profitButton;
 	private JButton expenditureButton;
-	
-	private FinancialFormPanel formPanel ;
-	
-	public FinancialToolbar(){
+	private FinancialToolbarListener listener;
+
+	private FinancialFormPanel formPanel;
+
+	public FinancialToolbar() {
 		setBorder(BorderFactory.createEtchedBorder());
 		saleButton = new JButton("Sales");
 		expenditureButton = new JButton("Expenditures");
-		profitButton = new JButton ("Profit");
-		
+		profitButton = new JButton("Profit");
+
 		saleButton.addActionListener(this);
 		expenditureButton.addActionListener(this);
 		profitButton.addActionListener(this);
-		
+
 		setLayout(new FlowLayout(FlowLayout.LEFT));
-		
+
 		add(saleButton);
 		add(expenditureButton);
 		add(profitButton);
-			
+
 	}
-	
-	public void setFormPanel(FinancialFormPanel formPanel){
+
+	public void setFormPanel(FinancialFormPanel formPanel) {
 		this.formPanel = formPanel;
+	}
+
+	public void setFinancialToolbarListener(FinancialToolbarListener listener) {
+		this.listener = listener;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton clicked = (JButton)e.getSource() ;
-		
-		if(clicked == saleButton) {
+		JButton clicked = (JButton) e.getSource();
+
+		if (clicked == saleButton) {
 			formPanel.removeAll();
-			formPanel.SalesFormPanel();
+			listener.saleSelected();
 			formPanel.validate();
 			formPanel.repaint();
-		}else if(clicked == expenditureButton) {
+		} else if (clicked == expenditureButton) {
 			formPanel.removeAll();
-			formPanel.ExpendituresFormPanel();
+			listener.expendituresSelected();
 			formPanel.validate();
 			formPanel.repaint();
-		}else if(clicked == profitButton) {
+		} else if (clicked == profitButton) {
 			formPanel.removeAll();
-			formPanel.ProfitFormPanel();
+			listener.profitsSelected();
 			formPanel.validate();
 			formPanel.repaint();
 		}

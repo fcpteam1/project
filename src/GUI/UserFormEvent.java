@@ -1,10 +1,9 @@
 package GUI;
-import java.awt.event.ActionListener;
+
 import java.util.EventObject;
 
-
 public class UserFormEvent extends EventObject {
-	
+
 	private String username;
 	private String password;
 	private String id;
@@ -13,20 +12,20 @@ public class UserFormEvent extends EventObject {
 	public UserFormEvent(Object source) {
 		super(source);
 	}
-	
-	public UserFormEvent(Object source, String username, String password, String id, Boolean admin) {
+
+	public UserFormEvent(Object source, String username, String password,
+			String id, Boolean admin) {
 		super(source);
-		
+
 		this.username = username;
 		this.password = password;
 		this.id = id;
 		this.admin = admin;
 	}
 
-	
 	public UserFormEvent(Object source, String username, String password) {
 		super(source);
-		
+
 		this.username = username;
 		this.password = password;
 	}
@@ -62,7 +61,5 @@ public class UserFormEvent extends EventObject {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
-
-
 
 }

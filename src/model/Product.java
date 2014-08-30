@@ -1,11 +1,12 @@
 package model;
+
 public class Product implements java.io.Serializable {
 
-	private double supplierPrice,customerPrice;
+	private double supplierPrice, customerPrice;
 	private String name;
 	private int quantity;
 	private int id;
-	
+
 	public Product() {
 		this.name = "";
 		this.supplierPrice = 0;
@@ -18,20 +19,21 @@ public class Product implements java.io.Serializable {
 		this.supplierPrice = supplierPrice;
 		this.quantity = 0;
 	}
-	
+
 	public Product(String name, double supplierPrice, int quantity) {
 		this.name = name;
 		this.supplierPrice = supplierPrice;
 		this.quantity = quantity;
 	}
-	
-	public Product(String name, double customerPrice, double supplierPrice, int id) {
+
+	public Product(String name, double customerPrice, double supplierPrice,
+			int id) {
 		this.name = name;
 		this.customerPrice = customerPrice;
 		this.supplierPrice = supplierPrice;
 		this.id = id;
 	}
-	
+
 	public double getSupplierPrice() {
 		return supplierPrice;
 	}
@@ -63,6 +65,5 @@ public class Product implements java.io.Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
 }
