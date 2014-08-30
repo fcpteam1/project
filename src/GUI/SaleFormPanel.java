@@ -1,7 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
-
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 
 import model.Customer;
 import model.Stock;
@@ -34,6 +31,7 @@ public class SaleFormPanel extends JPanel {
 	private SaleFormListener formListener;
 	private ArrayList<Stock> stocks;
 	private ArrayList<Customer> customers;
+	private String stockFile;
 	private ArrayList<Stock> saleStockList = new ArrayList<Stock>();
 	Customer thisCustomer;
 	int size;
@@ -45,9 +43,11 @@ public class SaleFormPanel extends JPanel {
 
 	}
 
-	public void setData(ArrayList<Stock> stocks, ArrayList<Customer> customers) {
+	public void setData(ArrayList<Stock> stocks, ArrayList<Customer> customers,
+			String stockFile) {
 		this.stocks = stocks;
 		this.customers = customers;
+		this.stockFile = stockFile;
 	}
 
 	public void createCustomerPanel() throws IOException {
@@ -194,12 +194,14 @@ public class SaleFormPanel extends JPanel {
 				for (String name : stockNames) {
 					for (Stock s : stocks) {
 						if (s.getName().equals(name)) {
-							s.setQuantity(s.getQuantity() - quantities.get(i));
-							saleStockList.add(s);
+							Stock saleStockItem = new Stock(s.getProduct(),
+									quantities.get(i));
+							saleStockList.add(saleStockItem);
 						}
 					}
 					i++;
 				}
+				// writeStock(stockFile);
 				SaleFormEvent saleEvent = new SaleFormEvent(this, thisCustomer,
 						saleStockList);
 				if (formListener != null) {

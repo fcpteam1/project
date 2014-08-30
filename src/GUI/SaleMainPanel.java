@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -33,13 +32,26 @@ public class SaleMainPanel extends JFrame {
 		toolBar.setMainPanel(formPanel);
 		tablePanel.setFormPanel(formPanel);
 		formPanel.setData(model.getShop().getStock(), model.getShop()
-				.getCustomers());
+				.getCustomers(), model.getShop().getStockFile());
 		tablePanel.setData(model.getShop().getSales());
 
 		mainPanel.add(toolBar, BorderLayout.NORTH);
 		mainPanel.add(formPanel, BorderLayout.WEST);
-		mainPanel.add(tablePanel, BorderLayout.EAST);
-		mainPanel.add(textPanel, BorderLayout.CENTER);
+		mainPanel.add(tablePanel, BorderLayout.CENTER);
+		mainPanel.add(textPanel, BorderLayout.EAST);
+
+		tablePanel.setSaleTableListener(new SaleTableListener() {
+			public void rowDeleted(int row) {
+				model.getShop().removeSale(row);
+				tablePanel.refresh();
+			}
+
+			@Override
+			public void rowEdited(int row) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		formPanel.setFormListener(new SaleFormListener() {
 

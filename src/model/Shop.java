@@ -51,6 +51,10 @@ public class Shop {
 	boolean userRunning;
 	boolean loginCorrect;
 
+	public String getStockFile() {
+		return stockFile;
+	}
+
 	public void setEditUserUsername(String editUserUsername) {
 		this.editUserUsername = editUserUsername;
 	}
@@ -471,13 +475,58 @@ public class Shop {
 		System.out.println("Edit address sent");
 	}
 
+	public static boolean processSale(Stock sale, ArrayList<Stock> stockList,
+			int stockIndex) {
+		boolean inStock = false;
+		for (int i = stockIndex; i < stockList.size(); i++) {
+			if (sale.getProduct().getName().equals(stockList.get(i).getName())) {
+				if (stockList.get(i).getQuantity() > sale.getQuantity()) {
+					stockList.get(i)
+							.setQuantity(
+									stockList.get(i).getQuantity()
+											- sale.getQuantity());
+
+					inStock = true;
+					i = stockList.size();
+				} else if (stockList.get(i).getQuantity() == sale.getQuantity()) {
+					stockList.remove(stockList.get(i));
+					inStock = true;
+					i = stockList.size();
+
+				} else {
+					sale.setQuantity(sale.getQuantity()
+							- stockList.get(i).getQuantity());
+					stockList.remove(stockList.get(i));
+					processSale(sale, stockList, i);
+				}
+			}
+
+		}
+		return inStock;
+	}
+
 	public void createSale(SaleFormEvent e) {
 
-		ArrayList<Stock> stocks = e.getStockList();
+		ArrayList<Stock> saleStocks = e.getStockList();
 		Customer customer = e.getCustomer();
-		Sale sale = new Sale(stocks, customer);
+		Sale sale = new Sale(saleStocks, customer);
 		sales.add(sale);
 
+		for (Stock saleStock : saleStocks) {
+			processSale(saleStock, stocks, 0);
+		}
+
+		writeStock(stockFile);
+
+		int newCount = 0;
+		for (Sale s : sales) {
+			s.setId(newCount++);
+		}
+		writeSale(saleFile);
+	}
+
+	public void removeSale(int index) {
+		sales.remove(index);
 		int newCount = 0;
 		for (Sale s : sales) {
 			s.setId(newCount++);

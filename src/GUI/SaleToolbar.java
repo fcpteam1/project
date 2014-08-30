@@ -10,28 +10,21 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class SaleToolbar extends JPanel implements ActionListener {
-	private JButton createSale, viewSale, deleteSale, editSale;
+	private JButton createSale, viewSale;
 	private SaleFormPanel mainPanel;
 
 	public SaleToolbar() {
 		createSale = new JButton("Add Sale");
 		viewSale = new JButton("View Sales");
-		deleteSale = new JButton("Delete Sale");
-		editSale = new JButton("Edit Sale");
 
 		createSale.addActionListener(this);
 		viewSale.addActionListener(this);
-		deleteSale.addActionListener(this);
-		editSale.addActionListener(this);
 
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		setBorder(BorderFactory.createEtchedBorder());
 
 		add(createSale);
 		add(viewSale);
-		add(deleteSale);
-		add(editSale);
-
 	}
 
 	public void setMainPanel(SaleFormPanel formPanel) {

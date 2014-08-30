@@ -25,6 +25,7 @@ public class Stock extends Product implements java.io.Serializable {
 
 	public Stock(Product product, int quantity) {
 		super(product.getName(), product.getId());
+		this.customerPrice = calculatePrice();
 		this.quantity = quantity;
 		this.product = product;
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
