@@ -4,13 +4,12 @@ import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import model.Model;
 import model.Stock;
 
-public class SaleMainPanel extends JFrame {
+public class SaleMainPanel extends JPanel {
 
 	private JPanel mainPanel;
 	private SaleToolbar toolBar;
