@@ -3,6 +3,8 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -16,8 +18,8 @@ import model.Sale;
 
 public class FinancialFormPanel extends JPanel {
 	private JButton todayBtn, dailyBtn, weeklyBtn, monthlyBtn;
-	private CustomerFormListener customerFormListener;
 	private Model model;
+	private FinancialFormListener listener;
 
 	private ArrayList<Sale> sales;
 	private ArrayList<Order> orders;
@@ -49,6 +51,21 @@ public class FinancialFormPanel extends JPanel {
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
+		todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.todaysSales();
+			}
+		});
+		weeklyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.thisWeeksSales();
+			}
+		});
+		monthlyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.thisMonthsSales();
+			}
+		});
 		setLayout(new GridBagLayout());
 
 		GridBagConstraints gc = new GridBagConstraints();
@@ -100,6 +117,22 @@ public class FinancialFormPanel extends JPanel {
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.todaysExpenses();
+			}
+		});
+		weeklyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.thisWeeksExpenses();
+			}
+		});
+		monthlyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.thisMonthsExpenses();
+			}
+		});
 
 		setLayout(new GridBagLayout());
 
@@ -155,6 +188,22 @@ public class FinancialFormPanel extends JPanel {
 
 		setLayout(new GridBagLayout());
 
+		todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.todaysProfits();
+			}
+		});
+		weeklyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.thisWeeksProfits();
+			}
+		});
+		monthlyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.thisMonthsProfits();
+			}
+		});
+
 		GridBagConstraints gc = new GridBagConstraints();
 
 		// /////// First row ////////
@@ -188,5 +237,9 @@ public class FinancialFormPanel extends JPanel {
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(monthlyBtn, gc);
+	}
+
+	public void setFinancialFormListener(FinancialFormListener listener) {
+		this.listener = listener;
 	}
 }
