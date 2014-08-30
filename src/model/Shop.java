@@ -30,7 +30,7 @@ public class Shop {
 	private ArrayList<Sale> monthSales = new ArrayList<Sale>();
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private ArrayList<Sale> blankTable = new ArrayList<Sale>();
-	
+
 	private String username, password, choice, customerName, customerNumber,
 			customerAddress, editUserPassword, editUserUsername;
 	private String editCustomerName, editCustomerNumber, editCustomerAddress;
@@ -57,7 +57,7 @@ public class Shop {
 	boolean adminRunning;
 	boolean userRunning;
 	boolean loginCorrect;
-	
+
 	public Calendar dateToCalender(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -394,37 +394,56 @@ public class Shop {
 	public ArrayList<Sale> getSales() {
 		return sales;
 	}
-	
-	public ArrayList<Sale> getBlankTable(){
+
+	public ArrayList<Sale> getBlankTable() {
 		return blankTable;
 	}
-	
+
 	public ArrayList<Sale> getTodaySales() {
-		Calendar today=Calendar.getInstance();
+		Calendar today = Calendar.getInstance();
 		todaySales.clear();
-		for(Sale sale: sales){
-			Calendar saleDate=dateToCalender(sale.getDate());
-			
-			if( (saleDate.get(Calendar.DATE)== today.get(Calendar.DATE))&& (saleDate.get(Calendar.MONTH)== today.get(Calendar.MONTH))&&(saleDate.get(Calendar.YEAR)== today.get(Calendar.YEAR))){
-				todaySales.add(sale);
-			}
-		}
-		return todaySales;
-	}
-	public ArrayList<Sale> getWeeklySales() {
-		Calendar today=Calendar.getInstance();
-		weekSales.clear();
-		for(Sale sale: sales){
-			Calendar saleDate=dateToCalender(sale.getDate());
-			
-			if( (saleDate.get(Calendar.DATE)== today.get(Calendar.DATE))&& (saleDate.get(Calendar.MONTH)== today.get(Calendar.MONTH))&&(saleDate.get(Calendar.YEAR)== today.get(Calendar.YEAR))){
+		for (Sale sale : sales) {
+			Calendar saleDate = dateToCalender(sale.getDate());
+
+			if ((saleDate.get(Calendar.DATE) == today.get(Calendar.DATE))
+					&& (saleDate.get(Calendar.MONTH) == today
+							.get(Calendar.MONTH))
+					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
 				todaySales.add(sale);
 			}
 		}
 		return todaySales;
 	}
 
-				
+	public ArrayList<Sale> getMonthlySales() {
+		Calendar today = Calendar.getInstance();
+		monthSales.clear();
+		for (Sale sale : sales) {
+			Calendar saleDate = dateToCalender(sale.getDate());
+
+			if ((saleDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
+					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+				todaySales.add(sale);
+			}
+		}
+		return todaySales;
+	}
+
+	public ArrayList<Sale> getWeeklySales() {
+		Calendar today = Calendar.getInstance();
+		weekSales.clear();
+		for (Sale sale : sales) {
+			Calendar saleDate = dateToCalender(sale.getDate());
+
+			if ((saleDate.get(Calendar.DATE) == today.get(Calendar.DATE))
+					&& (saleDate.get(Calendar.MONTH) == today
+							.get(Calendar.MONTH))
+					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+				todaySales.add(sale);
+			}
+		}
+		return todaySales;
+	}
 
 	public ArrayList<Supplier> getSuppliers() {
 		return suppliers;
@@ -567,6 +586,5 @@ public class Shop {
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
-	
 
 }
