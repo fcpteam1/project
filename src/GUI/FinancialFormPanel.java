@@ -3,6 +3,8 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -17,6 +19,7 @@ import model.Sale;
 public class FinancialFormPanel extends JPanel {
 	private JButton todayBtn, dailyBtn, weeklyBtn, monthlyBtn;
 	private CustomerFormListener customerFormListener;
+	private FinancialFormListener listener;
 	private Model model;
 
 	private ArrayList<Sale> sales;
@@ -34,6 +37,10 @@ public class FinancialFormPanel extends JPanel {
 		this.orders = orders;
 	}
 
+	public void setFinancialFormListener(FinancialFormListener listener) {
+		this.listener = listener;
+	}
+
 	// ////////////////////Sales////////////////////////
 
 	public void SalesFormPanel() {
@@ -44,6 +51,24 @@ public class FinancialFormPanel extends JPanel {
 		todayBtn = new JButton("Todays sales");
 		weeklyBtn = new JButton("This weeks sales");
 		monthlyBtn = new JButton("This Months sales");
+
+		todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.todaySaleSelected();
+			}
+		});
+
+		weeklyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.weekSaleSelected();
+			}
+		});
+
+		monthlyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.monthSaleSelected();
+			}
+		});
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);

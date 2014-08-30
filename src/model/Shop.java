@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 import GUI.CustomerFormEvent;
@@ -23,7 +25,12 @@ public class Shop {
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
+	private ArrayList<Sale> todaySales = new ArrayList<Sale>();
+	private ArrayList<Sale> weekSales = new ArrayList<Sale>();
+	private ArrayList<Sale> monthSales = new ArrayList<Sale>();
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
+	private ArrayList<Sale> blankTable = new ArrayList<Sale>();
+	
 	private String username, password, choice, customerName, customerNumber,
 			customerAddress, editUserPassword, editUserUsername;
 	private String editCustomerName, editCustomerNumber, editCustomerAddress;
@@ -50,6 +57,12 @@ public class Shop {
 	boolean adminRunning;
 	boolean userRunning;
 	boolean loginCorrect;
+	
+	public Calendar dateToCalender(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
 
 	public void setEditUserUsername(String editUserUsername) {
 		this.editUserUsername = editUserUsername;
@@ -106,21 +119,6 @@ public class Shop {
 		loadSales(saleFile);
 		loadOrders(orderFile);
 
-		/*
-		 * for (Sale s : sales) System.out.println(s.getCustomer() +
-		 * " : From sales.ser"); for (Order o : orders)
-		 * System.out.println(o.getSupplier() + " : From orders.ser"); for
-		 * (Customer c : customers) System.out.println(c.getName() + ", " +
-		 * c.getAddress() ); for (User u : users)
-		 * System.out.println((u.getUsername() + ", " + u.getId())); for
-		 * (Supplier s : suppliers) System.out.println(s.getName() +
-		 * " Product list size: " + s.getProducts().size()); for (Stock stock :
-		 * stocks) System.out.println(stock.getName() + " Quantity: " +
-		 * stock.getQuantity());
-		 */
-
-		// checkLogin();
-		// mainMenu();
 	}
 
 	public static Shop getInstance() throws IOException {
@@ -396,6 +394,37 @@ public class Shop {
 	public ArrayList<Sale> getSales() {
 		return sales;
 	}
+	
+	public ArrayList<Sale> getBlankTable(){
+		return blankTable;
+	}
+	
+	public ArrayList<Sale> getTodaySales() {
+		Calendar today=Calendar.getInstance();
+		todaySales.clear();
+		for(Sale sale: sales){
+			Calendar saleDate=dateToCalender(sale.getDate());
+			
+			if( (saleDate.get(Calendar.DATE)== today.get(Calendar.DATE))&& (saleDate.get(Calendar.MONTH)== today.get(Calendar.MONTH))&&(saleDate.get(Calendar.YEAR)== today.get(Calendar.YEAR))){
+				todaySales.add(sale);
+			}
+		}
+		return todaySales;
+	}
+	public ArrayList<Sale> getWeeklySales() {
+		Calendar today=Calendar.getInstance();
+		weekSales.clear();
+		for(Sale sale: sales){
+			Calendar saleDate=dateToCalender(sale.getDate());
+			
+			if( (saleDate.get(Calendar.DATE)== today.get(Calendar.DATE))&& (saleDate.get(Calendar.MONTH)== today.get(Calendar.MONTH))&&(saleDate.get(Calendar.YEAR)== today.get(Calendar.YEAR))){
+				todaySales.add(sale);
+			}
+		}
+		return todaySales;
+	}
+
+				
 
 	public ArrayList<Supplier> getSuppliers() {
 		return suppliers;
@@ -538,5 +567,6 @@ public class Shop {
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
+	
 
 }
