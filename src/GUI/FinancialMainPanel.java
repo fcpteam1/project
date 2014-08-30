@@ -54,9 +54,37 @@ public class FinancialMainPanel {
 					}
 
 				});
+		financialTablePanel.setData(model.getShop().getBlankTable());
+		financialFormPanel
+				.setFinancialFormListener(new FinancialFormListener() {
+
+					@Override
+					public void todaySaleSelected() {
+						financialTablePanel.setData(model.getShop()
+								.getTodaySales());
+						financialTablePanel.refresh();
+					}
+
+					@Override
+					public void weekSaleSelected() {
+						financialTablePanel.setData(model.getShop()
+								.getTodaySales());
+						financialTablePanel.refresh();
+
+					}
+
+					@Override
+					public void monthSaleSelected() {
+						financialTablePanel.setData(model.getShop()
+								.getMonthlySales());
+						financialTablePanel.refresh();
+					}
+
+				});
 
 		mainPanel.add(financialFormPanel, BorderLayout.WEST);
 		mainPanel.add(financialToolbar, BorderLayout.NORTH);
+		mainPanel.add(financialTablePanel, BorderLayout.CENTER);
 		mainPanel.setSize(600, 500);
 	}
 
