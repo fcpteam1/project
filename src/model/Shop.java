@@ -52,6 +52,7 @@ public class Shop {
 	private UserFormPanel userFormPanel;
 	private CustomerFormPanel customerFormPanel;
 	private OrderFormPanel orderFormPanel;
+	private StockSalesPredictor predictor;
 
 	boolean loopAuthentication = true;
 	boolean adminRunning;
@@ -120,9 +121,11 @@ public class Shop {
 		loadUsers(userFile);
 		loadSuppliers(supplierFile);
 		loadStock(stockFile);
+
 		loadSales(saleFile);
 		loadOrders(orderFile);
 
+		predictor = new StockSalesPredictor(sales);
 		/*
 		 * for (Sale s : sales) System.out.println(s.getCustomer() +
 		 * " : From sales.ser"); for (Order o : orders)
