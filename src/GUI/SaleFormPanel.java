@@ -248,6 +248,11 @@ public class SaleFormPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 
+		for (Stock stock : saleStockListToEdit) {
+			System.out.println("PRINITING FROM EDITSALEpANEL NAME "
+					+ stock.getName() + "  QUANTITY " + stock.getQuantity());
+		}
+
 		for (int i = 0; i < size; i++) {
 			stockName[i] = new JLabel(stocks.get(i).getName());
 			customerPrice[i] = new JLabel(": " + "\u20ac"
@@ -255,11 +260,13 @@ public class SaleFormPanel extends JPanel {
 			quantityField[i] = new JTextField(3);
 
 			for (Stock stock : saleStockListToEdit) {
+				int j = 0;
 				if (stocks.get(i).getName().equals(stock.getName())) {
 					quantityField[i].setText(String.valueOf(saleStockListToEdit
-							.get(i).getQuantity()));
+							.get(j).getQuantity()));
 					break;
 				}
+				j++;
 			}
 
 			gc.gridy = i;

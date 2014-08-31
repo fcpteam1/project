@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 public class SaleToolbar extends JPanel implements ActionListener {
 	private JButton createSale, viewSale;
 	private SaleFormPanel mainPanel;
+	private SaleTablePanel tablePanel;
 
 	public SaleToolbar() {
 		createSale = new JButton("Add Sale");
@@ -31,6 +32,11 @@ public class SaleToolbar extends JPanel implements ActionListener {
 		this.mainPanel = formPanel;
 	}
 
+	/*
+	 * public void setTablePanel(SaleTablePanel tablePanel) { this.tablePanel =
+	 * tablePanel; }
+	 */
+
 	public void actionPerformed(ActionEvent e) {
 		try {
 			JButton clicked = (JButton) e.getSource();
@@ -39,7 +45,10 @@ public class SaleToolbar extends JPanel implements ActionListener {
 				mainPanel.createCustomerPanel();
 				mainPanel.validate();
 				mainPanel.repaint();
+			} else if (clicked == viewSale) {
+
 			}
+
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

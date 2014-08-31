@@ -31,8 +31,10 @@ public class SaleTablePanel extends JPanel {
 
 		JMenuItem removeItem = new JMenuItem("Delete Sale");
 		JMenuItem editItem = new JMenuItem("Edit Products");
+		JMenuItem listItem = new JMenuItem("List Products");
 		popup.add(removeItem);
 		popup.add(editItem);
+		popup.add(listItem);
 
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -65,6 +67,15 @@ public class SaleTablePanel extends JPanel {
 			}
 		});
 
+		listItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = table.getSelectedRow();
+				if (saleTableListener != null) {
+					saleTableListener.listItems(row);
+				}
+			}
+		});
+
 		setLayout(new BorderLayout());
 		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
@@ -73,15 +84,15 @@ public class SaleTablePanel extends JPanel {
 		tableModel.setData(sales);
 	}
 
-	public void setFormPanel(SaleFormPanel formPanel) {
-		this.formPanel = formPanel;
-	}
-
 	public void refresh() {
 		tableModel.fireTableDataChanged();
 	}
 
 	public void setSaleTableListener(SaleTableListener listener) {
 		this.saleTableListener = listener;
+	}
+
+	public void setFormPanel(SaleFormPanel formpanel) {
+		this.formPanel = formpanel;
 	}
 }

@@ -28,11 +28,11 @@ public class SaleMainPanel extends JPanel {
 		textPanel = new SaleTextPanel();
 		model = new Model();
 
-		toolBar.setMainPanel(formPanel);
-		tablePanel.setFormPanel(formPanel);
 		formPanel.setData(model.getShop().getStock(), model.getShop()
 				.getCustomers(), model.getShop().getStockFile());
 		tablePanel.setData(model.getShop().getSales());
+		toolBar.setMainPanel(formPanel);
+		tablePanel.setFormPanel(formPanel);
 
 		mainPanel.add(toolBar, BorderLayout.NORTH);
 		mainPanel.add(formPanel, BorderLayout.WEST);
@@ -48,10 +48,33 @@ public class SaleMainPanel extends JPanel {
 			@Override
 			public void rowEdited(int row) {
 				formPanel.setSaleToEdit(model.getShop().getSales().get(row));
+				System.out.println("CUSTOMER NAME FROM SALE "
+						+ model.getShop().getSales().get(row).getCustomer()
+								.getName());
 				formPanel.setSaleStockListToEdit(model.getShop().getSales()
 						.get(row).getStocks());
+				System.out.println("PRINT OUT FROM ROWEDITED"
+						+ (model.getShop().getSales().get(row).getStocks()
+								.get(1).getName()));
 				formPanel.editSaleSelectionPanel();
 				tablePanel.refresh();
+			}
+
+			public void listItems(int row) {
+				ArrayList<Stock> itemsBought = model.getShop().getSales()
+						.get(row).getStocks();
+
+				textPanel.appendText("\n------Products from Sale Id: " + row
+						+ "-------\n");
+
+				for (int i = 0; i < itemsBought.size(); i++) {
+					textPanel.appendText(itemsBought.get(i).getName()
+							+ "  Quantity: " + itemsBought.get(i).getQuantity()
+							+ "\n");
+				}
+
+				textPanel.appendText("\n");
+
 			}
 		});
 
@@ -69,7 +92,7 @@ public class SaleMainPanel extends JPanel {
 							+ "  Quantity: " + stockItems.get(i).getQuantity()
 							+ "\n");
 				}
-				textPanel.appendText("\n------Sale Edited-------\n");
+				textPanel.appendText("\n------Sale Complete-------\n");
 				textPanel.appendText("\n");
 			}
 

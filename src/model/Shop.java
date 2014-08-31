@@ -123,14 +123,19 @@ public class Shop {
 		loadSales(saleFile);
 		loadOrders(orderFile);
 
+		for (Sale s : sales) {
+			for (Stock stock : s.getStocks()) {
+				System.out.println("Name " + stock.getName() + "  Quantity "
+						+ stock.getQuantity());
+			}
+			System.out.println(s.getCustomer() + " : From sales.ser");
+		}
 		/*
-		 * for (Sale s : sales) System.out.println(s.getCustomer() +
-		 * " : From sales.ser"); for (Order o : orders)
-		 * System.out.println(o.getSupplier() + " : From orders.ser"); for
-		 * (Customer c : customers) System.out.println(c.getName() + ", " +
-		 * c.getAddress() ); for (User u : users)
-		 * System.out.println((u.getUsername() + ", " + u.getId())); for
-		 * (Supplier s : suppliers) System.out.println(s.getName() +
+		 * for (Order o : orders) System.out.println(o.getSupplier() +
+		 * " : From orders.ser"); for (Customer c : customers)
+		 * System.out.println(c.getName() + ", " + c.getAddress() ); for (User u
+		 * : users) System.out.println((u.getUsername() + ", " + u.getId()));
+		 * for (Supplier s : suppliers) System.out.println(s.getName() +
 		 * " Product list size: " + s.getProducts().size());
 		 */
 		for (Stock stock : stocks)
