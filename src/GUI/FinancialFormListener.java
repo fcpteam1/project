@@ -6,4 +6,10 @@ public interface FinancialFormListener {
 	public void weekSaleSelected();
 
 	public void monthSaleSelected();
+
+/*	public void todayExpenditureSelected();
+
+	public void weekExpenditureSelected();
+
+	public void monthExpenditureSelected();*/
 }

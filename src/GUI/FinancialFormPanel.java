@@ -121,6 +121,24 @@ public class FinancialFormPanel extends JPanel {
 		todayBtn = new JButton("Todays expenditures");
 		weeklyBtn = new JButton("This weeks expenditures");
 		monthlyBtn = new JButton("This Months expenditures");
+		
+		/*todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.todayExpenditureSelected();
+			}
+		});
+
+		weeklyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.weekExpenditureSelected();
+			}
+		});
+
+		monthlyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.monthExpenditureSelected();
+			}
+		});*/
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
