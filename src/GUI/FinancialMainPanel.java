@@ -41,18 +41,22 @@ public class FinancialMainPanel {
 
 					@Override
 					public void expendituresSelected() {
-						financialFormPanel.removeAll();
-						financialFormPanel.ExpendituresFormPanel();
-						financialFormPanel.validate();
-						financialFormPanel.repaint();
+						/*
+						 * financialFormPanel.removeAll();
+						 * financialFormPanel.ExpendituresFormPanel();
+						 * financialFormPanel.validate();
+						 * financialFormPanel.repaint();
+						 */
 					}
 
 					@Override
 					public void profitsSelected() {
-						financialFormPanel.removeAll();
-						financialFormPanel.ProfitFormPanel();
-						financialFormPanel.validate();
-						financialFormPanel.repaint();
+						/*
+						 * financialFormPanel.removeAll();
+						 * financialFormPanel.ProfitFormPanel();
+						 * financialFormPanel.validate();
+						 * financialFormPanel.repaint();
+						 */
 					}
 
 				});
@@ -74,7 +78,7 @@ public class FinancialMainPanel {
 					}
 
 					@Override
-					public void weekSaleSelected() {
+					public void weeklySaleSelected() {
 						financialTablePanel.setSaleData(model.getShop()
 								.getTodaySales());
 						financialTablePanel.saleRefresh();
@@ -86,7 +90,13 @@ public class FinancialMainPanel {
 					}
 
 					@Override
-					public void monthSaleSelected() {
+					public void dailySaleSelected() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void monthlySaleSelected() {
 						financialTablePanel.setSaleData(model.getShop()
 								.getMonthlySales());
 						financialTablePanel.saleRefresh();

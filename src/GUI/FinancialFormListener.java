@@ -3,13 +3,17 @@ package GUI;
 public interface FinancialFormListener {
 	public void todaySaleSelected();
 
-	public void weekSaleSelected();
+	public void dailySaleSelected();
 
-	public void monthSaleSelected();
+	public void weeklySaleSelected();
 
-/*	public void todayExpenditureSelected();
+	public void monthlySaleSelected();
 
-	public void weekExpenditureSelected();
-
-	public void monthExpenditureSelected();*/
+	/*
+	 * public void todayExpenditureSelected();
+	 * 
+	 * public void weekExpenditureSelected();
+	 * 
+	 * public void monthExpenditureSelected();
+	 */
 }
