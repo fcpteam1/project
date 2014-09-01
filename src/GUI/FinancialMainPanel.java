@@ -6,6 +6,8 @@ import java.io.IOException;
 import javax.swing.JPanel;
 
 import model.Model;
+import model.Order;
+import model.Sale;
 
 public class FinancialMainPanel {
 	private JPanel mainPanel;
@@ -124,26 +126,61 @@ public class FinancialMainPanel {
 
 					@Override
 					public void allProfits() {
-						// TODO Auto-generated method stub
-
+						double income = model.getShop().getAllIncome();
+						double expenses = model.getShop().getAllExpenses();
+						double profit = model.getShop()
+								.profit(income, expenses);
+						double loss = model.getShop().loss(income, expenses);
+						financialTablePanel.setProfitData(income, expenses,
+								profit, loss);
+						financialTablePanel.setTableModel(3);
+						financialTablePanel.refresh();
 					}
 
 					@Override
 					public void todaysProfits() {
-						// TODO Auto-generated method stub
-
+						double income = model.getShop().getTodaysIncome();
+						double expenses = model.getShop().getTodaysExpenses();
+						double profit = model.getShop()
+								.profit(income, expenses);
+						double loss = model.getShop().loss(income, expenses);
+						financialTablePanel.setProfitData(income, expenses,
+								profit, loss);
+						financialTablePanel.setTableModel(3);
+						financialTablePanel.refresh();
 					}
 
 					@Override
 					public void weeklyProfits() {
-						// TODO Auto-generated method stub
-
+						// //financialTablePanel.setProfitData(model.getShop()
+						// .totalSales(), model.getShop().totalOrders(),
+						// model.getShop().profit(), model.getShop()
+						// .loss());
+						financialTablePanel.setTableModel(3);
+						financialTablePanel.refresh();
 					}
 
 					@Override
 					public void monthlyProfits() {
-						// TODO Auto-generated method stub
-
+						double expenses = 0;
+						for (Order order : model.getShop().getMonthlyOrders()) {
+							expenses += order.getTotalPrice();
+						}
+						double income = 0;
+						for (Sale sale : model.getShop().getMonthlySales()) {
+							income += sale.getTotalPrice();
+						}
+						double profit = model.getShop()
+								.profit(income, expenses);
+						double loss = model.getShop().loss(income, expenses);
+						income = round(income);
+						expenses = round(expenses);
+						profit = round(profit);
+						loss = round(loss);
+						financialTablePanel.setProfitData(income, expenses,
+								profit, loss);
+						financialTablePanel.setTableModel(3);
+						financialTablePanel.refresh();
 					}
 
 					@Override
@@ -169,8 +206,9 @@ public class FinancialMainPanel {
 		financialTablePanel.setFormPanel(financialFormPanel);
 		financialTablePanel.setSaleData(model.getShop().getSales());
 		financialTablePanel.setExpenditureData(model.getShop().getOrders());
-		financialTablePanel.setProfitData(model.getShop().getOrders(), model
-				.getShop().getSales());
+		// financialTablePanel.setProfitData(model.getShop().totalSales(), model
+		// .getShop().totalOrders(), model.getShop().profit(), model
+		// .getShop().loss());
 
 		financialToolbar.setFormPanel(financialFormPanel);
 		financialToolbar
@@ -204,8 +242,10 @@ public class FinancialMainPanel {
 					public void profitsSelected() {
 						financialFormPanel.removeAll();
 						financialFormPanel.ProfitFormPanel();
-						financialTablePanel.setProfitData(model.getShop()
-								.getOrders(), model.getShop().getSales());
+						// financialTablePanel.setProfitData(model.getShop()
+						// .totalSales(), model.getShop().totalOrders(),
+						// model.getShop().profit(), model.getShop()
+						// .loss());
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 						financialFormPanel.validate();
@@ -227,5 +267,10 @@ public class FinancialMainPanel {
 	public JPanel getPanel() {
 		return mainPanel;
 
+	}
+
+	public double round(double val) {
+		val = Math.round(val * 100) / 100.00;
+		return val;
 	}
 }

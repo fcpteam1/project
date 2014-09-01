@@ -403,9 +403,11 @@ public class FinancialFormPanel extends JPanel {
 		dim.width = 250;
 		setPreferredSize(dim);
 
-		todayBtn = new JButton("Todays profit");
-		weeklyBtn = new JButton("This weeks profit");
-		monthlyBtn = new JButton("This Months profit");
+		allBtn = new JButton("All Profits");
+		todayBtn = new JButton("Today's Profits");
+		dailyBtn = new JButton("Daily Profits");
+		weeklyBtn = new JButton("Weekly Profits");
+		monthlyBtn = new JButton("Monthly Profits");
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -418,7 +420,11 @@ public class FinancialFormPanel extends JPanel {
 				listener.allProfits();
 			}
 		});
-
+		dailyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.dailyProfits();
+			}
+		});
 		todayBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				listener.todaysProfits();
@@ -485,11 +491,10 @@ public class FinancialFormPanel extends JPanel {
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 1000000;
+		gc.weighty = 100;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(monthlyBtn, gc);
-
 	}
 }

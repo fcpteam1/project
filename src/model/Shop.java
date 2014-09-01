@@ -733,4 +733,63 @@ public class Shop {
 		}
 		return totalSum;
 	}
+
+	public double profit(double income, double expenses) {
+		double profit = income - expenses;
+		profit = round(profit);
+		if (profit > 0) {
+			return profit;
+		} else
+			return 0;
+	}
+
+	public double loss(double income, double expenses) {
+		double loss = expenses - income;
+		loss = round(loss);
+		if (loss > 0) {
+			return loss;
+		} else
+			return 0;
+	}
+
+	public double getAllIncome() {
+		double income = 0;
+		for (Sale sale : getSales()) {
+			income += sale.getTotalPrice();
+		}
+		income = round(income);
+		return income;
+	}
+
+	public double getTodaysIncome() {
+		double income = 0;
+		for (Sale sale : getTodaySales()) {
+			income += sale.getTotalPrice();
+		}
+		income = round(income);
+		return income;
+	}
+
+	public double getAllExpenses() {
+		double expenses = 0;
+		for (Order order : getOrders()) {
+			expenses += order.getTotalPrice();
+		}
+		expenses = round(expenses);
+		return expenses;
+	}
+
+	public double getTodaysExpenses() {
+		double expenses = 0;
+		for (Order order : getTodayOrders()) {
+			expenses += order.getTotalPrice();
+		}
+		expenses = round(expenses);
+		return expenses;
+	}
+
+	public double round(double val) {
+		val = Math.round(val * 100) / 100.00;
+		return val;
+	}
 }

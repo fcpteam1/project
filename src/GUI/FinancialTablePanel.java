@@ -128,8 +128,9 @@ public class FinancialTablePanel extends JPanel {
 		saleModel.setData(sales);
 	}
 
-	public void setProfitData(ArrayList<Order> orders, ArrayList<Sale> sales) {
-		profitModel.setData(orders, sales);
+	public void setProfitData(double income, double expenditure, double profit,
+			double loss) {
+		profitModel.setData(income, expenditure, profit, loss);
 	}
 
 	public void refresh() {

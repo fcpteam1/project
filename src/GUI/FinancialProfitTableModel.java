@@ -1,25 +1,21 @@
 package GUI;
 
-import java.util.ArrayList;
-
 import javax.swing.table.AbstractTableModel;
 
-import model.Order;
-import model.Sale;
-
 public class FinancialProfitTableModel extends AbstractTableModel {
-	private ArrayList<Sale> sales;
-	private ArrayList<Order> orders;
-	private String[] columnNames = { "Sale Id", "Customer Name", "Date",
-			"Total Price" };
+	private String[] columnNames = { "Income", "Expenditure", "Profit", "Loss" };
+	private double income, expenditure, profit, loss;
 
 	public FinancialProfitTableModel() {
 
 	}
 
-	public void setData(ArrayList<Order> orders, ArrayList<Sale> sales) {
-		this.sales = sales;
-		this.orders = orders;
+	public void setData(double income, double expenditure, double profit,
+			double loss) {
+		this.income = income;
+		this.expenditure = expenditure;
+		this.profit = profit;
+		this.loss = loss;
 	}
 
 	public String getColumnName(int column) {
@@ -31,20 +27,20 @@ public class FinancialProfitTableModel extends AbstractTableModel {
 	}
 
 	public int getRowCount() {
-		return sales.size();
+		return 1;
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 
 		case 0:
-			return sales.get(rowIndex).getId();
+			return income;
 		case 1:
-			return sales.get(rowIndex).getCustomer().getName();
+			return expenditure;
 		case 2:
-			return sales.get(rowIndex).getDate();
+			return profit;
 		case 3:
-			return sales.get(rowIndex).getTotalPrice();
+			return loss;
 		}
 		return null;
 	}
