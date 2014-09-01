@@ -45,22 +45,12 @@ public class FinancialToolbar extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton clicked = (JButton) e.getSource();
-
 		if (clicked == saleButton) {
-			formPanel.removeAll();
 			listener.saleSelected();
-			formPanel.validate();
-			formPanel.repaint();
 		} else if (clicked == expenditureButton) {
-			formPanel.removeAll();
 			listener.expendituresSelected();
-			formPanel.validate();
-			formPanel.repaint();
 		} else if (clicked == profitButton) {
-			formPanel.removeAll();
 			listener.profitsSelected();
-			formPanel.validate();
-			formPanel.repaint();
 		}
 	}
 }

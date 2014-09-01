@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 import model.Order;
-import model.Supplier;
 
-public class FinancialExpendituresTableModel extends AbstractTableModel {
+public class FinancialExpenditureTableModel extends AbstractTableModel {
 
 	private ArrayList<Order> orders;
-	private String[] columnNames = { "ID", "Supplier", "Total Price",
-			"Ordered", "Delivered" };
+	private String[] columnNames = { "Order ID", "Supplier Name", "Date",
+			"Total Price" };
 
-	public FinancialExpendituresTableModel() {
+	public FinancialExpenditureTableModel() {
 	}
 
 	@Override
@@ -21,8 +20,12 @@ public class FinancialExpendituresTableModel extends AbstractTableModel {
 		return columnNames[column];
 	}
 
-	public void setData(ArrayList<Order> orders, ArrayList<Supplier> suppliers) {
+	public void setData(ArrayList<Order> orders) {
 		this.orders = orders;
+	}
+
+	public ArrayList<Order> getData() {
+		return orders;
 	}
 
 	@Override
@@ -32,7 +35,7 @@ public class FinancialExpendituresTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 5;
+		return 4;
 	}
 
 	@Override
@@ -44,13 +47,12 @@ public class FinancialExpendituresTableModel extends AbstractTableModel {
 		case 1:
 			return orders.get(rowIndex).getSupplier().getName();
 		case 2:
-			return orders.get(rowIndex).getTotalPrice();
-		case 3:
 			return orders.get(rowIndex).getDate();
-		case 4:
-			return !orders.get(rowIndex).isCurrent();
+		case 3:
+			return orders.get(rowIndex).getTotalPrice();
 		}
 
 		return null;
 	}
+
 }

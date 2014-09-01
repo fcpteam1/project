@@ -11,8 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-
-
 public class MainMenuGUI {
 
 	private JPanel framePanel;
@@ -27,21 +25,21 @@ public class MainMenuGUI {
 	private StockGUI stockTab;
 	private SaleMainPanel saleTab;
 	private FinancialMainPanel profitAndLossTab;
-	protected boolean adminLogged=false;
-	
+	protected boolean adminLogged = false;
+
 	private static MainMenuGUI instance;
 
-	public static MainMenuGUI getInstance() throws IOException{
-		
-		if(instance == null){
-			instance=new MainMenuGUI();
+	public static MainMenuGUI getInstance() throws IOException {
+
+		if (instance == null) {
+			instance = new MainMenuGUI();
 		}
-		
+
 		return instance;
 	}
-	
-private MainMenuGUI() throws IOException{
-		
+
+	private MainMenuGUI() throws IOException {
+
 		framePanel = new JPanel();
 		framePanel.setLayout(new GridBagLayout());
 

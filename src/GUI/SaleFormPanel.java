@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import model.Customer;
+import model.Sale;
 import model.Stock;
 
 public class SaleFormPanel extends JPanel {
@@ -27,6 +28,9 @@ public class SaleFormPanel extends JPanel {
 	private JComboBox customerBox;
 	private JButton enterButton;
 	private JButton saleButton;
+	private Sale saleToEdit;
+	private ArrayList<Stock> saleStockListToEdit = new ArrayList<Stock>();
+	private JButton editButton;
 	private SaleMainPanel mainPanel;
 	private SaleFormListener formListener;
 	private ArrayList<Stock> stocks;
@@ -135,7 +139,9 @@ public class SaleFormPanel extends JPanel {
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
 		saleButton = new JButton("Process Sale");
-
+		// local arraylist for stock to be created by checkLevel() giving
+		// product with total quantity
+		// will be used in place of stocks
 		size = stocks.size();
 		stockName = new JLabel[size];
 		customerPrice = new JLabel[size];
@@ -193,6 +199,8 @@ public class SaleFormPanel extends JPanel {
 				int i = 0;
 				for (String name : stockNames) {
 					for (Stock s : stocks) {
+						// stocks will be replaced by local arraylist derived
+						// using checkLevels()
 						if (s.getName().equals(name)) {
 							Stock saleStockItem = new Stock(s.getProduct(),
 									quantities.get(i));
@@ -201,7 +209,7 @@ public class SaleFormPanel extends JPanel {
 					}
 					i++;
 				}
-				// writeStock(stockFile);
+
 				SaleFormEvent saleEvent = new SaleFormEvent(this, thisCustomer,
 						saleStockList);
 				if (formListener != null) {
@@ -219,8 +227,124 @@ public class SaleFormPanel extends JPanel {
 
 	}
 
+	public void editSaleSelectionPanel() {
+
+		this.removeAll();
+
+		Dimension dim = getPreferredSize();
+		dim.width = 450;
+		setPreferredSize(dim);
+		Border innerBorder = (BorderFactory.createTitledBorder("Edit Amount"));
+		Border outerBorder = (BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		editButton = new JButton("Finish");
+
+		size = stocks.size();
+		stockName = new JLabel[size];
+		customerPrice = new JLabel[size];
+		quantityField = new JTextField[size];
+
+		setLayout(new GridBagLayout());
+		GridBagConstraints gc = new GridBagConstraints();
+
+		for (int i = 0; i < size; i++) {
+			stockName[i] = new JLabel(stocks.get(i).getName());
+			customerPrice[i] = new JLabel(": " + "\u20ac"
+					+ Double.toString(stocks.get(i).getCustomerPrice()));
+			quantityField[i] = new JTextField(3);
+			int j = 0;
+			for (Stock stock : saleStockListToEdit) {
+
+				if (stocks.get(i).getName().equals(stock.getName())) {
+					quantityField[i].setText(String.valueOf(saleStockListToEdit
+							.get(j).getQuantity()));
+					break;
+				}
+				j++;
+			}
+
+			gc.gridy = i;
+			gc.weightx = 1;
+			gc.weighty = 0.1;
+
+			gc.gridx = 0;
+			gc.fill = GridBagConstraints.NONE;
+			gc.anchor = GridBagConstraints.LINE_END;
+			gc.insets = new Insets(0, 0, 0, 5);
+			add(stockName[i], gc);
+
+			gc.gridx = 1;
+			gc.insets = new Insets(0, 0, 0, 0);
+			gc.anchor = GridBagConstraints.LINE_START;
+			add(customerPrice[i], gc);
+
+			gc.gridx = 2;
+			gc.insets = new Insets(0, 0, 0, 0);
+			gc.anchor = GridBagConstraints.LINE_START;
+			add(quantityField[i], gc);
+		}
+
+		editButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Integer> quantities = new ArrayList<Integer>();
+				ArrayList<String> stockNames = new ArrayList<String>();
+				// Get ordered stock and associated quantities
+				for (int i = 0; i < size; i++) {
+					if (!quantityField[i].getText().equals("")) {
+						try {
+							quantities.add(Integer.valueOf(quantityField[i]
+									.getText()));
+							stockNames.add(stockName[i].getText());
+						} catch (NumberFormatException nfEx) {
+							System.out.println("Not an integer");
+						}
+					}
+				}
+				// clear stock list from previous runs
+				saleStockListToEdit.clear();
+				// Loop through ordered stock names and link to actual product
+				int i = 0;
+				for (String name : stockNames) {
+					for (Stock s : stocks) {
+						// stocks will be replaced by local arraylist derived
+						// using checkLevels()
+						if (s.getName().equals(name)) {
+							Stock saleStockItem = new Stock(s.getProduct(),
+									quantities.get(i));
+							saleStockListToEdit.add(saleStockItem);
+						}
+					}
+					i++;
+				}
+
+				SaleFormEvent saleEvent = new SaleFormEvent(this, saleToEdit
+						.getCustomer(), saleStockListToEdit);
+				if (formListener != null) {
+					formListener.editSaleOccurred(saleEvent, saleToEdit.getId());
+				}
+				setVisible(false);
+			}
+
+		});
+		gc.gridy++;
+		gc.gridx = 1;
+		add(editButton, gc);
+		this.validate();
+		this.repaint();
+
+	}
+
 	public void setFormListener(SaleFormListener listener) {
 		this.formListener = listener;
+	}
+
+	public void setSaleToEdit(Sale saleToEdit) {
+		this.saleToEdit = saleToEdit;
+	}
+
+	public void setSaleStockListToEdit(ArrayList<Stock> saleStockListToEdit) {
+		this.saleStockListToEdit = saleStockListToEdit;
 	}
 
 	public JButton getEnterButton() {
