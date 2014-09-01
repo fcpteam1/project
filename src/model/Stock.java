@@ -11,6 +11,7 @@ public class Stock extends Product implements java.io.Serializable {
 	private Date date = new Date();
 	private DateFormat format = DateFormat.getDateInstance();
 	private Product product;
+	private Model model;
 
 	public Stock() {
 		super();
@@ -117,5 +118,4 @@ public class Stock extends Product implements java.io.Serializable {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-
 }
