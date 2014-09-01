@@ -12,6 +12,9 @@ public class FinancialMainPanel {
 	private FinancialToolbar financialToolbar;
 	private FinancialFormPanel financialFormPanel;
 	private FinancialTablePanel financialTablePanel;
+	private FinancialTableModel financialTableModel;
+	private FinancialTextPanel financialTextPanel;
+	private double totalPrice;
 	private Model model;
 
 	public FinancialMainPanel() throws IOException {
@@ -21,6 +24,7 @@ public class FinancialMainPanel {
 		financialTablePanel = new FinancialTablePanel();
 		financialToolbar = new FinancialToolbar();
 		financialFormPanel = new FinancialFormPanel();
+		financialTextPanel = new FinancialTextPanel();
 		model = new Model();
 
 		financialFormPanel
@@ -39,7 +43,11 @@ public class FinancialMainPanel {
 						financialTablePanel.setSaleData(model.getShop()
 								.getTodaySales());
 						financialTablePanel.setTableModel(1);
-						financialTablePanel.refresh();
+						financialTablePanel.saleRefresh();
+						double totalPrice = model.getShop().totalSales();
+						financialTextPanel.appendText("");
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -47,7 +55,11 @@ public class FinancialMainPanel {
 						financialTablePanel.setSaleData(model.getShop()
 								.getTodaySales());
 						financialTablePanel.setTableModel(1);
-						financialTablePanel.refresh();
+						financialTablePanel.saleRefresh();
+						double totalPrice = model.getShop().totalSales();
+						financialTextPanel.appendText("");
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -55,7 +67,11 @@ public class FinancialMainPanel {
 						financialTablePanel.setSaleData(model.getShop()
 								.getMonthlySales());
 						financialTablePanel.setTableModel(1);
-						financialTablePanel.refresh();
+						financialTablePanel.saleRefresh();
+						double totalPrice = model.getShop().totalSales();
+						financialTextPanel.appendText("");
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -72,24 +88,6 @@ public class FinancialMainPanel {
 								.getTodayOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
-						/*
-						 * ArrayList<Order> orders = new ArrayList<Order>();
-						 * Date today = new Date(); int day = today.getDay();
-						 * int month = today.getMonth(); int year =
-						 * today.getYear(); for (Order order :
-						 * model.getShop().getOrders()) { if
-						 * (order.getDate().getDay() == day &&
-						 * order.getDate().getMonth() == month &&
-						 * order.getDate().getYear() == year) {
-						 * orders.add(order); System.out.println("added"); } }
-						 * financialFormPanel.removeAll();
-						 * financialFormPanel.ExpendituresFormPanel();
-						 * financialTablePanel.setExpenditureData(orders);
-						 * financialTablePanel.setTableModel(2);
-						 * financialTablePanel.refresh();
-						 * financialFormPanel.validate();
-						 * financialFormPanel.repaint();
-						 */
 					}
 
 					@Override
@@ -98,25 +96,6 @@ public class FinancialMainPanel {
 								.getWeeklyOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
-						/*
-						 * ArrayList<Order> orders = new ArrayList<Order>();
-						 * Date today = new Date();
-						 * 
-						 * int day = today.getDay(); int month =
-						 * today.getMonth(); int year = today.getYear(); for
-						 * (Order order : model.getShop().getOrders()) { if
-						 * (order.getDate().getDay() == day &&
-						 * order.getDate().getMonth() == month &&
-						 * order.getDate().getYear() == year) {
-						 * orders.add(order); System.out.println("added"); } }
-						 * financialFormPanel.removeAll();
-						 * financialFormPanel.ExpendituresFormPanel();
-						 * financialTablePanel.setExpenditureData(orders);
-						 * financialTablePanel.setTableModel(2);
-						 * financialTablePanel.refresh();
-						 * financialFormPanel.validate();
-						 * financialFormPanel.repaint();
-						 */
 					}
 
 					@Override
@@ -125,22 +104,6 @@ public class FinancialMainPanel {
 								.getMonthlyOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
-						/*
-						 * ArrayList<Order> orders = new ArrayList<Order>();
-						 * Date today = new Date(); int month =
-						 * today.getMonth(); int year = today.getYear(); for
-						 * (Order order : model.getShop().getOrders()) { if
-						 * (order.getDate().getMonth() == month &&
-						 * order.getDate().getYear() == year) {
-						 * orders.add(order); System.out.println("added"); } }
-						 * financialFormPanel.removeAll();
-						 * financialFormPanel.ExpendituresFormPanel();
-						 * financialTablePanel.setExpenditureData(orders);
-						 * financialTablePanel.setTableModel(2);
-						 * financialTablePanel.refresh();
-						 * financialFormPanel.validate();
-						 * financialFormPanel.repaint();
-						 */
 					}
 
 					@Override
@@ -163,6 +126,24 @@ public class FinancialMainPanel {
 
 					@Override
 					public void thisMonthsProfits() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void dailySaleSelected() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void dailyExpenses() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void dailyProfits() {
 						// TODO Auto-generated method stub
 
 					}
@@ -216,10 +197,14 @@ public class FinancialMainPanel {
 					}
 
 				});
+		financialTablePanel.setSaleData(model.getShop().getBlankSalesTable());
+
+		financialTablePanel.setVisible(true);
 
 		mainPanel.add(financialFormPanel, BorderLayout.WEST);
 		mainPanel.add(financialToolbar, BorderLayout.NORTH);
 		mainPanel.add(financialTablePanel, BorderLayout.CENTER);
+		mainPanel.add(financialTextPanel, BorderLayout.EAST);
 		mainPanel.setSize(600, 500);
 	}
 

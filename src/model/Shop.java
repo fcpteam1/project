@@ -28,11 +28,9 @@ public class Shop {
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
-	private ArrayList<Sale> todaySales = new ArrayList<Sale>();
-	private ArrayList<Sale> weekSales = new ArrayList<Sale>();
-	private ArrayList<Sale> monthSales = new ArrayList<Sale>();
+	private ArrayList<Sale> financialSales = new ArrayList<Sale>();
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
-	private ArrayList<Sale> blankTable = new ArrayList<Sale>();
+	private ArrayList<Sale> blankSalesTable = new ArrayList<Sale>();
 
 	private String username, password, choice, customerName, customerNumber,
 			customerAddress, editUserPassword, editUserUsername;
@@ -472,13 +470,13 @@ public class Shop {
 		return sales;
 	}
 
-	public ArrayList<Sale> getBlankTable() {
-		return blankTable;
+	public ArrayList<Sale> getBlankSalesTable() {
+		return blankSalesTable;
 	}
 
 	public ArrayList<Sale> getTodaySales() {
 		Calendar today = Calendar.getInstance();
-		todaySales.clear();
+		financialSales.clear();
 		for (Sale sale : sales) {
 			Calendar saleDate = dateToCalender(sale.getDate());
 
@@ -486,29 +484,29 @@ public class Shop {
 					&& (saleDate.get(Calendar.MONTH) == today
 							.get(Calendar.MONTH))
 					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
-				todaySales.add(sale);
+				financialSales.add(sale);
 			}
 		}
-		return todaySales;
+		return financialSales;
 	}
 
 	public ArrayList<Sale> getMonthlySales() {
 		Calendar today = Calendar.getInstance();
-		monthSales.clear();
+		financialSales.clear();
 		for (Sale sale : sales) {
 			Calendar saleDate = dateToCalender(sale.getDate());
 
 			if ((saleDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
 					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
-				todaySales.add(sale);
+				financialSales.add(sale);
 			}
 		}
-		return todaySales;
+		return financialSales;
 	}
 
 	public ArrayList<Sale> getWeeklySales() {
 		Calendar today = Calendar.getInstance();
-		weekSales.clear();
+		financialSales.clear();
 		for (Sale sale : sales) {
 			Calendar saleDate = dateToCalender(sale.getDate());
 
@@ -516,10 +514,10 @@ public class Shop {
 					&& (saleDate.get(Calendar.MONTH) == today
 							.get(Calendar.MONTH))
 					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
-				todaySales.add(sale);
+				financialSales.add(sale);
 			}
 		}
-		return todaySales;
+		return financialSales;
 	}
 
 	public ArrayList<Supplier> getSuppliers() {
@@ -720,5 +718,13 @@ public class Shop {
 
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
+	}
+
+	public double totalSales() {
+		double totalSum = 0;
+		for (Sale sale : financialSales) {
+			totalSum = totalSum + sale.getTotalPrice();
+		}
+		return totalSum;
 	}
 }

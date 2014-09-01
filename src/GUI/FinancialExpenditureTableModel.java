@@ -24,6 +24,10 @@ public class FinancialExpenditureTableModel extends AbstractTableModel {
 		this.orders = orders;
 	}
 
+	public ArrayList<Order> getData() {
+		return orders;
+	}
+
 	@Override
 	public int getRowCount() {
 		return orders.size();
