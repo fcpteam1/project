@@ -20,25 +20,24 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
+import model.Order;
 import model.Sale;
 
 public class FinancialTablePanel extends JPanel {
 
-	private JTable tableOrder;
-	private JTable tableSale;
+	private JTable table;
+	private FinancialExpenditureTableModel expenditureModel;
+	private FinancialSaleTableModel saleModel;
+	private FinancialProfitTableModel profitModel;
 	private FinancialSaleTableModel tableModel;
-	private FinancialExpendituresTableModel tableOrderModel;
 	private FinancialFormPanel formPanel;
-	private ArrayList<Sale> financialSales = new ArrayList<Sale>();
 
 	public FinancialTablePanel() {
+		table = new JTable();
+		expenditureModel = new FinancialExpenditureTableModel();
+		saleModel = new FinancialSaleTableModel();
+		profitModel = new FinancialProfitTableModel();
 		JButton graphBtn = new JButton("Barchart");
-		tableModel = new FinancialSaleTableModel();
-		/*
-		 * tableOrderModel = new FinancialExpendituresTableModel(); tableOrder =
-		 * new JTable(tableOrderModel);
-		 */
-		tableSale = new JTable(tableModel);
 
 		graphBtn.addActionListener(new ActionListener() {
 			@Override
@@ -53,7 +52,6 @@ public class FinancialTablePanel extends JPanel {
 					@Override
 					public void run() {
 						contentPane.setScene(createSaleBarChart());
-
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
 							public void run() {
@@ -72,12 +70,12 @@ public class FinancialTablePanel extends JPanel {
 				final BarChart<String, Number> bc = new BarChart<String, Number>(
 						xAxis, yAxis);
 				bc.setTitle("Sales Summary");
-				xAxis.setLabel("Products");
+				xAxis.setLabel("Customers");
 				yAxis.setLabel("Value");
 
 				XYChart.Series series1 = new XYChart.Series();
 
-				for (Sale sale : financialSales) {
+				for (Sale sale : saleModel.getData()) {
 					/* series1.setName(sale.getCustomer().getName()); */
 					series1.getData().add(
 							new XYChart.Data(sale.getCustomer().getName(), sale
@@ -87,34 +85,73 @@ public class FinancialTablePanel extends JPanel {
 				bc.getData().addAll(series1);
 				return new Scene(bc, 800, 600);
 			}
+
+			private Scene createExpensesBarChart() {
+				System.out.println("creating scene");
+				final CategoryAxis xAxis = new CategoryAxis();
+				final NumberAxis yAxis = new NumberAxis();
+				final BarChart<String, Number> bc = new BarChart<String, Number>(
+						xAxis, yAxis);
+				bc.setTitle("Expenses Summary");
+				xAxis.setLabel("Suppliers");
+				yAxis.setLabel("Value");
+
+				XYChart.Series series1 = new XYChart.Series();
+
+				for (Order order : expenditureModel.getData()) {
+					/* series1.setName(sale.getCustomer().getName()); */
+					series1.getData().add(
+							new XYChart.Data(order.getSupplier().getName(),
+									order.getTotalPrice()));
+				}
+
+				bc.getData().addAll(series1);
+				return new Scene(bc, 800, 600);
+			}
+
 		});
 
 		setLayout(new BorderLayout());
 		add(graphBtn, BorderLayout.SOUTH);
-		add(new JScrollPane(tableSale), BorderLayout.CENTER);
-
+		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
-
-	public void setSaleData(ArrayList<Sale> todaySales) {
-		this.financialSales = todaySales;
-		tableModel.setData(todaySales);
-	}
-
-	/*
-	 * public void setOrderData(ArrayList<Order> todayOrders) {
-	 * tableOrderModel.setData(todayOrders); add(new JScrollPane(tableOrder),
-	 * BorderLayout.CENTER); }
-	 */
 
 	public void setFormPanel(FinancialFormPanel formPanel) {
 		this.formPanel = formPanel;
 	}
 
-	public void saleRefresh() {
-		tableModel.fireTableDataChanged();
+	public void setExpenditureData(ArrayList<Order> orders) {
+		expenditureModel.setData(orders);
 	}
 
-	/*
-	 * public void orderRefresh() { tableOrderModel.fireTableDataChanged(); }
-	 */
+	public void setSaleData(ArrayList<Sale> sales) {
+		saleModel.setData(sales);
+	}
+
+	public void setProfitData(ArrayList<Order> orders, ArrayList<Sale> sales) {
+		profitModel.setData(orders, sales);
+	}
+
+	public void refresh() {
+		expenditureModel.fireTableDataChanged();
+		saleModel.fireTableDataChanged();
+		profitModel.fireTableDataChanged();
+	}
+
+	public void setTableModel(int i) {
+		switch (i) {
+		case 1:
+			table.setModel(saleModel);
+			System.out.println("Sale");
+			break;
+		case 2:
+			table.setModel(expenditureModel);
+			System.out.println("Expense");
+			break;
+		case 3:
+			table.setModel(profitModel);
+			System.out.println("Profit");
+			break;
+		}
+	}
 }

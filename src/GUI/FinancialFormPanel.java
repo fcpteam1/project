@@ -21,12 +21,14 @@ import model.Order;
 import model.Sale;
 
 public class FinancialFormPanel extends JPanel {
-	private JButton todayBtn, dailyBtn, weeklyBtn, monthlyBtn, submitBtn;
+
+	private JButton allBtn, todayBtn, dailyBtn, weeklyBtn, monthlyBtn,
+			submitBtn;
 	private JComboBox dayList, weekList, monthList;
 	private JLabel dayLabel, weekLabel, monthLabel;
 	private CustomerFormListener customerFormListener;
-	private FinancialFormListener listener;
 	private Model model;
+	private FinancialFormListener listener;
 
 	private ArrayList<Sale> sales;
 	private ArrayList<Order> orders;
@@ -54,14 +56,21 @@ public class FinancialFormPanel extends JPanel {
 		dim.width = 250;
 		setPreferredSize(dim);
 
-		todayBtn = new JButton("Todays sales");
-		dailyBtn = new JButton("Daily sales");
-		weeklyBtn = new JButton("Weekly sales");
-		monthlyBtn = new JButton("Monthly sales");
+		allBtn = new JButton("All Sales");
+		todayBtn = new JButton("Todays Sales");
+		dailyBtn = new JButton("Daily Sales");
+		weeklyBtn = new JButton("Weekly Sales");
+		monthlyBtn = new JButton("Monthly Sales");
+
+		allBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.allSales();
+			}
+		});
 
 		todayBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.todaySaleSelected();
+				listener.todaysSales();
 			}
 		});
 
@@ -73,13 +82,14 @@ public class FinancialFormPanel extends JPanel {
 
 		weeklyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.weeklySaleSelected();
+				listener.thisWeeksSales();
+
 			}
 		});
 
 		monthlyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.monthlySaleSelected();
+				listener.thisMonthsSales();
 			}
 		});
 
@@ -99,20 +109,147 @@ public class FinancialFormPanel extends JPanel {
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		add(todayBtn, gc);
+		add(allBtn, gc);
 
 		// /////// Second row ////////
 
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 100;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(todayBtn, gc);
+
+		// /////// Third row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(dailyBtn, gc);
+
+		// /////// Fourth row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(weeklyBtn, gc);
 
+		// /////// Fifth row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1000000;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(monthlyBtn, gc);
+	}
+
+	public void ExpendituresFormPanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		allBtn = new JButton("All Expenses");
+		todayBtn = new JButton("Todays Expenses");
+		dailyBtn = new JButton("Daily Expenses");
+		weeklyBtn = new JButton("Weekly Expenses");
+		monthlyBtn = new JButton("Monthly Expenses");
+
+		allBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.allExpenses();
+			}
+		});
+
+		todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.todaysExpenses();
+			}
+		});
+
+		dailyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.dailyExpenses();
+			}
+		});
+
+		weeklyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.thisWeeksExpenses();
+
+			}
+		});
+
+		monthlyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.thisMonthsExpenses();
+			}
+		});
+
+		Border innerBorder = BorderFactory.createTitledBorder("Expenses");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gc = new GridBagConstraints();
+
+		// /////// First row ////////
+
+		gc.gridy = 0;
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(allBtn, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(todayBtn, gc);
+
 		// /////// Third row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(dailyBtn, gc);
+
+		// /////// Fourth row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(weeklyBtn, gc);
+
+		// /////// Fifth row /////////
 
 		gc.gridy++;
 
@@ -128,6 +265,11 @@ public class FinancialFormPanel extends JPanel {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
 		setPreferredSize(dim);
+
+		allBtn = new JButton("All Expenditures");
+		todayBtn = new JButton("Todays Expenditures");
+		weeklyBtn = new JButton("This weeks Expenditures");
+		monthlyBtn = new JButton("This Months Expenditures");
 
 		dayLabel = new JLabel("Day: ");
 		weekLabel = new JLabel("Week: ");
@@ -183,6 +325,28 @@ public class FinancialFormPanel extends JPanel {
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		allBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.allExpenses();
+			}
+		});
+
+		todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.todaysExpenses();
+			}
+		});
+		weeklyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.thisWeeksExpenses();
+			}
+		});
+		monthlyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.thisMonthsExpenses();
+			}
+		});
 
 		setLayout(new GridBagLayout());
 
@@ -245,10 +409,109 @@ public class FinancialFormPanel extends JPanel {
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 2;
+		gc.weighty = 1;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(allBtn, gc);
+
 		add(submitBtn, gc);
+	}
+
+	// ////////////////////Profit////////////////////////
+
+	public void ProfitFormPanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		todayBtn = new JButton("Todays profit");
+		weeklyBtn = new JButton("This weeks profit");
+		monthlyBtn = new JButton("This Months profit");
+
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		allBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.allProfits();
+			}
+		});
+
+		todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.todaysProfits();
+			}
+		});
+		weeklyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.thisWeeksProfits();
+			}
+		});
+		monthlyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listener.thisMonthsProfits();
+			}
+		});
+
+		GridBagConstraints gc = new GridBagConstraints();
+
+		// /////// First row ////////
+
+		gc.gridy = 0;
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(allBtn, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(todayBtn, gc);
+
+		// /////// Third row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(dailyBtn, gc);
+
+		// /////// Fourth row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(weeklyBtn, gc);
+
+		// /////// Fifth row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1000000;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(monthlyBtn, gc);
+
 	}
 }

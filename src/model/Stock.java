@@ -24,6 +24,7 @@ public class Stock extends Product implements java.io.Serializable {
 	}
 
 	public Stock(Product product, int quantity) {
+
 		super(product.getName(), product.getId());
 		this.customerPrice = calculatePrice();
 		this.quantity = quantity;
@@ -117,5 +118,4 @@ public class Stock extends Product implements java.io.Serializable {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-
 }

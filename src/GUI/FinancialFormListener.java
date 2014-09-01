@@ -1,19 +1,34 @@
 package GUI;
 
 public interface FinancialFormListener {
-	public void todaySaleSelected();
+
+	public void allSales();
 
 	public void dailySaleSelected();
 
-	public void weeklySaleSelected();
+	public void todaysSales();
 
-	public void monthlySaleSelected();
+	public void thisWeeksSales();
 
-	/*
-	 * public void todayExpenditureSelected();
-	 * 
-	 * public void weekExpenditureSelected();
-	 * 
-	 * public void monthExpenditureSelected();
-	 */
+	public void thisMonthsSales();
+
+	public void allExpenses();
+
+	public void dailyExpenses();
+
+	public void todaysExpenses();
+
+	public void thisWeeksExpenses();
+
+	public void thisMonthsExpenses();
+
+	public void allProfits();
+
+	public void dailyProfits();
+
+	public void todaysProfits();
+
+	public void thisWeeksProfits();
+
+	public void thisMonthsProfits();
 }
