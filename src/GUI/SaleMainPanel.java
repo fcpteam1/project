@@ -47,6 +47,7 @@ public class SaleMainPanel extends JPanel {
 
 			@Override
 			public void rowEdited(int row) {
+				formPanel.setVisible(true);
 				formPanel.setSaleToEdit(model.getShop().getSales().get(row));
 				formPanel.setSaleStockListToEdit(model.getShop().getSales()
 						.get(row).getStocks());

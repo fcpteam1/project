@@ -7,20 +7,16 @@ import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class SaleToolbar extends JPanel implements ActionListener {
 	private JButton createSale, viewSale;
 	private SaleFormPanel mainPanel;
 	private SaleTablePanel tablePanel;
-	private JLabel instruction;
 
 	public SaleToolbar() {
 		createSale = new JButton("Create\\Edit Sale");
 		viewSale = new JButton("View Sales");
-		instruction = new JLabel(
-				"Right click table to delete and list Products, edit function enabled in Create\\Edit Sale");
 
 		createSale.addActionListener(this);
 		viewSale.addActionListener(this);
@@ -30,7 +26,6 @@ public class SaleToolbar extends JPanel implements ActionListener {
 
 		add(createSale);
 		add(viewSale);
-		add(instruction);
 	}
 
 	public void setMainPanel(SaleFormPanel formPanel) {
@@ -51,7 +46,6 @@ public class SaleToolbar extends JPanel implements ActionListener {
 				mainPanel.repaint();
 			} else if (clicked == viewSale) {
 				mainPanel.setVisible(false);
-				tablePanel.refresh();
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
