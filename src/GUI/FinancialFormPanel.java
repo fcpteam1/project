@@ -18,6 +18,7 @@ import model.Sale;
 
 public class FinancialFormPanel extends JPanel {
 	private JButton todayBtn, dailyBtn, weeklyBtn, monthlyBtn;
+
 	private Model model;
 	private FinancialFormListener listener;
 
@@ -36,6 +37,10 @@ public class FinancialFormPanel extends JPanel {
 		this.orders = orders;
 	}
 
+	public void setFinancialFormListener(FinancialFormListener listener) {
+		this.listener = listener;
+	}
+
 	// ////////////////////Sales////////////////////////
 
 	public void SalesFormPanel() {
@@ -46,6 +51,24 @@ public class FinancialFormPanel extends JPanel {
 		todayBtn = new JButton("Todays sales");
 		weeklyBtn = new JButton("This weeks sales");
 		monthlyBtn = new JButton("This Months sales");
+
+		todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.todaysSales();
+			}
+		});
+
+		weeklyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.thisWeeksSales();
+			}
+		});
+
+		monthlyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.thisMonthsSales();
+			}
+		});
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -237,9 +260,5 @@ public class FinancialFormPanel extends JPanel {
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(monthlyBtn, gc);
-	}
-
-	public void setFinancialFormListener(FinancialFormListener listener) {
-		this.listener = listener;
 	}
 }

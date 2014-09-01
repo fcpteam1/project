@@ -15,8 +15,8 @@ public class FinancialSaleTableModel extends AbstractTableModel {
 
 	}
 
-	public void setData(ArrayList<Sale> sales) {
-		this.sales = sales;
+	public void setData(ArrayList<Sale> todaySales) {
+		this.sales = todaySales;
 	}
 
 	public String getColumnName(int column) {

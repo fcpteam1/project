@@ -18,7 +18,7 @@ public class SaleTextPanel extends JPanel {
 		// finalSaleButton = new JButton("Place Sale");
 		setLayout(new BorderLayout());
 
-		add(new JScrollPane(textArea), BorderLayout.CENTER);
+		add(new JScrollPane(textArea), BorderLayout.EAST);
 		// add(finalSaleButton, BorderLayout.SOUTH);
 	}
 

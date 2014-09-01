@@ -4,14 +4,12 @@ import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import model.Model;
 import model.Stock;
 
-public class SaleMainPanel extends JFrame {
+public class SaleMainPanel extends JPanel {
 
 	private JPanel mainPanel;
 	private SaleToolbar toolBar;
@@ -30,24 +28,55 @@ public class SaleMainPanel extends JFrame {
 		textPanel = new SaleTextPanel();
 		model = new Model();
 
+		formPanel.setData(model.getShop().getStock(), model.getShop()
+				.getCustomers(), model.getShop().getStockFile());
+		tablePanel.setData(model.getShop().getSales());
 		toolBar.setMainPanel(formPanel);
 		tablePanel.setFormPanel(formPanel);
-		formPanel.setData(model.getShop().getStock(), model.getShop()
-				.getCustomers());
-		tablePanel.setData(model.getShop().getSales());
 
 		mainPanel.add(toolBar, BorderLayout.NORTH);
 		mainPanel.add(formPanel, BorderLayout.WEST);
-		mainPanel.add(tablePanel, BorderLayout.EAST);
-		mainPanel.add(textPanel, BorderLayout.CENTER);
+		mainPanel.add(tablePanel, BorderLayout.CENTER);
+		mainPanel.add(textPanel, BorderLayout.EAST);
+
+		tablePanel.setSaleTableListener(new SaleTableListener() {
+			public void rowDeleted(int row) {
+				model.getShop().removeSale(row);
+				tablePanel.refresh();
+			}
+
+			@Override
+			public void rowEdited(int row) {
+				formPanel.setSaleToEdit(model.getShop().getSales().get(row));
+				formPanel.setSaleStockListToEdit(model.getShop().getSales()
+						.get(row).getStocks());
+				formPanel.editSaleSelectionPanel();
+				tablePanel.refresh();
+			}
+
+			public void listItems(int row) {
+				ArrayList<Stock> itemsBought = model.getShop().getSales()
+						.get(row).getStocks();
+
+				textPanel.appendText("\n------Products from Sale Id: " + row
+						+ "-------\n");
+
+				for (int i = 0; i < itemsBought.size(); i++) {
+					textPanel.appendText(itemsBought.get(i).getName()
+							+ "  Quantity: " + itemsBought.get(i).getQuantity()
+							+ "\n");
+				}
+
+				textPanel.appendText("\n");
+
+			}
+		});
 
 		formPanel.setFormListener(new SaleFormListener() {
 
 			public void createSaleOccurred(SaleFormEvent e) {
 
 				model.getShop().createSale(e);
-				System.out.println(model.getShop().getSales().get(0)
-						.getTotalPrice());
 				tablePanel.refresh();
 				ArrayList<Stock> stockItems = e.getStockList();
 				for (int i = 0; i < stockItems.size(); i++) {
@@ -56,6 +85,23 @@ public class SaleMainPanel extends JFrame {
 							+ "\n");
 				}
 				textPanel.appendText("\n------Sale Complete-------\n");
+				textPanel.appendText("\n");
+			}
+
+			@Override
+			public void editSaleOccurred(SaleFormEvent e, int id) {
+
+				model.getShop().editSale(e, id);
+				tablePanel.refresh();
+				ArrayList<Stock> stockItems = e.getStockList();
+				for (int i = 0; i < stockItems.size(); i++) {
+					textPanel.appendText(stockItems.get(i).getName()
+							+ "  Quantity: " + stockItems.get(i).getQuantity()
+							+ "\n");
+				}
+				textPanel.appendText("\n------Sale Edited-------\n");
+				textPanel.appendText("\n");
+				tablePanel.setVisible(false);
 			}
 		});
 	}

@@ -1,6 +1,7 @@
 package GUI;
 
 public interface FinancialFormListener {
+
 	public void todaysSales();
 
 	public void thisWeeksSales();

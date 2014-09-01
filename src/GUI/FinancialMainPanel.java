@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 import model.Model;
 import model.Order;
-import model.Sale;
 
 public class FinancialMainPanel {
 	private JPanel mainPanel;
@@ -32,54 +31,26 @@ public class FinancialMainPanel {
 
 					@Override
 					public void todaysSales() {
-						ArrayList<Sale> sales = new ArrayList<Sale>();
-						Date today = new Date();
-						int day = today.getDay();
-						int month = today.getMonth();
-						int year = today.getYear();
-						for (Sale sale : model.getShop().getSales()) {
-							if (sale.getDate().getDay() == day
-									&& sale.getDate().getMonth() == month
-									&& sale.getDate().getYear() == year) {
-								sales.add(sale);
-								System.out.println("added");
-							}
-						}
-						financialFormPanel.removeAll();
-						financialFormPanel.SalesFormPanel();
-						financialTablePanel.setSaleData(sales);
+						financialTablePanel.setSaleData(model.getShop()
+								.getTodaySales());
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
-						financialFormPanel.validate();
-						financialFormPanel.repaint();
 					}
 
 					@Override
 					public void thisWeeksSales() {
-						// TODO Auto-generated method stub
-
+						financialTablePanel.setSaleData(model.getShop()
+								.getTodaySales());
+						financialTablePanel.setTableModel(1);
+						financialTablePanel.refresh();
 					}
 
 					@Override
 					public void thisMonthsSales() {
-						ArrayList<Sale> sales = new ArrayList<Sale>();
-						Date today = new Date();
-						int month = today.getMonth();
-						int year = today.getYear();
-						for (Sale sale : model.getShop().getSales()) {
-							if (sale.getDate().getMonth() == month
-									&& sale.getDate().getYear() == year) {
-								sales.add(sale);
-								System.out.println("added");
-							}
-						}
-						financialFormPanel.removeAll();
-						financialFormPanel.SalesFormPanel();
-						financialTablePanel.setSaleData(sales);
+						financialTablePanel.setSaleData(model.getShop()
+								.getMonthlySales());
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
-						financialFormPanel.validate();
-						financialFormPanel.repaint();
 					}
 
 					@Override

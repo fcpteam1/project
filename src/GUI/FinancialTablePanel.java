@@ -13,9 +13,6 @@ import model.Sale;
 public class FinancialTablePanel extends JPanel {
 
 	private JTable table;
-	private JTable expenditureTable;
-	private JTable saleTable;
-	private JTable profitTable;
 	private FinancialExpenditureTableModel expenditureModel;
 	private FinancialSaleTableModel saleModel;
 	private FinancialProfitTableModel profitModel;
