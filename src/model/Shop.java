@@ -126,6 +126,7 @@ public class Shop {
 		loadOrders(orderFile);
 
 		predictor = new StockSalesPredictor(sales);
+
 		/*
 		 * for (Sale s : sales) System.out.println(s.getCustomer() +
 		 * " : From sales.ser"); for (Order o : orders)

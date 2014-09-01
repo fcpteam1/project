@@ -519,7 +519,8 @@ public class StockSalesPredictor {
 				// thisWeekSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						thisWeekStockSales += sale.getTotalPrice();
+						// thisWeekStockSales += sale.getTotalPrice();
+						thisWeekStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -529,7 +530,7 @@ public class StockSalesPredictor {
 				// lastWeekSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						lastWeekStockSales += sale.getTotalPrice();
+						lastWeekStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -539,7 +540,7 @@ public class StockSalesPredictor {
 				// twoWeekSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						twoWeekStockSales += sale.getTotalPrice();
+						twoWeekStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -549,7 +550,7 @@ public class StockSalesPredictor {
 				// threeWeekSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						threeWeekStockSales += sale.getTotalPrice();
+						threeWeekStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -560,7 +561,7 @@ public class StockSalesPredictor {
 				// thisMonthSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						thisMonthStockSales += sale.getTotalPrice();
+						thisMonthStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -571,7 +572,7 @@ public class StockSalesPredictor {
 				// lastMonthSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						lastMonthStockSales += sale.getTotalPrice();
+						lastMonthStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -583,7 +584,7 @@ public class StockSalesPredictor {
 				// twoMonthSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						twoMonthStockSales += sale.getTotalPrice();
+						twoMonthStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -595,7 +596,7 @@ public class StockSalesPredictor {
 				// threeMonthSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						threeMonthStockSales += sale.getTotalPrice();
+						threeMonthStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -605,7 +606,7 @@ public class StockSalesPredictor {
 				// nextWeekLastYearSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						nextWeekLastYearStockSales += sale.getTotalPrice();
+						nextWeekLastYearStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -615,7 +616,7 @@ public class StockSalesPredictor {
 				// thisWeekLastYearSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						thisWeekLastYearStockSales += sale.getTotalPrice();
+						thisWeekLastYearStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -624,7 +625,7 @@ public class StockSalesPredictor {
 				// lastWeekLastYearSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						lastWeekLastYearStockSales += sale.getTotalPrice();
+						lastWeekLastYearStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -636,7 +637,7 @@ public class StockSalesPredictor {
 				// lastMonthLastYearSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						lastMonthLastYearStockSales += sale.getTotalPrice();
+						lastMonthLastYearStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -648,7 +649,7 @@ public class StockSalesPredictor {
 				// thisMonthLastYearSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						thisMonthLastYearStockSales += sale.getTotalPrice();
+						thisMonthLastYearStockSales += saleStock.getQuantity();
 					}
 				}
 			}
@@ -660,17 +661,33 @@ public class StockSalesPredictor {
 				// nextMonthLastYearSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
-						nextMonthLastYearStockSales += sale.getTotalPrice();
+						nextMonthLastYearStockSales += saleStock.getQuantity();
 					}
 				}
 			}
 		}
 
+		int daysGone = calendar.get(Calendar.DAY_OF_WEEK);
+		daysGone -= 1;
+		thisWeekStockSales = (thisWeekStockSales / daysGone) * 7;
+
 		nextWeekStockSales = ((((thisWeekStockSales / thisWeekLastYearStockSales) * 2) + (lastWeekStockSales / lastWeekLastYearStockSales)) / 3)
 				* nextWeekLastYearStockSales;
+		if (nextWeekStockSales == 0) {
+			nextWeekStockSales = ((thisWeekStockSales * 4)
+					+ (lastWeekStockSales * 3) + (twoWeekStockSales * 2) + (threeWeekStockSales)) / 10;
+		}
+
+		thisMonthStockSales = thisMonthStockSales / calendar.get(Calendar.DATE)
+				* calendar.getMaximum(calendar.get(Calendar.MONTH));
 
 		nextMonthStockSales = ((((thisMonthStockSales / thisMonthLastYearStockSales) * 2) + (lastMonthStockSales / lastMonthLastYearStockSales)) / 3)
 				* nextMonthLastYearStockSales;
+
+		if (nextMonthStockSales == 0) {
+			nextMonthStockSales = ((thisMonthStockSales * 4)
+					+ (lastMonthStockSales * 3) + (twoMonthStockSales * 2) + (threeMonthStockSales)) / 10;
+		}
 
 		System.out.println("Next week sales prediction for " + stock.getName()
 				+ " " + nextWeekStockSales);

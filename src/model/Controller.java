@@ -210,9 +210,6 @@ public class Controller {
 
 				int row = view.getMainmenu().getSupplierTab()
 						.getViewSupplierTabel().rowAtPoint(e.getPoint());
-
-				System.out.println("Row " + row);
-
 				view.getMainmenu().getSupplierTab().getViewSupplierTabel()
 						.getSelectionModel().setSelectionInterval(row, row);
 
@@ -222,7 +219,7 @@ public class Controller {
 							.getViewProductsPopup()
 							.show(view.getMainmenu().getSupplierTab()
 									.getViewSupplierTabel(), e.getX(), e.getY());
-					System.out.println("MOUSE event 3");
+
 				}
 			}
 
@@ -274,6 +271,7 @@ public class Controller {
 				int index = view.getMainmenu().getSupplierTab()
 						.getViewSupplierTabel().getSelectedRow();
 				view.getMainmenu().getSupplierTab().setCurrent(index);
+				view.getMainmenu().getSupplierTab().focusViewProducts();
 				view.getMainmenu().getSupplierTab().showAddProductPanel();
 
 			}
@@ -350,6 +348,9 @@ public class Controller {
 								view.getMainmenu().getSupplierTab()
 										.getSupplierName().getText());
 
+				view.getMainmenu().getSupplierTab()
+						.refreshSupplier(fillSupplierTable());
+
 			}
 
 		};
@@ -363,7 +364,8 @@ public class Controller {
 						.setNumber(
 								view.getMainmenu().getSupplierTab()
 										.getSupplierPhone().getText());
-
+				view.getMainmenu().getSupplierTab()
+						.refreshSupplier(fillSupplierTable());
 			}
 
 		};
@@ -377,7 +379,8 @@ public class Controller {
 						.setAddress(
 								view.getMainmenu().getSupplierTab()
 										.getSupplierAddress().getText());
-
+				view.getMainmenu().getSupplierTab()
+						.refreshSupplier(fillSupplierTable());
 			}
 
 		};
@@ -395,6 +398,10 @@ public class Controller {
 
 				model.getShop().getSuppliers().get(current).getProducts()
 						.add(new Product(name, supPrice));
+
+				Object data[][] = fillProductsForSupplier(current);
+
+				view.getMainmenu().getSupplierTab().refreshProducts(data);
 
 			}
 
@@ -433,6 +440,16 @@ public class Controller {
 
 		editSupButton = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				if (view.getMainmenu().getSupplierTab().getViewSupplierTabel()
+						.getSelectedRow() > -1) {
+					view.getMainmenu()
+							.getSupplierTab()
+							.setCurrent(
+									view.getMainmenu().getSupplierTab()
+											.getViewSupplierTabel()
+											.getSelectedRow());
+				}
 				int index = view.getMainmenu().getSupplierTab().getCurrent();
 				view.getMainmenu().getSupplierTab().showEditPanel();
 				view.getMainmenu()
@@ -554,8 +571,7 @@ public class Controller {
 
 	}
 
-	public void viewSuppliers() {
-
+	public Object[][] fillSupplierTable() {
 		Object data[][] = new Object[model.getShop().getSuppliers().size()][4];
 
 		for (int i = 0; i < model.getShop().getSuppliers().size(); i++) {
@@ -564,6 +580,13 @@ public class Controller {
 			data[i][2] = model.getShop().getSuppliers().get(i).getNumber();
 			data[i][3] = model.getShop().getSuppliers().get(i).getAddress();
 		}
+
+		return data;
+	}
+
+	public void viewSuppliers() {
+
+		Object data[][] = fillSupplierTable();
 		view.getMainmenu().getSupplierTab().setSupplierData(data);
 		view.getMainmenu().getSupplierTab().focusViewSuppliers();
 		view.getMainmenu().getSupplierTab().getViewSupplierTabel()
@@ -587,8 +610,8 @@ public class Controller {
 		view.getMainmenu().getSupplierTab().getSupplierText()
 				.setText(model.getShop().getSuppliers().get(current).getName());
 		view.getMainmenu().getSupplierTab().setProductData(data);
+		// view.getMainmenu().getSupplierTab().refreshProducts(data);
 		view.getMainmenu().getSupplierTab().focusViewProducts();
-
 		view.getMainmenu().getSupplierTab().getViewSupplierTabel()
 				.addMouseListener(supplierTableListener);
 
