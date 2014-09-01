@@ -25,11 +25,11 @@ import model.Sale;
 
 public class FinancialTablePanel extends JPanel {
 
+	private int choice;
 	private JTable table;
 	private FinancialExpenditureTableModel expenditureModel;
 	private FinancialSaleTableModel saleModel;
 	private FinancialProfitTableModel profitModel;
-	private FinancialSaleTableModel tableModel;
 	private FinancialFormPanel formPanel;
 
 	public FinancialTablePanel() {
@@ -51,7 +51,16 @@ public class FinancialTablePanel extends JPanel {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						contentPane.setScene(createSaleBarChart());
+						if (choice == 1){
+							System.out.println("SaleModel");
+							contentPane.setScene(createSaleBarChart());
+						}
+						else if (choice == 2){
+							contentPane.setScene(createExpensesBarChart());
+						}
+						else if (choice == 3){
+							contentPane.setScene(createSaleBarChart());
+						}
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
 							public void run() {
@@ -142,14 +151,17 @@ public class FinancialTablePanel extends JPanel {
 	public void setTableModel(int i) {
 		switch (i) {
 		case 1:
+			choice = 1;
 			table.setModel(saleModel);
 			System.out.println("Sale");
 			break;
 		case 2:
+			choice = 2;
 			table.setModel(expenditureModel);
 			System.out.println("Expense");
 			break;
 		case 3:
+			choice = 3;
 			table.setModel(profitModel);
 			System.out.println("Profit");
 			break;
