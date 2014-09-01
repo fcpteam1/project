@@ -43,7 +43,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setSaleData(model.getShop()
 								.getTodaySales());
 						financialTablePanel.setTableModel(1);
-						financialTablePanel.saleRefresh();
+						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.appendText("");
 						financialTextPanel.appendText("Total Price : "
@@ -55,7 +55,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setSaleData(model.getShop()
 								.getTodaySales());
 						financialTablePanel.setTableModel(1);
-						financialTablePanel.saleRefresh();
+						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.appendText("");
 						financialTextPanel.appendText("Total Price : "
@@ -67,7 +67,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setSaleData(model.getShop()
 								.getMonthlySales());
 						financialTablePanel.setTableModel(1);
-						financialTablePanel.saleRefresh();
+						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.appendText("");
 						financialTextPanel.appendText("Total Price : "

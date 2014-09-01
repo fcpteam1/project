@@ -248,12 +248,14 @@ public class OrderFormPanel extends JPanel {
 							.getSupplierPrice() * 100.00 / 100.00) + " each");
 			fields[i] = new JTextField(3);
 			for (Product product : editedProducts) {
+				int j = 0;
 				if (editedSupplierProducts.get(i).getName()
 						.equals(product.getName())) {
-					fields[i].setText(String.valueOf(editedProducts.get(i)
+					fields[i].setText(String.valueOf(editedProducts.get(j)
 							.getQuantity()));
 					break;
 				}
+				j++;
 			}
 
 			gc.gridy = i;
