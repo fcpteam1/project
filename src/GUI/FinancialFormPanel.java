@@ -82,14 +82,14 @@ public class FinancialFormPanel extends JPanel {
 
 		weeklyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.thisWeeksSales();
+				listener.weeklySales();
 
 			}
 		});
 
 		monthlyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.thisMonthsSales();
+				listener.monthlySales();
 			}
 		});
 
@@ -187,14 +187,14 @@ public class FinancialFormPanel extends JPanel {
 
 		weeklyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.thisWeeksExpenses();
+				listener.weeklyExpenses();
 
 			}
 		});
 
 		monthlyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.thisMonthsExpenses();
+				listener.monthlyExpenses();
 			}
 		});
 
@@ -326,28 +326,6 @@ public class FinancialFormPanel extends JPanel {
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
-		allBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listener.allExpenses();
-			}
-		});
-
-		todayBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				listener.todaysExpenses();
-			}
-		});
-		weeklyBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				listener.thisWeeksExpenses();
-			}
-		});
-		monthlyBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				listener.thisMonthsExpenses();
-			}
-		});
-
 		setLayout(new GridBagLayout());
 
 		GridBagConstraints gc = new GridBagConstraints();
@@ -448,12 +426,12 @@ public class FinancialFormPanel extends JPanel {
 		});
 		weeklyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				listener.thisWeeksProfits();
+				listener.weeklyProfits();
 			}
 		});
 		monthlyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				listener.thisMonthsProfits();
+				listener.monthlyProfits();
 			}
 		});
 

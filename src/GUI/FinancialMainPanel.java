@@ -51,7 +51,7 @@ public class FinancialMainPanel {
 					}
 
 					@Override
-					public void thisWeeksSales() {
+					public void weeklySales() {
 						financialTablePanel.setSaleData(model.getShop()
 								.getTodaySales());
 						financialTablePanel.setTableModel(1);
@@ -63,7 +63,7 @@ public class FinancialMainPanel {
 					}
 
 					@Override
-					public void thisMonthsSales() {
+					public void monthlySales() {
 						financialTablePanel.setSaleData(model.getShop()
 								.getMonthlySales());
 						financialTablePanel.setTableModel(1);
@@ -91,7 +91,7 @@ public class FinancialMainPanel {
 					}
 
 					@Override
-					public void thisWeeksExpenses() {
+					public void weeklyExpenses() {
 						financialTablePanel.setExpenditureData(model.getShop()
 								.getWeeklyOrders());
 						financialTablePanel.setTableModel(2);
@@ -99,7 +99,7 @@ public class FinancialMainPanel {
 					}
 
 					@Override
-					public void thisMonthsExpenses() {
+					public void monthlyExpenses() {
 						financialTablePanel.setExpenditureData(model.getShop()
 								.getMonthlyOrders());
 						financialTablePanel.setTableModel(2);
@@ -119,13 +119,13 @@ public class FinancialMainPanel {
 					}
 
 					@Override
-					public void thisWeeksProfits() {
+					public void weeklyProfits() {
 						// TODO Auto-generated method stub
 
 					}
 
 					@Override
-					public void thisMonthsProfits() {
+					public void monthlyProfits() {
 						// TODO Auto-generated method stub
 
 					}

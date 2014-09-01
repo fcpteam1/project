@@ -8,9 +8,9 @@ public interface FinancialFormListener {
 
 	public void todaysSales();
 
-	public void thisWeeksSales();
+	public void weeklySales();
 
-	public void thisMonthsSales();
+	public void monthlySales();
 
 	public void allExpenses();
 
@@ -18,9 +18,9 @@ public interface FinancialFormListener {
 
 	public void todaysExpenses();
 
-	public void thisWeeksExpenses();
+	public void weeklyExpenses();
 
-	public void thisMonthsExpenses();
+	public void monthlyExpenses();
 
 	public void allProfits();
 
@@ -28,7 +28,7 @@ public interface FinancialFormListener {
 
 	public void todaysProfits();
 
-	public void thisWeeksProfits();
+	public void weeklyProfits();
 
-	public void thisMonthsProfits();
+	public void monthlyProfits();
 }
