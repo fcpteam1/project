@@ -257,8 +257,10 @@ public class FinancialMainPanel {
 
 					@Override
 					public void dailyExpenses() {
-						// TODO Auto-generated method stub
-						
+						financialFormPanel.removeAll();
+						financialFormPanel.chooseDayExpensePanel();
+						financialFormPanel.validate();
+						financialFormPanel.repaint();
 					}
 
 				});
