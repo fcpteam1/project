@@ -62,7 +62,7 @@ public class FinancialMainPanel {
 					@Override
 					public void weeklySales() {
 						financialFormPanel.removeAll();
-						financialFormPanel.chooseDaySalePanel();
+						financialFormPanel.chooseWeekSalePanel();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
 					}
@@ -70,7 +70,7 @@ public class FinancialMainPanel {
 					@Override
 					public void monthlySales() {
 						financialFormPanel.removeAll();
-						financialFormPanel.chooseDaySalePanel();
+						financialFormPanel.chooseMonthSalePanel();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
 					}
@@ -182,20 +182,41 @@ public class FinancialMainPanel {
 					}
 
 					@Override
-					public void expenseMonthSelected(FinancialFormEvent ev) {
-						// TODO Auto-generated method stub
+					public void expenseMonthSelected(FinancialFormEvent e) {
+						financialTablePanel.setExpenditureData(model.getShop()
+								.getMonthlyOrders(e));
+						financialTablePanel.setTableModel(2);
+						financialTablePanel.refresh();
+						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.appendText("");
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 
 					}
 
 					@Override
-					public void expenseWeekSelected(FinancialFormEvent ev) {
-						// TODO Auto-generated method stub
+					public void expenseWeekSelected(FinancialFormEvent e) {
+						financialTablePanel.setExpenditureData(model.getShop()
+								.getWeeklyOrders(e));
+						financialTablePanel.setTableModel(2);
+						financialTablePanel.refresh();
+						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.appendText("");
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 
 					}
 
 					@Override
-					public void expenseDaySelected(FinancialFormEvent ev) {
-						// TODO Auto-generated method stub
+					public void expenseDaySelected(FinancialFormEvent e) {
+						financialTablePanel.setExpenditureData(model.getShop()
+								.getDailyOrders(e));
+						financialTablePanel.setTableModel(2);
+						financialTablePanel.refresh();
+						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.appendText("");
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 
 					}
 

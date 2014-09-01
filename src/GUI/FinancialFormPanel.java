@@ -27,7 +27,6 @@ public class FinancialFormPanel extends JPanel {
 			submitBtn;
 	private JComboBox dayList, weekList, monthList;
 	private JLabel dayLabel, weekLabel, monthLabel;
-	private CustomerFormListener customerFormListener;
 	private Model model;
 	private FinancialFormListener listener;
 	private Calendar cal;
@@ -388,12 +387,12 @@ public class FinancialFormPanel extends JPanel {
 		dayModel.addElement("Sunday");
 		dayList.setModel(dayModel);
 
-		/*
-		 * DefaultComboBoxModel weekModel = new DefaultComboBoxModel();
-		 * weekModel.addElement("Week1"); weekModel.addElement("Week2");
-		 * weekModel.addElement("Week3"); weekModel.addElement("Week4");
-		 * weekList.setModel(weekModel);
-		 */
+		DefaultComboBoxModel weekModel = new DefaultComboBoxModel();
+		weekModel.addElement("Week1");
+		weekModel.addElement("Week2");
+		weekModel.addElement("Week3");
+		weekModel.addElement("Week4");
+		weekList.setModel(weekModel);
 
 		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
 		monthModel.addElement("January");
@@ -404,8 +403,8 @@ public class FinancialFormPanel extends JPanel {
 		monthModel.addElement("June");
 		monthModel.addElement("July");
 		monthModel.addElement("August");
-		monthModel.addElement("October");
 		monthModel.addElement("September");
+		monthModel.addElement("October");
 		monthModel.addElement("November");
 		monthModel.addElement("December");
 		monthList.setModel(monthModel);
@@ -428,6 +427,16 @@ public class FinancialFormPanel extends JPanel {
 					day = cal.SATURDAY;
 				} else if (dayList.getSelectedItem() == ("Sunday")) {
 					day = cal.SUNDAY;
+				}
+
+				if (weekList.getSelectedItem() == ("Week1")) {
+					week = 1;
+				} else if (weekList.getSelectedItem() == ("Week2")) {
+					week = 2;
+				} else if (weekList.getSelectedItem() == ("Week3")) {
+					week = 3;
+				} else if (weekList.getSelectedItem() == ("Week4")) {
+					week = 4;
 				}
 
 				if (monthList.getSelectedItem() == ("January")) {
@@ -456,12 +465,7 @@ public class FinancialFormPanel extends JPanel {
 					month = cal.DECEMBER;
 				}
 
-				/*
-				 * if (weekList.getSelectedItem()== ("Week 1")){ int week = cal.
-				 * } String month = (String) monthList.getSelectedItem();
-				 */
-
-				FinancialFormEvent ev = new FinancialFormEvent(this, day, month);
+				FinancialFormEvent ev = new FinancialFormEvent(this, day, week,month);
 
 				if (listener != null) {
 					listener.saleDaySelected(ev);
@@ -571,24 +575,59 @@ public class FinancialFormPanel extends JPanel {
 		monthModel.addElement("June");
 		monthModel.addElement("July");
 		monthModel.addElement("August");
-		monthModel.addElement("October");
 		monthModel.addElement("September");
+		monthModel.addElement("October");
 		monthModel.addElement("November");
 		monthModel.addElement("December");
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
 
-		/*
-		 * submitBtn.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { String week = (String)
-		 * weekList.getSelectedItem(); String month = (String)
-		 * monthList.getSelectedItem();
-		 * 
-		 * FinancialFormEvent ev = new FinancialFormEvent(this, week, month);
-		 * 
-		 * if (listener != null) { listener.saleWeekSelected(ev); } } });
-		 */
+		submitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (weekList.getSelectedItem() == ("Week1")) {
+					week = 1;
+				} else if (weekList.getSelectedItem() == ("Week2")) {
+					week = 2;
+				} else if (weekList.getSelectedItem() == ("Week3")) {
+					week = 3;
+				} else if (weekList.getSelectedItem() == ("Week4")) {
+					week = 4;
+				}
+
+				if (monthList.getSelectedItem() == ("January")) {
+					month = cal.JANUARY;
+				} else if (monthList.getSelectedItem() == ("February")) {
+					month = cal.FEBRUARY;
+				} else if (monthList.getSelectedItem() == ("March")) {
+					month = cal.MARCH;
+				} else if (monthList.getSelectedItem() == ("April")) {
+					month = cal.APRIL;
+				} else if (monthList.getSelectedItem() == ("May")) {
+					month = cal.MAY;
+				} else if (monthList.getSelectedItem() == ("June")) {
+					month = cal.JUNE;
+				} else if (monthList.getSelectedItem() == ("July")) {
+					month = cal.JULY;
+				} else if (monthList.getSelectedItem() == ("August")) {
+					month = cal.AUGUST;
+				} else if (monthList.getSelectedItem() == ("September")) {
+					month = cal.SEPTEMBER;
+				} else if (monthList.getSelectedItem() == ("October")) {
+					month = cal.OCTOBER;
+				} else if (monthList.getSelectedItem() == ("November")) {
+					month = cal.NOVEMBER;
+				} else if (monthList.getSelectedItem() == ("December")) {
+					month = cal.DECEMBER;
+				}
+
+				FinancialFormEvent ev = new FinancialFormEvent(this,week,month);
+
+				if (listener != null) {
+					listener.saleWeekSelected(ev);
+				}
+			}
+		});
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -666,24 +705,50 @@ public class FinancialFormPanel extends JPanel {
 		monthModel.addElement("June");
 		monthModel.addElement("July");
 		monthModel.addElement("August");
-		monthModel.addElement("October");
 		monthModel.addElement("September");
+		monthModel.addElement("October");
 		monthModel.addElement("November");
 		monthModel.addElement("December");
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
 
-		/*
-		 * submitBtn.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) {
-		 * 
-		 * String month = (String) monthList.getSelectedItem();
-		 * 
-		 * FinancialFormEvent ev = new FinancialFormEvent(this, month);
-		 * 
-		 * if (listener != null) { listener.saleMonthSelected(ev); } } });
-		 */
+		submitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (monthList.getSelectedItem() == ("January")) {
+					month = cal.JANUARY;
+				} else if (monthList.getSelectedItem() == ("February")) {
+					month = cal.FEBRUARY;
+				} else if (monthList.getSelectedItem() == ("March")) {
+					month = cal.MARCH;
+				} else if (monthList.getSelectedItem() == ("April")) {
+					month = cal.APRIL;
+				} else if (monthList.getSelectedItem() == ("May")) {
+					month = cal.MAY;
+				} else if (monthList.getSelectedItem() == ("June")) {
+					month = cal.JUNE;
+				} else if (monthList.getSelectedItem() == ("July")) {
+					month = cal.JULY;
+				} else if (monthList.getSelectedItem() == ("August")) {
+					month = cal.AUGUST;
+				} else if (monthList.getSelectedItem() == ("September")) {
+					month = cal.SEPTEMBER;
+				} else if (monthList.getSelectedItem() == ("October")) {
+					month = cal.OCTOBER;
+				} else if (monthList.getSelectedItem() == ("November")) {
+					month = cal.NOVEMBER;
+				} else if (monthList.getSelectedItem() == ("December")) {
+					month = cal.DECEMBER;
+				}
+
+				FinancialFormEvent ev = new FinancialFormEvent(this,month);
+
+				if (listener != null) {
+					listener.saleMonthSelected(ev);
+				}
+			}
+		});
+		
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
@@ -764,27 +829,75 @@ public class FinancialFormPanel extends JPanel {
 		monthModel.addElement("June");
 		monthModel.addElement("July");
 		monthModel.addElement("August");
-		monthModel.addElement("October");
 		monthModel.addElement("September");
+		monthModel.addElement("October");
 		monthModel.addElement("November");
 		monthModel.addElement("December");
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
+		
+		submitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (dayList.getSelectedItem() == ("Monday")) {
+					day = cal.MONDAY;
+				} else if (dayList.getSelectedItem() == ("Tuesday")) {
+					day = cal.TUESDAY;
+				} else if (dayList.getSelectedItem() == ("Wednesday")) {
+					day = cal.WEDNESDAY;
+				} else if (dayList.getSelectedItem() == ("Thursday")) {
+					day = cal.THURSDAY;
+				} else if (dayList.getSelectedItem() == ("Friday")) {
+					day = cal.FRIDAY;
+				} else if (dayList.getSelectedItem() == ("Saturday")) {
+					day = cal.SATURDAY;
+				} else if (dayList.getSelectedItem() == ("Sunday")) {
+					day = cal.SUNDAY;
+				}
 
-		// submitBtn.addActionListener(new ActionListener() {
-		// /* public void actionPerformed(ActionEvent e) {
-		// String day = (String) dayList.getSelectedItem();
-		// String week = (String) weekList.getSelectedItem();
-		// String month = (String) monthList.getSelectedItem();
-		//
-		// FinancialFormEvent ev = new FinancialFormEvent(this,day,week,month);
-		//
-		// if(listener != null){
-		// listener.expenseDaySelected(ev);
-		// }
-		// }*/
-		// });
+				if (weekList.getSelectedItem() == ("Week1")) {
+					week = 1;
+				} else if (weekList.getSelectedItem() == ("Week2")) {
+					week = 2;
+				} else if (weekList.getSelectedItem() == ("Week3")) {
+					week = 3;
+				} else if (weekList.getSelectedItem() == ("Week4")) {
+					week = 4;
+				}
+
+				if (monthList.getSelectedItem() == ("January")) {
+					month = cal.JANUARY;
+				} else if (monthList.getSelectedItem() == ("February")) {
+					month = cal.FEBRUARY;
+				} else if (monthList.getSelectedItem() == ("March")) {
+					month = cal.MARCH;
+				} else if (monthList.getSelectedItem() == ("April")) {
+					month = cal.APRIL;
+				} else if (monthList.getSelectedItem() == ("May")) {
+					month = cal.MAY;
+				} else if (monthList.getSelectedItem() == ("June")) {
+					month = cal.JUNE;
+				} else if (monthList.getSelectedItem() == ("July")) {
+					month = cal.JULY;
+				} else if (monthList.getSelectedItem() == ("August")) {
+					month = cal.AUGUST;
+				} else if (monthList.getSelectedItem() == ("September")) {
+					month = cal.SEPTEMBER;
+				} else if (monthList.getSelectedItem() == ("October")) {
+					month = cal.OCTOBER;
+				} else if (monthList.getSelectedItem() == ("November")) {
+					month = cal.NOVEMBER;
+				} else if (monthList.getSelectedItem() == ("December")) {
+					month = cal.DECEMBER;
+				}
+
+				FinancialFormEvent ev = new FinancialFormEvent(this, day, week,month);
+
+				if (listener != null) {
+					listener.expenseDaySelected(ev);
+				}
+			}
+		});
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -888,24 +1001,59 @@ public class FinancialFormPanel extends JPanel {
 		monthModel.addElement("June");
 		monthModel.addElement("July");
 		monthModel.addElement("August");
-		monthModel.addElement("October");
 		monthModel.addElement("September");
+		monthModel.addElement("October");
 		monthModel.addElement("November");
 		monthModel.addElement("December");
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
+		
+		submitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (weekList.getSelectedItem() == ("Week1")) {
+					week = 1;
+				} else if (weekList.getSelectedItem() == ("Week2")) {
+					week = 2;
+				} else if (weekList.getSelectedItem() == ("Week3")) {
+					week = 3;
+				} else if (weekList.getSelectedItem() == ("Week4")) {
+					week = 4;
+				}
 
-		/*
-		 * submitBtn.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { String week = (String)
-		 * weekList.getSelectedItem(); String month = (String)
-		 * monthList.getSelectedItem();
-		 * 
-		 * FinancialFormEvent ev = new FinancialFormEvent(this, week, month);
-		 * 
-		 * if (listener != null) { listener.expenseWeekSelected(ev); } } });
-		 */
+				if (monthList.getSelectedItem() == ("January")) {
+					month = cal.JANUARY;
+				} else if (monthList.getSelectedItem() == ("February")) {
+					month = cal.FEBRUARY;
+				} else if (monthList.getSelectedItem() == ("March")) {
+					month = cal.MARCH;
+				} else if (monthList.getSelectedItem() == ("April")) {
+					month = cal.APRIL;
+				} else if (monthList.getSelectedItem() == ("May")) {
+					month = cal.MAY;
+				} else if (monthList.getSelectedItem() == ("June")) {
+					month = cal.JUNE;
+				} else if (monthList.getSelectedItem() == ("July")) {
+					month = cal.JULY;
+				} else if (monthList.getSelectedItem() == ("August")) {
+					month = cal.AUGUST;
+				} else if (monthList.getSelectedItem() == ("September")) {
+					month = cal.SEPTEMBER;
+				} else if (monthList.getSelectedItem() == ("October")) {
+					month = cal.OCTOBER;
+				} else if (monthList.getSelectedItem() == ("November")) {
+					month = cal.NOVEMBER;
+				} else if (monthList.getSelectedItem() == ("December")) {
+					month = cal.DECEMBER;
+				}
+
+				FinancialFormEvent ev = new FinancialFormEvent(this,week,month);
+
+				if (listener != null) {
+					listener.expenseWeekSelected(ev);
+				}
+			}
+		});
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -983,24 +1131,49 @@ public class FinancialFormPanel extends JPanel {
 		monthModel.addElement("June");
 		monthModel.addElement("July");
 		monthModel.addElement("August");
-		monthModel.addElement("October");
 		monthModel.addElement("September");
+		monthModel.addElement("October");
 		monthModel.addElement("November");
 		monthModel.addElement("December");
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
+		
+		submitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (monthList.getSelectedItem() == ("January")) {
+					month = cal.JANUARY;
+				} else if (monthList.getSelectedItem() == ("February")) {
+					month = cal.FEBRUARY;
+				} else if (monthList.getSelectedItem() == ("March")) {
+					month = cal.MARCH;
+				} else if (monthList.getSelectedItem() == ("April")) {
+					month = cal.APRIL;
+				} else if (monthList.getSelectedItem() == ("May")) {
+					month = cal.MAY;
+				} else if (monthList.getSelectedItem() == ("June")) {
+					month = cal.JUNE;
+				} else if (monthList.getSelectedItem() == ("July")) {
+					month = cal.JULY;
+				} else if (monthList.getSelectedItem() == ("August")) {
+					month = cal.AUGUST;
+				} else if (monthList.getSelectedItem() == ("September")) {
+					month = cal.SEPTEMBER;
+				} else if (monthList.getSelectedItem() == ("October")) {
+					month = cal.OCTOBER;
+				} else if (monthList.getSelectedItem() == ("November")) {
+					month = cal.NOVEMBER;
+				} else if (monthList.getSelectedItem() == ("December")) {
+					month = cal.DECEMBER;
+				}
 
-		/*
-		 * submitBtn.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) {
-		 * 
-		 * String month = (String) monthList.getSelectedItem();
-		 * 
-		 * FinancialFormEvent ev = new FinancialFormEvent(this, month);
-		 * 
-		 * if (listener != null) { listener.expenseMonthSelected(ev); } } });
-		 */
+				FinancialFormEvent ev = new FinancialFormEvent(this,month);
+
+				if (listener != null) {
+					listener.expenseMonthSelected(ev);
+				}
+			}
+		});
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -1082,25 +1255,75 @@ public class FinancialFormPanel extends JPanel {
 		monthModel.addElement("June");
 		monthModel.addElement("July");
 		monthModel.addElement("August");
-		monthModel.addElement("October");
 		monthModel.addElement("September");
+		monthModel.addElement("October");
 		monthModel.addElement("November");
 		monthModel.addElement("December");
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
+		
+		submitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (dayList.getSelectedItem() == ("Monday")) {
+					day = cal.MONDAY;
+				} else if (dayList.getSelectedItem() == ("Tuesday")) {
+					day = cal.TUESDAY;
+				} else if (dayList.getSelectedItem() == ("Wednesday")) {
+					day = cal.WEDNESDAY;
+				} else if (dayList.getSelectedItem() == ("Thursday")) {
+					day = cal.THURSDAY;
+				} else if (dayList.getSelectedItem() == ("Friday")) {
+					day = cal.FRIDAY;
+				} else if (dayList.getSelectedItem() == ("Saturday")) {
+					day = cal.SATURDAY;
+				} else if (dayList.getSelectedItem() == ("Sunday")) {
+					day = cal.SUNDAY;
+				}
 
-		/*
-		 * submitBtn.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { String day = (String)
-		 * dayList.getSelectedItem(); String week = (String)
-		 * weekList.getSelectedItem(); String month = (String)
-		 * monthList.getSelectedItem();
-		 * 
-		 * FinancialFormEvent ev = new FinancialFormEvent(this,day,week,month);
-		 * 
-		 * if(listener != null){ listener.profitDaySelected(ev); } } });
-		 */
+				if (weekList.getSelectedItem() == ("Week1")) {
+					week = 1;
+				} else if (weekList.getSelectedItem() == ("Week2")) {
+					week = 2;
+				} else if (weekList.getSelectedItem() == ("Week3")) {
+					week = 3;
+				} else if (weekList.getSelectedItem() == ("Week4")) {
+					week = 4;
+				}
+
+				if (monthList.getSelectedItem() == ("January")) {
+					month = cal.JANUARY;
+				} else if (monthList.getSelectedItem() == ("February")) {
+					month = cal.FEBRUARY;
+				} else if (monthList.getSelectedItem() == ("March")) {
+					month = cal.MARCH;
+				} else if (monthList.getSelectedItem() == ("April")) {
+					month = cal.APRIL;
+				} else if (monthList.getSelectedItem() == ("May")) {
+					month = cal.MAY;
+				} else if (monthList.getSelectedItem() == ("June")) {
+					month = cal.JUNE;
+				} else if (monthList.getSelectedItem() == ("July")) {
+					month = cal.JULY;
+				} else if (monthList.getSelectedItem() == ("August")) {
+					month = cal.AUGUST;
+				} else if (monthList.getSelectedItem() == ("September")) {
+					month = cal.SEPTEMBER;
+				} else if (monthList.getSelectedItem() == ("October")) {
+					month = cal.OCTOBER;
+				} else if (monthList.getSelectedItem() == ("November")) {
+					month = cal.NOVEMBER;
+				} else if (monthList.getSelectedItem() == ("December")) {
+					month = cal.DECEMBER;
+				}
+
+				FinancialFormEvent ev = new FinancialFormEvent(this, day, week,month);
+
+				if (listener != null) {
+					listener.profitDaySelected(ev);
+				}
+			}
+		});
 
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -1204,24 +1427,60 @@ public class FinancialFormPanel extends JPanel {
 		monthModel.addElement("June");
 		monthModel.addElement("July");
 		monthModel.addElement("August");
-		monthModel.addElement("October");
 		monthModel.addElement("September");
+		monthModel.addElement("October");
 		monthModel.addElement("November");
 		monthModel.addElement("December");
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
+		
+		submitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (weekList.getSelectedItem() == ("Week1")) {
+					week = 1;
+				} else if (weekList.getSelectedItem() == ("Week2")) {
+					week = 2;
+				} else if (weekList.getSelectedItem() == ("Week3")) {
+					week = 3;
+				} else if (weekList.getSelectedItem() == ("Week4")) {
+					week = 4;
+				}
 
-		/*
-		 * submitBtn.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { String week = (String)
-		 * weekList.getSelectedItem(); String month = (String)
-		 * monthList.getSelectedItem();
-		 * 
-		 * FinancialFormEvent ev = new FinancialFormEvent(this, week, month);
-		 * 
-		 * if (listener != null) { listener.saleWeekSelected(ev); } } });
-		 */
+				if (monthList.getSelectedItem() == ("January")) {
+					month = cal.JANUARY;
+				} else if (monthList.getSelectedItem() == ("February")) {
+					month = cal.FEBRUARY;
+				} else if (monthList.getSelectedItem() == ("March")) {
+					month = cal.MARCH;
+				} else if (monthList.getSelectedItem() == ("April")) {
+					month = cal.APRIL;
+				} else if (monthList.getSelectedItem() == ("May")) {
+					month = cal.MAY;
+				} else if (monthList.getSelectedItem() == ("June")) {
+					month = cal.JUNE;
+				} else if (monthList.getSelectedItem() == ("July")) {
+					month = cal.JULY;
+				} else if (monthList.getSelectedItem() == ("August")) {
+					month = cal.AUGUST;
+				} else if (monthList.getSelectedItem() == ("September")) {
+					month = cal.SEPTEMBER;
+				} else if (monthList.getSelectedItem() == ("October")) {
+					month = cal.OCTOBER;
+				} else if (monthList.getSelectedItem() == ("November")) {
+					month = cal.NOVEMBER;
+				} else if (monthList.getSelectedItem() == ("December")) {
+					month = cal.DECEMBER;
+				}
+
+				FinancialFormEvent ev = new FinancialFormEvent(this,week,month);
+
+				if (listener != null) {
+					listener.saleWeekSelected(ev);
+				}
+			}
+		});
+
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
@@ -1278,7 +1537,7 @@ public class FinancialFormPanel extends JPanel {
 		add(submitBtn, gc);
 	}
 
-	// ////////////////////MonthlySale////////////////////////
+	// ////////////////////MonthlyProfit////////////////////////
 
 	public void chooseMonthProfitPanel() {
 		Dimension dim = getPreferredSize();
@@ -1298,24 +1557,50 @@ public class FinancialFormPanel extends JPanel {
 		monthModel.addElement("June");
 		monthModel.addElement("July");
 		monthModel.addElement("August");
-		monthModel.addElement("October");
 		monthModel.addElement("September");
+		monthModel.addElement("October");
 		monthModel.addElement("November");
 		monthModel.addElement("December");
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
 
-		/*
-		 * submitBtn.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) {
-		 * 
-		 * String month = (String) monthList.getSelectedItem();
-		 * 
-		 * FinancialFormEvent ev = new FinancialFormEvent(this, month);
-		 * 
-		 * if (listener != null) { listener.profitMonthSelected(ev); } } });
-		 */
+		submitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (monthList.getSelectedItem() == ("January")) {
+					month = cal.JANUARY;
+				} else if (monthList.getSelectedItem() == ("February")) {
+					month = cal.FEBRUARY;
+				} else if (monthList.getSelectedItem() == ("March")) {
+					month = cal.MARCH;
+				} else if (monthList.getSelectedItem() == ("April")) {
+					month = cal.APRIL;
+				} else if (monthList.getSelectedItem() == ("May")) {
+					month = cal.MAY;
+				} else if (monthList.getSelectedItem() == ("June")) {
+					month = cal.JUNE;
+				} else if (monthList.getSelectedItem() == ("July")) {
+					month = cal.JULY;
+				} else if (monthList.getSelectedItem() == ("August")) {
+					month = cal.AUGUST;
+				} else if (monthList.getSelectedItem() == ("September")) {
+					month = cal.SEPTEMBER;
+				} else if (monthList.getSelectedItem() == ("October")) {
+					month = cal.OCTOBER;
+				} else if (monthList.getSelectedItem() == ("November")) {
+					month = cal.NOVEMBER;
+				} else if (monthList.getSelectedItem() == ("December")) {
+					month = cal.DECEMBER;
+				}
+
+				FinancialFormEvent ev = new FinancialFormEvent(this,month);
+
+				if (listener != null) {
+					listener.profitMonthSelected(ev);
+				}
+			}
+		});
+		
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));

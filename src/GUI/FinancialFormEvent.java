@@ -4,18 +4,11 @@ import java.util.EventObject;
 
 public class FinancialFormEvent extends EventObject {
 	private int day;
-	private String week;
+	private int week;
 	private int month;
 
 	public FinancialFormEvent(Object source) {
 		super(source);
-	}
-
-	public FinancialFormEvent(Object source, int day, int month) {
-		super(source);
-
-		this.day = day;
-		this.month = month;
 	}
 
 	public FinancialFormEvent(Object source, int month) {
@@ -24,14 +17,14 @@ public class FinancialFormEvent extends EventObject {
 		this.month = month;
 	}
 
-	public FinancialFormEvent(Object source, String week, int month) {
+	public FinancialFormEvent(Object source, int week, int month) {
 		super(source);
 
 		this.week = week;
 		this.month = month;
 	}
 
-	public FinancialFormEvent(Object source, int day, String week, int month) {
+	public FinancialFormEvent(Object source, int day, int week, int month) {
 		super(source);
 
 		this.day = day;
@@ -47,11 +40,11 @@ public class FinancialFormEvent extends EventObject {
 		this.day = day;
 	}
 
-	public String getWeek() {
+	public int getWeek() {
 		return week;
 	}
 
-	public void setWeek(String week) {
+	public void setWeek(int week) {
 		this.week = week;
 	}
 
