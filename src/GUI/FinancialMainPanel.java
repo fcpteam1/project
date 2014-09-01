@@ -2,13 +2,10 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.JPanel;
 
 import model.Model;
-import model.Order;
 
 public class FinancialMainPanel {
 	private JPanel mainPanel;
@@ -28,6 +25,14 @@ public class FinancialMainPanel {
 
 		financialFormPanel
 				.setFinancialFormListener(new FinancialFormListener() {
+
+					@Override
+					public void allSales() {
+						financialTablePanel.setSaleData(model.getShop()
+								.getSales());
+						financialTablePanel.setTableModel(1);
+						financialTablePanel.refresh();
+					}
 
 					@Override
 					public void todaysSales() {
@@ -54,74 +59,94 @@ public class FinancialMainPanel {
 					}
 
 					@Override
-					public void todaysExpenses() {
-						ArrayList<Order> orders = new ArrayList<Order>();
-						Date today = new Date();
-						int day = today.getDay();
-						int month = today.getMonth();
-						int year = today.getYear();
-						for (Order order : model.getShop().getOrders()) {
-							if (order.getDate().getDay() == day
-									&& order.getDate().getMonth() == month
-									&& order.getDate().getYear() == year) {
-								orders.add(order);
-								System.out.println("added");
-							}
-						}
-						financialFormPanel.removeAll();
-						financialFormPanel.ExpendituresFormPanel();
-						financialTablePanel.setExpenditureData(orders);
+					public void allExpenses() {
+						financialTablePanel.setExpenditureData(model.getShop()
+								.getOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
-						financialFormPanel.validate();
-						financialFormPanel.repaint();
+					}
+
+					@Override
+					public void todaysExpenses() {
+						financialTablePanel.setExpenditureData(model.getShop()
+								.getTodayOrders());
+						financialTablePanel.setTableModel(2);
+						financialTablePanel.refresh();
+						/*
+						 * ArrayList<Order> orders = new ArrayList<Order>();
+						 * Date today = new Date(); int day = today.getDay();
+						 * int month = today.getMonth(); int year =
+						 * today.getYear(); for (Order order :
+						 * model.getShop().getOrders()) { if
+						 * (order.getDate().getDay() == day &&
+						 * order.getDate().getMonth() == month &&
+						 * order.getDate().getYear() == year) {
+						 * orders.add(order); System.out.println("added"); } }
+						 * financialFormPanel.removeAll();
+						 * financialFormPanel.ExpendituresFormPanel();
+						 * financialTablePanel.setExpenditureData(orders);
+						 * financialTablePanel.setTableModel(2);
+						 * financialTablePanel.refresh();
+						 * financialFormPanel.validate();
+						 * financialFormPanel.repaint();
+						 */
 					}
 
 					@Override
 					public void thisWeeksExpenses() {
-						ArrayList<Order> orders = new ArrayList<Order>();
-						Date today = new Date();
-
-						int day = today.getDay();
-						int month = today.getMonth();
-						int year = today.getYear();
-						for (Order order : model.getShop().getOrders()) {
-							if (order.getDate().getDay() == day
-									&& order.getDate().getMonth() == month
-									&& order.getDate().getYear() == year) {
-								orders.add(order);
-								System.out.println("added");
-							}
-						}
-						financialFormPanel.removeAll();
-						financialFormPanel.ExpendituresFormPanel();
-						financialTablePanel.setExpenditureData(orders);
+						financialTablePanel.setExpenditureData(model.getShop()
+								.getWeeklyOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
-						financialFormPanel.validate();
-						financialFormPanel.repaint();
+						/*
+						 * ArrayList<Order> orders = new ArrayList<Order>();
+						 * Date today = new Date();
+						 * 
+						 * int day = today.getDay(); int month =
+						 * today.getMonth(); int year = today.getYear(); for
+						 * (Order order : model.getShop().getOrders()) { if
+						 * (order.getDate().getDay() == day &&
+						 * order.getDate().getMonth() == month &&
+						 * order.getDate().getYear() == year) {
+						 * orders.add(order); System.out.println("added"); } }
+						 * financialFormPanel.removeAll();
+						 * financialFormPanel.ExpendituresFormPanel();
+						 * financialTablePanel.setExpenditureData(orders);
+						 * financialTablePanel.setTableModel(2);
+						 * financialTablePanel.refresh();
+						 * financialFormPanel.validate();
+						 * financialFormPanel.repaint();
+						 */
 					}
 
 					@Override
 					public void thisMonthsExpenses() {
-						ArrayList<Order> orders = new ArrayList<Order>();
-						Date today = new Date();
-						int month = today.getMonth();
-						int year = today.getYear();
-						for (Order order : model.getShop().getOrders()) {
-							if (order.getDate().getMonth() == month
-									&& order.getDate().getYear() == year) {
-								orders.add(order);
-								System.out.println("added");
-							}
-						}
-						financialFormPanel.removeAll();
-						financialFormPanel.ExpendituresFormPanel();
-						financialTablePanel.setExpenditureData(orders);
+						financialTablePanel.setExpenditureData(model.getShop()
+								.getMonthlyOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
-						financialFormPanel.validate();
-						financialFormPanel.repaint();
+						/*
+						 * ArrayList<Order> orders = new ArrayList<Order>();
+						 * Date today = new Date(); int month =
+						 * today.getMonth(); int year = today.getYear(); for
+						 * (Order order : model.getShop().getOrders()) { if
+						 * (order.getDate().getMonth() == month &&
+						 * order.getDate().getYear() == year) {
+						 * orders.add(order); System.out.println("added"); } }
+						 * financialFormPanel.removeAll();
+						 * financialFormPanel.ExpendituresFormPanel();
+						 * financialTablePanel.setExpenditureData(orders);
+						 * financialTablePanel.setTableModel(2);
+						 * financialTablePanel.refresh();
+						 * financialFormPanel.validate();
+						 * financialFormPanel.repaint();
+						 */
+					}
+
+					@Override
+					public void allProfits() {
+						// TODO Auto-generated method stub
+
 					}
 
 					@Override
@@ -145,7 +170,6 @@ public class FinancialMainPanel {
 				});
 
 		financialTablePanel.setFormPanel(financialFormPanel);
-		financialTablePanel.setTableModel(1);
 		financialTablePanel.setSaleData(model.getShop().getSales());
 		financialTablePanel.setExpenditureData(model.getShop().getOrders());
 		financialTablePanel.setProfitData(model.getShop().getOrders(), model

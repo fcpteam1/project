@@ -20,6 +20,9 @@ import GUI.UserFormPanel;
 
 public class Shop {
 
+	private ArrayList<Order> todayOrders = new ArrayList<Order>();
+	private ArrayList<Order> weekOrders = new ArrayList<Order>();
+	private ArrayList<Order> monthOrders = new ArrayList<Order>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private ArrayList<Stock> stocks = new ArrayList<Stock>();
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
@@ -123,13 +126,12 @@ public class Shop {
 		loadSales(saleFile);
 		loadOrders(orderFile);
 
-		/*for (Sale s : sales) {
-			for (Stock stock : s.getStocks()) {
-				System.out.println("Name " + stock.getName() + "  Quantity "
-						+ stock.getQuantity());
-			}
-			System.out.println(s.getCustomer() + " : From sales.ser");
-		}*/
+		/*
+		 * for (Sale s : sales) { for (Stock stock : s.getStocks()) {
+		 * System.out.println("Name " + stock.getName() + "  Quantity " +
+		 * stock.getQuantity()); } System.out.println(s.getCustomer() +
+		 * " : From sales.ser"); }
+		 */
 		/*
 		 * for (Order o : orders) System.out.println(o.getSupplier() +
 		 * " : From orders.ser"); for (Customer c : customers)
@@ -410,6 +412,55 @@ public class Shop {
 
 	public ArrayList<Order> getOrders() {
 		return orders;
+	}
+
+	public ArrayList<Order> getTodayOrders() {
+		Calendar today = Calendar.getInstance();
+		todayOrders.clear();
+		for (Order order : orders) {
+			Calendar orderDate = dateToCalender(order.getDate());
+
+			if ((orderDate.get(Calendar.DATE) == today.get(Calendar.DATE))
+					&& (orderDate.get(Calendar.MONTH) == today
+							.get(Calendar.MONTH))
+					&& (orderDate.get(Calendar.YEAR) == today
+							.get(Calendar.YEAR))) {
+				todayOrders.add(order);
+			}
+		}
+		return todayOrders;
+	}
+
+	public ArrayList<Order> getMonthlyOrders() {
+		Calendar today = Calendar.getInstance();
+		monthOrders.clear();
+		for (Order order : orders) {
+			Calendar orderDate = dateToCalender(order.getDate());
+
+			if ((orderDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
+					&& (orderDate.get(Calendar.YEAR) == today
+							.get(Calendar.YEAR))) {
+				monthOrders.add(order);
+			}
+		}
+		return monthOrders;
+	}
+
+	public ArrayList<Order> getWeeklyOrders() {
+		Calendar today = Calendar.getInstance();
+		weekOrders.clear();
+		for (Order order : orders) {
+			Calendar orderDate = dateToCalender(order.getDate());
+
+			if ((orderDate.get(Calendar.DATE) == today.get(Calendar.DATE))
+					&& (orderDate.get(Calendar.MONTH) == today
+							.get(Calendar.MONTH))
+					&& (orderDate.get(Calendar.YEAR) == today
+							.get(Calendar.YEAR))) {
+				weekOrders.add(order);
+			}
+		}
+		return weekOrders;
 	}
 
 	public ArrayList<Stock> getStock() {
