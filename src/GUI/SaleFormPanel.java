@@ -248,11 +248,6 @@ public class SaleFormPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 
-		for (Stock stock : saleStockListToEdit) {
-			System.out.println("PRINITING FROM EDITSALEpANEL NAME "
-					+ stock.getName() + "  QUANTITY " + stock.getQuantity());
-		}
-
 		for (int i = 0; i < size; i++) {
 			stockName[i] = new JLabel(stocks.get(i).getName());
 			customerPrice[i] = new JLabel(": " + "\u20ac"
