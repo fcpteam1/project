@@ -1,7 +1,6 @@
 package model;
 
 import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Invoice implements java.io.Serializable {
@@ -12,14 +11,6 @@ public class Invoice implements java.io.Serializable {
 
 	public Invoice() {
 		this.totalPrice = 0;
-
-		Calendar c = Calendar.getInstance();
-		c.add(Calendar.YEAR, -1);
-		c.set(Calendar.WEEK_OF_YEAR,
-				Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) - 1);
-
-		date = c.getTime();
-
 	}
 
 	public double getTotalPrice() {
