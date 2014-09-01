@@ -48,14 +48,8 @@ public class SaleMainPanel extends JPanel {
 			@Override
 			public void rowEdited(int row) {
 				formPanel.setSaleToEdit(model.getShop().getSales().get(row));
-				System.out.println("CUSTOMER NAME FROM SALE "
-						+ model.getShop().getSales().get(row).getCustomer()
-								.getName());
 				formPanel.setSaleStockListToEdit(model.getShop().getSales()
 						.get(row).getStocks());
-				System.out.println("PRINT OUT FROM ROWEDITED"
-						+ (model.getShop().getSales().get(row).getStocks()
-								.get(1).getName()));
 				formPanel.editSaleSelectionPanel();
 				tablePanel.refresh();
 			}
@@ -83,8 +77,6 @@ public class SaleMainPanel extends JPanel {
 			public void createSaleOccurred(SaleFormEvent e) {
 
 				model.getShop().createSale(e);
-				System.out.println(model.getShop().getSales().get(0)
-						.getTotalPrice());
 				tablePanel.refresh();
 				ArrayList<Stock> stockItems = e.getStockList();
 				for (int i = 0; i < stockItems.size(); i++) {

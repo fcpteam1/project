@@ -123,13 +123,13 @@ public class Shop {
 		loadSales(saleFile);
 		loadOrders(orderFile);
 
-		for (Sale s : sales) {
+		/*for (Sale s : sales) {
 			for (Stock stock : s.getStocks()) {
 				System.out.println("Name " + stock.getName() + "  Quantity "
 						+ stock.getQuantity());
 			}
 			System.out.println(s.getCustomer() + " : From sales.ser");
-		}
+		}*/
 		/*
 		 * for (Order o : orders) System.out.println(o.getSupplier() +
 		 * " : From orders.ser"); for (Customer c : customers)
