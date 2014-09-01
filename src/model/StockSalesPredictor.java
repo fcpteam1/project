@@ -9,9 +9,15 @@ public class StockSalesPredictor {
 	Calendar calendar;
 	Calendar today, yesterday, twoDaysAgo, threeDaysAgo, fourDaysAgo,
 			fiveDaysAgo, sixDaysAgo;
+	Calendar weekBeginning, weekEnding, lastWeekBeginning,
+			twoWeeksAgoBeginning, threeWeeksAgoBeginning, lastWeekEnding,
+			twoWeeksAgoEnding, threeWeeksAgoEnding;
 	Calendar lastWeek, twoWeeksAgo, threeWeeksAgo;
 	Calendar lastMonth, twoMonthsAgo, threeMonthsAgo;
-	Calendar thisWeekLastYear, lastWeekLastYear, nextWeekLastYear;
+	Calendar thisWeekLastYear, lastWeekLastYear, nextWeekLastYear,
+			thisWeekLastYearBeginning, lastWeekLastYearBeginning,
+			nextWeekLastYearBeginning, thisWeekLastYearEnding,
+			lastWeekLastYearEnding, nextWeekLastYearEnding;
 	Calendar thisMonthLastYear, lastMonthLastYear, nextMonthLastYear;
 
 	double thisWeekSales, lastWeekSales, twoWeekSales, threeWeekSales;
@@ -60,59 +66,148 @@ public class StockSalesPredictor {
 
 		calendar = Calendar.getInstance();
 		today = Calendar.getInstance();
+		int day = calendar.get(Calendar.DAY_OF_WEEK);
+		weekBeginning = Calendar.getInstance();
 
-		lastWeek = Calendar.getInstance();
-		twoWeeksAgo = Calendar.getInstance();
-		threeWeeksAgo = Calendar.getInstance();
+		weekBeginning.add(Calendar.DATE, -(day) + 2);
+		weekBeginning.set(Calendar.HOUR, 0);
+		weekEnding = Calendar.getInstance();
+		weekEnding.add(Calendar.DATE, -(day) + 8);
+		weekEnding.set(Calendar.HOUR, 23);
+		// lastWeek = Calendar.getInstance();
+		// twoWeeksAgo = Calendar.getInstance();
+		// threeWeeksAgo = Calendar.getInstance();
+		lastWeekBeginning = Calendar.getInstance();
+		twoWeeksAgoBeginning = Calendar.getInstance();
+		threeWeeksAgoBeginning = Calendar.getInstance();
+		lastWeekEnding = Calendar.getInstance();
+		twoWeeksAgoEnding = Calendar.getInstance();
+		threeWeeksAgoEnding = Calendar.getInstance();
+
 		lastMonth = Calendar.getInstance();
 		twoMonthsAgo = Calendar.getInstance();
 		threeMonthsAgo = Calendar.getInstance();
 
-		thisWeekLastYear = Calendar.getInstance();
-		lastWeekLastYear = Calendar.getInstance();
-		nextWeekLastYear = Calendar.getInstance();
+		// thisWeekLastYear = Calendar.getInstance();
+		// lastWeekLastYear = Calendar.getInstance();
+		// nextWeekLastYear = Calendar.getInstance();
+
+		thisWeekLastYearBeginning = Calendar.getInstance();
+		lastWeekLastYearBeginning = Calendar.getInstance();
+		nextWeekLastYearBeginning = Calendar.getInstance();
+
+		thisWeekLastYearEnding = Calendar.getInstance();
+		lastWeekLastYearEnding = Calendar.getInstance();
+		nextWeekLastYearEnding = Calendar.getInstance();
+
 		thisMonthLastYear = Calendar.getInstance();
 		lastMonthLastYear = Calendar.getInstance();
 		nextMonthLastYear = Calendar.getInstance();
 
-		lastWeek.add(Calendar.WEEK_OF_YEAR, -1);
-		twoWeeksAgo.add(Calendar.WEEK_OF_YEAR, -2);
-		threeWeeksAgo.add(Calendar.WEEK_OF_YEAR, -3);
+		// lastWeek.add(Calendar.WEEK_OF_YEAR, -1);
+		// twoWeeksAgo.add(Calendar.WEEK_OF_YEAR, -2);
+		// threeWeeksAgo.add(Calendar.WEEK_OF_YEAR, -3);
+
+		lastWeekBeginning.add(Calendar.DATE, -(day) + 2 - 7);
+		lastWeekBeginning.set(Calendar.HOUR, 0);
+		twoWeeksAgoBeginning.add(Calendar.DATE, -(day) + 2 - 14);
+		twoWeeksAgoBeginning.set(Calendar.HOUR, 0);
+		threeWeeksAgoBeginning.add(Calendar.DATE, -(day) + 2 - 21);
+		threeWeeksAgoBeginning.set(Calendar.HOUR, 0);
+
+		lastWeekEnding.add(Calendar.DATE, -(day) + 8 - 7);
+		lastWeekEnding.set(Calendar.HOUR, 23);
+		twoWeeksAgoEnding.add(Calendar.DATE, -(day) + 8 - 14);
+		twoWeeksAgoEnding.set(Calendar.HOUR, 23);
+		threeWeeksAgoEnding.add(Calendar.DATE, -(day) + 8 - 21);
+		threeWeeksAgoEnding.set(Calendar.HOUR, 23);
+
 		lastMonth.add(Calendar.MONTH, -1);
 		twoMonthsAgo.add(Calendar.MONTH, -2);
 		threeMonthsAgo.add(Calendar.MONTH, -3);
 
-		thisWeekLastYear.add(Calendar.YEAR, -1);
-		thisWeekLastYear.set(Calendar.WEEK_OF_YEAR,
+		thisWeekLastYearBeginning.add(Calendar.YEAR, -1);
+		thisWeekLastYearBeginning.set(Calendar.WEEK_OF_YEAR,
 				calendar.get(Calendar.WEEK_OF_YEAR));
-		lastWeekLastYear.add(Calendar.YEAR, -1);
-		lastWeekLastYear.set(Calendar.WEEK_OF_YEAR,
+		thisWeekLastYearBeginning.add(Calendar.DATE,
+				-(thisWeekLastYearBeginning.get(Calendar.DAY_OF_WEEK)) + 2);
+		thisWeekLastYearBeginning.set(Calendar.HOUR, 0);
+
+		thisWeekLastYearEnding.add(Calendar.YEAR, -1);
+		thisWeekLastYearEnding.set(Calendar.WEEK_OF_YEAR,
+				calendar.get(Calendar.WEEK_OF_YEAR));
+		thisWeekLastYearEnding.add(Calendar.DATE,
+				-(thisWeekLastYearEnding.get(Calendar.DAY_OF_WEEK)) + 8);
+		thisWeekLastYearEnding.set(Calendar.HOUR, 23);
+
+		lastWeekLastYearBeginning.add(Calendar.YEAR, -1);
+		lastWeekLastYearBeginning.set(Calendar.WEEK_OF_YEAR,
 				calendar.get(Calendar.WEEK_OF_YEAR) - 1);
+		lastWeekLastYearBeginning.add(Calendar.DATE,
+				-(lastWeekLastYearBeginning.get(Calendar.DAY_OF_WEEK)) + 2);
+		lastWeekLastYearBeginning.set(Calendar.HOUR, 0);
+
+		lastWeekLastYearEnding.add(Calendar.YEAR, -1);
+		lastWeekLastYearEnding.set(Calendar.WEEK_OF_YEAR,
+				calendar.get(Calendar.WEEK_OF_YEAR) - 1);
+		lastWeekLastYearEnding.add(Calendar.DATE,
+				-(lastWeekLastYearEnding.get(Calendar.DAY_OF_WEEK)) + 8);
+		lastWeekLastYearEnding.set(Calendar.HOUR, 23);
+
 		thisMonthLastYear.add(Calendar.YEAR, -1);
 		lastMonthLastYear.add(Calendar.YEAR, -1);
 		lastMonthLastYear.add(Calendar.MONTH, -1);
 
-		nextWeekLastYear.add(Calendar.YEAR, -1);
-		nextWeekLastYear.set(Calendar.WEEK_OF_YEAR,
-				Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
-		nextWeekLastYear.add(Calendar.WEEK_OF_YEAR, 1);
+		nextWeekLastYearBeginning.add(Calendar.YEAR, -1);
+		nextWeekLastYearBeginning.set(Calendar.WEEK_OF_YEAR,
+				calendar.get(Calendar.WEEK_OF_YEAR) + 1);
+		nextWeekLastYearBeginning.add(Calendar.DATE,
+				-(nextWeekLastYearBeginning.get(Calendar.DAY_OF_WEEK)) + 2);
+		nextWeekLastYearBeginning.set(Calendar.HOUR, 0);
+
+		nextWeekLastYearEnding.add(Calendar.YEAR, -1);
+		nextWeekLastYearEnding.set(Calendar.WEEK_OF_YEAR,
+				calendar.get(Calendar.WEEK_OF_YEAR) + 1);
+		nextWeekLastYearEnding.add(Calendar.DATE,
+				-(nextWeekLastYearEnding.get(Calendar.DAY_OF_WEEK)) + 8);
+		nextWeekLastYearEnding.set(Calendar.HOUR, 23);
+
+		// nextWeekLastYear.add(Calendar.WEEK_OF_YEAR, 1);
 		nextMonthLastYear.add(Calendar.YEAR, -1);
 		nextMonthLastYear.add(Calendar.MONTH, 1);
 
-		System.out.println("This week" + calendar.getTime());
-		System.out.println("Last week" + lastWeek.getTime());
-		System.out.println("2 weeks ago " + twoWeeksAgo.getTime());
-		System.out.println("3 week ago" + threeWeeksAgo.getTime());
+		// System.out.println("This week" + calendar.getTime());
+		System.out.println("This week begiing " + weekBeginning.getTime());
+		System.out.println("This week ending " + weekEnding.getTime());
+		// System.out.println("Last week" + lastWeek.getTime());
+		System.out.println("last week begiing " + lastWeekBeginning.getTime());
+		System.out.println("last week ending " + lastWeekEnding.getTime());
+		// System.out.println("2 weeks ago " + twoWeeksAgo.getTime());
+		System.out.println("2 week begiing " + twoWeeksAgoBeginning.getTime());
+		System.out.println("2 week ending " + twoWeeksAgoEnding.getTime());
+		// System.out.println("3 week ago" + threeWeeksAgo.getTime());
+		System.out
+				.println("3 week begiing " + threeWeeksAgoBeginning.getTime());
+		System.out.println("3 week ending " + threeWeeksAgoEnding.getTime());
 		System.out.println("Last month" + lastMonth.getTime());
-		System.out.println("2 week ago" + twoMonthsAgo.getTime());
-		System.out.println("3 week ago" + threeMonthsAgo.getTime());
-		System.out.println("this week last year" + thisWeekLastYear.getTime());
-		System.out.println("Last week last year" + lastWeekLastYear.getTime());
+		System.out.println("2 month ago" + twoMonthsAgo.getTime());
+		System.out.println("3 month ago" + threeMonthsAgo.getTime());
+		System.out.println("this week last year beginning"
+				+ thisWeekLastYearBeginning.getTime());
+		System.out.println("this week last year ending "
+				+ thisWeekLastYearEnding.getTime());
+		System.out.println("Last week last year beginning"
+				+ lastWeekLastYearBeginning.getTime());
+		System.out.println("Last week last year ending "
+				+ lastWeekLastYearEnding.getTime());
 		System.out
 				.println("this month last year" + thisMonthLastYear.getTime());
 		System.out
 				.println("Last month last year" + lastMonthLastYear.getTime());
-		System.out.println("next week last year" + nextWeekLastYear.getTime());
+		System.out.println("next week last year beginning"
+				+ nextWeekLastYearBeginning.getTime());
+		System.out.println("next week last year ending "
+				+ nextWeekLastYearEnding.getTime());
 		System.out
 				.println("next month last year" + nextMonthLastYear.getTime());
 
@@ -120,31 +215,23 @@ public class StockSalesPredictor {
 
 			Calendar saleDate = this.dateToCalender(sale.getDate());
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == calendar
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == calendar
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(weekBeginning))
+					&& (saleDate.before(weekEnding))) {
 				thisWeekSales += sale.getTotalPrice();
 			}
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == lastWeek
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == lastWeek
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(lastWeekBeginning))
+					&& (saleDate.before(lastWeekEnding))) {
 				lastWeekSales += sale.getTotalPrice();
 			}
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == twoWeeksAgo
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == twoWeeksAgo
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(twoWeeksAgoBeginning))
+					&& (saleDate.before(twoWeeksAgoEnding))) {
 				twoWeekSales += sale.getTotalPrice();
 			}
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == threeWeeksAgo
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == threeWeeksAgo
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(threeWeeksAgoBeginning))
+					&& (saleDate.before(threeWeeksAgoEnding))) {
 				threeWeekSales += sale.getTotalPrice();
 			}
 
@@ -174,23 +261,17 @@ public class StockSalesPredictor {
 				threeMonthSales += sale.getTotalPrice();
 			}
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == nextWeekLastYear
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == nextWeekLastYear
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(nextWeekLastYearBeginning))
+					&& (saleDate.before(nextWeekLastYearEnding))) {
 				nextWeekLastYearSales += sale.getTotalPrice();
 			}
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == thisWeekLastYear
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == thisWeekLastYear
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(thisWeekLastYearBeginning))
+					&& (saleDate.before(thisWeekLastYearEnding))) {
 				thisWeekLastYearSales += sale.getTotalPrice();
 			}
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == lastWeekLastYear
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == lastWeekLastYear
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(lastWeekLastYearBeginning))
+					&& (saleDate.before(lastWeekLastYearEnding))) {
 				lastWeekLastYearSales += sale.getTotalPrice();
 			}
 
@@ -231,11 +312,30 @@ public class StockSalesPredictor {
 		System.out.println("next week last year " + nextWeekLastYearSales);
 		System.out.println("next month last year " + nextMonthLastYearSales);
 
+		int daysGone = calendar.get(Calendar.DAY_OF_WEEK);
+		daysGone -= 1;
+		if (daysGone == 0)
+			daysGone = 7;
+
+		thisWeekSales = (thisWeekSales / daysGone) * 7;
+
 		nextWeekSales = ((((thisWeekSales / thisWeekLastYearSales) * 2) + (lastWeekSales / lastWeekLastYearSales)) / 3)
 				* nextWeekLastYearSales;
+		if (nextWeekSales == 0) {
+			nextWeekSales = ((thisWeekSales * 4) + (lastWeekSales * 3)
+					+ (twoWeekSales * 2) + (threeWeekSales)) / 10;
+		}
+
+		thisMonthSales = thisMonthSales / calendar.get(Calendar.DATE)
+				* calendar.getMaximum(calendar.get(Calendar.MONTH));
 
 		nextMonthSales = ((((thisMonthSales / thisMonthLastYearSales) * 2) + (lastMonthSales / lastMonthLastYearSales)) / 3)
 				* nextMonthLastYearSales;
+
+		if (nextMonthSales == 0) {
+			nextMonthSales = ((thisMonthSales * 4) + (lastMonthSales * 3)
+					+ (twoMonthSales * 2) + (threeMonthSales)) / 10;
+		}
 
 		System.out.println("Next week sales prediction " + nextWeekSales);
 
@@ -265,59 +365,148 @@ public class StockSalesPredictor {
 
 		calendar = Calendar.getInstance();
 		today = Calendar.getInstance();
+		int day = calendar.get(Calendar.DAY_OF_WEEK);
+		weekBeginning = Calendar.getInstance();
 
-		lastWeek = Calendar.getInstance();
-		twoWeeksAgo = Calendar.getInstance();
-		threeWeeksAgo = Calendar.getInstance();
+		weekBeginning.add(Calendar.DATE, -(day) + 2);
+		weekBeginning.set(Calendar.HOUR, 0);
+		weekEnding = Calendar.getInstance();
+		weekEnding.add(Calendar.DATE, -(day) + 8);
+		weekEnding.set(Calendar.HOUR, 23);
+		// lastWeek = Calendar.getInstance();
+		// twoWeeksAgo = Calendar.getInstance();
+		// threeWeeksAgo = Calendar.getInstance();
+		lastWeekBeginning = Calendar.getInstance();
+		twoWeeksAgoBeginning = Calendar.getInstance();
+		threeWeeksAgoBeginning = Calendar.getInstance();
+		lastWeekEnding = Calendar.getInstance();
+		twoWeeksAgoEnding = Calendar.getInstance();
+		threeWeeksAgoEnding = Calendar.getInstance();
+
 		lastMonth = Calendar.getInstance();
 		twoMonthsAgo = Calendar.getInstance();
 		threeMonthsAgo = Calendar.getInstance();
 
-		thisWeekLastYear = Calendar.getInstance();
-		lastWeekLastYear = Calendar.getInstance();
-		nextWeekLastYear = Calendar.getInstance();
+		// thisWeekLastYear = Calendar.getInstance();
+		// lastWeekLastYear = Calendar.getInstance();
+		// nextWeekLastYear = Calendar.getInstance();
+
+		thisWeekLastYearBeginning = Calendar.getInstance();
+		lastWeekLastYearBeginning = Calendar.getInstance();
+		nextWeekLastYearBeginning = Calendar.getInstance();
+
+		thisWeekLastYearEnding = Calendar.getInstance();
+		lastWeekLastYearEnding = Calendar.getInstance();
+		nextWeekLastYearEnding = Calendar.getInstance();
+
 		thisMonthLastYear = Calendar.getInstance();
 		lastMonthLastYear = Calendar.getInstance();
 		nextMonthLastYear = Calendar.getInstance();
 
-		lastWeek.add(Calendar.WEEK_OF_YEAR, -1);
-		twoWeeksAgo.add(Calendar.WEEK_OF_YEAR, -2);
-		threeWeeksAgo.add(Calendar.WEEK_OF_YEAR, -3);
+		// lastWeek.add(Calendar.WEEK_OF_YEAR, -1);
+		// twoWeeksAgo.add(Calendar.WEEK_OF_YEAR, -2);
+		// threeWeeksAgo.add(Calendar.WEEK_OF_YEAR, -3);
+
+		lastWeekBeginning.add(Calendar.DATE, -(day) + 2 - 7);
+		lastWeekBeginning.set(Calendar.HOUR, 0);
+		twoWeeksAgoBeginning.add(Calendar.DATE, -(day) + 2 - 14);
+		twoWeeksAgoBeginning.set(Calendar.HOUR, 0);
+		threeWeeksAgoBeginning.add(Calendar.DATE, -(day) + 2 - 21);
+		threeWeeksAgoBeginning.set(Calendar.HOUR, 0);
+
+		lastWeekEnding.add(Calendar.DATE, -(day) + 8 - 7);
+		lastWeekEnding.set(Calendar.HOUR, 23);
+		twoWeeksAgoEnding.add(Calendar.DATE, -(day) + 8 - 14);
+		twoWeeksAgoEnding.set(Calendar.HOUR, 23);
+		threeWeeksAgoEnding.add(Calendar.DATE, -(day) + 8 - 21);
+		threeWeeksAgoEnding.set(Calendar.HOUR, 23);
+
 		lastMonth.add(Calendar.MONTH, -1);
 		twoMonthsAgo.add(Calendar.MONTH, -2);
 		threeMonthsAgo.add(Calendar.MONTH, -3);
 
-		thisWeekLastYear.add(Calendar.YEAR, -1);
-		thisWeekLastYear.set(Calendar.WEEK_OF_YEAR,
+		thisWeekLastYearBeginning.add(Calendar.YEAR, -1);
+		thisWeekLastYearBeginning.set(Calendar.WEEK_OF_YEAR,
 				calendar.get(Calendar.WEEK_OF_YEAR));
-		lastWeekLastYear.add(Calendar.YEAR, -1);
-		lastWeekLastYear.set(Calendar.WEEK_OF_YEAR,
+		thisWeekLastYearBeginning.add(Calendar.DATE,
+				-(thisWeekLastYearBeginning.get(Calendar.DAY_OF_WEEK)) + 2);
+		thisWeekLastYearBeginning.set(Calendar.HOUR, 0);
+
+		thisWeekLastYearEnding.add(Calendar.YEAR, -1);
+		thisWeekLastYearEnding.set(Calendar.WEEK_OF_YEAR,
+				calendar.get(Calendar.WEEK_OF_YEAR));
+		thisWeekLastYearEnding.add(Calendar.DATE,
+				-(thisWeekLastYearEnding.get(Calendar.DAY_OF_WEEK)) + 8);
+		thisWeekLastYearEnding.set(Calendar.HOUR, 23);
+
+		lastWeekLastYearBeginning.add(Calendar.YEAR, -1);
+		lastWeekLastYearBeginning.set(Calendar.WEEK_OF_YEAR,
 				calendar.get(Calendar.WEEK_OF_YEAR) - 1);
+		lastWeekLastYearBeginning.add(Calendar.DATE,
+				-(lastWeekLastYearBeginning.get(Calendar.DAY_OF_WEEK)) + 2);
+		lastWeekLastYearBeginning.set(Calendar.HOUR, 0);
+
+		lastWeekLastYearEnding.add(Calendar.YEAR, -1);
+		lastWeekLastYearEnding.set(Calendar.WEEK_OF_YEAR,
+				calendar.get(Calendar.WEEK_OF_YEAR) - 1);
+		lastWeekLastYearEnding.add(Calendar.DATE,
+				-(lastWeekLastYearEnding.get(Calendar.DAY_OF_WEEK)) + 8);
+		lastWeekLastYearEnding.set(Calendar.HOUR, 23);
+
 		thisMonthLastYear.add(Calendar.YEAR, -1);
 		lastMonthLastYear.add(Calendar.YEAR, -1);
 		lastMonthLastYear.add(Calendar.MONTH, -1);
 
-		nextWeekLastYear.add(Calendar.YEAR, -1);
-		nextWeekLastYear.set(Calendar.WEEK_OF_YEAR,
-				Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
-		nextWeekLastYear.add(Calendar.WEEK_OF_YEAR, 1);
+		nextWeekLastYearBeginning.add(Calendar.YEAR, -1);
+		nextWeekLastYearBeginning.set(Calendar.WEEK_OF_YEAR,
+				calendar.get(Calendar.WEEK_OF_YEAR) + 1);
+		nextWeekLastYearBeginning.add(Calendar.DATE,
+				-(nextWeekLastYearBeginning.get(Calendar.DAY_OF_WEEK)) + 2);
+		nextWeekLastYearBeginning.set(Calendar.HOUR, 0);
+
+		nextWeekLastYearEnding.add(Calendar.YEAR, -1);
+		nextWeekLastYearEnding.set(Calendar.WEEK_OF_YEAR,
+				calendar.get(Calendar.WEEK_OF_YEAR) + 1);
+		nextWeekLastYearEnding.add(Calendar.DATE,
+				-(nextWeekLastYearEnding.get(Calendar.DAY_OF_WEEK)) + 8);
+		nextWeekLastYearEnding.set(Calendar.HOUR, 23);
+
+		// nextWeekLastYear.add(Calendar.WEEK_OF_YEAR, 1);
 		nextMonthLastYear.add(Calendar.YEAR, -1);
 		nextMonthLastYear.add(Calendar.MONTH, 1);
 
-		System.out.println("This week" + calendar.getTime());
-		System.out.println("Last week" + lastWeek.getTime());
-		System.out.println("2 weeks ago " + twoWeeksAgo.getTime());
-		System.out.println("3 week ago" + threeWeeksAgo.getTime());
+		// System.out.println("This week" + calendar.getTime());
+		System.out.println("This week begiing " + weekBeginning.getTime());
+		System.out.println("This week ending " + weekEnding.getTime());
+		// System.out.println("Last week" + lastWeek.getTime());
+		System.out.println("last week begiing " + lastWeekBeginning.getTime());
+		System.out.println("last week ending " + lastWeekEnding.getTime());
+		// System.out.println("2 weeks ago " + twoWeeksAgo.getTime());
+		System.out.println("2 week begiing " + twoWeeksAgoBeginning.getTime());
+		System.out.println("2 week ending " + twoWeeksAgoEnding.getTime());
+		// System.out.println("3 week ago" + threeWeeksAgo.getTime());
+		System.out
+				.println("3 week begiing " + threeWeeksAgoBeginning.getTime());
+		System.out.println("3 week ending " + threeWeeksAgoEnding.getTime());
 		System.out.println("Last month" + lastMonth.getTime());
-		System.out.println("2 week ago" + twoMonthsAgo.getTime());
-		System.out.println("3 week ago" + threeMonthsAgo.getTime());
-		System.out.println("this week last year" + thisWeekLastYear.getTime());
-		System.out.println("Last week last year" + lastWeekLastYear.getTime());
+		System.out.println("2 month ago" + twoMonthsAgo.getTime());
+		System.out.println("3 month ago" + threeMonthsAgo.getTime());
+		System.out.println("this week last year beginning"
+				+ thisWeekLastYearBeginning.getTime());
+		System.out.println("this week last year ending "
+				+ thisWeekLastYearEnding.getTime());
+		System.out.println("Last week last year beginning"
+				+ lastWeekLastYearBeginning.getTime());
+		System.out.println("Last week last year ending "
+				+ lastWeekLastYearEnding.getTime());
 		System.out
 				.println("this month last year" + thisMonthLastYear.getTime());
 		System.out
 				.println("Last month last year" + lastMonthLastYear.getTime());
-		System.out.println("next week last year" + nextWeekLastYear.getTime());
+		System.out.println("next week last year beginning"
+				+ nextWeekLastYearBeginning.getTime());
+		System.out.println("next week last year ending "
+				+ nextWeekLastYearEnding.getTime());
 		System.out
 				.println("next month last year" + nextMonthLastYear.getTime());
 
@@ -325,10 +514,8 @@ public class StockSalesPredictor {
 
 			Calendar saleDate = this.dateToCalender(sale.getDate());
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == calendar
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == calendar
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(weekBeginning))
+					&& (saleDate.before(weekEnding))) {
 				// thisWeekSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
@@ -337,10 +524,8 @@ public class StockSalesPredictor {
 				}
 			}
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == lastWeek
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == lastWeek
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(lastWeekBeginning))
+					&& (saleDate.before(lastWeekEnding))) {
 				// lastWeekSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
@@ -349,10 +534,8 @@ public class StockSalesPredictor {
 				}
 			}
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == twoWeeksAgo
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == twoWeeksAgo
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(twoWeeksAgoBeginning))
+					&& (saleDate.before(twoWeeksAgoEnding))) {
 				// twoWeekSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
@@ -361,10 +544,8 @@ public class StockSalesPredictor {
 				}
 			}
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == threeWeeksAgo
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == threeWeeksAgo
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(threeWeeksAgoBeginning))
+					&& (saleDate.before(threeWeeksAgoEnding))) {
 				// threeWeekSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
@@ -419,10 +600,8 @@ public class StockSalesPredictor {
 				}
 			}
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == nextWeekLastYear
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == nextWeekLastYear
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(nextWeekLastYearBeginning))
+					&& (saleDate.before(nextWeekLastYearEnding))) {
 				// nextWeekLastYearSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
@@ -431,10 +610,8 @@ public class StockSalesPredictor {
 				}
 			}
 
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == thisWeekLastYear
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == thisWeekLastYear
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(thisWeekLastYearBeginning))
+					&& (saleDate.before(thisWeekLastYearEnding))) {
 				// thisWeekLastYearSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
@@ -442,10 +619,8 @@ public class StockSalesPredictor {
 					}
 				}
 			}
-			if ((saleDate.get(Calendar.WEEK_OF_YEAR) == lastWeekLastYear
-					.get(Calendar.WEEK_OF_YEAR))
-					&& (saleDate.get(Calendar.YEAR) == lastWeekLastYear
-							.get(Calendar.YEAR))) {
+			if ((saleDate.after(lastWeekLastYearBeginning))
+					&& (saleDate.before(lastWeekLastYearEnding))) {
 				// lastWeekLastYearSales += sale.getTotalPrice();
 				for (Stock saleStock : sale.getStocks()) {
 					if (saleStock.getName().equals(stock.getName())) {
