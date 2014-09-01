@@ -4,31 +4,49 @@ public interface FinancialFormListener {
 
 	public void allSales();
 
-	public void dailySaleSelected();
-
 	public void todaysSales();
+	
+	public void dailySales();
+	
+	public void weeklySales();
 
-	public void thisWeeksSales();
-
-	public void thisMonthsSales();
+	public void monthlySales();
 
 	public void allExpenses();
 
+	public void todaysExpenses();
+	
 	public void dailyExpenses();
 
-	public void todaysExpenses();
+	public void weeklyExpenses();
 
-	public void thisWeeksExpenses();
-
-	public void thisMonthsExpenses();
+	public void monthlyExpenses();
 
 	public void allProfits();
 
+	public void todaysProfits();
+	
 	public void dailyProfits();
 
-	public void todaysProfits();
+	public void weeklyProfits();
 
-	public void thisWeeksProfits();
+	public void monthlyProfits();
 
-	public void thisMonthsProfits();
+	public void saleMonthSelected(FinancialFormEvent ev);
+
+	public void saleWeekSelected(FinancialFormEvent ev);
+
+	public void saleDaySelected(FinancialFormEvent ev);
+	
+	public void expenseMonthSelected(FinancialFormEvent ev);
+
+	public void expenseWeekSelected(FinancialFormEvent ev);
+
+	public void expenseDaySelected(FinancialFormEvent ev);
+	
+	public void profitMonthSelected(FinancialFormEvent ev);
+
+	public void profitWeekSelected(FinancialFormEvent ev);
+
+	public void profitDaySelected(FinancialFormEvent ev);
 }

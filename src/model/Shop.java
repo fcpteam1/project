@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 import GUI.CustomerFormEvent;
 import GUI.CustomerFormPanel;
+import GUI.FinancialFormEvent;
 import GUI.OrderFormEvent;
 import GUI.OrderFormPanel;
 import GUI.SaleFormEvent;
@@ -494,7 +495,29 @@ public class Shop {
 		return financialSales;
 	}
 
-	public ArrayList<Sale> getMonthlySales() {
+	public ArrayList<Sale> getDailySales(FinancialFormEvent e) {
+		int day = e.getDay();
+		int month = e.getMonth();
+
+		System.out.println(day + "\n" + month);
+		Calendar today = Calendar.getInstance();
+		financialSales.clear();
+		for (Sale sale : sales) {
+			Calendar saleDate = dateToCalender(sale.getDate());
+
+			if ((saleDate.get(Calendar.DAY_OF_WEEK) == day)
+					&& (saleDate.get(Calendar.MONTH) == month)
+					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+				financialSales.add(sale);
+			}
+		}
+		for (Sale sale : financialSales) {
+			System.out.println(sale.getCustomer());
+		}
+		return financialSales;
+	}
+
+	public ArrayList<Sale> getMonthlySales(FinancialFormEvent e) {
 		Calendar today = Calendar.getInstance();
 		financialSales.clear();
 		for (Sale sale : sales) {
@@ -508,7 +531,7 @@ public class Shop {
 		return financialSales;
 	}
 
-	public ArrayList<Sale> getWeeklySales() {
+	public ArrayList<Sale> getWeeklySales(FinancialFormEvent e) {
 		Calendar today = Calendar.getInstance();
 		financialSales.clear();
 		for (Sale sale : sales) {

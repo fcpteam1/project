@@ -7,6 +7,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -29,6 +30,8 @@ public class FinancialFormPanel extends JPanel {
 	private CustomerFormListener customerFormListener;
 	private Model model;
 	private FinancialFormListener listener;
+	private Calendar cal;
+	private int day, week, month;
 
 	private ArrayList<Sale> sales;
 	private ArrayList<Order> orders;
@@ -76,20 +79,20 @@ public class FinancialFormPanel extends JPanel {
 
 		dailyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.dailySaleSelected();
+				listener.dailySales();
 			}
 		});
 
 		weeklyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.thisWeeksSales();
+				listener.weeklySales();
 
 			}
 		});
 
 		monthlyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.thisMonthsSales();
+				listener.monthlySales();
 			}
 		});
 
@@ -156,6 +159,8 @@ public class FinancialFormPanel extends JPanel {
 		add(monthlyBtn, gc);
 	}
 
+	// ////////////////////Expenditures////////////////////////
+
 	public void ExpendituresFormPanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
@@ -187,14 +192,14 @@ public class FinancialFormPanel extends JPanel {
 
 		weeklyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.thisWeeksExpenses();
+				listener.weeklyExpenses();
 
 			}
 		});
 
 		monthlyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listener.thisMonthsExpenses();
+				listener.monthlyExpenses();
 			}
 		});
 
@@ -261,163 +266,6 @@ public class FinancialFormPanel extends JPanel {
 		add(monthlyBtn, gc);
 	}
 
-	public void chooseDayPanel() {
-		Dimension dim = getPreferredSize();
-		dim.width = 250;
-		setPreferredSize(dim);
-
-		allBtn = new JButton("All Expenditures");
-		todayBtn = new JButton("Todays Expenditures");
-		weeklyBtn = new JButton("This weeks Expenditures");
-		monthlyBtn = new JButton("This Months Expenditures");
-
-		dayLabel = new JLabel("Day: ");
-		weekLabel = new JLabel("Week: ");
-		monthLabel = new JLabel("Month: ");
-
-		dayList = new JComboBox();
-		weekList = new JComboBox();
-		monthList = new JComboBox();
-
-		DefaultComboBoxModel dayModel = new DefaultComboBoxModel();
-		dayModel.addElement("Monday");
-		dayModel.addElement("Tuesday");
-		dayModel.addElement("Wednesday");
-		dayModel.addElement("Thursday");
-		dayModel.addElement("Friday");
-		dayModel.addElement("Saturday");
-		dayModel.addElement("Sunday");
-		dayList.setModel(dayModel);
-
-		DefaultComboBoxModel weekModel = new DefaultComboBoxModel();
-		weekModel.addElement("Week1");
-		weekModel.addElement("Week2");
-		weekModel.addElement("Week3");
-		weekModel.addElement("Week4");
-		weekList.setModel(weekModel);
-
-		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
-		monthModel.addElement("January");
-		monthModel.addElement("February");
-		monthModel.addElement("March");
-		monthModel.addElement("April");
-		monthModel.addElement("May");
-		monthModel.addElement("June");
-		monthModel.addElement("July");
-		monthModel.addElement("August");
-		monthModel.addElement("October");
-		monthModel.addElement("September");
-		monthModel.addElement("November");
-		monthModel.addElement("December");
-		monthList.setModel(monthModel);
-
-		submitBtn = new JButton("Submit");
-
-		submitBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String day = (String) dayList.getSelectedItem();
-				String week = (String) weekList.getSelectedItem();
-				String month = (String) monthList.getSelectedItem();
-				listener.dailySaleSelected();
-			}
-		});
-
-		Border innerBorder = BorderFactory.createTitledBorder("Sales");
-		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-
-		allBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listener.allExpenses();
-			}
-		});
-
-		todayBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				listener.todaysExpenses();
-			}
-		});
-		weeklyBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				listener.thisWeeksExpenses();
-			}
-		});
-		monthlyBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				listener.thisMonthsExpenses();
-			}
-		});
-
-		setLayout(new GridBagLayout());
-
-		GridBagConstraints gc = new GridBagConstraints();
-		// /////// First row ////////
-
-		gc.gridy = 0;
-
-		gc.weightx = 1;
-		gc.weighty = .1;
-
-		gc.gridx = 0;
-		gc.fill = GridBagConstraints.NONE;
-		gc.anchor = GridBagConstraints.LINE_END;
-		gc.insets = new Insets(0, 0, 0, 5);
-		add(monthLabel, gc);
-
-		gc.gridx = 1;
-		gc.gridy = 0;
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.insets = new Insets(0, 0, 0, 0);
-		add(monthList, gc);
-
-		// /////// Second row ////////
-
-		gc.gridy++;
-
-		gc.weightx = 1;
-		gc.weighty = .1;
-
-		gc.gridx = 0;
-		gc.anchor = GridBagConstraints.LINE_END;
-		gc.insets = new Insets(0, 0, 0, 5);
-		add(weekLabel, gc);
-
-		gc.gridx = 1;
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.insets = new Insets(0, 0, 0, 0);
-		add(weekList, gc);
-
-		// /////// Third row /////////
-
-		gc.gridy++;
-
-		gc.weightx = 1;
-		gc.weighty = .1;
-
-		gc.gridx = 0;
-		gc.anchor = GridBagConstraints.LINE_END;
-		gc.insets = new Insets(0, 0, 0, 5);
-		add(dayLabel, gc);
-
-		gc.gridx = 1;
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.insets = new Insets(0, 0, 0, 0);
-		add(dayLabel, gc);
-
-		// /////// Fourth row ////////
-
-		gc.gridy++;
-
-		gc.weightx = 1;
-		gc.weighty = 1;
-
-		gc.gridx = 1;
-		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		add(allBtn, gc);
-
-		add(submitBtn, gc);
-	}
-
 	// ////////////////////Profit////////////////////////
 
 	public void ProfitFormPanel() {
@@ -443,17 +291,17 @@ public class FinancialFormPanel extends JPanel {
 
 		todayBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				listener.todaysProfits();
+				listener.dailyProfits();
 			}
 		});
 		weeklyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				listener.thisWeeksProfits();
+				listener.weeklyProfits();
 			}
 		});
 		monthlyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				listener.thisMonthsProfits();
+				listener.monthlyProfits();
 			}
 		});
 
@@ -514,4 +362,997 @@ public class FinancialFormPanel extends JPanel {
 		add(monthlyBtn, gc);
 
 	}
+
+	// ////////////////////DailySale////////////////////////
+
+	public void chooseDaySalePanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		dayLabel = new JLabel("Day: ");
+		weekLabel = new JLabel("Week: ");
+		monthLabel = new JLabel("Month: ");
+
+		dayList = new JComboBox();
+		weekList = new JComboBox();
+		monthList = new JComboBox();
+
+		DefaultComboBoxModel dayModel = new DefaultComboBoxModel();
+		dayModel.addElement("Monday");
+		dayModel.addElement("Tuesday");
+		dayModel.addElement("Wednesday");
+		dayModel.addElement("Thursday");
+		dayModel.addElement("Friday");
+		dayModel.addElement("Saturday");
+		dayModel.addElement("Sunday");
+		dayList.setModel(dayModel);
+
+		/*
+		 * DefaultComboBoxModel weekModel = new DefaultComboBoxModel();
+		 * weekModel.addElement("Week1"); weekModel.addElement("Week2");
+		 * weekModel.addElement("Week3"); weekModel.addElement("Week4");
+		 * weekList.setModel(weekModel);
+		 */
+
+		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
+		monthModel.addElement("January");
+		monthModel.addElement("February");
+		monthModel.addElement("March");
+		monthModel.addElement("April");
+		monthModel.addElement("May");
+		monthModel.addElement("June");
+		monthModel.addElement("July");
+		monthModel.addElement("August");
+		monthModel.addElement("October");
+		monthModel.addElement("September");
+		monthModel.addElement("November");
+		monthModel.addElement("December");
+		monthList.setModel(monthModel);
+
+		submitBtn = new JButton("Submit");
+
+		submitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (dayList.getSelectedItem() == ("Monday")) {
+					day = cal.MONDAY;
+				} else if (dayList.getSelectedItem() == ("Tuesday")) {
+					day = cal.TUESDAY;
+				} else if (dayList.getSelectedItem() == ("Wednesday")) {
+					day = cal.WEDNESDAY;
+				} else if (dayList.getSelectedItem() == ("Thursday")) {
+					day = cal.THURSDAY;
+				} else if (dayList.getSelectedItem() == ("Friday")) {
+					day = cal.FRIDAY;
+				} else if (dayList.getSelectedItem() == ("Saturday")) {
+					day = cal.SATURDAY;
+				} else if (dayList.getSelectedItem() == ("Sunday")) {
+					day = cal.SUNDAY;
+				}
+
+				if (monthList.getSelectedItem() == ("January")) {
+					month = cal.JANUARY;
+				} else if (monthList.getSelectedItem() == ("February")) {
+					month = cal.FEBRUARY;
+				} else if (monthList.getSelectedItem() == ("March")) {
+					month = cal.MARCH;
+				} else if (monthList.getSelectedItem() == ("April")) {
+					month = cal.APRIL;
+				} else if (monthList.getSelectedItem() == ("May")) {
+					month = cal.MAY;
+				} else if (monthList.getSelectedItem() == ("June")) {
+					month = cal.JUNE;
+				} else if (monthList.getSelectedItem() == ("July")) {
+					month = cal.JULY;
+				} else if (monthList.getSelectedItem() == ("August")) {
+					month = cal.AUGUST;
+				} else if (monthList.getSelectedItem() == ("September")) {
+					month = cal.SEPTEMBER;
+				} else if (monthList.getSelectedItem() == ("October")) {
+					month = cal.OCTOBER;
+				} else if (monthList.getSelectedItem() == ("November")) {
+					month = cal.NOVEMBER;
+				} else if (monthList.getSelectedItem() == ("December")) {
+					month = cal.DECEMBER;
+				}
+
+				/*
+				 * if (weekList.getSelectedItem()== ("Week 1")){ int week = cal.
+				 * } String month = (String) monthList.getSelectedItem();
+				 */
+
+				FinancialFormEvent ev = new FinancialFormEvent(this, day, month);
+
+				if (listener != null) {
+					listener.saleDaySelected(ev);
+				}
+			}
+		});
+
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gc = new GridBagConstraints();
+		// /////// First row ////////
+
+		gc.gridy = 0;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(monthLabel, gc);
+
+		gc.gridx = 1;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(monthList, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(weekLabel, gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(weekList, gc);
+
+		// /////// Third row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(dayLabel, gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(dayList, gc);
+
+		// /////// Fourth row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		add(submitBtn, gc);
+	}
+
+	// ////////////////////WeeklySale////////////////////////
+
+	public void chooseWeekSalePanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		weekLabel = new JLabel("Week: ");
+		monthLabel = new JLabel("Month: ");
+
+		weekList = new JComboBox();
+		monthList = new JComboBox();
+
+		DefaultComboBoxModel weekModel = new DefaultComboBoxModel();
+		weekModel.addElement("Week1");
+		weekModel.addElement("Week2");
+		weekModel.addElement("Week3");
+		weekModel.addElement("Week4");
+		weekList.setModel(weekModel);
+
+		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
+		monthModel.addElement("January");
+		monthModel.addElement("February");
+		monthModel.addElement("March");
+		monthModel.addElement("April");
+		monthModel.addElement("May");
+		monthModel.addElement("June");
+		monthModel.addElement("July");
+		monthModel.addElement("August");
+		monthModel.addElement("October");
+		monthModel.addElement("September");
+		monthModel.addElement("November");
+		monthModel.addElement("December");
+		monthList.setModel(monthModel);
+
+		submitBtn = new JButton("Submit");
+
+		/*
+		 * submitBtn.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { String week = (String)
+		 * weekList.getSelectedItem(); String month = (String)
+		 * monthList.getSelectedItem();
+		 * 
+		 * FinancialFormEvent ev = new FinancialFormEvent(this, week, month);
+		 * 
+		 * if (listener != null) { listener.saleWeekSelected(ev); } } });
+		 */
+
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gc = new GridBagConstraints();
+		// /////// First row ////////
+
+		gc.gridy = 0;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(monthLabel, gc);
+
+		gc.gridx = 1;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(monthList, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(weekLabel, gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(weekList, gc);
+
+		// /////// Third row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		add(submitBtn, gc);
+	}
+
+	// ////////////////////MonthlySale////////////////////////
+
+	public void chooseMonthSalePanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		monthLabel = new JLabel("Month: ");
+
+		monthList = new JComboBox();
+
+		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
+		monthModel.addElement("January");
+		monthModel.addElement("February");
+		monthModel.addElement("March");
+		monthModel.addElement("April");
+		monthModel.addElement("May");
+		monthModel.addElement("June");
+		monthModel.addElement("July");
+		monthModel.addElement("August");
+		monthModel.addElement("October");
+		monthModel.addElement("September");
+		monthModel.addElement("November");
+		monthModel.addElement("December");
+		monthList.setModel(monthModel);
+
+		submitBtn = new JButton("Submit");
+
+		/*
+		 * submitBtn.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) {
+		 * 
+		 * String month = (String) monthList.getSelectedItem();
+		 * 
+		 * FinancialFormEvent ev = new FinancialFormEvent(this, month);
+		 * 
+		 * if (listener != null) { listener.saleMonthSelected(ev); } } });
+		 */
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gc = new GridBagConstraints();
+		// /////// First row ////////
+
+		gc.gridy = 0;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(monthLabel, gc);
+
+		gc.gridx = 1;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(monthList, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		add(submitBtn, gc);
+	}
+
+	// ////////////////////DailyExpense////////////////////////
+
+	public void chooseDayExpensePanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		dayLabel = new JLabel("Day: ");
+		weekLabel = new JLabel("Week: ");
+		monthLabel = new JLabel("Month: ");
+
+		dayList = new JComboBox();
+		weekList = new JComboBox();
+		monthList = new JComboBox();
+
+		DefaultComboBoxModel dayModel = new DefaultComboBoxModel();
+		dayModel.addElement("Monday");
+		dayModel.addElement("Tuesday");
+		dayModel.addElement("Wednesday");
+		dayModel.addElement("Thursday");
+		dayModel.addElement("Friday");
+		dayModel.addElement("Saturday");
+		dayModel.addElement("Sunday");
+		dayList.setModel(dayModel);
+
+		DefaultComboBoxModel weekModel = new DefaultComboBoxModel();
+		weekModel.addElement("Week1");
+		weekModel.addElement("Week2");
+		weekModel.addElement("Week3");
+		weekModel.addElement("Week4");
+		weekList.setModel(weekModel);
+
+		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
+		monthModel.addElement("January");
+		monthModel.addElement("February");
+		monthModel.addElement("March");
+		monthModel.addElement("April");
+		monthModel.addElement("May");
+		monthModel.addElement("June");
+		monthModel.addElement("July");
+		monthModel.addElement("August");
+		monthModel.addElement("October");
+		monthModel.addElement("September");
+		monthModel.addElement("November");
+		monthModel.addElement("December");
+		monthList.setModel(monthModel);
+
+		submitBtn = new JButton("Submit");
+
+		// submitBtn.addActionListener(new ActionListener() {
+		// /* public void actionPerformed(ActionEvent e) {
+		// String day = (String) dayList.getSelectedItem();
+		// String week = (String) weekList.getSelectedItem();
+		// String month = (String) monthList.getSelectedItem();
+		//
+		// FinancialFormEvent ev = new FinancialFormEvent(this,day,week,month);
+		//
+		// if(listener != null){
+		// listener.expenseDaySelected(ev);
+		// }
+		// }*/
+		// });
+
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gc = new GridBagConstraints();
+		// /////// First row ////////
+
+		gc.gridy = 0;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(monthLabel, gc);
+
+		gc.gridx = 1;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(monthList, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(weekLabel, gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(weekList, gc);
+
+		// /////// Third row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(dayLabel, gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(dayList, gc);
+
+		// /////// Fourth row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		add(submitBtn, gc);
+	}
+
+	// ////////////////////WeeklyExpense////////////////////////
+
+	public void chooseWeekExpensePanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		weekLabel = new JLabel("Week: ");
+		monthLabel = new JLabel("Month: ");
+
+		weekList = new JComboBox();
+		monthList = new JComboBox();
+
+		DefaultComboBoxModel weekModel = new DefaultComboBoxModel();
+		weekModel.addElement("Week1");
+		weekModel.addElement("Week2");
+		weekModel.addElement("Week3");
+		weekModel.addElement("Week4");
+		weekList.setModel(weekModel);
+
+		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
+		monthModel.addElement("January");
+		monthModel.addElement("February");
+		monthModel.addElement("March");
+		monthModel.addElement("April");
+		monthModel.addElement("May");
+		monthModel.addElement("June");
+		monthModel.addElement("July");
+		monthModel.addElement("August");
+		monthModel.addElement("October");
+		monthModel.addElement("September");
+		monthModel.addElement("November");
+		monthModel.addElement("December");
+		monthList.setModel(monthModel);
+
+		submitBtn = new JButton("Submit");
+
+		/*
+		 * submitBtn.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { String week = (String)
+		 * weekList.getSelectedItem(); String month = (String)
+		 * monthList.getSelectedItem();
+		 * 
+		 * FinancialFormEvent ev = new FinancialFormEvent(this, week, month);
+		 * 
+		 * if (listener != null) { listener.expenseWeekSelected(ev); } } });
+		 */
+
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gc = new GridBagConstraints();
+		// /////// First row ////////
+
+		gc.gridy = 0;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(monthLabel, gc);
+
+		gc.gridx = 1;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(monthList, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(weekLabel, gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(weekList, gc);
+
+		// /////// Third row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		add(submitBtn, gc);
+	}
+
+	// ////////////////////MonthlyExpense////////////////////////
+
+	public void chooseMonthExpensePanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		monthLabel = new JLabel("Month: ");
+
+		monthList = new JComboBox();
+
+		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
+		monthModel.addElement("January");
+		monthModel.addElement("February");
+		monthModel.addElement("March");
+		monthModel.addElement("April");
+		monthModel.addElement("May");
+		monthModel.addElement("June");
+		monthModel.addElement("July");
+		monthModel.addElement("August");
+		monthModel.addElement("October");
+		monthModel.addElement("September");
+		monthModel.addElement("November");
+		monthModel.addElement("December");
+		monthList.setModel(monthModel);
+
+		submitBtn = new JButton("Submit");
+
+		/*
+		 * submitBtn.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) {
+		 * 
+		 * String month = (String) monthList.getSelectedItem();
+		 * 
+		 * FinancialFormEvent ev = new FinancialFormEvent(this, month);
+		 * 
+		 * if (listener != null) { listener.expenseMonthSelected(ev); } } });
+		 */
+
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gc = new GridBagConstraints();
+		// /////// First row ////////
+
+		gc.gridy = 0;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(monthLabel, gc);
+
+		gc.gridx = 1;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(monthList, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		add(submitBtn, gc);
+	}
+
+	// ////////////////////DailyProfit////////////////////////
+
+	public void chooseDayProfitPanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		dayLabel = new JLabel("Day: ");
+		weekLabel = new JLabel("Week: ");
+		monthLabel = new JLabel("Month: ");
+
+		dayList = new JComboBox();
+		weekList = new JComboBox();
+		monthList = new JComboBox();
+
+		DefaultComboBoxModel dayModel = new DefaultComboBoxModel();
+		dayModel.addElement("Monday");
+		dayModel.addElement("Tuesday");
+		dayModel.addElement("Wednesday");
+		dayModel.addElement("Thursday");
+		dayModel.addElement("Friday");
+		dayModel.addElement("Saturday");
+		dayModel.addElement("Sunday");
+		dayList.setModel(dayModel);
+
+		DefaultComboBoxModel weekModel = new DefaultComboBoxModel();
+		weekModel.addElement("Week1");
+		weekModel.addElement("Week2");
+		weekModel.addElement("Week3");
+		weekModel.addElement("Week4");
+		weekList.setModel(weekModel);
+
+		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
+		monthModel.addElement("January");
+		monthModel.addElement("February");
+		monthModel.addElement("March");
+		monthModel.addElement("April");
+		monthModel.addElement("May");
+		monthModel.addElement("June");
+		monthModel.addElement("July");
+		monthModel.addElement("August");
+		monthModel.addElement("October");
+		monthModel.addElement("September");
+		monthModel.addElement("November");
+		monthModel.addElement("December");
+		monthList.setModel(monthModel);
+
+		submitBtn = new JButton("Submit");
+
+		/*
+		 * submitBtn.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { String day = (String)
+		 * dayList.getSelectedItem(); String week = (String)
+		 * weekList.getSelectedItem(); String month = (String)
+		 * monthList.getSelectedItem();
+		 * 
+		 * FinancialFormEvent ev = new FinancialFormEvent(this,day,week,month);
+		 * 
+		 * if(listener != null){ listener.profitDaySelected(ev); } } });
+		 */
+
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gc = new GridBagConstraints();
+		// /////// First row ////////
+
+		gc.gridy = 0;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(monthLabel, gc);
+
+		gc.gridx = 1;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(monthList, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(weekLabel, gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(weekList, gc);
+
+		// /////// Third row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(dayLabel, gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(dayList, gc);
+
+		// /////// Fourth row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		add(submitBtn, gc);
+	}
+
+	// ////////////////////WeeklyProfit////////////////////////
+
+	public void chooseWeekProfitPanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		weekLabel = new JLabel("Week: ");
+		monthLabel = new JLabel("Month: ");
+
+		weekList = new JComboBox();
+		monthList = new JComboBox();
+
+		DefaultComboBoxModel weekModel = new DefaultComboBoxModel();
+		weekModel.addElement("Week1");
+		weekModel.addElement("Week2");
+		weekModel.addElement("Week3");
+		weekModel.addElement("Week4");
+		weekList.setModel(weekModel);
+
+		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
+		monthModel.addElement("January");
+		monthModel.addElement("February");
+		monthModel.addElement("March");
+		monthModel.addElement("April");
+		monthModel.addElement("May");
+		monthModel.addElement("June");
+		monthModel.addElement("July");
+		monthModel.addElement("August");
+		monthModel.addElement("October");
+		monthModel.addElement("September");
+		monthModel.addElement("November");
+		monthModel.addElement("December");
+		monthList.setModel(monthModel);
+
+		submitBtn = new JButton("Submit");
+
+		/*
+		 * submitBtn.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { String week = (String)
+		 * weekList.getSelectedItem(); String month = (String)
+		 * monthList.getSelectedItem();
+		 * 
+		 * FinancialFormEvent ev = new FinancialFormEvent(this, week, month);
+		 * 
+		 * if (listener != null) { listener.saleWeekSelected(ev); } } });
+		 */
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gc = new GridBagConstraints();
+		// /////// First row ////////
+
+		gc.gridy = 0;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(monthLabel, gc);
+
+		gc.gridx = 1;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(monthList, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(weekLabel, gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(weekList, gc);
+
+		// /////// Third row /////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		add(submitBtn, gc);
+	}
+
+	// ////////////////////MonthlySale////////////////////////
+
+	public void chooseMonthProfitPanel() {
+		Dimension dim = getPreferredSize();
+		dim.width = 250;
+		setPreferredSize(dim);
+
+		monthLabel = new JLabel("Month: ");
+
+		monthList = new JComboBox();
+
+		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
+		monthModel.addElement("January");
+		monthModel.addElement("February");
+		monthModel.addElement("March");
+		monthModel.addElement("April");
+		monthModel.addElement("May");
+		monthModel.addElement("June");
+		monthModel.addElement("July");
+		monthModel.addElement("August");
+		monthModel.addElement("October");
+		monthModel.addElement("September");
+		monthModel.addElement("November");
+		monthModel.addElement("December");
+		monthList.setModel(monthModel);
+
+		submitBtn = new JButton("Submit");
+
+		/*
+		 * submitBtn.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) {
+		 * 
+		 * String month = (String) monthList.getSelectedItem();
+		 * 
+		 * FinancialFormEvent ev = new FinancialFormEvent(this, month);
+		 * 
+		 * if (listener != null) { listener.profitMonthSelected(ev); } } });
+		 */
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints gc = new GridBagConstraints();
+		// /////// First row ////////
+
+		gc.gridy = 0;
+
+		gc.weightx = 1;
+		gc.weighty = .1;
+
+		gc.gridx = 0;
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(monthLabel, gc);
+
+		gc.gridx = 1;
+		gc.gridy = 0;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(monthList, gc);
+
+		// /////// Second row ////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 1;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		add(submitBtn, gc);
+	}
+
 }
