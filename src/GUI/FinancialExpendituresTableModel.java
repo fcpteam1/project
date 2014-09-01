@@ -15,27 +15,23 @@ public class FinancialExpendituresTableModel extends AbstractTableModel {
 
 	public FinancialExpendituresTableModel() {
 	}
+	
+	public void setData(ArrayList<Order> todayOrders) {
+		this.orders = todayOrders;
+	}
 
-	@Override
 	public String getColumnName(int column) {
 		return columnNames[column];
 	}
 
-	public void setData(ArrayList<Order> orders, ArrayList<Supplier> suppliers) {
-		this.orders = orders;
-	}
-
-	@Override
 	public int getRowCount() {
 		return orders.size();
 	}
 
-	@Override
 	public int getColumnCount() {
-		return 5;
+		return 4;
 	}
 
-	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 
 		switch (columnIndex) {
@@ -47,8 +43,6 @@ public class FinancialExpendituresTableModel extends AbstractTableModel {
 			return orders.get(rowIndex).getTotalPrice();
 		case 3:
 			return orders.get(rowIndex).getDate();
-		case 4:
-			return !orders.get(rowIndex).isCurrent();
 		}
 
 		return null;
