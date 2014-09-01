@@ -253,9 +253,9 @@ public class SaleFormPanel extends JPanel {
 			customerPrice[i] = new JLabel(": " + "\u20ac"
 					+ Double.toString(stocks.get(i).getCustomerPrice()));
 			quantityField[i] = new JTextField(3);
-
+			int j = 0;
 			for (Stock stock : saleStockListToEdit) {
-				int j = 0;
+
 				if (stocks.get(i).getName().equals(stock.getName())) {
 					quantityField[i].setText(String.valueOf(saleStockListToEdit
 							.get(j).getQuantity()));
