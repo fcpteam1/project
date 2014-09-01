@@ -38,6 +38,10 @@ public class FinancialMainPanel {
 								.getSales());
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
+						double totalPrice = model.getShop().getAllIncome();
+						financialTextPanel.clearText();
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -82,7 +86,7 @@ public class FinancialMainPanel {
 								.getOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
-						double totalPrice = model.getShop().totalOrders();
+						double totalPrice = model.getShop().getAllExpenses();
 						financialTextPanel.clearText();
 						financialTextPanel.appendText("Total Price : "
 								+ totalPrice + " euro\n");
@@ -133,6 +137,7 @@ public class FinancialMainPanel {
 						double loss = model.getShop().loss(income, expenses);
 						financialTablePanel.setProfitData(income, expenses,
 								profit, loss);
+						financialTextPanel.clearText();
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
@@ -146,6 +151,7 @@ public class FinancialMainPanel {
 						double loss = model.getShop().loss(income, expenses);
 						financialTablePanel.setProfitData(income, expenses,
 								profit, loss);
+						financialTextPanel.clearText();
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
@@ -156,6 +162,7 @@ public class FinancialMainPanel {
 						// .totalSales(), model.getShop().totalOrders(),
 						// model.getShop().profit(), model.getShop()
 						// .loss());
+						financialTextPanel.clearText();
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
@@ -179,6 +186,7 @@ public class FinancialMainPanel {
 						loss = round(loss);
 						financialTablePanel.setProfitData(income, expenses,
 								profit, loss);
+						financialTextPanel.clearText();
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
