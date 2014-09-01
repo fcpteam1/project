@@ -45,7 +45,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
-						financialTextPanel.appendText("");
+						financialTextPanel.clearText();
 						financialTextPanel.appendText("Total Price : "
 								+ totalPrice + " euro\n");
 					}
@@ -57,7 +57,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
-						financialTextPanel.appendText("");
+						financialTextPanel.clearText();
 						financialTextPanel.appendText("Total Price : "
 								+ totalPrice + " euro\n");
 					}
@@ -69,7 +69,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
-						financialTextPanel.appendText("");
+						financialTextPanel.clearText();
 						financialTextPanel.appendText("Total Price : "
 								+ totalPrice + " euro\n");
 					}
@@ -80,6 +80,10 @@ public class FinancialMainPanel {
 								.getOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
+						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.clearText();
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -88,6 +92,10 @@ public class FinancialMainPanel {
 								.getTodayOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
+						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.clearText();
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -96,6 +104,10 @@ public class FinancialMainPanel {
 								.getWeeklyOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
+						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.clearText();
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -104,6 +116,10 @@ public class FinancialMainPanel {
 								.getMonthlyOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
+						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.clearText();
+						financialTextPanel.appendText("Total Price : "
+								+ totalPrice + " euro\n");
 					}
 
 					@Override

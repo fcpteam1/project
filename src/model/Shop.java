@@ -20,9 +20,7 @@ import GUI.UserFormPanel;
 
 public class Shop {
 
-	private ArrayList<Order> todayOrders = new ArrayList<Order>();
-	private ArrayList<Order> weekOrders = new ArrayList<Order>();
-	private ArrayList<Order> monthOrders = new ArrayList<Order>();
+	private ArrayList<Order> financialOrders = new ArrayList<Order>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private ArrayList<Stock> stocks = new ArrayList<Stock>();
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
@@ -414,7 +412,7 @@ public class Shop {
 
 	public ArrayList<Order> getTodayOrders() {
 		Calendar today = Calendar.getInstance();
-		todayOrders.clear();
+		financialOrders.clear();
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
 
@@ -423,30 +421,30 @@ public class Shop {
 							.get(Calendar.MONTH))
 					&& (orderDate.get(Calendar.YEAR) == today
 							.get(Calendar.YEAR))) {
-				todayOrders.add(order);
+				financialOrders.add(order);
 			}
 		}
-		return todayOrders;
+		return financialOrders;
 	}
 
 	public ArrayList<Order> getMonthlyOrders() {
 		Calendar today = Calendar.getInstance();
-		monthOrders.clear();
+		financialOrders.clear();
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
 
 			if ((orderDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
 					&& (orderDate.get(Calendar.YEAR) == today
 							.get(Calendar.YEAR))) {
-				monthOrders.add(order);
+				financialOrders.add(order);
 			}
 		}
-		return monthOrders;
+		return financialOrders;
 	}
 
 	public ArrayList<Order> getWeeklyOrders() {
 		Calendar today = Calendar.getInstance();
-		weekOrders.clear();
+		financialOrders.clear();
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
 
@@ -455,10 +453,10 @@ public class Shop {
 							.get(Calendar.MONTH))
 					&& (orderDate.get(Calendar.YEAR) == today
 							.get(Calendar.YEAR))) {
-				weekOrders.add(order);
+				financialOrders.add(order);
 			}
 		}
-		return weekOrders;
+		return financialOrders;
 	}
 
 	public ArrayList<Stock> getStock() {
@@ -724,6 +722,14 @@ public class Shop {
 		double totalSum = 0;
 		for (Sale sale : financialSales) {
 			totalSum = totalSum + sale.getTotalPrice();
+		}
+		return totalSum;
+	}
+
+	public double totalOrders() {
+		double totalSum = 0;
+		for (Order order : financialOrders) {
+			totalSum = totalSum + order.getTotalPrice();
 		}
 		return totalSum;
 	}
