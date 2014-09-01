@@ -124,10 +124,6 @@ public class FinancialTablePanel extends JPanel {
 		expenditureModel.setData(orders);
 	}
 
-	public void saleRefresh() {
-		tableModel.fireTableDataChanged();
-	}
-
 	public void setSaleData(ArrayList<Sale> sales) {
 		saleModel.setData(sales);
 	}
