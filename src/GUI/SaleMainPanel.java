@@ -28,7 +28,7 @@ public class SaleMainPanel extends JPanel {
 		textPanel = new SaleTextPanel();
 		model = new Model();
 
-		formPanel.setData(model.getShop().getStock(), model.getShop()
+		formPanel.setData(model.getShop().getAvailableStock(), model.getShop()
 				.getCustomers(), model.getShop().getStockFile());
 		tablePanel.setData(model.getShop().getSales());
 		toolBar.setMainPanel(formPanel);

@@ -142,6 +142,14 @@ public class MainMenuGUI {
 		this.supplierTab = supplierTab;
 	}
 
+	public StockGUI getStockTab() {
+		return stockTab;
+	}
+
+	public void setStockTab(StockGUI stockTab) {
+		this.stockTab = stockTab;
+	}
+
 	private ImageIcon createIcon(String path) {
 		URL url = getClass().getResource(path);
 

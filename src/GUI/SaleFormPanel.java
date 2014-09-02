@@ -19,6 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import model.Customer;
+import model.Model;
+import model.Product;
 import model.Sale;
 import model.Stock;
 
@@ -33,15 +35,17 @@ public class SaleFormPanel extends JPanel {
 	private JButton editButton;
 	private SaleMainPanel mainPanel;
 	private SaleFormListener formListener;
-	private ArrayList<Stock> stocks;
+	private ArrayList<Product> totalProducts;
 	private ArrayList<Customer> customers;
+	private ArrayList<Stock> stocks;
 	private String stockFile;
 	private ArrayList<Stock> saleStockList = new ArrayList<Stock>();
+	private ArrayList<Stock> availableStock = new ArrayList<Stock>();
 	Customer thisCustomer;
 	int size;
-	JLabel[] stockName;
-	JLabel[] customerPrice;
+	JLabel[] stockName, customerPrice, maxAvailable;
 	JTextField[] quantityField;
+	private Model model;
 
 	public SaleFormPanel() throws IOException {
 
@@ -49,11 +53,43 @@ public class SaleFormPanel extends JPanel {
 
 	public void setData(ArrayList<Stock> stocks, ArrayList<Customer> customers,
 			String stockFile) {
-		this.stocks = stocks;
+
 		this.customers = customers;
 		this.stockFile = stockFile;
+		this.availableStock = stocks;
 	}
 
+	/*
+	 * public Map<String, Integer> stockLevels() {
+	 * 
+	 * for (Stock stock : stocks) { System.out.println(stock.getName() + "" +
+	 * stock.calculatePrice()); }
+	 * 
+	 * 
+	 * Map<String, Integer> stockLevels = new HashMap<String, Integer>();
+	 * 
+	 * for (int i = 0; i < stocks.size(); i++) { int quantity = 0; for (int j =
+	 * i; j < stocks.size(); j++) { boolean inMap = stockLevels
+	 * .containsKey(stocks.get(i).getName()); if (inMap && j == i) { j =
+	 * stocks.size(); } else if (stocks.get(i).getName()
+	 * .equals(stocks.get(j).getName())) { quantity = quantity +
+	 * stocks.get(j).getQuantity(); //
+	 * System.out.println(stocks.get(j).getQuantity());
+	 * stockLevels.put(stocks.get(i).getName(), quantity); //
+	 * System.out.println(quantity); }
+	 * 
+	 * } } return stockLevels; }
+	 * 
+	 * public ArrayList<Stock> panelStockList() { for (Product p :
+	 * totalProducts) { System.out.println("PanelStockList Method: " +
+	 * stockLevels().get(p.getName()));
+	 * 
+	 * if (stockLevels().get(p.getName()) == null) { Stock stock = new Stock(p,
+	 * 0); availableStock.add(stock); } else {
+	 * 
+	 * Stock stock = new Stock(p, stockLevels().get(p.getName()));
+	 * availableStock.add(stock); // } } return availableStock; }
+	 */
 	public void createCustomerPanel() throws IOException {
 
 		Dimension dim = getPreferredSize();
@@ -142,18 +178,23 @@ public class SaleFormPanel extends JPanel {
 		// local arraylist for stock to be created by checkLevel() giving
 		// product with total quantity
 		// will be used in place of stocks
-		size = stocks.size();
+		size = availableStock.size();
+		System.out.println("The size of availableStock:" + size);
 		stockName = new JLabel[size];
 		customerPrice = new JLabel[size];
+		maxAvailable = new JLabel[size];
 		quantityField = new JTextField[size];
 
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 
 		for (int i = 0; i < size; i++) {
-			stockName[i] = new JLabel(stocks.get(i).getName());
+			stockName[i] = new JLabel(availableStock.get(i).getName());
 			customerPrice[i] = new JLabel(": " + "\u20ac"
-					+ Double.toString(stocks.get(i).getCustomerPrice()));
+					+ Double.toString(availableStock.get(i).getCustomerPrice()));
+			maxAvailable[i] = new JLabel("("
+					+ Double.toString(availableStock.get(i).getQuantity())
+					+ ")");
 			quantityField[i] = new JTextField(3);
 
 			gc.gridy = i;
@@ -172,6 +213,11 @@ public class SaleFormPanel extends JPanel {
 			add(customerPrice[i], gc);
 
 			gc.gridx = 2;
+			gc.insets = new Insets(0, 0, 0, 0);
+			gc.anchor = GridBagConstraints.LINE_START;
+			add(maxAvailable[i], gc);
+
+			gc.gridx = 3;
 			gc.insets = new Insets(0, 0, 0, 0);
 			gc.anchor = GridBagConstraints.LINE_START;
 			add(quantityField[i], gc);
@@ -198,7 +244,7 @@ public class SaleFormPanel extends JPanel {
 				// Loop through ordered stock names and link to actual product
 				int i = 0;
 				for (String name : stockNames) {
-					for (Stock s : stocks) {
+					for (Stock s : availableStock) {
 						// stocks will be replaced by local arraylist derived
 						// using checkLevels()
 						if (s.getName().equals(name)) {
@@ -209,7 +255,8 @@ public class SaleFormPanel extends JPanel {
 					}
 					i++;
 				}
-
+				int sizeSaleStockList = saleStockList.size();
+				System.out.println("SALESTOCKLIST SIZE: " + sizeSaleStockList);
 				SaleFormEvent saleEvent = new SaleFormEvent(this, thisCustomer,
 						saleStockList);
 				if (formListener != null) {
@@ -240,7 +287,7 @@ public class SaleFormPanel extends JPanel {
 
 		editButton = new JButton("Finish");
 
-		size = stocks.size();
+		size = availableStock.size();
 		stockName = new JLabel[size];
 		customerPrice = new JLabel[size];
 		quantityField = new JTextField[size];
@@ -249,14 +296,14 @@ public class SaleFormPanel extends JPanel {
 		GridBagConstraints gc = new GridBagConstraints();
 
 		for (int i = 0; i < size; i++) {
-			stockName[i] = new JLabel(stocks.get(i).getName());
+			stockName[i] = new JLabel(availableStock.get(i).getName());
 			customerPrice[i] = new JLabel(": " + "\u20ac"
-					+ Double.toString(stocks.get(i).getCustomerPrice()));
+					+ Double.toString(availableStock.get(i).getCustomerPrice()));
 			quantityField[i] = new JTextField(3);
 			int j = 0;
 			for (Stock stock : saleStockListToEdit) {
 
-				if (stocks.get(i).getName().equals(stock.getName())) {
+				if (availableStock.get(i).getName().equals(stock.getName())) {
 					quantityField[i].setText(String.valueOf(saleStockListToEdit
 							.get(j).getQuantity()));
 					break;
@@ -306,7 +353,7 @@ public class SaleFormPanel extends JPanel {
 				// Loop through ordered stock names and link to actual product
 				int i = 0;
 				for (String name : stockNames) {
-					for (Stock s : stocks) {
+					for (Stock s : availableStock) {
 						// stocks will be replaced by local arraylist derived
 						// using checkLevels()
 						if (s.getName().equals(name)) {
