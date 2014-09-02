@@ -39,9 +39,6 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().getAllIncome();
-						financialTextPanel.clearText();
-						financialTextPanel.appendText("Total Price : "
-								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -51,9 +48,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
-						financialTextPanel.clearText();
-						financialTextPanel.appendText("Total Price : "
-								+ totalPrice + " euro\n");
+						
 					}
 
 					public void dailySales() {
@@ -85,9 +80,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().getAllExpenses();
-						financialTextPanel.clearText();
-						financialTextPanel.appendText("Total Price : "
-								+ totalPrice + " euro\n");
+						
 					}
 
 					@Override
@@ -97,9 +90,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
-						financialTextPanel.clearText();
-						financialTextPanel.appendText("Total Price : "
-								+ totalPrice + " euro\n");
+					
 					}
 				
 
@@ -135,7 +126,6 @@ public class FinancialMainPanel {
 						double loss = model.getShop().loss(income, expenses);
 						financialTablePanel.setProfitData(income, expenses,
 								profit, loss);
-						financialTextPanel.clearText();
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
@@ -149,7 +139,6 @@ public class FinancialMainPanel {
 						double loss = model.getShop().loss(income, expenses);
 						financialTablePanel.setProfitData(income, expenses,
 								profit, loss);
-						financialTextPanel.clearText();
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
@@ -185,9 +174,6 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
-						financialTextPanel.appendText("");
-						financialTextPanel.appendText("Total Price : "
-								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -197,9 +183,6 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
-						financialTextPanel.appendText("");
-						financialTextPanel.appendText("Total Price : "
-								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -209,9 +192,6 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
-						financialTextPanel.appendText("");
-						financialTextPanel.appendText("Total Price : "
-								+ totalPrice + " euro\n");
 					}
 
 					@Override
@@ -221,10 +201,6 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
-						financialTextPanel.appendText("");
-						financialTextPanel.appendText("Total Price : "
-								+ totalPrice + " euro\n");
-
 					}
 
 					@Override
@@ -234,10 +210,6 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
-						financialTextPanel.appendText("");
-						financialTextPanel.appendText("Total Price : "
-								+ totalPrice + " euro\n");
-
 					}
 
 					@Override
@@ -247,10 +219,6 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
-						financialTextPanel.appendText("");
-						financialTextPanel.appendText("Total Price : "
-								+ totalPrice + " euro\n");
-
 					}
 
 					@Override
@@ -262,7 +230,6 @@ public class FinancialMainPanel {
 						double loss = model.getShop().loss(income, expenses);
 						financialTablePanel.setProfitData(income, expenses,
 								profit, loss);
-						financialTextPanel.clearText();
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
@@ -276,7 +243,6 @@ public class FinancialMainPanel {
 						double loss = model.getShop().loss(income, expenses);
 						financialTablePanel.setProfitData(income, expenses,
 								profit, loss);
-						financialTextPanel.clearText();
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
@@ -290,7 +256,6 @@ public class FinancialMainPanel {
 						double loss = model.getShop().loss(income, expenses);
 						financialTablePanel.setProfitData(income, expenses,
 								profit, loss);
-						financialTextPanel.clearText();
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
@@ -300,9 +265,6 @@ public class FinancialMainPanel {
 		financialTablePanel.setFormPanel(financialFormPanel);
 		financialTablePanel.setSaleData(model.getShop().getSales());
 		financialTablePanel.setExpenditureData(model.getShop().getOrders());
-		// financialTablePanel.setProfitData(model.getShop().totalSales(), model
-		// .getShop().totalOrders(), model.getShop().profit(), model
-		// .getShop().loss());
 
 		financialToolbar.setFormPanel(financialFormPanel);
 		financialToolbar
@@ -350,14 +312,14 @@ public class FinancialMainPanel {
 					}
 
 				});
+		
 		financialTablePanel.setSaleData(model.getShop().getBlankSalesTable());
-
 		financialTablePanel.setVisible(true);
 
 		mainPanel.add(financialFormPanel, BorderLayout.WEST);
 		mainPanel.add(financialToolbar, BorderLayout.NORTH);
 		mainPanel.add(financialTablePanel, BorderLayout.CENTER);
-		mainPanel.add(financialTextPanel, BorderLayout.EAST);
+		mainPanel.add(financialTextPanel, BorderLayout.SOUTH);
 		mainPanel.setSize(600, 500);
 	}
 

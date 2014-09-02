@@ -496,7 +496,6 @@ public class Shop {
 
 
 	public ArrayList<Stock> getStock() {
-
 		return stocks;
 	}
 
