@@ -16,6 +16,7 @@ import GUI.FinancialFormEvent;
 import GUI.OrderFormEvent;
 import GUI.OrderFormPanel;
 import GUI.SaleFormEvent;
+import GUI.StockGUI;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
 
@@ -695,16 +696,15 @@ public class Shop {
 		return inStock;
 	}
 
-	public void createSale(SaleFormEvent e) {
+	public ArrayList<Stock> createSale(SaleFormEvent e) {
 
 		ArrayList<Stock> saleStocks = e.getStockList();
 		Customer customer = e.getCustomer();
 		Sale sale = new Sale(saleStocks, customer);
 		sales.add(sale);
 
-		for (Stock saleStock : saleStocks) {
-			processSale(saleStock, stocks, 0);
-		}
+		ArrayList<Stock> saleProcessed = StockGUI.checkStock(saleStocks,
+				getStock());
 
 		writeStock(stockFile);
 
@@ -713,6 +713,7 @@ public class Shop {
 			s.setId(newCount++);
 		}
 		writeSale(saleFile);
+		return saleProcessed;
 	}
 
 	public void removeSale(int index) {

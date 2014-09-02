@@ -154,12 +154,23 @@ public class StockGUI extends JPanel {
 			ArrayList<Stock> stockList, int quantity) {
 
 		for (Stock temp : salesList) {
-			if (!processSale(temp, stockList, quantity, 0)) {
-				System.out.println("Out of Stock Item: " + temp.getName());
-				// create an order
-				// Order.makeOrder(temp, stockList, quantity);
+				ArrayList<Stock> stockList) {
+		printArray(saleList);
+
+		for (Stock temp : saleList) {
+			if (!processSale(temp, stockList, 0)) {
+				System.out.println("Out of Stock Item: "
+						+ temp.getProduct().getName());
+				if (saleList.get(saleList.size() - 1) == temp) {
+					saleList.remove(temp);
+					break;
+				} else {
+					saleList.remove(temp);
+				}
 			}
 		}
+		printArray(saleList);
+		return saleList;
 	}
 
 	public static boolean processSale(Stock sale, ArrayList<Stock> stockList,
@@ -186,6 +197,13 @@ public class StockGUI extends JPanel {
 
 		}
 		return inStock;
+	}
+
+
+	public static void printArray(ArrayList<Stock> list) {
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println("LIST: " + list.get(0).getName());
+		}
 	}
 
 	public static void checkSellBy(ArrayList<Stock> stockList) {
