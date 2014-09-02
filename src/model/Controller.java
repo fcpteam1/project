@@ -549,7 +549,7 @@ public class Controller {
 				}
 
 				view.getMainmenu().getStockTab().setPredictData(data);
-				view.getMainmenu().getStockTab().fillWeekPrediction(data);
+				view.getMainmenu().getStockTab().fillMonthPrediction(data);
 			}
 		};
 
