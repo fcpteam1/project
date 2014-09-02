@@ -1,9 +1,11 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -14,15 +16,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import model.Model;
 import model.Stock;
+import model.Supplier;
 
 public class StockGUI extends JPanel {
 
@@ -30,7 +38,15 @@ public class StockGUI extends JPanel {
 	private JButton viewStockBtn;
 	private JPanel stockPanel;
 	private Model model;
-
+	//Darren
+	private JButton byDateBtn;
+	private JButton allBtn;
+	private StockTablePanel tablePanel;
+	private StockTableModel tableModel;
+	private JLabel newPriceLabel;
+	private JTextField newPriceField;
+	private JButton confirmBtn;
+	
 	// miall
 	private JButton predictStock, predictNextWeek, predictNextMonth, backTo;
 	private JComboBox stocks;
@@ -57,8 +73,22 @@ public class StockGUI extends JPanel {
 		buttonsPanel.setLayout(new FlowLayout());
 		stockConstraints=new GridBagConstraints();
 		
-		//
-
+		//Darren
+		byDateBtn = new JButton("View By Date");
+		allBtn = new JButton("View All");
+		tablePanel = new StockTablePanel();
+		
+		tablePanel.setListener(new StockTableListener(){
+			@Override
+			public void editPrice(String name) {
+				for(Stock stock: model.getShop().getStock()){
+					if(stock.getName().equals(name)){
+						//editPanel();
+					}
+				}
+			}
+		});
+		
 		textArea = new JTextArea(5, 20);
 		stockPanel = new JPanel();
 		//stockPanel.setSize(500, 600);
@@ -207,6 +237,61 @@ public class StockGUI extends JPanel {
 		return showPanel;
 	}
 
+//	public void editPanel(StockEvent ev){
+//		Dimension dim = getPreferredSize();
+//		dim.width = 300;
+//		setPreferredSize(dim);
+//		Border innerBorder = BorderFactory.createTitledBorder("Edit Item Price");
+//		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+//		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+//		newPriceLabel = new JLabel("New Price: ");
+//		newPriceField = new JTextField(3);
+//		confirmBtn = new JButton("Confirm");
+//
+//		confirmBtn.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				if(!newPriceField.getText().equals("")){
+//					double price = Double.valueOf(newPriceField.getText());
+//					for(Stock stock: model.getShop().getStock()){
+//						if(stock.getName().equals(name)){
+//							stock.setCustomerPrice(price);
+//						}
+//					}
+//				}
+//			}
+//		});
+//
+//		setLayout(new GridBagLayout());
+//		GridBagConstraints gc = new GridBagConstraints();
+//
+//		// First Row
+//		gc.gridy = 0;
+//		gc.weightx = 1;
+//		gc.weighty = 0.1;
+//
+//		gc.gridx = 0;
+//		gc.fill = GridBagConstraints.NONE;
+//		gc.anchor = GridBagConstraints.LINE_END;
+//		gc.insets = new Insets(0, 0, 0, 5);
+//		add(supplierLabel, gc);
+//
+//		gc.gridx = 1;
+//		gc.insets = new Insets(0, 0, 0, 0);
+//		gc.anchor = GridBagConstraints.LINE_START;
+//		add(supplierCombo, gc);
+//
+//		// Next Row
+//		gc.gridy++;
+//		gc.weightx = 1;
+//		gc.weighty = 0.1;
+//
+//		gc.gridx = 1;
+//		gc.insets = new Insets(0, 0, 0, 0);
+//		gc.anchor = GridBagConstraints.LINE_START;
+//		add(selectButton, gc);
+//		setVisible(true);
+//	}
+	
 	public void predictionPanel() {
 
 		predictNextWeek = new JButton("Estimate next Week");

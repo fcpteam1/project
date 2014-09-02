@@ -300,9 +300,6 @@ public class FinancialMainPanel {
 		financialTablePanel.setFormPanel(financialFormPanel);
 		financialTablePanel.setSaleData(model.getShop().getSales());
 		financialTablePanel.setExpenditureData(model.getShop().getOrders());
-		// financialTablePanel.setProfitData(model.getShop().totalSales(), model
-		// .getShop().totalOrders(), model.getShop().profit(), model
-		// .getShop().loss());
 
 		financialToolbar.setFormPanel(financialFormPanel);
 		financialToolbar
