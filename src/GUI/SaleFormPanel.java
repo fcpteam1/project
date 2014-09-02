@@ -14,6 +14,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -59,37 +60,6 @@ public class SaleFormPanel extends JPanel {
 		this.availableStock = stocks;
 	}
 
-	/*
-	 * public Map<String, Integer> stockLevels() {
-	 * 
-	 * for (Stock stock : stocks) { System.out.println(stock.getName() + "" +
-	 * stock.calculatePrice()); }
-	 * 
-	 * 
-	 * Map<String, Integer> stockLevels = new HashMap<String, Integer>();
-	 * 
-	 * for (int i = 0; i < stocks.size(); i++) { int quantity = 0; for (int j =
-	 * i; j < stocks.size(); j++) { boolean inMap = stockLevels
-	 * .containsKey(stocks.get(i).getName()); if (inMap && j == i) { j =
-	 * stocks.size(); } else if (stocks.get(i).getName()
-	 * .equals(stocks.get(j).getName())) { quantity = quantity +
-	 * stocks.get(j).getQuantity(); //
-	 * System.out.println(stocks.get(j).getQuantity());
-	 * stockLevels.put(stocks.get(i).getName(), quantity); //
-	 * System.out.println(quantity); }
-	 * 
-	 * } } return stockLevels; }
-	 * 
-	 * public ArrayList<Stock> panelStockList() { for (Product p :
-	 * totalProducts) { System.out.println("PanelStockList Method: " +
-	 * stockLevels().get(p.getName()));
-	 * 
-	 * if (stockLevels().get(p.getName()) == null) { Stock stock = new Stock(p,
-	 * 0); availableStock.add(stock); } else {
-	 * 
-	 * Stock stock = new Stock(p, stockLevels().get(p.getName()));
-	 * availableStock.add(stock); // } } return availableStock; }
-	 */
 	public void createCustomerPanel() throws IOException {
 
 		Dimension dim = getPreferredSize();
@@ -229,7 +199,9 @@ public class SaleFormPanel extends JPanel {
 				ArrayList<String> stockNames = new ArrayList<String>();
 				// Get ordered stock and associated quantities
 				for (int i = 0; i < size; i++) {
-					if (!quantityField[i].getText().equals("")) {
+					if (!quantityField[i].getText().equals("")
+							&& (Integer.valueOf(quantityField[i].getText()) <= Integer
+									.valueOf(maxAvailable[i].getText()))) {
 						try {
 							quantities.add(Integer.valueOf(quantityField[i]
 									.getText()));
@@ -237,6 +209,9 @@ public class SaleFormPanel extends JPanel {
 						} catch (NumberFormatException nfEx) {
 							System.out.println("Not an integer");
 						}
+					} else {
+						JOptionPane.showMessageDialog(SaleFormPanel.this,
+								"Exceeded max Avaialble");
 					}
 				}
 				// clear stock list from previous runs

@@ -168,34 +168,6 @@ public class Shop {
 		return ShopInstance;
 	}
 
-	public Map<String, Integer> stockLevels() {
-
-		/*
-		 * for (Stock stock : stocks) { System.out.println(stock.getName() + ""
-		 * + stock.calculatePrice()); }
-		 */
-
-		Map<String, Integer> stockLevels = new HashMap<String, Integer>();
-
-		for (int i = 0; i < stocks.size(); i++) {
-			int quantity = 0;
-			for (int j = i; j < stocks.size(); j++) {
-				boolean inMap = stockLevels
-						.containsKey(stocks.get(i).getName());
-				if (inMap && j == i) {
-					j = stocks.size();
-				} else if (stocks.get(i).getName()
-						.equals(stocks.get(j).getName())) {
-					quantity = quantity + stocks.get(j).getQuantity();
-					// System.out.println(stocks.get(j).getQuantity());
-					stockLevels.put(stocks.get(i).getName(), quantity);
-					// System.out.println(quantity);
-				}
-			}
-		}
-		return stockLevels;
-	}
-
 	public void loadSales(String inPutFile) {
 
 		try {
@@ -320,13 +292,37 @@ public class Shop {
 
 		for (Supplier s : suppliers) {
 			for (Product p : s.getProducts()) {
-				// for (Product t : totalProducts) {
-				// if (!t.getName().equals(p.getName())) {
 				totalProducts.add(p);
-				// }
-				// }
 			}
 		}
+	}
+
+	public Map<String, Integer> stockLevels() {
+
+		/*
+		 * for (Stock stock : stocks) { System.out.println(stock.getName() + ""
+		 * + stock.calculatePrice()); }
+		 */
+
+		Map<String, Integer> stockLevels = new HashMap<String, Integer>();
+
+		for (int i = 0; i < stocks.size(); i++) {
+			int quantity = 0;
+			for (int j = i; j < stocks.size(); j++) {
+				boolean inMap = stockLevels
+						.containsKey(stocks.get(i).getName());
+				if (inMap && j == i) {
+					j = stocks.size();
+				} else if (stocks.get(i).getName()
+						.equals(stocks.get(j).getName())) {
+					quantity = quantity + stocks.get(j).getQuantity();
+					// System.out.println(stocks.get(j).getQuantity());
+					stockLevels.put(stocks.get(i).getName(), quantity);
+					// System.out.println(quantity);
+				}
+			}
+		}
+		return stockLevels;
 	}
 
 	public void loadAvailableStock() {
@@ -699,16 +695,31 @@ public class Shop {
 		return inStock;
 	}
 
+	public static ArrayList<Stock> checkStock(ArrayList<Stock> saleList,
+			ArrayList<Stock> stockList) {
+
+		for (Stock temp : saleList) {
+			if (!processSale(temp, stockList, 0)) {
+				System.out.println("Out of Stock Item: "
+						+ temp.getProduct().getName());
+
+				if (saleList.get(saleList.size() - 1) == temp) {
+					saleList.remove(temp);
+					break;
+				} else {
+					saleList.remove(temp);
+				}
+			}
+		}
+		return saleList;
+	}
+
 	public void createSale(SaleFormEvent e) {
 
-		ArrayList<Stock> saleStocks = e.getStockList();
-		Customer customer = e.getCustomer();
-		Sale sale = new Sale(saleStocks, customer);
-		sales.add(sale);
+		ArrayList<Stock> inStockList = checkStock(e.getStockList(), stocks);
 
-		for (Stock saleStock : saleStocks) {
-			processSale(saleStock, stocks, 0);
-		}
+		Sale sale = new Sale(inStockList, e.getCustomer());
+		sales.add(sale);
 
 		writeStock(stockFile);
 
