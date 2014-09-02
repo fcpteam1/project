@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -62,7 +63,7 @@ public class SupplierGUI {
 	boolean supplier;
 	int current = 0;
 
-	public SupplierGUI() {
+	public SupplierGUI() throws IOException {
 		// TODO Auto-generated constructor stub
 
 		addNewProducts();
@@ -86,6 +87,7 @@ public class SupplierGUI {
 		borderPanel = new JPanel();
 		borderPanel.setLayout(new BorderLayout());
 
+		
 		buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridBagLayout());
 

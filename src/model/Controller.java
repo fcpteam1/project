@@ -6,7 +6,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 public class Controller {
 
@@ -31,6 +33,7 @@ public class Controller {
 	private ActionListener createSupplier;
 
 	private ActionListener stockBack, weekPredict, monthPredict, predict;
+	private ActionListener switchToLogin,exit,loginDelay;
 
 	public Controller() throws IOException {
 		// TODO Auto-generated constructor stub
@@ -558,7 +561,56 @@ public class Controller {
 				view.getMainmenu().getStockTab().switchToMain();
 			}
 		};
+		
+		switchToLogin=new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				view.getLogin().getPanel().setVisible(true);
+				new Timer(1, new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						view.getWelcomeScreen().getWelcomePanel().setLocation(view.getWelcomeScreen().getWelcomePanel().getX() - 5, 0);
+						
+						if (view.getWelcomeScreen().getWelcomePanel().getX()+view.getWelcomeScreen().getWelcomePanel().getWidth() <= 0) {
+							((Timer) e.getSource()).stop();
+							
+							view.getLogin().getSubmit().setEnabled(true);
+							view.getLogin().getPanel().setVisible(true);
+							view.getWelcomeScreen().getWelcomePanel().setVisible(false);
+							view.getLogin().startTimer();
+							view.getLogin().settStart(System.currentTimeMillis());
+							view.getLogin().setTend(view.getLogin().gettStart());
+						}
+					}
+				}).start();
+			}
+		};
+		
+		exit=new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+
+			}
+		};
+		
+		loginDelay=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				view.getLogin().setTend(System.currentTimeMillis());
+				//System.out.println(view.getLogin().getTime());
+				if((view.getLogin().getTend() - view.getLogin().gettStart()) >60000){
+					view.getLogin().stopTimer();
+					view.idle();
+					view.getLogin().getPanel().setVisible(false);
+					
+				}
+				
+			}
+		};
+		
 	}
 
 	public Object[][] fillProductsForSupplier(int current) {
@@ -644,6 +696,14 @@ public class Controller {
 				.addActionListener(monthPredict);
 		view.getMainmenu().getStockTab().getPredictStock()
 				.addActionListener(predict);
+		
+		
+		view.getWelcomeScreen().getswitchToLoginPanelButton().addActionListener(switchToLogin);
+		view.getWelcomeScreen().getExit().addActionListener(exit);
+		view.getLogin().setDelayTimer(loginDelay);
+		
+		
+		
 	}
 
 	public Object[][] fillSupplierTable() {
