@@ -458,11 +458,9 @@ public class Shop {
 	public ArrayList<Order> getWeeklyOrders(FinancialFormEvent e) {
 		int week = e.getWeek();
 		int month = e.getMonth();
-		
-		System.out.println(week + "\n" + month);
-				
 		Calendar today = Calendar.getInstance();
-
+		today.set(Calendar.WEEK_OF_MONTH, week);
+		today.set(Calendar.MONTH, month);
 		financialOrders.clear();
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
@@ -479,11 +477,7 @@ public class Shop {
 	}
 
 	public ArrayList<Order> getMonthlyOrders(FinancialFormEvent e) {
-		
 		int month = e.getMonth();
-		
-		System.out.println(month);
-		
 		Calendar today = Calendar.getInstance();
 		today.set(Calendar.MONTH,month);
 		financialOrders.clear();
@@ -849,7 +843,71 @@ public class Shop {
 		income = round(income);
 		return income;
 	}
+	
+	public double getDailyIncome(FinancialFormEvent e){
+		double income = 0;
+		int day = e.getDay();
+		int week = e.getWeek();
+		int month = e.getMonth();
 
+		System.out.println(day + "\n" + month);
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.MONTH, month);
+		today.set(Calendar.WEEK_OF_MONTH, week);
+		today.set(Calendar.DAY_OF_WEEK, day);
+		for (Sale sale : sales) {
+			Calendar saleDate = dateToCalender(sale.getDate());
+
+			if ((saleDate.get(Calendar.DAY_OF_WEEK) == today.get(Calendar.DAY_OF_WEEK))&&
+					(saleDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
+					&& (saleDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
+					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+				income += sale.getTotalPrice();
+			}
+		}
+		income = round(income);
+		return income;
+	}
+
+	public double getWeeklyIncome(FinancialFormEvent e){
+		double income = 0;
+		int week = e.getWeek();
+		int month = e.getMonth();
+		
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.WEEK_OF_MONTH, week);
+		today.set(Calendar.MONTH, month);
+		for (Sale sale : sales) {
+			Calendar saleDate = dateToCalender(sale.getDate());
+
+			if ((saleDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
+					&& (saleDate.get(Calendar.MONTH) == today
+							.get(Calendar.MONTH))
+					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+				income += sale.getTotalPrice();
+			}
+		}
+		income = round(income);
+		return income;
+	}
+	
+	public double getMonthlyIncome(FinancialFormEvent e){
+		double income = 0;
+		int month = e.getMonth();
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.MONTH, month);
+		for (Sale sale : sales) {
+			Calendar saleDate = dateToCalender(sale.getDate());
+
+			if ((saleDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
+				&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+				income += sale.getTotalPrice();
+			}
+		}
+		income = round(income);
+		return income;
+	}
+	
 	public double getAllExpenses() {
 		double expenses = 0;
 		for (Order order : getOrders()) {
@@ -868,6 +926,67 @@ public class Shop {
 		return expenses;
 	}
 
+	public double getDailyExpenses(FinancialFormEvent e){
+		double expenses = 0;
+		int day = e.getDay();
+		int week = e.getWeek();
+		int month = e.getMonth();
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.MONTH, month);
+		today.set(Calendar.WEEK_OF_MONTH, week);
+		today.set(Calendar.DAY_OF_WEEK, day);
+		for (Order order : orders) {
+			Calendar orderDate = dateToCalender(order.getDate());
+
+			if ((orderDate.get(Calendar.DAY_OF_WEEK) == today.get(Calendar.DAY_OF_WEEK))&&
+					(orderDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
+					&& (orderDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
+					&& (orderDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+				expenses += order.getTotalPrice();
+			}
+		}
+		expenses = round(expenses);
+		return expenses;
+	}
+	
+	public double getWeeklyExpenses(FinancialFormEvent e){
+		double expenses = 0;
+		int week = e.getWeek();
+		int month = e.getMonth();
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.WEEK_OF_MONTH, week);
+		today.set(Calendar.MONTH, month);
+		for (Order order : orders) {
+			Calendar orderDate = dateToCalender(order.getDate());
+
+			if ((orderDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
+					&& (orderDate.get(Calendar.MONTH) == today
+							.get(Calendar.MONTH))
+					&& (orderDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+				expenses += order.getTotalPrice();
+			}
+		}
+		expenses = round(expenses);
+		return expenses;
+	}
+	
+	public double getMonthlyExpenses(FinancialFormEvent e){
+		double expenses = 0;
+		int month = e.getMonth();
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.MONTH, month);
+		for (Order order : orders) {
+			Calendar orderDate = dateToCalender(order.getDate());
+
+			if ((orderDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
+				&& (orderDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+				expenses += order.getTotalPrice();
+			}
+		}
+		expenses = round(expenses);
+		return expenses;
+	}
+	
 	public double round(double val) {
 		val = Math.round(val * 100) / 100.00;
 		return val;
