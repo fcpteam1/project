@@ -10,6 +10,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
@@ -37,7 +38,7 @@ public class FinancialTablePanel extends JPanel {
 		expenditureModel = new FinancialExpenditureTableModel();
 		saleModel = new FinancialSaleTableModel();
 		profitModel = new FinancialProfitTableModel();
-		JButton graphBtn = new JButton("Barchart");
+		JButton graphBtn = new JButton("Chart");
 
 		graphBtn.addActionListener(new ActionListener() {
 			@Override
@@ -59,7 +60,7 @@ public class FinancialTablePanel extends JPanel {
 							contentPane.setScene(createExpensesBarChart());
 						}
 						else if (choice == 3){
-							contentPane.setScene(createSaleBarChart());
+							contentPane.setScene(createProfitLineChart());
 						}
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
@@ -116,6 +117,37 @@ public class FinancialTablePanel extends JPanel {
 
 				bc.getData().addAll(series1);
 				return new Scene(bc, 800, 600);
+			}
+			
+			private Scene createProfitLineChart() {
+				 final CategoryAxis xAxis = new CategoryAxis();
+			        final NumberAxis yAxis = new NumberAxis();
+			         xAxis.setLabel("Month");
+			        final LineChart<String,Number> lineChart = 
+			                new LineChart<String,Number>(xAxis,yAxis);
+			       
+			        lineChart.setTitle("Stock Monitoring, 2010");
+			                          
+			        XYChart.Series series1 = new XYChart.Series();
+			        series1.setName("Sales");
+			        for (Sale sale: saleModel.getData()){
+			        	series1.getData().add(new XYChart.Data("test",sale.getTotalPrice()));
+			        }
+			        
+			        
+			        
+			        XYChart.Series series2 = new XYChart.Series();
+			        series2.setName("Orders");
+			        for (Order order: expenditureModel.getData()){
+			        	series1.getData().add(new XYChart.Data("test",order.getTotalPrice()));
+			        }
+			        
+			        XYChart.Series series3 = new XYChart.Series();
+			        series3.setName("Profit");
+		
+			        
+			        lineChart.getData().addAll(series1, series2, series3);
+			        return new Scene(lineChart,800,600);        
 			}
 
 		});

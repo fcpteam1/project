@@ -6,17 +6,14 @@ import java.io.IOException;
 import javax.swing.JPanel;
 
 import model.Model;
-import model.Order;
-import model.Sale;
+
 
 public class FinancialMainPanel {
 	private JPanel mainPanel;
 	private FinancialToolbar financialToolbar;
 	private FinancialFormPanel financialFormPanel;
 	private FinancialTablePanel financialTablePanel;
-	private FinancialTableModel financialTableModel;
 	private FinancialTextPanel financialTextPanel;
-	private double totalPrice;
 	private Model model;
 
 	public FinancialMainPanel() throws IOException {
@@ -35,10 +32,11 @@ public class FinancialMainPanel {
 					@Override
 					public void allSales() {
 						financialTablePanel.setSaleData(model.getShop()
-								.getSales());
+								.getAllSales());
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
-						double totalPrice = model.getShop().getAllIncome();
+						double totalPrice = model.getShop().totalSales();
+						financialTextPanel.getTotal(totalPrice);
 					}
 
 					@Override
@@ -48,6 +46,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
+						financialTextPanel.getTotal(totalPrice);
 						
 					}
 
@@ -76,10 +75,11 @@ public class FinancialMainPanel {
 					@Override
 					public void allExpenses() {
 						financialTablePanel.setExpenditureData(model.getShop()
-								.getOrders());
+								.getAllOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().getAllExpenses();
+						financialTextPanel.getTotal(totalPrice);
 						
 					}
 
@@ -90,6 +90,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.getTotal(totalPrice);
 					
 					}
 				
@@ -174,6 +175,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
+						financialTextPanel.getTotal(totalPrice);
 					}
 
 					@Override
@@ -183,6 +185,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
+						financialTextPanel.getTotal(totalPrice);
 					}
 
 					@Override
@@ -192,6 +195,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
+						financialTextPanel.getTotal(totalPrice);
 					}
 
 					@Override
@@ -201,6 +205,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.getTotal(totalPrice);
 					}
 
 					@Override
@@ -210,6 +215,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.getTotal(totalPrice);
 					}
 
 					@Override
@@ -219,6 +225,7 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
+						financialTextPanel.getTotal(totalPrice);
 					}
 
 					@Override
