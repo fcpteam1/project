@@ -121,7 +121,7 @@ public class FinancialTablePanel extends JPanel {
 		});
 
 		setLayout(new BorderLayout());
-		add(graphBtn, BorderLayout.SOUTH);
+		add(graphBtn, BorderLayout.NORTH);
 		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
 
@@ -137,9 +137,8 @@ public class FinancialTablePanel extends JPanel {
 		saleModel.setData(sales);
 	}
 
-	public void setProfitData(double income, double expenditure, double profit,
-			double loss) {
-		profitModel.setData(income, expenditure, profit, loss);
+	public void setProfitData(ArrayList<Order> orders, ArrayList<Sale> sales) {
+		profitModel.setData(orders, sales);
 	}
 
 	public void refresh() {
