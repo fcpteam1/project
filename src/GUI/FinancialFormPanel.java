@@ -27,7 +27,6 @@ public class FinancialFormPanel extends JPanel {
 			submitBtn;
 	private JComboBox dayList, weekList, monthList;
 	private JLabel dayLabel, weekLabel, monthLabel;
-	private Model model;
 	private FinancialFormListener listener;
 	private Calendar cal;
 	private int day, week, month;
@@ -279,7 +278,7 @@ public class FinancialFormPanel extends JPanel {
 		weeklyBtn = new JButton("Weekly Profits");
 		monthlyBtn = new JButton("Monthly Profits");
 
-		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border innerBorder = BorderFactory.createTitledBorder("Profits");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
@@ -297,7 +296,7 @@ public class FinancialFormPanel extends JPanel {
 		});
 		todayBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				listener.dailyProfits();
+				listener.todaysProfits();
 			}
 		});
 		weeklyBtn.addActionListener(new ActionListener() {
@@ -1331,7 +1330,7 @@ public class FinancialFormPanel extends JPanel {
 			}
 		});
 
-		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border innerBorder = BorderFactory.createTitledBorder("Profits");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
@@ -1482,12 +1481,12 @@ public class FinancialFormPanel extends JPanel {
 				FinancialFormEvent ev = new FinancialFormEvent(this,week,month);
 
 				if (listener != null) {
-					listener.saleWeekSelected(ev);
+					listener.profitWeekSelected(ev);
 				}
 			}
 		});
 
-		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border innerBorder = BorderFactory.createTitledBorder("Profits");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
@@ -1607,7 +1606,7 @@ public class FinancialFormPanel extends JPanel {
 			}
 		});
 		
-		Border innerBorder = BorderFactory.createTitledBorder("Sales");
+		Border innerBorder = BorderFactory.createTitledBorder("Profits");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 

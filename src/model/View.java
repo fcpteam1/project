@@ -35,7 +35,7 @@ public class View extends JFrame {
 	public View() throws IOException {
 		// TODO Auto-generated constructor stub
 
-		//setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
