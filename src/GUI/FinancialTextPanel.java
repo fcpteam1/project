@@ -1,4 +1,5 @@
 package GUI;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
@@ -14,18 +15,18 @@ public class FinancialTextPanel extends JPanel {
 	public FinancialTextPanel() {
 		textArea = new JTextArea();
 		textArea.append("Product and Quantity Selected: \n\n");
-		
+
 		setLayout(new BorderLayout());
 
 		add(new JScrollPane(textArea), BorderLayout.CENTER);
 	}
-	
-	public void clearText(){
-		textArea.removeAll();
+
+	public void clearText() {
+		textArea.setText("");
 	}
 
 	public void appendText(String text) {
 		textArea.append(text);
 	}
-	
+
 }

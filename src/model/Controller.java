@@ -555,7 +555,7 @@ public class Controller {
 
 		stockBack = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				view.getMainmenu().getStockTab().switchToStockPredict();
+				view.getMainmenu().getStockTab().switchToMain();
 			}
 		};
 

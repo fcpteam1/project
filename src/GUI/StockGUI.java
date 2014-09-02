@@ -42,6 +42,8 @@ public class StockGUI extends JPanel {
 	private Object[][] predictData;
 	private JTable predictionTabel;
 	private JScrollPane predictionScroll;
+	private GridBagConstraints showConstraints,stockConstraints;
+
 
 	//
 
@@ -53,21 +55,23 @@ public class StockGUI extends JPanel {
 		buttonsPanel = new JPanel();
 		predictStock = new JButton("Estimated StockSales");
 		buttonsPanel.setLayout(new FlowLayout());
+		stockConstraints=new GridBagConstraints();
+		
 		//
 
 		textArea = new JTextArea(5, 20);
 		stockPanel = new JPanel();
-		stockPanel.setSize(500, 600);
+		//stockPanel.setSize(500, 600);
 		model = new Model();
-		stockPanel.setLayout(new BorderLayout());
+		//stockPanel.setLayout(new BorderLayout());
 		viewStockBtn = new JButton("View Stock");
 
 		// niall
-		stockPanel.add(textArea);
+		//stockPanel.add(textArea);
 		buttonsPanel.add(viewStockBtn);
 		buttonsPanel.add(predictStock);
 		// stockPanel.add(viewStockBtn, BorderLayout.NORTH);
-		stockPanel.add(buttonsPanel, BorderLayout.NORTH);
+		//stockPanel.add(buttonsPanel, BorderLayout.NORTH);
 		//
 
 		viewStockBtn.addActionListener(new ActionListener() {
@@ -83,8 +87,36 @@ public class StockGUI extends JPanel {
 			}
 
 		});
+		stockPanel.setLayout(new GridBagLayout());
+		stockConstraints.gridx=0;
+		stockConstraints.gridy=0;
+		stockConstraints.gridheight=1;
+		stockConstraints.gridwidth=3;
+		stockConstraints.weightx=1;
+		stockConstraints.weighty=0.2;
+		stockConstraints.fill = GridBagConstraints.BOTH;
+		stockPanel.add(buttonsPanel,stockConstraints);
+		stockConstraints.gridx=0;
+		stockConstraints.gridy=1;
+		stockConstraints.gridheight=2;
+		stockConstraints.gridwidth=3;
+		stockConstraints.weighty=1;
+		stockConstraints.fill = GridBagConstraints.BOTH;
+		stockPanel.add(textArea,stockConstraints);
+		
+		showPanel.setLayout(new GridBagLayout());
+		showConstraints=new GridBagConstraints();
+		showConstraints.gridx=0;
+		showConstraints.gridy=0;
+		showConstraints.gridwidth=3;
+		showConstraints.gridheight=3;
+		
+		showConstraints.weightx=1;
+		showConstraints.weighty=1;
+		showConstraints.anchor=GridBagConstraints.FIRST_LINE_START;
+		showConstraints.fill = GridBagConstraints.BOTH;
 		// showPanel.add(stockPanel);
-		showPanel = stockPanel;
+		showPanel.add(stockPanel,showConstraints);
 	}
 
 	public Map<String, Integer> stockLevels() {
@@ -343,14 +375,14 @@ public class StockGUI extends JPanel {
 
 	public void switchToStockPredict() {
 		showPanel.removeAll();
-		showPanel.add(predictionPanel);
+		showPanel.add(predictionPanel,showConstraints);
 		showPanel.validate();
 		showPanel.repaint();
 	}
 
 	public void switchToMain() {
 		showPanel.removeAll();
-		showPanel.add(stockPanel);
+		showPanel.add(stockPanel,showConstraints);
 		showPanel.validate();
 		showPanel.repaint();
 	}
