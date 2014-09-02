@@ -212,4 +212,12 @@ public class MainMenuGUI {
 		this.adminLogged = adminLogged;
 	}
 
+	public StockGUI getStockTab() {
+		return stockTab;
+	}
+
+	public void setStockTab(StockGUI stockTab) {
+		this.stockTab = stockTab;
+	}
+
 }

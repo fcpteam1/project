@@ -126,7 +126,7 @@ public class Shop {
 		loadSales(saleFile);
 		loadOrders(orderFile);
 
-		predictor = new StockSalesPredictor(sales);
+		predictor = new StockSalesPredictor();
 
 		/*
 		 * for (Sale s : sales) { for (Stock stock : s.getStocks()) {
@@ -800,6 +800,7 @@ public class Shop {
 		return totalSum;
 	}
 
+	
 	public double totalOrders() {
 		double totalSum = 0;
 		for (Order order : financialOrders) {
@@ -990,5 +991,13 @@ public class Shop {
 	public double round(double val) {
 		val = Math.round(val * 100) / 100.00;
 		return val;
+	}
+	
+	public StockSalesPredictor getPredictor() {
+		return predictor;
+	}
+
+	public void setPredictor(StockSalesPredictor predictor) {
+		this.predictor = predictor;
 	}
 }
