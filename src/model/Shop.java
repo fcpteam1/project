@@ -128,26 +128,9 @@ public class Shop {
 
 		predictor = new StockSalesPredictor();
 
-		/*
-		 * for (Sale s : sales) { for (Stock stock : s.getStocks()) {
-		 * System.out.println("Name " + stock.getName() + "  Quantity " +
-		 * stock.getQuantity()); } System.out.println(s.getCustomer() +
-		 * " : From sales.ser"); }
-		 */
-		/*
-		 * for (Order o : orders) System.out.println(o.getSupplier() +
-		 * " : From orders.ser"); for (Customer c : customers)
-		 * System.out.println(c.getName() + ", " + c.getAddress() ); for (User u
-		 * : users) System.out.println((u.getUsername() + ", " + u.getId()));
-		 * for (Supplier s : suppliers) System.out.println(s.getName() +
-		 * " Product list size: " + s.getProducts().size());
-		 */
 		for (Stock stock : stocks)
 			System.out.println(stock.getName() + " Quantity: "
 					+ stock.getQuantity());
-
-		// checkLogin();
-		// mainMenu();
 
 	}
 
@@ -415,6 +398,14 @@ public class Shop {
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}
+	
+	public ArrayList<Order> getAllOrders() {
+		financialOrders.clear();
+		for (Order order: orders){
+			financialOrders.add(order);
+		}
+		return financialOrders;
+	}
 
 	public ArrayList<Order> getTodayOrders() {
 		Calendar today = Calendar.getInstance();
@@ -499,9 +490,17 @@ public class Shop {
 		return stocks;
 	}
 
+	public ArrayList<Sale> getAllSales() {
+		financialSales.clear();
+		for (Sale sale: sales){
+			financialSales.add(sale);
+		}
+		return financialSales;
+	}
+	
 	public ArrayList<Sale> getSales() {
 		return sales;
-	}
+	} 
 
 	public ArrayList<Sale> getBlankSalesTable() {
 		return blankSalesTable;
