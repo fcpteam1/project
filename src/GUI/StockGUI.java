@@ -1,6 +1,9 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -12,7 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import model.Model;
@@ -25,7 +31,29 @@ public class StockGUI extends JPanel {
 	private JPanel stockPanel;
 	private Model model;
 
+	// miall
+	private JButton predictStock, predictNextWeek, predictNextMonth, backTo;
+	private JComboBox stocks;
+	private int next, current, last, lastTwo, lastThree;
+	double dnext, dcurrent, dlast, dlastTwo, dlastThree;
+	private JPanel predictionPanel;
+	private JPanel chartPanel, buttonsPanel, showPanel;
+	private String[] predictColumnsWeeks, predictColumnsMonths;
+	private Object[][] predictData;
+	private JTable predictionTabel;
+	private JScrollPane predictionScroll;
+
+	//
+
 	public StockGUI() throws IOException {
+
+		// niall
+		predictionPanel();
+		showPanel = new JPanel();
+		buttonsPanel = new JPanel();
+		predictStock = new JButton("Estimated StockSales");
+		buttonsPanel.setLayout(new FlowLayout());
+		//
 
 		textArea = new JTextArea(5, 20);
 		stockPanel = new JPanel();
@@ -34,8 +62,13 @@ public class StockGUI extends JPanel {
 		stockPanel.setLayout(new BorderLayout());
 		viewStockBtn = new JButton("View Stock");
 
+		// niall
 		stockPanel.add(textArea);
-		stockPanel.add(viewStockBtn, BorderLayout.NORTH);
+		buttonsPanel.add(viewStockBtn);
+		buttonsPanel.add(predictStock);
+		// stockPanel.add(viewStockBtn, BorderLayout.NORTH);
+		stockPanel.add(buttonsPanel, BorderLayout.NORTH);
+		//
 
 		viewStockBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -50,6 +83,8 @@ public class StockGUI extends JPanel {
 			}
 
 		});
+		// showPanel.add(stockPanel);
+		showPanel = stockPanel;
 	}
 
 	public Map<String, Integer> stockLevels() {
@@ -137,7 +172,211 @@ public class StockGUI extends JPanel {
 	}
 
 	public JPanel getPanel() {
-		return stockPanel;
+		return showPanel;
+	}
+
+	public void predictionPanel() {
+
+		predictNextWeek = new JButton("Estimate next Week");
+		predictNextMonth = new JButton("Estimate next Month");
+		backTo = new JButton("Back");
+
+		chartPanel = new JPanel();
+		predictionPanel = new JPanel();
+		predictionPanel.setLayout(new BorderLayout());
+
+		predictColumnsWeeks = new String[] { "Stock", "3 Weeks", "2 Weeks",
+				"Last Week", "This Week", "Estimated next Week" };
+		predictColumnsMonths = new String[] { "Stock", "3 Months", "2 Months",
+				"Last Month", "This Month", "Estimated next Month" };
+
+		chartPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+
+		predictData = new Object[1][6];
+		predictData[0][0] = null;
+		predictData[0][1] = null;
+		predictData[0][2] = null;
+		predictData[0][3] = null;
+		predictData[0][4] = null;
+		predictData[0][5] = null;
+		predictionTabel = new JTable(predictData, predictColumnsWeeks);
+		predictionScroll = new JScrollPane(predictionTabel);
+		predictionPanel.add(predictionScroll, BorderLayout.CENTER);
+
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weighty = 0.1;
+		c.weightx = 1;
+		c.gridwidth = 3;
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		chartPanel.add(predictNextWeek, c);
+
+		c.gridy = 1;
+
+		chartPanel.add(predictNextMonth, c);
+
+		c.gridy = 2;
+		c.weighty = 0.9;
+		chartPanel.add(backTo, c);
+
+		predictionPanel.add(chartPanel, BorderLayout.WEST);
+
+	}
+
+	public int getNext() {
+		return next;
+	}
+
+	public void setNext(int next) {
+		this.next = next;
+	}
+
+	public int getCurrent() {
+		return current;
+	}
+
+	public void setCurrent(int current) {
+		this.current = current;
+	}
+
+	public int getLast() {
+		return last;
+	}
+
+	public void setLast(int last) {
+		this.last = last;
+	}
+
+	public int getLastTwo() {
+		return lastTwo;
+	}
+
+	public void setLastTwo(int lastTwo) {
+		this.lastTwo = lastTwo;
+	}
+
+	public int getLastThree() {
+		return lastThree;
+	}
+
+	public void setLastThree(int lastThree) {
+		this.lastThree = lastThree;
+	}
+
+	public double getDnext() {
+		return dnext;
+	}
+
+	public void setDnext(double dnext) {
+		this.dnext = dnext;
+	}
+
+	public double getDcurrent() {
+		return dcurrent;
+	}
+
+	public void setDcurrent(double dcurrent) {
+		this.dcurrent = dcurrent;
+	}
+
+	public double getDlast() {
+		return dlast;
+	}
+
+	public void setDlast(double dlast) {
+		this.dlast = dlast;
+	}
+
+	public double getDlastTwo() {
+		return dlastTwo;
+	}
+
+	public void setDlastTwo(double dlastTwo) {
+		this.dlastTwo = dlastTwo;
+	}
+
+	public double getDlastThree() {
+		return dlastThree;
+	}
+
+	public void setDlastThree(double dlastThree) {
+		this.dlastThree = dlastThree;
+	}
+
+	public Object[][] getPredictData() {
+		return predictData;
+	}
+
+	public void setPredictData(Object[][] predictData) {
+		this.predictData = predictData;
+	}
+
+	public JButton getBackTo() {
+		return backTo;
+	}
+
+	public void fillWeekPrediction(Object[][] data) {
+		predictionPanel.remove(predictionScroll);
+
+		predictionTabel = new JTable(data, predictColumnsWeeks);
+		predictionScroll = new JScrollPane(predictionTabel);
+
+		predictionPanel.add(predictionScroll, BorderLayout.CENTER);
+		predictionPanel.validate();
+		predictionPanel.repaint();
+
+	}
+
+	public void fillMonthPrediction(Object[][] data) {
+
+		predictionPanel.remove(predictionScroll);
+
+		predictionTabel = new JTable(data, predictColumnsMonths);
+		predictionScroll = new JScrollPane(predictionTabel);
+
+		predictionPanel.add(predictionScroll, BorderLayout.CENTER);
+		predictionPanel.validate();
+		predictionPanel.repaint();
+	}
+
+	public void switchToStockPredict() {
+		showPanel.removeAll();
+		showPanel.add(predictionPanel);
+		showPanel.validate();
+		showPanel.repaint();
+	}
+
+	public void switchToMain() {
+		showPanel.removeAll();
+		showPanel.add(stockPanel);
+		showPanel.validate();
+		showPanel.repaint();
+	}
+
+	public JButton getPredictNextWeek() {
+		return predictNextWeek;
+	}
+
+	public void setPredictNextWeek(JButton predictNextWeek) {
+		this.predictNextWeek = predictNextWeek;
+	}
+
+	public JButton getPredictNextMonth() {
+		return predictNextMonth;
+	}
+
+	public void setPredictNextMonth(JButton predictNextMonth) {
+		this.predictNextMonth = predictNextMonth;
+	}
+
+	public JButton getPredictStock() {
+		return predictStock;
+	}
+
+	public void setPredictStock(JButton predictStock) {
+		this.predictStock = predictStock;
 	}
 
 }

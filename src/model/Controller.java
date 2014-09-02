@@ -30,6 +30,8 @@ public class Controller {
 			addSupButton;
 	private ActionListener createSupplier;
 
+	private ActionListener stockBack, weekPredict, monthPredict, predict;
+
 	public Controller() throws IOException {
 		// TODO Auto-generated constructor stub
 
@@ -492,6 +494,71 @@ public class Controller {
 				model.getShop().getSuppliers().add(supplier);
 			}
 		};
+
+		predict = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				view.getMainmenu().getStockTab().switchToStockPredict();
+			}
+		};
+
+		weekPredict = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Object data[][];
+				int count = 0;
+				int[] result = new int[5];
+				data = new Object[model.getShop().getStock().size()][6];
+				for (Stock stock : model.getShop().getStock()) {
+					result = model
+							.getShop()
+							.getPredictor()
+							.stockPredictor(model.getShop().getSales(), stock,
+									true);
+					data[count][0] = stock.getName();
+					data[count][1] = result[0];
+					data[count][2] = result[1];
+					data[count][3] = result[2];
+					data[count][4] = result[3];
+					data[count][5] = result[4];
+					System.out.println(count);
+					count++;
+				}
+				view.getMainmenu().getStockTab().setPredictData(data);
+				view.getMainmenu().getStockTab().fillWeekPrediction(data);
+			}
+		};
+
+		monthPredict = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Object data[][];
+				int count = 0;
+				int[] result = new int[5];
+				data = new Object[model.getShop().getStock().size()][6];
+				for (Stock stock : model.getShop().getStock()) {
+					result = model
+							.getShop()
+							.getPredictor()
+							.stockPredictor(model.getShop().getSales(), stock,
+									false);
+					data[count][0] = stock.getName();
+					data[count][1] = result[0];
+					data[count][2] = result[1];
+					data[count][3] = result[2];
+					data[count][4] = result[3];
+					data[count][5] = result[4];
+					count++;
+				}
+
+				view.getMainmenu().getStockTab().setPredictData(data);
+				view.getMainmenu().getStockTab().fillWeekPrediction(data);
+			}
+		};
+
+		stockBack = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				view.getMainmenu().getStockTab().switchToStockPredict();
+			}
+		};
+
 	}
 
 	public Object[][] fillProductsForSupplier(int current) {
@@ -569,6 +636,14 @@ public class Controller {
 		view.getMainmenu().getSupplierTab().getExitCreatePanelButton()
 				.addActionListener(exitCreatePanel);
 
+		view.getMainmenu().getStockTab().getBackTo()
+				.addActionListener(stockBack);
+		view.getMainmenu().getStockTab().getPredictNextWeek()
+				.addActionListener(weekPredict);
+		view.getMainmenu().getStockTab().getPredictNextMonth()
+				.addActionListener(monthPredict);
+		view.getMainmenu().getStockTab().getPredictStock()
+				.addActionListener(predict);
 	}
 
 	public Object[][] fillSupplierTable() {

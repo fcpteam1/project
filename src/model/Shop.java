@@ -126,7 +126,7 @@ public class Shop {
 		loadSales(saleFile);
 		loadOrders(orderFile);
 
-		predictor = new StockSalesPredictor(sales);
+		predictor = new StockSalesPredictor();
 
 		/*
 		 * for (Sale s : sales) { for (Stock stock : s.getStocks()) {
@@ -731,4 +731,13 @@ public class Shop {
 		}
 		return totalSum;
 	}
+
+	public StockSalesPredictor getPredictor() {
+		return predictor;
+	}
+
+	public void setPredictor(StockSalesPredictor predictor) {
+		this.predictor = predictor;
+	}
+
 }

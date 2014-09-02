@@ -39,9 +39,9 @@ public class StockSalesPredictor {
 
 	double nextWeekStockSales, nextMonthStockSales;
 
-	public StockSalesPredictor(ArrayList<Sale> sales) {
+	public StockSalesPredictor() {
 		// TODO Auto-generated constructor stub
-		salesPredictor(sales);
+
 	}
 
 	public void salesPredictor(ArrayList<Sale> sales) {
@@ -343,7 +343,7 @@ public class StockSalesPredictor {
 
 	}
 
-	private void stockPredictor(ArrayList<Sale> sales, Stock stock) {
+	public int[] stockPredictor(ArrayList<Sale> sales, Stock stock, boolean week) {
 
 		thisWeekStockSales = 0;
 		lastWeekStockSales = 0;
@@ -693,6 +693,24 @@ public class StockSalesPredictor {
 				+ " " + nextWeekStockSales);
 		System.out.println("Next month sales prediction for " + stock.getName()
 				+ " " + nextMonthStockSales);
+
+		int result[] = new int[5];
+
+		if (week == true) {
+			result[0] = (int) threeWeekStockSales;
+			result[1] = (int) twoWeekStockSales;
+			result[2] = (int) lastWeekStockSales;
+			result[3] = (int) thisWeekStockSales;
+			result[4] = (int) nextWeekStockSales;
+		} else {
+			result[0] = (int) threeMonthStockSales;
+			result[1] = (int) twoMonthStockSales;
+			result[2] = (int) lastMonthStockSales;
+			result[3] = (int) thisMonthStockSales;
+			result[4] = (int) nextMonthStockSales;
+		}
+
+		return result;
 	}
 
 	private Calendar dateToCalender(Date date) {
