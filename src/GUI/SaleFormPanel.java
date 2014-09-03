@@ -136,6 +136,7 @@ public class SaleFormPanel extends JPanel {
 	public void createSaleSelectionPanel(SaleFormEvent ev) throws IOException {
 
 		this.removeAll();
+
 		thisCustomer = ev.getCustomer();
 
 		Dimension dim = getPreferredSize();
@@ -205,6 +206,12 @@ public class SaleFormPanel extends JPanel {
 
 		saleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				/*
+				 * mainPanel.removeAll(); mainPanel.createCustomerPanel();
+				 * mainPanel.validate(); mainPanel.repaint();
+				 */
+
 				ArrayList<Integer> quantities = new ArrayList<Integer>();
 				ArrayList<String> stockNames = new ArrayList<String>();
 				// Get ordered stock and associated quantities
@@ -220,14 +227,14 @@ public class SaleFormPanel extends JPanel {
 							System.out.println("Not an integer");
 						}
 					} else if (!quantityField[i].getText().equals("")) {
+
 						JOptionPane.showMessageDialog(SaleFormPanel.this,
 								"Exceeded max Available");
-						try {
-							createSaleSelectionPanel(event);
-						} catch (IOException e1) {
 
-							e1.printStackTrace();
-						}
+						JOptionPane.showConfirmDialog(mainPanel,
+								"Exceeded max Available", "Out Of Stock",
+								JOptionPane.OK_OPTION);
+
 					}
 				}
 				// clear stock list from previous runs

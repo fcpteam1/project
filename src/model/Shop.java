@@ -326,6 +326,7 @@ public class Shop {
 	}
 
 	public void loadAvailableStock() {
+		availableStock.clear();
 		for (Product p : totalProducts) {
 			System.out.println("PanelStockList Method: "
 					+ stockLevels().get(p.getName()));
@@ -728,6 +729,7 @@ public class Shop {
 			s.setId(newCount++);
 		}
 		writeSale(saleFile);
+		loadAvailableStock();
 	}
 
 	public void removeSale(int index) {
