@@ -362,7 +362,7 @@ public class SupplierGUI {
 		c.anchor = GridBagConstraints.PAGE_END;
 		showPanel.add(supplierTextPanel, c);
 
-		showPanel.validate();
+		showPanel.revalidate();
 		showPanel.repaint();
 
 		supplier = false;

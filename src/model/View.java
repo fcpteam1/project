@@ -65,7 +65,7 @@ public class View extends JFrame {
 		
 		layeredPanel.add(welcomeScreen.getWelcomePanel(),current,new Integer(2));
 		layeredPanel.add(currentPanel,current, new Integer(1));
-		currentPanel.setVisible(true);
+		login.getPanel().setVisible(false);
 		login.getSubmit().setEnabled(false);
 		
 		/*button.addActionListener(new ActionListener(){

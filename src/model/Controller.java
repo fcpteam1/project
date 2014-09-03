@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import model.ErrorChecker;
 
 public class Controller {
 
@@ -286,7 +287,7 @@ public class Controller {
 				int index = view.getMainmenu().getSupplierTab()
 						.getViewSupplierTabel().getSelectedRow();
 				view.getMainmenu().getSupplierTab().setCurrent(index);
-				view.getMainmenu().getSupplierTab().focusViewProducts();
+				viewProducts();
 				view.getMainmenu().getSupplierTab().showAddProductPanel();
 
 			}
@@ -373,16 +374,27 @@ public class Controller {
 		updateSupPhone = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				model.getShop()
-						.getSuppliers()
-						.get(view.getMainmenu().getSupplierTab().getCurrent())
-						.setNumber(
-								view.getMainmenu().getSupplierTab()
-										.getSupplierPhone().getText());
-				view.getMainmenu().getSupplierTab()
-						.refreshSupplier(fillSupplierTable());
+				
+				if(ErrorChecker.isPhoneNumber(view.getMainmenu().getSupplierTab()
+											.getSupplierPhone().getText())){
+					
+						model.getShop()
+								.getSuppliers()
+								.get(view.getMainmenu().getSupplierTab().getCurrent())
+								.setNumber(
+										view.getMainmenu().getSupplierTab()
+												.getSupplierPhone().getText());
+						
+						
+						view.getMainmenu().getSupplierTab()
+								.refreshSupplier(fillSupplierTable());
+					
+				}
+				else{
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Phone number can only contain numbers and ' - '");
+				}
+			
 			}
-
 		};
 
 		updateSupAddress = new ActionListener() {
@@ -409,15 +421,36 @@ public class Controller {
 				String price = view.getMainmenu().getSupplierTab()
 						.getSupplierPrice().getText();
 
-				double supPrice = Double.parseDouble(price);
+				
+				
+				if(ErrorChecker.isOnlyLetters(name)==false){
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Product name must only conatain letters");
+				}
+				else if(ErrorChecker.isFloat(price)==false){
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Supplier Price must be of the format e.cc.");
+					
+				}
+				else{
+					name= name.toLowerCase();
+					
+					char[] cName=name.toCharArray();
+					name=name.toUpperCase();
+					char one=name.charAt(0);
+					
+					String newName="";
+					newName+=one;
+					for(int i=1;i<name.length();i++){
+						newName+=cName[i];
+					}
+					
+					model.getShop().getSuppliers().get(current).getProducts()
+							.add(new Product(newName, Double.parseDouble(price)));
 
-				model.getShop().getSuppliers().get(current).getProducts()
-						.add(new Product(name, supPrice));
+					
+					Object data[][] = fillProductsForSupplier(current);
 
-				Object data[][] = fillProductsForSupplier(current);
-
-				view.getMainmenu().getSupplierTab().refreshProducts(data);
-
+					view.getMainmenu().getSupplierTab().refreshProducts(data);
+					}
 			}
 
 		};
@@ -587,6 +620,7 @@ public class Controller {
 							
 							view.getLogin().getSubmit().setEnabled(true);
 							view.getLogin().getPanel().setVisible(true);
+							//view.getCurrentPanel().setVisible(true);
 							view.getWelcomeScreen().getWelcomePanel().setVisible(false);
 							view.getLogin().startTimer();
 							view.getLogin().settStart(System.currentTimeMillis());
