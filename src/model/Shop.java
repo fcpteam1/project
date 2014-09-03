@@ -299,11 +299,6 @@ public class Shop {
 
 	public Map<String, Integer> stockLevels() {
 
-		/*
-		 * for (Stock stock : stocks) { System.out.println(stock.getName() + ""
-		 * + stock.calculatePrice()); }
-		 */
-
 		Map<String, Integer> stockLevels = new HashMap<String, Integer>();
 
 		for (int i = 0; i < stocks.size(); i++) {
@@ -328,8 +323,6 @@ public class Shop {
 	public void loadAvailableStock() {
 		availableStock.clear();
 		for (Product p : totalProducts) {
-			System.out.println("PanelStockList Method: "
-					+ stockLevels().get(p.getName()));
 
 			if (stockLevels().get(p.getName()) == null) {
 				Stock stock = new Stock(p, 0);

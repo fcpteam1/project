@@ -40,7 +40,7 @@ public class StockGUI extends JPanel {
 		viewStockBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Map<String, Integer> stockLevels = stockLevels();
-				textArea.append("Stock Levels:");
+				textArea.setText("Stock Levels:");
 				for (Map.Entry<String, Integer> current : stockLevels
 						.entrySet()) {
 					textArea.append("\n" + current.getKey() + ": "

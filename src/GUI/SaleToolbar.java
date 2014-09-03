@@ -11,11 +11,11 @@ import javax.swing.JPanel;
 
 public class SaleToolbar extends JPanel implements ActionListener {
 	private JButton createSale, viewSale;
-	private SaleFormPanel mainPanel;
+	private SaleFormPanel formPanel;
 	private SaleTablePanel tablePanel;
 
 	public SaleToolbar() {
-		createSale = new JButton("Create\\Edit Sale");
+		createSale = new JButton("Create Sale");
 		viewSale = new JButton("View Sales");
 
 		createSale.addActionListener(this);
@@ -29,7 +29,7 @@ public class SaleToolbar extends JPanel implements ActionListener {
 	}
 
 	public void setMainPanel(SaleFormPanel formPanel) {
-		this.mainPanel = formPanel;
+		this.formPanel = formPanel;
 	}
 
 	public void setTablePanel(SaleTablePanel tablePanel) {
@@ -40,12 +40,12 @@ public class SaleToolbar extends JPanel implements ActionListener {
 		try {
 			JButton clicked = (JButton) e.getSource();
 			if (clicked == createSale) {
-				mainPanel.removeAll();
-				mainPanel.createCustomerPanel();
-				mainPanel.validate();
-				mainPanel.repaint();
+				formPanel.removeAll();
+				formPanel.createCustomerPanel();
+				formPanel.validate();
+				formPanel.repaint();
 			} else if (clicked == viewSale) {
-				mainPanel.setVisible(false);
+				formPanel.setVisible(false);
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();

@@ -207,11 +207,6 @@ public class SaleFormPanel extends JPanel {
 		saleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				/*
-				 * mainPanel.removeAll(); mainPanel.createCustomerPanel();
-				 * mainPanel.validate(); mainPanel.repaint();
-				 */
-
 				ArrayList<Integer> quantities = new ArrayList<Integer>();
 				ArrayList<String> stockNames = new ArrayList<String>();
 				// Get ordered stock and associated quantities
@@ -228,13 +223,18 @@ public class SaleFormPanel extends JPanel {
 						}
 					} else if (!quantityField[i].getText().equals("")) {
 
-						JOptionPane.showMessageDialog(SaleFormPanel.this,
-								"Exceeded max Available");
-
-						JOptionPane.showConfirmDialog(mainPanel,
-								"Exceeded max Available", "Out Of Stock",
-								JOptionPane.OK_OPTION);
-
+						int option = JOptionPane.showConfirmDialog(
+								SaleFormPanel.this, "Exceeded max Available",
+								"Out of Stock", JOptionPane.OK_OPTION);
+						if (option == JOptionPane.OK_OPTION) {
+							try {
+								removeAll();
+								createSaleSelectionPanel(event);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
 					}
 				}
 				// clear stock list from previous runs
@@ -254,13 +254,12 @@ public class SaleFormPanel extends JPanel {
 					i++;
 				}
 				int sizeSaleStockList = saleStockList.size();
-				System.out.println("SALESTOCKLIST SIZE: " + sizeSaleStockList);
 				SaleFormEvent saleEvent = new SaleFormEvent(this, thisCustomer,
 						saleStockList);
 				if (formListener != null) {
 					formListener.createSaleOccurred(saleEvent);
 				}
-				setVisible(false);
+				// setVisible(false);
 			}
 
 		});
@@ -286,24 +285,40 @@ public class SaleFormPanel extends JPanel {
 		editButton = new JButton("Finish");
 
 		size = availableStock.size();
+		maxLabel = new JLabel("Quantity in Stock");
 		stockName = new JLabel[size];
 		customerPrice = new JLabel[size];
 		quantityField = new JTextField[size];
+		maxAvailable = new JLabel[size];
 
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 
-		for (int i = 0; i < size; i++) {
-			stockName[i] = new JLabel(availableStock.get(i).getName());
-			customerPrice[i] = new JLabel(": " + "\u20ac"
-					+ Double.toString(availableStock.get(i).getCustomerPrice()));
-			quantityField[i] = new JTextField(3);
+		gc.gridy = 0;
+		gc.gridx = 2;
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(maxLabel, gc);
+		// i set to 1, to fill 2nd row, therefore arrays have i-1, so they start
+		// at zero
+
+		for (int i = 1; i < size + 1; i++) {
+			stockName[i - 1] = new JLabel(availableStock.get(i - 1).getName());
+			customerPrice[i - 1] = new JLabel(": "
+					+ "\u20ac"
+					+ Double.toString(availableStock.get(i - 1)
+							.getCustomerPrice()));
+			maxAvailable[i - 1] = new JLabel(Integer.toString(availableStock
+					.get(i - 1).getQuantity()));
+			quantityField[i - 1] = new JTextField(3);
+
 			int j = 0;
 			for (Stock stock : saleStockListToEdit) {
 
-				if (availableStock.get(i).getName().equals(stock.getName())) {
-					quantityField[i].setText(String.valueOf(saleStockListToEdit
-							.get(j).getQuantity()));
+				if (availableStock.get(i - 1).getName().equals(stock.getName())) {
+					quantityField[i - 1].setText(String
+							.valueOf(saleStockListToEdit.get(j).getQuantity()));
 					break;
 				}
 				j++;
@@ -317,17 +332,22 @@ public class SaleFormPanel extends JPanel {
 			gc.fill = GridBagConstraints.NONE;
 			gc.anchor = GridBagConstraints.LINE_END;
 			gc.insets = new Insets(0, 0, 0, 5);
-			add(stockName[i], gc);
+			add(stockName[i - 1], gc);
 
 			gc.gridx = 1;
 			gc.insets = new Insets(0, 0, 0, 0);
 			gc.anchor = GridBagConstraints.LINE_START;
-			add(customerPrice[i], gc);
+			add(customerPrice[i - 1], gc);
 
 			gc.gridx = 2;
 			gc.insets = new Insets(0, 0, 0, 0);
 			gc.anchor = GridBagConstraints.LINE_START;
-			add(quantityField[i], gc);
+			add(maxAvailable[i - 1], gc);
+
+			gc.gridx = 3;
+			gc.insets = new Insets(0, 0, 0, 0);
+			gc.anchor = GridBagConstraints.LINE_START;
+			add(quantityField[i - 1], gc);
 		}
 
 		editButton.addActionListener(new ActionListener() {
@@ -336,7 +356,9 @@ public class SaleFormPanel extends JPanel {
 				ArrayList<String> stockNames = new ArrayList<String>();
 				// Get ordered stock and associated quantities
 				for (int i = 0; i < size; i++) {
-					if (!quantityField[i].getText().equals("")) {
+					if (!quantityField[i].getText().equals("")
+							&& (Integer.parseInt(quantityField[i].getText()) <= Integer
+									.parseInt(maxAvailable[i].getText()))) {
 						try {
 							quantities.add(Integer.valueOf(quantityField[i]
 									.getText()));
@@ -344,6 +366,11 @@ public class SaleFormPanel extends JPanel {
 						} catch (NumberFormatException nfEx) {
 							System.out.println("Not an integer");
 						}
+					} else if (!quantityField[i].getText().equals("")) {
+
+						JOptionPane.showMessageDialog(SaleFormPanel.this,
+								"Exceeded max Available");
+
 					}
 				}
 				// clear stock list from previous runs
@@ -368,7 +395,7 @@ public class SaleFormPanel extends JPanel {
 				if (formListener != null) {
 					formListener.editSaleOccurred(saleEvent, saleToEdit.getId());
 				}
-				setVisible(false);
+				// setVisible(false);
 			}
 
 		});
