@@ -14,6 +14,7 @@ public class FinancialMainPanel {
 	private FinancialFormPanel financialFormPanel;
 	private FinancialTablePanel financialTablePanel;
 	private FinancialTextPanel financialTextPanel;
+	private FinancialGraphPanel financialGraphPanel;
 	private Model model;
 
 	public FinancialMainPanel() throws IOException {
@@ -24,6 +25,7 @@ public class FinancialMainPanel {
 		financialToolbar = new FinancialToolbar();
 		financialFormPanel = new FinancialFormPanel();
 		financialTextPanel = new FinancialTextPanel();
+		financialGraphPanel = new FinancialGraphPanel();
 		model = new Model();
 
 		financialFormPanel
@@ -287,6 +289,11 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
+						
+						financialGraphPanel.removeAll();
+						financialGraphPanel.saleGraphPanel();
+						financialGraphPanel.validate();
+						financialGraphPanel.repaint();
 					}
 
 					@Override
@@ -299,6 +306,11 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
+						
+						financialGraphPanel.removeAll();
+						financialGraphPanel.expenseGraphPanel();
+						financialGraphPanel.validate();
+						financialGraphPanel.repaint();
 					}
 
 					@Override
@@ -316,6 +328,11 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
+						
+						financialGraphPanel.removeAll();
+						financialGraphPanel.profitGraphPanel();
+						financialGraphPanel.validate();
+						financialGraphPanel.repaint();
 					}
 
 				});
@@ -327,6 +344,7 @@ public class FinancialMainPanel {
 		mainPanel.add(financialToolbar, BorderLayout.NORTH);
 		mainPanel.add(financialTablePanel, BorderLayout.CENTER);
 		mainPanel.add(financialTextPanel, BorderLayout.SOUTH);
+		mainPanel.add(financialGraphPanel, BorderLayout.EAST);
 		mainPanel.setSize(600, 500);
 	}
 
