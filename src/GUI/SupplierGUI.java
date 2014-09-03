@@ -1,13 +1,10 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -66,7 +63,7 @@ public class SupplierGUI {
 	boolean supplier;
 	int current = 0;
 
-	public SupplierGUI() {
+	public SupplierGUI() throws IOException {
 		// TODO Auto-generated constructor stub
 
 		addNewProducts();
@@ -90,6 +87,7 @@ public class SupplierGUI {
 		borderPanel = new JPanel();
 		borderPanel.setLayout(new BorderLayout());
 
+		
 		buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridBagLayout());
 
@@ -364,7 +362,7 @@ public class SupplierGUI {
 		c.anchor = GridBagConstraints.PAGE_END;
 		showPanel.add(supplierTextPanel, c);
 
-		showPanel.validate();
+		showPanel.revalidate();
 		showPanel.repaint();
 
 		supplier = false;
@@ -646,6 +644,30 @@ public class SupplierGUI {
 		 * 
 		 * deleteFrame.setVisible(false);
 		 */
+
+	}
+
+	public void refreshSupplier(Object data[][]) {
+
+		tablePanel.remove(viewScroll);
+		viewSupplierTabel = new JTable(data, supplierNames);
+		viewScroll = new JScrollPane(viewSupplierTabel);
+
+		tablePanel.add(viewScroll, BorderLayout.CENTER);
+		tablePanel.validate();
+		tablePanel.repaint();
+
+	}
+
+	public void refreshProducts(Object data[][]) {
+
+		tablePanel.remove(viewScroll);
+		viewSupplierTabel = new JTable(data, productNames);
+		viewScroll = new JScrollPane(viewSupplierTabel);
+
+		tablePanel.add(viewScroll, BorderLayout.CENTER);
+		tablePanel.validate();
+		tablePanel.repaint();
 
 	}
 

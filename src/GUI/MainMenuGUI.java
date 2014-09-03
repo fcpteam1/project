@@ -220,4 +220,5 @@ public class MainMenuGUI {
 		this.adminLogged = adminLogged;
 	}
 
+
 }

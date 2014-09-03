@@ -6,26 +6,35 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.Timer;
+
 
 public class LoginGUI {
 
+	
 	private JPanel framePanel, loginPanel, loginSubmitPanel, centreLoginPanel;
 	private JLabel usernameLabel, passwordLabel;
 	private JTextField loginUsername;
 	private JPasswordField loginPassword;
 	private JButton submit;
-
+	private Timer delayTimer;
+	private long tStart,tend;
+	
 	public LoginGUI() {
 
 		framePanel = new JPanel();
 		framePanel.setLayout(new GridLayout(3, 3, 10, 10));
 
+		
+		
 		submit = new JButton("SUBMIT");
 		loginPanel = new JPanel();
 		loginPanel.setLayout(new GridBagLayout());
@@ -79,12 +88,17 @@ public class LoginGUI {
 		framePanel.add(new JPanel());
 		framePanel.add(new JPanel());
 
+		
+		
+		
 	}
 
 	public JPanel getPanel() {
 
 		return framePanel;
 	}
+	
+	
 
 	public JButton getSubmit() {
 		return submit;
@@ -110,4 +124,39 @@ public class LoginGUI {
 		this.loginPassword = loginPassword;
 	}
 
+	public Timer getDelayTimer() {
+		return delayTimer;
+	}
+
+	public void setDelayTimer( ActionListener al) {
+		this.delayTimer=new Timer(1,al);
+	}
+
+	public void startTimer(){
+		delayTimer.start();
+	}
+
+	public void stopTimer(){
+		delayTimer.stop();
+	}
+	
+
+	public long gettStart() {
+		return tStart;
+	}
+
+	public void settStart(long tStart) {
+		this.tStart = tStart;
+	}
+
+	public long getTend() {
+		return tend;
+	}
+
+	public void setTend(long tend) {
+		this.tend = tend;
+	}
+	
+	
+	
 }
