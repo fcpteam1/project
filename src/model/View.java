@@ -153,8 +153,9 @@ public class View extends JFrame {
 		currentPanel.removeAll();
 		currentPanel.add(login.getPanel(),current);
 
-		
+		welcomeScreen.getWelcomePanel().setVisible(false);
 		login.startTimer();
+		
 		
 		currentPanel.validate();
 		currentPanel.repaint();

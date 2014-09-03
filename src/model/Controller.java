@@ -50,6 +50,9 @@ public class Controller {
 		loginListener = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				view.getLogin().settStart(System.currentTimeMillis());
+				view.getLogin().setTend(view.getLogin().gettStart());
+				view.getLogin().getDelayTimer().restart();
 				String username = view.getLogin().getLoginUsername().getText();
 				char[] password = view.getLogin().getLoginPassword()
 						.getPassword();
@@ -74,6 +77,10 @@ public class Controller {
 				if (correctUser) {
 					view.getMainmenu().addTabs(admin);
 					view.changeToMaineMenu();
+					view.getLogin().settStart(System.currentTimeMillis());
+					view.getLogin().setTend(view.getLogin().gettStart());
+					view.getLogin().stopTimer();
+					
 				} else
 					System.out.println("Not a valid user");
 
@@ -87,8 +94,11 @@ public class Controller {
 		logoutListener = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				view.getLogin().settStart(System.currentTimeMillis());
+				view.getLogin().setTend(view.getLogin().gettStart());
 				view.logout();
 				view.getMainmenu().removeTabs();
+				
 			}
 
 		};
@@ -600,7 +610,7 @@ public class Controller {
 			public void actionPerformed(ActionEvent e){
 				
 				view.getLogin().setTend(System.currentTimeMillis());
-				//System.out.println(view.getLogin().getTime());
+				
 				if((view.getLogin().getTend() - view.getLogin().gettStart()) >60000){
 					view.getLogin().stopTimer();
 					view.idle();
