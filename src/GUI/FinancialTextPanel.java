@@ -21,8 +21,8 @@ public class FinancialTextPanel extends JPanel {
 	private double totalPrice;
 
 	public FinancialTextPanel() {
-		totalPriceLabel = new JLabel("Total: ");
-		totalPriceField = new JTextField(100);
+		totalPriceLabel = new JLabel("Total Price: ");
+		totalPriceField = new JTextField(20);
 		
 		Border innerBorder = BorderFactory.createTitledBorder("");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);

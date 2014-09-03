@@ -81,7 +81,7 @@ public class UserTablePanel extends JPanel {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					formPanel.EditFormPanel();
+					formPanel.editFormPanel();
 					formPanel.validate();
 					formPanel.repaint();
 				}

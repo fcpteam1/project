@@ -14,14 +14,25 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 import model.Model;
+import model.Sale;
 import model.Stock;
 
 public class StockGUI extends JPanel {
@@ -30,8 +41,11 @@ public class StockGUI extends JPanel {
 	private JButton viewStockBtn;
 	private JPanel stockPanel;
 	private Model model;
+	
+	//Shane
+	private JButton stockBarChartBtn;
 
-	// miall
+	// niall
 	private JButton predictStock, predictNextWeek, predictNextMonth, backTo;
 	private JComboBox stocks;
 	private int next, current, last, lastTwo, lastThree;
@@ -65,11 +79,14 @@ public class StockGUI extends JPanel {
 		model = new Model();
 		//stockPanel.setLayout(new BorderLayout());
 		viewStockBtn = new JButton("View Stock");
+		// shane
+		stockBarChartBtn = new JButton("Stock Chart");
 
 		// niall
 		//stockPanel.add(textArea);
 		buttonsPanel.add(viewStockBtn);
 		buttonsPanel.add(predictStock);
+		buttonsPanel.add(stockBarChartBtn);
 		// stockPanel.add(viewStockBtn, BorderLayout.NORTH);
 		//stockPanel.add(buttonsPanel, BorderLayout.NORTH);
 		//
@@ -77,7 +94,7 @@ public class StockGUI extends JPanel {
 		viewStockBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Map<String, Integer> stockLevels = stockLevels();
-				textArea.append("Stock Levels:");
+				textArea.setText("Stock Levels:");
 				for (Map.Entry<String, Integer> current : stockLevels
 						.entrySet()) {
 					textArea.append("\n" + current.getKey() + ": "
@@ -87,6 +104,53 @@ public class StockGUI extends JPanel {
 			}
 
 		});
+		
+		stockBarChartBtn.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				final JDialog dialog = new JDialog();
+				final JFXPanel contentPane = new JFXPanel();
+				dialog.setContentPane(contentPane);
+				dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+
+				// building the scene graph must be done on the javafx thread
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						contentPane.setScene(createStockBarChart());
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								dialog.pack();
+								dialog.setVisible(true);
+							}
+						});
+					}
+				});
+			}
+
+			private Scene createStockBarChart() {
+				Map<String, Integer> stockLevels = stockLevels();
+				final CategoryAxis xAxis = new CategoryAxis();
+				final NumberAxis yAxis = new NumberAxis();
+				final BarChart<String, Number> bc = new BarChart<String, Number>(
+						xAxis, yAxis);
+				bc.setTitle("Stock Summary");
+				xAxis.setLabel("Products");
+				yAxis.setLabel("Ammount");
+
+				XYChart.Series series1 = new XYChart.Series();
+
+				for (Map.Entry<String, Integer> current : stockLevels.entrySet()){
+					series1.getData().add(
+							new XYChart.Data(current.getKey(), current.getValue()));
+				}
+				
+				bc.getData().addAll(series1);
+				return new Scene(bc, 800, 600);	
+			}
+		});
+		
 		stockPanel.setLayout(new GridBagLayout());
 		stockConstraints.gridx=0;
 		stockConstraints.gridy=0;

@@ -44,7 +44,7 @@ public class StockSalesPredictor {
 
 	}
 
-	public void salesPredictor(ArrayList<Sale> sales) {
+	public double[] salesPredictor(ArrayList<Sale> sales,boolean week) {
 
 		thisWeekSales = 0;
 		lastWeekSales = 0;
@@ -340,6 +340,24 @@ public class StockSalesPredictor {
 		System.out.println("Next week sales prediction " + nextWeekSales);
 
 		System.out.println("Next month sales prediction " + nextMonthSales);
+		
+		double result[] = new double[5];
+
+		if (week == true) {
+			result[0] = (int) threeWeekSales;
+			result[1] = (int) twoWeekSales;
+			result[2] = (int) lastWeekSales;
+			result[3] = (int) thisWeekSales;
+			result[4] = (int) nextWeekSales;
+		} else {
+			result[0] = (int) threeMonthSales;
+			result[1] = (int) twoMonthSales;
+			result[2] = (int) lastMonthSales;
+			result[3] = (int) thisMonthSales;
+			result[4] = (int) nextMonthSales;
+		}
+
+		return result;
 
 	}
 

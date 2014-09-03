@@ -7,13 +7,14 @@ import javax.swing.JPanel;
 
 import model.Model;
 
+
 public class FinancialMainPanel {
 	private JPanel mainPanel;
 	private FinancialToolbar financialToolbar;
 	private FinancialFormPanel financialFormPanel;
 	private FinancialTablePanel financialTablePanel;
 	private FinancialTextPanel financialTextPanel;
-	private double totalPrice;
+	private FinancialGraphPanel financialGraphPanel;
 	private Model model;
 
 	public FinancialMainPanel() throws IOException {
@@ -24,6 +25,7 @@ public class FinancialMainPanel {
 		financialToolbar = new FinancialToolbar();
 		financialFormPanel = new FinancialFormPanel();
 		financialTextPanel = new FinancialTextPanel();
+		financialGraphPanel = new FinancialGraphPanel();
 		model = new Model();
 
 		financialFormPanel
@@ -32,12 +34,12 @@ public class FinancialMainPanel {
 					@Override
 					public void allSales() {
 						financialTablePanel.setSaleData(model.getShop()
-								.getSales());
+								.getAllSales());
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.getTotal(totalPrice);
-
+						financialGraphPanel.setSaleData(model.getShop().getAllSales());
 					}
 
 					@Override
@@ -48,17 +50,17 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setSaleData(model.getShop().getTodaySales());
+						
 					}
 
-					@Override
 					public void dailySales() {
 						financialFormPanel.removeAll();
 						financialFormPanel.chooseDaySalePanel();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
 					}
-
-					@Override
+					
 					public void weeklySales() {
 						financialFormPanel.removeAll();
 						financialFormPanel.chooseWeekSalePanel();
@@ -77,11 +79,13 @@ public class FinancialMainPanel {
 					@Override
 					public void allExpenses() {
 						financialTablePanel.setExpenditureData(model.getShop()
-								.getOrders());
+								.getAllOrders());
 						financialTablePanel.setTableModel(2);
 						financialTablePanel.refresh();
-						double totalPrice = model.getShop().totalOrders();
+						double totalPrice = model.getShop().getAllExpenses();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setOrderData(model.getShop().getAllOrders());
+						
 					}
 
 					@Override
@@ -92,7 +96,10 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setOrderData(model.getShop().getTodayOrders());
+					
 					}
+				
 
 					@Override
 					public void dailyExpenses() {
@@ -100,10 +107,8 @@ public class FinancialMainPanel {
 						financialFormPanel.chooseDayExpensePanel();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
-
 					}
-
-					@Override
+					
 					public void weeklyExpenses() {
 						financialFormPanel.removeAll();
 						financialFormPanel.chooseWeekExpensePanel();
@@ -121,31 +126,52 @@ public class FinancialMainPanel {
 
 					@Override
 					public void allProfits() {
-						// TODO Auto-generated method stub
-
+						double income = model.getShop().getAllIncome();
+						double expenses = model.getShop().getAllExpenses();
+						double profit = model.getShop()
+								.profit(income, expenses);
+						double loss = model.getShop().loss(income, expenses);
+						financialTablePanel.setProfitData(income, expenses,
+								profit, loss);
+						financialTablePanel.setTableModel(3);
+						financialTablePanel.refresh();
 					}
 
 					@Override
 					public void todaysProfits() {
-						// TODO Auto-generated method stub
-
+						double income = model.getShop().getTodaysIncome();
+						double expenses = model.getShop().getTodaysExpenses();
+						double profit = model.getShop()
+								.profit(income, expenses);
+						double loss = model.getShop().loss(income, expenses);
+						financialTablePanel.setProfitData(income, expenses,
+								profit, loss);
+						financialTablePanel.setTableModel(3);
+						financialTablePanel.refresh();
 					}
 
 					@Override
 					public void dailyProfits() {
-						// TODO Auto-generated method stub
-
+						financialFormPanel.removeAll();
+						financialFormPanel.chooseDayProfitPanel();
+						financialFormPanel.validate();
+						financialFormPanel.repaint();
 					}
 
 					@Override
 					public void weeklyProfits() {
-						// TODO Auto-generated method stub
-
+						financialFormPanel.removeAll();
+						financialFormPanel.chooseWeekProfitPanel();
+						financialFormPanel.validate();
+						financialFormPanel.repaint();
 					}
 
 					@Override
 					public void monthlyProfits() {
-
+						financialFormPanel.removeAll();
+						financialFormPanel.chooseMonthProfitPanel();
+						financialFormPanel.validate();
+						financialFormPanel.repaint();
 					}
 
 					@Override
@@ -156,6 +182,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setSaleData(model.getShop().getMonthlySales(e));
 					}
 
 					@Override
@@ -166,6 +193,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setSaleData(model.getShop().getWeeklySales(e));
 					}
 
 					@Override
@@ -176,6 +204,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setSaleData(model.getShop().getDailySales(e));
 					}
 
 					@Override
@@ -186,6 +215,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setOrderData(model.getShop().getMonthlyOrders(e));
 					}
 
 					@Override
@@ -196,7 +226,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
 						financialTextPanel.getTotal(totalPrice);
-
+						financialGraphPanel.setOrderData(model.getShop().getWeeklyOrders(e));
 					}
 
 					@Override
@@ -207,26 +237,46 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
 						financialTextPanel.getTotal(totalPrice);
-				
-
+						financialGraphPanel.setOrderData(model.getShop().getDailyOrders(e));
 					}
 
 					@Override
-					public void profitMonthSelected(FinancialFormEvent ev) {
-						// TODO Auto-generated method stub
-
+					public void profitMonthSelected(FinancialFormEvent e) {
+						double income = model.getShop().getMonthlyIncome(e);
+						double expenses = model.getShop().getMonthlyExpenses(e);
+						double profit = model.getShop()
+								.profit(income, expenses);
+						double loss = model.getShop().loss(income, expenses);
+						financialTablePanel.setProfitData(income, expenses,
+								profit, loss);
+						financialTablePanel.setTableModel(3);
+						financialTablePanel.refresh();
 					}
 
 					@Override
-					public void profitWeekSelected(FinancialFormEvent ev) {
-						// TODO Auto-generated method stub
-
+					public void profitWeekSelected(FinancialFormEvent e) {
+						double income = model.getShop().getWeeklyIncome(e);
+						double expenses = model.getShop().getWeeklyExpenses(e);
+						double profit = model.getShop()
+								.profit(income, expenses);
+						double loss = model.getShop().loss(income, expenses);
+						financialTablePanel.setProfitData(income, expenses,
+								profit, loss);
+						financialTablePanel.setTableModel(3);
+						financialTablePanel.refresh();
 					}
 
 					@Override
-					public void profitDaySelected(FinancialFormEvent ev) {
-						// TODO Auto-generated method stub
-
+					public void profitDaySelected(FinancialFormEvent e) {
+						double income = model.getShop().getDailyIncome(e);
+						double expenses = model.getShop().getDailyExpenses(e);
+						double profit = model.getShop()
+								.profit(income, expenses);
+						double loss = model.getShop().loss(income, expenses);
+						financialTablePanel.setProfitData(income, expenses,
+								profit, loss);
+						financialTablePanel.setTableModel(3);
+						financialTablePanel.refresh();
 					}
 
 				});
@@ -234,8 +284,6 @@ public class FinancialMainPanel {
 		financialTablePanel.setFormPanel(financialFormPanel);
 		financialTablePanel.setSaleData(model.getShop().getSales());
 		financialTablePanel.setExpenditureData(model.getShop().getOrders());
-		financialTablePanel.setProfitData(model.getShop().getOrders(), model
-				.getShop().getSales());
 
 		financialToolbar.setFormPanel(financialFormPanel);
 		financialToolbar
@@ -251,6 +299,11 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
+						
+						financialGraphPanel.removeAll();
+						financialGraphPanel.saleGraphPanel();
+						financialGraphPanel.validate();
+						financialGraphPanel.repaint();
 					}
 
 					@Override
@@ -263,36 +316,59 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
+						
+						financialGraphPanel.removeAll();
+						financialGraphPanel.expenseGraphPanel();
+						financialGraphPanel.validate();
+						financialGraphPanel.repaint();
 					}
 
 					@Override
 					public void profitsSelected() {
-						//financialTextPanel.removeAll();
 						financialFormPanel.removeAll();
 						financialFormPanel.ProfitFormPanel();
-						financialTablePanel.setProfitData(model.getShop()
-								.getOrders(), model.getShop().getSales());
+						double income = model.getShop().getAllIncome();
+						double expenses = model.getShop().getAllExpenses();
+						double profit = model.getShop()
+								.profit(income, expenses);
+						double loss = model.getShop().loss(income, expenses);
+						financialTablePanel.setProfitData(income, expenses,
+								profit, loss);
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
 						
+						financialGraphPanel.removeAll();
+						financialGraphPanel.profitGraphPanel();
+						financialGraphPanel.validate();
+						financialGraphPanel.repaint();
+						
+						financialGraphPanel.setSaleData(model.getShop().getAllSales());
+						financialGraphPanel.setOrderData(model.getShop().getAllOrders());
+						financialGraphPanel.setGraphData();
 					}
 
 				});
+		
 		financialTablePanel.setSaleData(model.getShop().getBlankSalesTable());
-
 		financialTablePanel.setVisible(true);
 
 		mainPanel.add(financialFormPanel, BorderLayout.WEST);
 		mainPanel.add(financialToolbar, BorderLayout.NORTH);
 		mainPanel.add(financialTablePanel, BorderLayout.CENTER);
 		mainPanel.add(financialTextPanel, BorderLayout.SOUTH);
+		mainPanel.add(financialGraphPanel, BorderLayout.EAST);
 		mainPanel.setSize(600, 500);
 	}
 
 	public JPanel getPanel() {
 		return mainPanel;
 
+	}
+
+	public double round(double val) {
+		val = Math.round(val * 100) / 100.00;
+		return val;
 	}
 }

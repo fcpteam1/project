@@ -34,7 +34,7 @@ public class UserToolbar extends JPanel implements ActionListener {
 
 		if (clicked == createButton) {
 			formPanel.removeAll();
-			formPanel.CreateFormPanel();
+			formPanel.createFormPanel();
 			formPanel.validate();
 			formPanel.repaint();
 		}
