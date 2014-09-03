@@ -27,7 +27,7 @@ import model.Stock;
 
 public class SaleFormPanel extends JPanel {
 
-	private JLabel customerLabel;
+	private JLabel customerLabel, maxLabel;
 	private JComboBox customerBox;
 	private JButton enterButton;
 	private JButton saleButton;
@@ -42,6 +42,7 @@ public class SaleFormPanel extends JPanel {
 	private String stockFile;
 	private ArrayList<Stock> saleStockList = new ArrayList<Stock>();
 	private ArrayList<Stock> availableStock = new ArrayList<Stock>();
+	private SaleFormEvent event;
 	Customer thisCustomer;
 	int size;
 	JLabel[] stockName, customerPrice, maxAvailable;
@@ -91,7 +92,7 @@ public class SaleFormPanel extends JPanel {
 						.getSelectedItem();
 
 				SaleFormEvent ev = new SaleFormEvent(this, thisCustomer);
-
+				setEvent(ev);
 				try {
 					createSaleSelectionPanel(ev);
 				} catch (IOException e) {
@@ -100,6 +101,7 @@ public class SaleFormPanel extends JPanel {
 				}
 
 			}
+
 		});
 
 		setLayout(new GridBagLayout());
@@ -131,10 +133,10 @@ public class SaleFormPanel extends JPanel {
 		setVisible(true);
 	}
 
-	public void createSaleSelectionPanel(SaleFormEvent e) throws IOException {
+	public void createSaleSelectionPanel(SaleFormEvent ev) throws IOException {
 
 		this.removeAll();
-		thisCustomer = e.getCustomer();
+		thisCustomer = ev.getCustomer();
 
 		Dimension dim = getPreferredSize();
 		dim.width = 450;
@@ -150,6 +152,7 @@ public class SaleFormPanel extends JPanel {
 		// will be used in place of stocks
 		size = availableStock.size();
 		System.out.println("The size of availableStock:" + size);
+		maxLabel = new JLabel("Quantity in Stock");
 		stockName = new JLabel[size];
 		customerPrice = new JLabel[size];
 		maxAvailable = new JLabel[size];
@@ -158,39 +161,46 @@ public class SaleFormPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 
-		for (int i = 0; i < size; i++) {
-			stockName[i] = new JLabel(availableStock.get(i).getName());
-			customerPrice[i] = new JLabel(": " + "\u20ac"
-					+ Double.toString(availableStock.get(i).getCustomerPrice()));
-			maxAvailable[i] = new JLabel("("
-					+ Double.toString(availableStock.get(i).getQuantity())
-					+ ")");
-			quantityField[i] = new JTextField(3);
+		gc.gridy = 0;
+		gc.gridx = 2;
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(maxLabel, gc);
+		// i set to 1, to fill 2nd row, therefore arrays have i-1, so they start
+		// at zero
+		for (int i = 1; i < (size + 1); i++) {
+			stockName[i - 1] = new JLabel(availableStock.get(i - 1).getName());
+			customerPrice[i - 1] = new JLabel(": "
+					+ "\u20ac"
+					+ Double.toString(availableStock.get(i - 1)
+							.getCustomerPrice()));
+			maxAvailable[i - 1] = new JLabel(Integer.toString(availableStock
+					.get(i - 1).getQuantity()));
+			quantityField[i - 1] = new JTextField(3);
 
 			gc.gridy = i;
-			gc.weightx = 1;
-			gc.weighty = 0.1;
 
 			gc.gridx = 0;
 			gc.fill = GridBagConstraints.NONE;
 			gc.anchor = GridBagConstraints.LINE_END;
 			gc.insets = new Insets(0, 0, 0, 5);
-			add(stockName[i], gc);
+			add(stockName[i - 1], gc);
 
 			gc.gridx = 1;
 			gc.insets = new Insets(0, 0, 0, 0);
 			gc.anchor = GridBagConstraints.LINE_START;
-			add(customerPrice[i], gc);
+			add(customerPrice[i - 1], gc);
 
 			gc.gridx = 2;
 			gc.insets = new Insets(0, 0, 0, 0);
 			gc.anchor = GridBagConstraints.LINE_START;
-			add(maxAvailable[i], gc);
+			add(maxAvailable[i - 1], gc);
 
 			gc.gridx = 3;
 			gc.insets = new Insets(0, 0, 0, 0);
 			gc.anchor = GridBagConstraints.LINE_START;
-			add(quantityField[i], gc);
+			add(quantityField[i - 1], gc);
 		}
 
 		saleButton.addActionListener(new ActionListener() {
@@ -200,8 +210,8 @@ public class SaleFormPanel extends JPanel {
 				// Get ordered stock and associated quantities
 				for (int i = 0; i < size; i++) {
 					if (!quantityField[i].getText().equals("")
-							&& (Integer.valueOf(quantityField[i].getText()) <= Integer
-									.valueOf(maxAvailable[i].getText()))) {
+							&& (Integer.parseInt(quantityField[i].getText()) <= Integer
+									.parseInt(maxAvailable[i].getText()))) {
 						try {
 							quantities.add(Integer.valueOf(quantityField[i]
 									.getText()));
@@ -209,9 +219,15 @@ public class SaleFormPanel extends JPanel {
 						} catch (NumberFormatException nfEx) {
 							System.out.println("Not an integer");
 						}
-					} else {
+					} else if (!quantityField[i].getText().equals("")) {
 						JOptionPane.showMessageDialog(SaleFormPanel.this,
-								"Exceeded max Avaialble");
+								"Exceeded max Available");
+						try {
+							createSaleSelectionPanel(event);
+						} catch (IOException e1) {
+
+							e1.printStackTrace();
+						}
 					}
 				}
 				// clear stock list from previous runs
@@ -367,6 +383,10 @@ public class SaleFormPanel extends JPanel {
 
 	public void setSaleStockListToEdit(ArrayList<Stock> saleStockListToEdit) {
 		this.saleStockListToEdit = saleStockListToEdit;
+	}
+
+	public void setEvent(SaleFormEvent event) {
+		this.event = event;
 	}
 
 	public JButton getEnterButton() {
