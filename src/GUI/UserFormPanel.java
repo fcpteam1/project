@@ -60,7 +60,7 @@ public class UserFormPanel extends JPanel {
 
 	// ////////////////////CREATE////////////////////////
 
-	public void CreateFormPanel() {
+	public void createFormPanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
 		setPreferredSize(dim);
@@ -174,7 +174,7 @@ public class UserFormPanel extends JPanel {
 
 	// ////////////////////EDIT////////////////////////
 
-	public void EditFormPanel() {
+	public void editFormPanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
 		setPreferredSize(dim);
