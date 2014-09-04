@@ -200,6 +200,7 @@ public class OrderFormPanel extends JPanel {
 					formListener.createOrderOccurred(orderEvent);
 				}
 				setVisible(false);
+
 			}
 		});
 

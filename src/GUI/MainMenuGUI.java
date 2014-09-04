@@ -219,5 +219,4 @@ public class MainMenuGUI {
 	public void setStockTab(StockMainPanel stockTab) {
 		this.stockTab = stockTab;
 	}
-
 }

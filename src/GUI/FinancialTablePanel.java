@@ -10,6 +10,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
@@ -37,91 +38,8 @@ public class FinancialTablePanel extends JPanel {
 		expenditureModel = new FinancialExpenditureTableModel();
 		saleModel = new FinancialSaleTableModel();
 		profitModel = new FinancialProfitTableModel();
-		JButton graphBtn = new JButton("Barchart");
-
-		graphBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				final JDialog dialog = new JDialog();
-				final JFXPanel contentPane = new JFXPanel();
-				dialog.setContentPane(contentPane);
-				dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-
-				// building the scene graph must be done on the javafx thread
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						if (choice == 1){
-							System.out.println("SaleModel");
-							contentPane.setScene(createSaleBarChart());
-						}
-						else if (choice == 2){
-							contentPane.setScene(createExpensesBarChart());
-						}
-						else if (choice == 3){
-							contentPane.setScene(createSaleBarChart());
-						}
-						SwingUtilities.invokeLater(new Runnable() {
-							@Override
-							public void run() {
-								dialog.pack();
-								dialog.setVisible(true);
-							}
-						});
-					}
-				});
-			}
-
-			private Scene createSaleBarChart() {
-				System.out.println("creating scene");
-				final CategoryAxis xAxis = new CategoryAxis();
-				final NumberAxis yAxis = new NumberAxis();
-				final BarChart<String, Number> bc = new BarChart<String, Number>(
-						xAxis, yAxis);
-				bc.setTitle("Sales Summary");
-				xAxis.setLabel("Customers");
-				yAxis.setLabel("Value");
-
-				XYChart.Series series1 = new XYChart.Series();
-
-				for (Sale sale : saleModel.getData()) {
-					/* series1.setName(sale.getCustomer().getName()); */
-					series1.getData().add(
-							new XYChart.Data(sale.getCustomer().getName(), sale
-									.getTotalPrice()));
-				}
-
-				bc.getData().addAll(series1);
-				return new Scene(bc, 800, 600);
-			}
-
-			private Scene createExpensesBarChart() {
-				System.out.println("creating scene");
-				final CategoryAxis xAxis = new CategoryAxis();
-				final NumberAxis yAxis = new NumberAxis();
-				final BarChart<String, Number> bc = new BarChart<String, Number>(
-						xAxis, yAxis);
-				bc.setTitle("Expenses Summary");
-				xAxis.setLabel("Suppliers");
-				yAxis.setLabel("Value");
-
-				XYChart.Series series1 = new XYChart.Series();
-
-				for (Order order : expenditureModel.getData()) {
-					/* series1.setName(sale.getCustomer().getName()); */
-					series1.getData().add(
-							new XYChart.Data(order.getSupplier().getName(),
-									order.getTotalPrice()));
-				}
-
-				bc.getData().addAll(series1);
-				return new Scene(bc, 800, 600);
-			}
-
-		});
-
+	
 		setLayout(new BorderLayout());
-		add(graphBtn, BorderLayout.SOUTH);
 		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
 

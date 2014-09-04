@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import GUI.CustomerFormEvent;
@@ -25,12 +27,14 @@ public class Shop {
 	private ArrayList<Order> financialOrders = new ArrayList<Order>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private ArrayList<Stock> stocks = new ArrayList<Stock>();
+	private ArrayList<Stock> availableStock = new ArrayList<Stock>();
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 	private ArrayList<Sale> financialSales = new ArrayList<Sale>();
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private ArrayList<Sale> blankSalesTable = new ArrayList<Sale>();
+	private ArrayList<Product> totalProducts = new ArrayList<Product>();
 
 	private String username, password, choice, customerName, customerNumber,
 			customerAddress, editUserPassword, editUserUsername, editedStockName;
@@ -126,29 +130,19 @@ public class Shop {
 
 		loadSales(saleFile);
 		loadOrders(orderFile);
+		loadTotalProduct();
+		loadAvailableStock();
 
 		predictor = new StockSalesPredictor();
 
-		/*
-		 * for (Sale s : sales) { for (Stock stock : s.getStocks()) {
-		 * System.out.println("Name " + stock.getName() + "  Quantity " +
-		 * stock.getQuantity()); } System.out.println(s.getCustomer() +
-		 * " : From sales.ser"); }
-		 */
-		/*
-		 * for (Order o : orders) System.out.println(o.getSupplier() +
-		 * " : From orders.ser"); for (Customer c : customers)
-		 * System.out.println(c.getName() + ", " + c.getAddress() ); for (User u
-		 * : users) System.out.println((u.getUsername() + ", " + u.getId()));
-		 * for (Supplier s : suppliers) System.out.println(s.getName() +
-		 * " Product list size: " + s.getProducts().size());
-		 */
 		for (Stock stock : stocks)
-			System.out.println(stock.getName() + " Quantity: "
+			System.out.println(stock.getName() + "From Shop Quantity: "
 					+ stock.getQuantity());
-
-		// checkLogin();
-		// mainMenu();
+		for (Product p : totalProducts)
+			System.out.println("Total Product list: " + p.getName());
+		for (Stock stock : availableStock)
+			System.out.println(stock.getName() + " Avaiable Stock: "
+					+ stock.getQuantity());
 
 	}
 
@@ -280,6 +274,57 @@ public class Shop {
 			System.out.println("Customer class not found");
 			c.printStackTrace();
 		}
+	}
+
+	public void loadTotalProduct() {
+
+		for (Supplier s : suppliers) {
+			for (Product p : s.getProducts()) {
+				totalProducts.add(p);
+			}
+		}
+	}
+
+	public Map<String, Integer> stockLevels() {
+
+		Map<String, Integer> stockLevels = new HashMap<String, Integer>();
+
+		for (int i = 0; i < stocks.size(); i++) {
+			int quantity = 0;
+			for (int j = i; j < stocks.size(); j++) {
+				boolean inMap = stockLevels
+						.containsKey(stocks.get(i).getName());
+				if (inMap && j == i) {
+					j = stocks.size();
+				} else if (stocks.get(i).getName()
+						.equals(stocks.get(j).getName())) {
+					quantity = quantity + stocks.get(j).getQuantity();
+					// System.out.println(stocks.get(j).getQuantity());
+					stockLevels.put(stocks.get(i).getName(), quantity);
+					// System.out.println(quantity);
+				}
+			}
+		}
+		return stockLevels;
+	}
+
+	public void loadAvailableStock() {
+		availableStock.clear();
+		for (Product p : totalProducts) {
+
+			if (stockLevels().get(p.getName()) == null) {
+				Stock stock = new Stock(p, 0);
+				availableStock.add(stock);
+			} else {
+
+				Stock stock = new Stock(p, stockLevels().get(p.getName()));
+				availableStock.add(stock);
+			}
+		}
+	}
+
+	public ArrayList<Stock> getAvailableStock() {
+		return availableStock;
 	}
 
 	public void writeSale(String saleFile) {
@@ -416,6 +461,14 @@ public class Shop {
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}
+	
+	public ArrayList<Order> getAllOrders() {
+		financialOrders.clear();
+		for (Order order: orders){
+			financialOrders.add(order);
+		}
+		return financialOrders;
+	}
 
 	public ArrayList<Order> getTodayOrders() {
 		Calendar today = Calendar.getInstance();
@@ -497,7 +550,6 @@ public class Shop {
 
 
 	public ArrayList<Stock> getStock() {
-
 		return stocks;
 	}
 
@@ -544,9 +596,17 @@ public class Shop {
 		writeStock(stockFile);
 	}
 	
+		public ArrayList<Sale> getAllSales() {
+		financialSales.clear();
+		for (Sale sale: sales){
+			financialSales.add(sale);
+		}
+		return financialSales;
+	}
+	
 	public ArrayList<Sale> getSales() {
 		return sales;
-	}
+	} 
 
 	public ArrayList<Sale> getBlankSalesTable() {
 		return blankSalesTable;
@@ -648,6 +708,10 @@ public class Shop {
 		return customers;
 	}
 
+	public ArrayList<Product> getTotalProducts() {
+		return totalProducts;
+	}
+
 	public void addCustomer(CustomerFormEvent e) {
 		String name = e.getName();
 		String number = e.getNumber();
@@ -739,16 +803,31 @@ public class Shop {
 		return inStock;
 	}
 
+	public static ArrayList<Stock> checkStock(ArrayList<Stock> saleList,
+			ArrayList<Stock> stockList) {
+
+		for (Stock temp : saleList) {
+			if (!processSale(temp, stockList, 0)) {
+				System.out.println("Out of Stock Item: "
+						+ temp.getProduct().getName());
+
+				if (saleList.get(saleList.size() - 1) == temp) {
+					saleList.remove(temp);
+					break;
+				} else {
+					saleList.remove(temp);
+				}
+			}
+		}
+		return saleList;
+	}
+
 	public void createSale(SaleFormEvent e) {
 
-		ArrayList<Stock> saleStocks = e.getStockList();
-		Customer customer = e.getCustomer();
-		Sale sale = new Sale(saleStocks, customer);
-		sales.add(sale);
+		ArrayList<Stock> inStockList = checkStock(e.getStockList(), stocks);
 
-		for (Stock saleStock : saleStocks) {
-			processSale(saleStock, stocks, 0);
-		}
+		Sale sale = new Sale(inStockList, e.getCustomer());
+		sales.add(sale);
 
 		writeStock(stockFile);
 
@@ -757,6 +836,7 @@ public class Shop {
 			s.setId(newCount++);
 		}
 		writeSale(saleFile);
+		loadAvailableStock();
 	}
 
 	public void removeSale(int index) {
