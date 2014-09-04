@@ -129,12 +129,6 @@ public class View extends JFrame {
 	}
 
 	public void changeToMaineMenu() {
-
-		/*thisContainer.removeAll();
-		thisContainer.add(mainmenu.getPanel());
-
-		thisContainer.validate();
-		thisContainer.repaint();*/
 		
 		currentPanel.removeAll();
 		currentPanel.add(mainmenu.getPanel(),current);
@@ -144,23 +138,16 @@ public class View extends JFrame {
 	}
 
 	public void logout() {
-		/*thisContainer.removeAll();
-		thisContainer.add(login.getPanel());
-
-		thisContainer.validate();
-		thisContainer.repaint();*/
-		
+	
 		currentPanel.removeAll();
 		currentPanel.add(login.getPanel(),current);
 
 		welcomeScreen.getWelcomePanel().setVisible(false);
 		login.startTimer();
 		
-		
 		currentPanel.validate();
 		currentPanel.repaint();
 		
-
 	}
 
 	public WelcomeScreenGUI getWelcomeScreen() {

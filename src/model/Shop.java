@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import GUI.CustomerFormEvent;
@@ -16,6 +18,7 @@ import GUI.FinancialFormEvent;
 import GUI.OrderFormEvent;
 import GUI.OrderFormPanel;
 import GUI.SaleFormEvent;
+import GUI.StockFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
 
@@ -24,16 +27,18 @@ public class Shop {
 	private ArrayList<Order> financialOrders = new ArrayList<Order>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private ArrayList<Stock> stocks = new ArrayList<Stock>();
+	private ArrayList<Stock> availableStock = new ArrayList<Stock>();
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 	private ArrayList<Sale> financialSales = new ArrayList<Sale>();
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private ArrayList<Sale> blankSalesTable = new ArrayList<Sale>();
+	private ArrayList<Product> totalProducts = new ArrayList<Product>();
 
 	private String username, password, choice, customerName, customerNumber,
-			customerAddress, editUserPassword, editUserUsername;
-	
+			customerAddress, editUserPassword, editUserUsername, editedStockName;
+	private double editedStockPrice;
 	private String editCustomerName, editCustomerNumber, editCustomerAddress;
 	private String saleFile = "sales.ser";
 	private String orderFile = "orders.ser";
@@ -125,11 +130,18 @@ public class Shop {
 
 		loadSales(saleFile);
 		loadOrders(orderFile);
+		loadTotalProduct();
+		loadAvailableStock();
 
 		predictor = new StockSalesPredictor();
 
 		for (Stock stock : stocks)
-			System.out.println(stock.getName() + " Quantity: "
+			System.out.println(stock.getName() + "From Shop Quantity: "
+					+ stock.getQuantity());
+		for (Product p : totalProducts)
+			System.out.println("Total Product list: " + p.getName());
+		for (Stock stock : availableStock)
+			System.out.println(stock.getName() + " Avaiable Stock: "
 					+ stock.getQuantity());
 
 	}
@@ -262,6 +274,57 @@ public class Shop {
 			System.out.println("Customer class not found");
 			c.printStackTrace();
 		}
+	}
+
+	public void loadTotalProduct() {
+
+		for (Supplier s : suppliers) {
+			for (Product p : s.getProducts()) {
+				totalProducts.add(p);
+			}
+		}
+	}
+
+	public Map<String, Integer> stockLevels() {
+
+		Map<String, Integer> stockLevels = new HashMap<String, Integer>();
+
+		for (int i = 0; i < stocks.size(); i++) {
+			int quantity = 0;
+			for (int j = i; j < stocks.size(); j++) {
+				boolean inMap = stockLevels
+						.containsKey(stocks.get(i).getName());
+				if (inMap && j == i) {
+					j = stocks.size();
+				} else if (stocks.get(i).getName()
+						.equals(stocks.get(j).getName())) {
+					quantity = quantity + stocks.get(j).getQuantity();
+					// System.out.println(stocks.get(j).getQuantity());
+					stockLevels.put(stocks.get(i).getName(), quantity);
+					// System.out.println(quantity);
+				}
+			}
+		}
+		return stockLevels;
+	}
+
+	public void loadAvailableStock() {
+		availableStock.clear();
+		for (Product p : totalProducts) {
+
+			if (stockLevels().get(p.getName()) == null) {
+				Stock stock = new Stock(p, 0);
+				availableStock.add(stock);
+			} else {
+
+				Stock stock = new Stock(p, stockLevels().get(p.getName()));
+				availableStock.add(stock);
+			}
+		}
+	}
+
+	public ArrayList<Stock> getAvailableStock() {
+		return availableStock;
 	}
 
 	public void writeSale(String saleFile) {
@@ -490,7 +553,50 @@ public class Shop {
 		return stocks;
 	}
 
-	public ArrayList<Sale> getAllSales() {
+	public ArrayList<Product> getAllSupplierProducts(){
+		ArrayList<Product> allProducts = new ArrayList<Product>();
+		for(Supplier supplier: suppliers){
+			for(Product product: supplier.getProducts()){
+				allProducts.add(product);
+			}
+		}
+		return allProducts;
+	}
+	
+	public ArrayList<Stock> getUniqueStockList() {
+		ArrayList<Stock> uniqueStockList = new ArrayList<Stock>();
+		ArrayList<Product> allProducts = new ArrayList<Product>();
+		//Get all products that we can sell
+		allProducts = getAllSupplierProducts();
+		//Loop through individual products and add them to a list of stock
+		for (Product product: allProducts) {
+			Stock stock = new Stock(product, 0);
+			uniqueStockList.add(stock);
+		}
+		//Loop through list of unique products which we stock
+		for(Stock stock: uniqueStockList){
+			//Loop through all stock
+			for(Stock current: stocks){
+				//if the stock is a certain product, add it's quantity to the uniquelist
+				if(current.getName().equals(stock.getName())){
+					stock.setQuantity(stock.getQuantity()+current.getQuantity());
+					stock.setCustomerPrice(current.getCustomerPrice());
+				}
+			}
+		}
+		return uniqueStockList;
+	}
+	
+	public void editCustomerPrice(){
+		for(Stock stock: stocks){
+			if(stock.getName().equals(editedStockName)){
+				stock.setCustomerPrice(editedStockPrice);
+			}
+		}
+		writeStock(stockFile);
+	}
+	
+		public ArrayList<Sale> getAllSales() {
 		financialSales.clear();
 		for (Sale sale: sales){
 			financialSales.add(sale);
@@ -602,6 +708,10 @@ public class Shop {
 		return customers;
 	}
 
+	public ArrayList<Product> getTotalProducts() {
+		return totalProducts;
+	}
+
 	public void addCustomer(CustomerFormEvent e) {
 		String name = e.getName();
 		String number = e.getNumber();
@@ -693,16 +803,31 @@ public class Shop {
 		return inStock;
 	}
 
+	public static ArrayList<Stock> checkStock(ArrayList<Stock> saleList,
+			ArrayList<Stock> stockList) {
+
+		for (Stock temp : saleList) {
+			if (!processSale(temp, stockList, 0)) {
+				System.out.println("Out of Stock Item: "
+						+ temp.getProduct().getName());
+
+				if (saleList.get(saleList.size() - 1) == temp) {
+					saleList.remove(temp);
+					break;
+				} else {
+					saleList.remove(temp);
+				}
+			}
+		}
+		return saleList;
+	}
+
 	public void createSale(SaleFormEvent e) {
 
-		ArrayList<Stock> saleStocks = e.getStockList();
-		Customer customer = e.getCustomer();
-		Sale sale = new Sale(saleStocks, customer);
-		sales.add(sale);
+		ArrayList<Stock> inStockList = checkStock(e.getStockList(), stocks);
 
-		for (Stock saleStock : saleStocks) {
-			processSale(saleStock, stocks, 0);
-		}
+		Sale sale = new Sale(inStockList, e.getCustomer());
+		sales.add(sale);
 
 		writeStock(stockFile);
 
@@ -711,6 +836,7 @@ public class Shop {
 			s.setId(newCount++);
 		}
 		writeSale(saleFile);
+		loadAvailableStock();
 	}
 
 	public void removeSale(int index) {
@@ -998,4 +1124,22 @@ public class Shop {
 	public void setPredictor(StockSalesPredictor predictor) {
 		this.predictor = predictor;
 	}
+
+	public String getEditedStockName() {
+		return editedStockName;
+	}
+
+	public void setEditedStockName(String editedStockName) {
+		this.editedStockName = editedStockName;
+	}
+
+	public double getEditedStockPrice() {
+		return editedStockPrice;
+	}
+
+	public void setEditedStockPrice(double editedStockPrice) {
+		this.editedStockPrice = editedStockPrice;
+	}
+	
+	
 }

@@ -17,12 +17,9 @@ public class Controller {
 
 	private View view;
 	private Model model;
-	private ActionListener loginListener, logoutListener, createUserListener,
-			backToUserMenu, deleteUserListener;
+	private ActionListener loginListener, logoutListener;
 	private ActionListener viewSupplier, viewProducts, nextSupplier,
 			prevSupplier, searchSupplier;
-	private ActionListener btnSubmitNewCustomer, btnViewCustomers,
-			btnAddCustomer;
 
 	private MouseAdapter supplierTableListener;
 	private ActionListener menuViewSupplier, menuEditSupplier, menuAddProduct,
@@ -33,6 +30,7 @@ public class Controller {
 			addProduct;
 	private ActionListener createSupButton, deleteSupButton, editSupButton,
 			addSupButton;
+
 	private ActionListener createSupplier;
 
 	private ActionListener stockBack, weekPredict, monthPredict, predict;
@@ -40,8 +38,6 @@ public class Controller {
 	private ActionListener switchToLogin,exit,loginDelay;
 
 	public Controller() throws IOException {
-		// TODO Auto-generated constructor stub
-
 		view = new View();
 		model = new Model();
 		addListeners();
@@ -545,70 +541,6 @@ public class Controller {
 			}
 		};
 
-		predict = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				view.getMainmenu().getStockTab().switchToStockPredict();
-			}
-		};
-
-		weekPredict = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object data[][];
-				int count = 0;
-				int[] result = new int[5];
-				data = new Object[model.getShop().getStock().size()][6];
-				for (Stock stock : model.getShop().getStock()) {
-					result = model
-							.getShop()
-							.getPredictor()
-							.stockPredictor(model.getShop().getSales(), stock,
-									true);
-					data[count][0] = stock.getName();
-					data[count][1] = result[0];
-					data[count][2] = result[1];
-					data[count][3] = result[2];
-					data[count][4] = result[3];
-					data[count][5] = result[4];
-					System.out.println(count);
-					count++;
-				}
-				view.getMainmenu().getStockTab().setPredictData(data);
-				view.getMainmenu().getStockTab().fillWeekPrediction(data);
-			}
-		};
-
-		monthPredict = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object data[][];
-				int count = 0;
-				int[] result = new int[5];
-				data = new Object[model.getShop().getStock().size()][6];
-				for (Stock stock : model.getShop().getStock()) {
-					result = model
-							.getShop()
-							.getPredictor()
-							.stockPredictor(model.getShop().getSales(), stock,
-									false);
-					data[count][0] = stock.getName();
-					data[count][1] = result[0];
-					data[count][2] = result[1];
-					data[count][3] = result[2];
-					data[count][4] = result[3];
-					data[count][5] = result[4];
-					count++;
-				}
-
-				view.getMainmenu().getStockTab().setPredictData(data);
-				view.getMainmenu().getStockTab().fillMonthPrediction(data);
-			}
-		};
-
-		stockBack = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				view.getMainmenu().getStockTab().switchToMain();
-			}
-		};
-		
 		switchToLogin=new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				
@@ -659,13 +591,13 @@ public class Controller {
 			}
 		};
 		
-		lowStock=new ActionListener(){
+		/*lowStock=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				view.getMainmenu().getStockTab().switchToControl();
 			}
-		};
+		};*/
 		
-		showLowStock=new ActionListener(){
+		/*showLowStock=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
 				ArrayList<Stock> lowStocks=new ArrayList<Stock>();
@@ -688,7 +620,7 @@ public class Controller {
 				view.getMainmenu().getStockTab().fillLowStock(data);
 				
 			}
-		};
+		};*/
 		
 		
 		showLowWeek=new ActionListener(){
@@ -775,21 +707,11 @@ public class Controller {
 		view.getMainmenu().getSupplierTab().getAddProduct()
 				.addActionListener(addProduct);
 		view.getMainmenu().getSupplierTab().getExitCreatePanelButton()
-				.addActionListener(exitCreatePanel);
-
-		view.getMainmenu().getStockTab().getBackTo()
-				.addActionListener(stockBack);
-		view.getMainmenu().getStockTab().getPredictNextWeek()
-				.addActionListener(weekPredict);
-		view.getMainmenu().getStockTab().getPredictNextMonth()
-				.addActionListener(monthPredict);
-		view.getMainmenu().getStockTab().getPredictStock()
-				.addActionListener(predict);
+				.addActionListener(exitCreatePanel);		
 		
-		view.getMainmenu().getStockTab().getStockControlButton().addActionListener(lowStock);
+		/*view.getMainmenu().getStockTab().getStockControlButton().addActionListener(lowStock);
 		view.getMainmenu().getStockTab().getShowLowStock().addActionListener(showLowStock);
-		view.getMainmenu().getStockTab().getBackToStock().addActionListener(stockBack);
-		
+		view.getMainmenu().getStockTab().getBackToStock().addActionListener(stockBack);*/
 		view.getWelcomeScreen().getswitchToLoginPanelButton().addActionListener(switchToLogin);
 		view.getWelcomeScreen().getExit().addActionListener(exit);
 		view.getLogin().setDelayTimer(loginDelay);
@@ -837,7 +759,7 @@ public class Controller {
 		view.getMainmenu().getSupplierTab().getSupplierText()
 				.setText(model.getShop().getSuppliers().get(current).getName());
 		view.getMainmenu().getSupplierTab().setProductData(data);
-		// view.getMainmenu().getSupplierTab().refreshProducts(data);
+		view.getMainmenu().getSupplierTab().refreshProducts(data);
 		view.getMainmenu().getSupplierTab().focusViewProducts();
 		view.getMainmenu().getSupplierTab().getViewSupplierTabel()
 				.addMouseListener(supplierTableListener);

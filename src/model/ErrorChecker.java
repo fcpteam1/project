@@ -1,3 +1,4 @@
+
 package model;
 
 import javax.swing.JFrame;
@@ -58,7 +59,7 @@ public class ErrorChecker {
 		
 		return isNumber;
 	}
-
+	
 	public static boolean isInteger(String integer){
 		boolean isInteger=true;
 		
@@ -70,4 +71,5 @@ public class ErrorChecker {
 		
 		return isInteger;
 	}
+
 }

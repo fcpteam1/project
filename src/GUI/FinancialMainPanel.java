@@ -39,6 +39,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setSaleData(model.getShop().getAllSales());
 					}
 
 					@Override
@@ -49,6 +50,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setSaleData(model.getShop().getTodaySales());
 						
 					}
 
@@ -82,6 +84,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().getAllExpenses();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setOrderData(model.getShop().getAllOrders());
 						
 					}
 
@@ -93,6 +96,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setOrderData(model.getShop().getTodayOrders());
 					
 					}
 				
@@ -178,6 +182,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setSaleData(model.getShop().getMonthlySales(e));
 					}
 
 					@Override
@@ -188,6 +193,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setSaleData(model.getShop().getWeeklySales(e));
 					}
 
 					@Override
@@ -198,6 +204,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalSales();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setSaleData(model.getShop().getDailySales(e));
 					}
 
 					@Override
@@ -208,6 +215,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setOrderData(model.getShop().getMonthlyOrders(e));
 					}
 
 					@Override
@@ -218,6 +226,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setOrderData(model.getShop().getWeeklyOrders(e));
 					}
 
 					@Override
@@ -228,6 +237,7 @@ public class FinancialMainPanel {
 						financialTablePanel.refresh();
 						double totalPrice = model.getShop().totalOrders();
 						financialTextPanel.getTotal(totalPrice);
+						financialGraphPanel.setOrderData(model.getShop().getDailyOrders(e));
 					}
 
 					@Override
@@ -333,6 +343,10 @@ public class FinancialMainPanel {
 						financialGraphPanel.profitGraphPanel();
 						financialGraphPanel.validate();
 						financialGraphPanel.repaint();
+						
+						financialGraphPanel.setSaleData(model.getShop().getAllSales());
+						financialGraphPanel.setOrderData(model.getShop().getAllOrders());
+						financialGraphPanel.setGraphData();
 					}
 
 				});
