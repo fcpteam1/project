@@ -30,8 +30,8 @@ public class CustomerTablePanel extends JPanel {
 		table = new JTable(tableModel);
 		popup = new JPopupMenu();
 
-		JMenuItem removeItem = new JMenuItem("Delete User");
-		JMenuItem editItem = new JMenuItem("Edit User");
+		JMenuItem removeItem = new JMenuItem("Delete Customer");
+		JMenuItem editItem = new JMenuItem("Edit Customer");
 		popup.add(removeItem);
 		popup.add(editItem);
 

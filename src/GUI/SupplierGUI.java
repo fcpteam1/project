@@ -563,8 +563,8 @@ public class SupplierGUI {
 		createPhoneLabel = new JLabel("Phone");
 		createAddressLabel = new JLabel("Address");
 
-		Border titleBorder = BorderFactory.createTitledBorder("Edit Supplier");
-		editSupplierPanel.setBorder(titleBorder);
+		Border titleBorder = BorderFactory.createTitledBorder("Create Supplier");
+		createSupplierPanel.setBorder(titleBorder);
 
 		c.gridx = 0;
 		c.gridy = 0;

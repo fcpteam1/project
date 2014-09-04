@@ -230,6 +230,8 @@ public class SaleFormPanel extends JPanel {
 							try {
 								removeAll();
 								createSaleSelectionPanel(event);
+								//return prevents an empty sale being completed
+								return;
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -351,7 +353,7 @@ public class SaleFormPanel extends JPanel {
 		}
 
 		editButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)  {
 				ArrayList<Integer> quantities = new ArrayList<Integer>();
 				ArrayList<String> stockNames = new ArrayList<String>();
 				// Get ordered stock and associated quantities
@@ -368,9 +370,15 @@ public class SaleFormPanel extends JPanel {
 						}
 					} else if (!quantityField[i].getText().equals("")) {
 
-						JOptionPane.showMessageDialog(SaleFormPanel.this,
-								"Exceeded max Available");
-
+						int option = JOptionPane.showConfirmDialog(
+								SaleFormPanel.this, "Exceeded max Available",
+								"Out of Stock", JOptionPane.OK_OPTION);
+						if (option == JOptionPane.OK_OPTION) {
+							removeAll();
+							editSaleSelectionPanel();
+							//return prevents an empty sale being completed
+							return;
+						}
 					}
 				}
 				// clear stock list from previous runs

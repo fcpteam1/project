@@ -120,7 +120,7 @@ public class Shop {
 
 		userFormPanel = new UserFormPanel();
 		customerFormPanel = new CustomerFormPanel();
-		orderFormPanel = new OrderFormPanel();
+   		orderFormPanel = new OrderFormPanel();
 
 		loadCustomers(customerFile);
 		loadUsers(userFile);
