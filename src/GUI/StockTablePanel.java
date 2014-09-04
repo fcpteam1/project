@@ -20,12 +20,17 @@ public class StockTablePanel extends JPanel {
 
 	private JTable table;
 	private StockTableModel tableModel;
+	private StockByDateTableModel byDateTableModel;
+	private StockPredictionTableModel predictionModel;
 	private JPopupMenu popup;
 	private StockTableListener listener;
 	private JTextField price;
+	private StockFormPanel formPanel;
 	
 	public StockTablePanel() {
 		
+		predictionModel = new StockPredictionTableModel();
+		byDateTableModel = new StockByDateTableModel();
 		tableModel = new StockTableModel();
 		table = new JTable(tableModel);
 		popup = new JPopupMenu();
@@ -48,12 +53,13 @@ public class StockTablePanel extends JPanel {
 				int row = table.getSelectedRow();
 				int column = 0;
 				String name = (String)table.getValueAt(row, column);
+				StockFormEvent stockEv = new StockFormEvent(e, name);
 				if(listener!=null){
-				//	listener.editPrice(StockEvent ev);
+					listener.editPrice(stockEv);
 				}
+				refresh();
 			}
 		});
-		
 		setLayout(new BorderLayout());
 
 		add(new JScrollPane(table), BorderLayout.CENTER);
@@ -62,14 +68,41 @@ public class StockTablePanel extends JPanel {
 	
 	public void setData(ArrayList<Stock> stock){
 		tableModel.setData(stock);
+		byDateTableModel.setData(stock);
+	}
+	
+	public void setPredictData(){
+		
 	}
 	
 	public void refresh() {
 		tableModel.fireTableDataChanged();
+		byDateTableModel.fireTableDataChanged();
 	}
 	
 	public void setListener(StockTableListener listener) {
 		this.listener = listener;
+	}
+	
+	public void setFormPanel(StockFormPanel formPanel){
+		this.formPanel = formPanel;
+	}
+	
+	public void setModel(int i){
+		switch (i) {
+		case 1:
+			//popup.setVisible(true);
+			table.setModel(tableModel);
+			break;
+		case 2:
+			//popup.setVisible(true);
+			table.setModel(byDateTableModel);
+			break;
+		case 3:
+			//popup.setVisible(false);
+			table.setModel(predictionModel);
+			break;
+		}
 	}
 	
 }

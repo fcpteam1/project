@@ -24,7 +24,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -34,30 +33,20 @@ import model.Supplier;
 
 public class StockGUI extends JPanel {
 
-	private JTextArea textArea;
-	private JButton viewStockBtn;
 	private JPanel stockPanel;
 	private Model model;
-	//Darren
-	private JButton byDateBtn;
-	private JButton allBtn;
-	private StockTablePanel tablePanel;
-	private StockTableModel tableModel;
-	private JLabel newPriceLabel;
-	private JTextField newPriceField;
-	private JButton confirmBtn;
 	
 	// miall
 	private JButton predictStock, predictNextWeek, predictNextMonth, backTo;
 	private JComboBox stocks;
 	private int next, current, last, lastTwo, lastThree;
 	double dnext, dcurrent, dlast, dlastTwo, dlastThree;
-	private JPanel predictionPanel;
+	private JPanel predictionPanel, editPanel;
 	private JPanel chartPanel, buttonsPanel, showPanel;
 	private String[] predictColumnsWeeks, predictColumnsMonths;
 	private Object[][] predictData;
 	private JTable predictionTabel;
-	private JScrollPane predictionScroll;
+	private JScrollPane predictionScroll, stockTableScroll;
 	private GridBagConstraints showConstraints,stockConstraints;
 
 
@@ -69,54 +58,15 @@ public class StockGUI extends JPanel {
 		predictionPanel();
 		showPanel = new JPanel();
 		buttonsPanel = new JPanel();
-		predictStock = new JButton("Estimated StockSales");
+		predictStock = new JButton("Estimated Stock");
 		buttonsPanel.setLayout(new FlowLayout());
 		stockConstraints=new GridBagConstraints();
-		
-		//Darren
-		byDateBtn = new JButton("View By Date");
-		allBtn = new JButton("View All");
-		tablePanel = new StockTablePanel();
-		
-		tablePanel.setListener(new StockTableListener(){
-			@Override
-			public void editPrice(String name) {
-				for(Stock stock: model.getShop().getStock()){
-					if(stock.getName().equals(name)){
-						//editPanel();
-					}
-				}
-			}
-		});
-		
-		textArea = new JTextArea(5, 20);
-		stockPanel = new JPanel();
-		//stockPanel.setSize(500, 600);
 		model = new Model();
-		//stockPanel.setLayout(new BorderLayout());
-		viewStockBtn = new JButton("View Stock");
+		
+		stockPanel = new JPanel();
 
-		// niall
-		//stockPanel.add(textArea);
-		buttonsPanel.add(viewStockBtn);
 		buttonsPanel.add(predictStock);
-		// stockPanel.add(viewStockBtn, BorderLayout.NORTH);
-		//stockPanel.add(buttonsPanel, BorderLayout.NORTH);
-		//
-
-		viewStockBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Map<String, Integer> stockLevels = stockLevels();
-				textArea.append("Stock Levels:");
-				for (Map.Entry<String, Integer> current : stockLevels
-						.entrySet()) {
-					textArea.append("\n" + current.getKey() + ": "
-							+ String.valueOf(current.getValue()));
-				}
-				textArea.append("\n*********************************\n");
-			}
-
-		});
+	
 		stockPanel.setLayout(new GridBagLayout());
 		stockConstraints.gridx=0;
 		stockConstraints.gridy=0;
@@ -126,14 +76,7 @@ public class StockGUI extends JPanel {
 		stockConstraints.weighty=0.2;
 		stockConstraints.fill = GridBagConstraints.BOTH;
 		stockPanel.add(buttonsPanel,stockConstraints);
-		stockConstraints.gridx=0;
-		stockConstraints.gridy=1;
-		stockConstraints.gridheight=2;
-		stockConstraints.gridwidth=3;
-		stockConstraints.weighty=1;
-		stockConstraints.fill = GridBagConstraints.BOTH;
-		stockPanel.add(textArea,stockConstraints);
-		
+	
 		showPanel.setLayout(new GridBagLayout());
 		showConstraints=new GridBagConstraints();
 		showConstraints.gridx=0;
@@ -237,61 +180,6 @@ public class StockGUI extends JPanel {
 		return showPanel;
 	}
 
-//	public void editPanel(StockEvent ev){
-//		Dimension dim = getPreferredSize();
-//		dim.width = 300;
-//		setPreferredSize(dim);
-//		Border innerBorder = BorderFactory.createTitledBorder("Edit Item Price");
-//		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-//		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-//		newPriceLabel = new JLabel("New Price: ");
-//		newPriceField = new JTextField(3);
-//		confirmBtn = new JButton("Confirm");
-//
-//		confirmBtn.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				if(!newPriceField.getText().equals("")){
-//					double price = Double.valueOf(newPriceField.getText());
-//					for(Stock stock: model.getShop().getStock()){
-//						if(stock.getName().equals(name)){
-//							stock.setCustomerPrice(price);
-//						}
-//					}
-//				}
-//			}
-//		});
-//
-//		setLayout(new GridBagLayout());
-//		GridBagConstraints gc = new GridBagConstraints();
-//
-//		// First Row
-//		gc.gridy = 0;
-//		gc.weightx = 1;
-//		gc.weighty = 0.1;
-//
-//		gc.gridx = 0;
-//		gc.fill = GridBagConstraints.NONE;
-//		gc.anchor = GridBagConstraints.LINE_END;
-//		gc.insets = new Insets(0, 0, 0, 5);
-//		add(supplierLabel, gc);
-//
-//		gc.gridx = 1;
-//		gc.insets = new Insets(0, 0, 0, 0);
-//		gc.anchor = GridBagConstraints.LINE_START;
-//		add(supplierCombo, gc);
-//
-//		// Next Row
-//		gc.gridy++;
-//		gc.weightx = 1;
-//		gc.weighty = 0.1;
-//
-//		gc.gridx = 1;
-//		gc.insets = new Insets(0, 0, 0, 0);
-//		gc.anchor = GridBagConstraints.LINE_START;
-//		add(selectButton, gc);
-//		setVisible(true);
-//	}
-	
 	public void predictionPanel() {
 
 		predictNextWeek = new JButton("Estimate next Week");
@@ -339,9 +227,8 @@ public class StockGUI extends JPanel {
 		chartPanel.add(backTo, c);
 
 		predictionPanel.add(chartPanel, BorderLayout.WEST);
-
 	}
-
+	
 	public int getNext() {
 		return next;
 	}
@@ -494,6 +381,6 @@ public class StockGUI extends JPanel {
 
 	public void setPredictStock(JButton predictStock) {
 		this.predictStock = predictStock;
-	}
+	}	
 
 }

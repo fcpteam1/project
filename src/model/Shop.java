@@ -16,6 +16,7 @@ import GUI.FinancialFormEvent;
 import GUI.OrderFormEvent;
 import GUI.OrderFormPanel;
 import GUI.SaleFormEvent;
+import GUI.StockFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
 
@@ -32,8 +33,8 @@ public class Shop {
 	private ArrayList<Sale> blankSalesTable = new ArrayList<Sale>();
 
 	private String username, password, choice, customerName, customerNumber,
-			customerAddress, editUserPassword, editUserUsername;
-	
+			customerAddress, editUserPassword, editUserUsername, editedStockName;
+	private double editedStockPrice;
 	private String editCustomerName, editCustomerNumber, editCustomerAddress;
 	private String saleFile = "sales.ser";
 	private String orderFile = "orders.ser";
@@ -500,6 +501,49 @@ public class Shop {
 		return stocks;
 	}
 
+	public ArrayList<Product> getAllSupplierProducts(){
+		ArrayList<Product> allProducts = new ArrayList<Product>();
+		for(Supplier supplier: suppliers){
+			for(Product product: supplier.getProducts()){
+				allProducts.add(product);
+			}
+		}
+		return allProducts;
+	}
+	
+	public ArrayList<Stock> getUniqueStockList() {
+		ArrayList<Stock> uniqueStockList = new ArrayList<Stock>();
+		ArrayList<Product> allProducts = new ArrayList<Product>();
+		//Get all products that we can sell
+		allProducts = getAllSupplierProducts();
+		//Loop through individual products and add them to a list of stock
+		for (Product product: allProducts) {
+			Stock stock = new Stock(product, 0);
+			uniqueStockList.add(stock);
+		}
+		//Loop through list of unique products which we stock
+		for(Stock stock: uniqueStockList){
+			//Loop through all stock
+			for(Stock current: stocks){
+				//if the stock is a certain product, add it's quantity to the uniquelist
+				if(current.getName().equals(stock.getName())){
+					stock.setQuantity(stock.getQuantity()+current.getQuantity());
+					stock.setCustomerPrice(current.getCustomerPrice());
+				}
+			}
+		}
+		return uniqueStockList;
+	}
+	
+	public void editCustomerPrice(){
+		for(Stock stock: stocks){
+			if(stock.getName().equals(editedStockName)){
+				stock.setCustomerPrice(editedStockPrice);
+			}
+		}
+		writeStock(stockFile);
+	}
+	
 	public ArrayList<Sale> getSales() {
 		return sales;
 	}
@@ -1000,4 +1044,22 @@ public class Shop {
 	public void setPredictor(StockSalesPredictor predictor) {
 		this.predictor = predictor;
 	}
+
+	public String getEditedStockName() {
+		return editedStockName;
+	}
+
+	public void setEditedStockName(String editedStockName) {
+		this.editedStockName = editedStockName;
+	}
+
+	public double getEditedStockPrice() {
+		return editedStockPrice;
+	}
+
+	public void setEditedStockPrice(double editedStockPrice) {
+		this.editedStockPrice = editedStockPrice;
+	}
+	
+	
 }

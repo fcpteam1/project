@@ -22,7 +22,7 @@ public class MainMenuGUI {
 	private UserMainPanel userTab;
 	private OrderMainPanel orderTab;
 	private SupplierGUI supplierTab;
-	private StockGUI stockTab;
+	private StockMainPanel stockTab;
 	private SaleMainPanel saleTab;
 	private FinancialMainPanel profitAndLossTab;
 	protected boolean adminLogged = false;
@@ -51,7 +51,7 @@ public class MainMenuGUI {
 		userTab = new UserMainPanel();
 		supplierTab = new SupplierGUI();
 		orderTab = new OrderMainPanel();
-		stockTab = new StockGUI();
+		stockTab = new StockMainPanel();
 		saleTab = new SaleMainPanel();
 		profitAndLossTab = new FinancialMainPanel();
 
@@ -212,11 +212,11 @@ public class MainMenuGUI {
 		this.adminLogged = adminLogged;
 	}
 
-	public StockGUI getStockTab() {
+	public StockMainPanel getStockTab() {
 		return stockTab;
 	}
 
-	public void setStockTab(StockGUI stockTab) {
+	public void setStockTab(StockMainPanel stockTab) {
 		this.stockTab = stockTab;
 	}
 

@@ -127,8 +127,7 @@ public class OrderFormPanel extends JPanel {
 		Dimension dim = getPreferredSize();
 		dim.width = 300;
 		setPreferredSize(dim);
-		Border innerBorder = BorderFactory
-				.createTitledBorder("Select Products");
+		Border innerBorder = BorderFactory.createTitledBorder("Select Products");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
@@ -145,11 +144,7 @@ public class OrderFormPanel extends JPanel {
 		// Dynamically create labels and text fields for products
 		for (int i = 0; i < size; i++) {
 			names[i] = new JLabel(products.get(i).getName());
-			prices[i] = new JLabel(
-					": \u20ac"
-							+ Double.toString(products.get(i)
-									.getSupplierPrice() * 100.00 / 100.00)
-							+ " each");
+			prices[i] = new JLabel(": \u20ac" + Double.toString(products.get(i).getSupplierPrice() * 100.00 / 100.00) + " each");
 			fields[i] = new JTextField(3);
 			gc.gridy = i;
 			gc.weightx = 1;
@@ -313,11 +308,9 @@ public class OrderFormPanel extends JPanel {
 					}
 					i++;
 				}
-				OrderFormEvent orderEvent = new OrderFormEvent(this,
-						editedOrder.getSupplier(), editedProducts);
+				OrderFormEvent orderEvent = new OrderFormEvent(this, editedOrder.getSupplier(), editedProducts);
 				if (formListener != null) {
-					formListener.editOrderOccurred(orderEvent,
-							editedOrder.getId());
+					formListener.editOrderOccurred(orderEvent, editedOrder.getId());
 				}
 				setVisible(false);
 			}
