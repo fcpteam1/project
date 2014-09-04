@@ -5,10 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+
 import model.ErrorChecker;
 
 public class Controller {
@@ -34,6 +36,7 @@ public class Controller {
 	private ActionListener createSupplier;
 
 	private ActionListener stockBack, weekPredict, monthPredict, predict;
+	private ActionListener lowStock,showLowStock,showLowWeek,showLowMonth;
 	private ActionListener switchToLogin,exit,loginDelay;
 
 	public Controller() throws IOException {
@@ -76,6 +79,7 @@ public class Controller {
 					}
 				}
 				if (correctUser) {
+					
 					view.getMainmenu().addTabs(admin);
 					view.changeToMaineMenu();
 					view.getLogin().settStart(System.currentTimeMillis());
@@ -391,7 +395,7 @@ public class Controller {
 					
 				}
 				else{
-					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Phone number can only contain numbers and ' - '");
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Phone number can only contain numbers and ' - '","Phone Number Format Error", JOptionPane.ERROR_MESSAGE);
 				}
 			
 			}
@@ -424,10 +428,10 @@ public class Controller {
 				
 				
 				if(ErrorChecker.isOnlyLetters(name)==false){
-					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Product name must only conatain letters");
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Product name must only conatain letters","Product Name Format Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(ErrorChecker.isFloat(price)==false){
-					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Supplier Price must be of the format e.cc.");
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Supplier Price must be of the format e.cc.","Supplier Price format Exception",JOptionPane.ERROR_MESSAGE);
 					
 				}
 				else{
@@ -655,6 +659,47 @@ public class Controller {
 			}
 		};
 		
+		lowStock=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				view.getMainmenu().getStockTab().switchToControl();
+			}
+		};
+		
+		showLowStock=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				ArrayList<Stock> lowStocks=new ArrayList<Stock>();
+				
+				for(Stock stock : model.getShop().getStock()){
+					
+					if(stock.getQuantity()<25){
+						lowStocks.add(stock);
+						System.out.println("low");
+					}
+				}
+				
+				Object data[][]=new Object[lowStocks.size()][4];
+				for(int i=0;i<lowStocks.size();i++){
+					data[i][0]=lowStocks.get(i).getName();
+					data[i][1]=lowStocks.get(i).getId();
+					data[i][2]=lowStocks.get(i).getQuantity();
+				}
+				
+				view.getMainmenu().getStockTab().fillLowStock(data);
+				
+			}
+		};
+		
+		
+		showLowWeek=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				ArrayList<Stock> lowWeekStock =new ArrayList<Stock>();
+				
+				
+			}
+		};
+		
 	}
 
 	public Object[][] fillProductsForSupplier(int current) {
@@ -741,6 +786,9 @@ public class Controller {
 		view.getMainmenu().getStockTab().getPredictStock()
 				.addActionListener(predict);
 		
+		view.getMainmenu().getStockTab().getStockControlButton().addActionListener(lowStock);
+		view.getMainmenu().getStockTab().getShowLowStock().addActionListener(showLowStock);
+		view.getMainmenu().getStockTab().getBackToStock().addActionListener(stockBack);
 		
 		view.getWelcomeScreen().getswitchToLoginPanelButton().addActionListener(switchToLogin);
 		view.getWelcomeScreen().getExit().addActionListener(exit);

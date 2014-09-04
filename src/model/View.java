@@ -159,6 +159,7 @@ public class View extends JFrame {
 		
 		currentPanel.validate();
 		currentPanel.repaint();
+		
 
 	}
 

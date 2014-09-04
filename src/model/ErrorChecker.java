@@ -59,4 +59,15 @@ public class ErrorChecker {
 		return isNumber;
 	}
 
+	public static boolean isInteger(String integer){
+		boolean isInteger=true;
+		
+		for(int i=0;i<integer.length();i++){
+			if( (integer.charAt(i)!='0') && (integer.charAt(i)!='1') && (integer.charAt(i)!='2') && (integer.charAt(i)!='3') && (integer.charAt(i)!='4') && (integer.charAt(i)!='5') && (integer.charAt(i)!='6') && (integer.charAt(i)!='7') && (integer.charAt(i)!='8') && (integer.charAt(i)!='9')){
+				isInteger=false;
+			}
+		}
+		
+		return isInteger;
+	}
 }

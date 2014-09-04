@@ -688,6 +688,7 @@ public class StockSalesPredictor {
 
 		int daysGone = calendar.get(Calendar.DAY_OF_WEEK);
 		daysGone -= 1;
+		int realThisWeeksSales=(int) thisWeekStockSales;
 		thisWeekStockSales = (thisWeekStockSales / daysGone) * 7;
 
 		nextWeekStockSales = ((((thisWeekStockSales / thisWeekLastYearStockSales) * 2) + (lastWeekStockSales / lastWeekLastYearStockSales)) / 3)
@@ -696,7 +697,7 @@ public class StockSalesPredictor {
 			nextWeekStockSales = ((thisWeekStockSales * 4)
 					+ (lastWeekStockSales * 3) + (twoWeekStockSales * 2) + (threeWeekStockSales)) / 10;
 		}
-
+		int realThisMonthStockSales=(int) thisMonthStockSales;
 		thisMonthStockSales = thisMonthStockSales / calendar.get(Calendar.DATE)
 				* calendar.getMaximum(calendar.get(Calendar.MONTH));
 
@@ -719,13 +720,13 @@ public class StockSalesPredictor {
 			result[0] = (int) threeWeekStockSales;
 			result[1] = (int) twoWeekStockSales;
 			result[2] = (int) lastWeekStockSales;
-			result[3] = (int) thisWeekStockSales;
+			result[3] = realThisWeeksSales;
 			result[4] = (int) nextWeekStockSales;
 		} else {
 			result[0] = (int) threeMonthStockSales;
 			result[1] = (int) twoMonthStockSales;
 			result[2] = (int) lastMonthStockSales;
-			result[3] = (int) thisMonthStockSales;
+			result[3] = realThisMonthStockSales;
 			result[4] = (int) nextMonthStockSales;
 		}
 

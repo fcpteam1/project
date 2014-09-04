@@ -159,6 +159,21 @@ public class MainMenuGUI {
 
 		adminLogged = admin;
 
+		/*try {
+			customerTab = new CustomerMainPanel();
+			userTab = new UserMainPanel();
+			supplierTab = new SupplierGUI();
+			orderTab = new OrderMainPanel();
+			stockTab = new StockGUI();
+			saleTab = new SaleMainPanel();
+			profitAndLossTab = new FinancialMainPanel();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}*/
+		
+		
 		tabbedPane.removeAll();
 		if (admin) {
 			tabbedPane.addTab("Customers", customerTab.getPanel());

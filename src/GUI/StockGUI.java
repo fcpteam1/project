@@ -48,8 +48,6 @@ public class StockGUI extends JPanel {
 	// niall
 	private JButton predictStock, predictNextWeek, predictNextMonth, backTo;
 	private JComboBox stocks;
-	private int next, current, last, lastTwo, lastThree;
-	double dnext, dcurrent, dlast, dlastTwo, dlastThree;
 	private JPanel predictionPanel;
 	private JPanel chartPanel, buttonsPanel, showPanel;
 	private String[] predictColumnsWeeks, predictColumnsMonths;
@@ -58,6 +56,13 @@ public class StockGUI extends JPanel {
 	private JScrollPane predictionScroll;
 	private GridBagConstraints showConstraints,stockConstraints;
 
+	//stock control  , show low stock , show stock expected to run out
+	private JPanel stockControlPanel,stockControlButtonsPanel,stockControlScrollPanel;
+	private JButton stockControlButton,showLowStock,showExpectedStockRunOutWeek,showExpectedStockRunOutMonth;
+	private JTable lowStockTable,expectedRunOutTable;
+	private String[] lowStockColumns,expectedRunOutWeekColumns,expectedRunOutMonthColumns;
+	private JScrollPane stockControlScroll;
+	private JButton backToStock;
 
 	//
 
@@ -70,6 +75,91 @@ public class StockGUI extends JPanel {
 		predictStock = new JButton("Estimated StockSales");
 		buttonsPanel.setLayout(new FlowLayout());
 		stockConstraints=new GridBagConstraints();
+		
+		//stockControl panel
+		stockControlPanel=new JPanel();
+		stockControlPanel.setLayout(new GridBagLayout());
+		stockControlButtonsPanel=new JPanel();
+		stockControlButtonsPanel.setLayout(new GridBagLayout());
+		stockControlScrollPanel=new JPanel();
+		stockControlScrollPanel.setLayout(new GridBagLayout());
+		
+		stockControlButton=new JButton("Check Low Stock");
+		showLowStock=new JButton("Show low Stock");
+		showExpectedStockRunOutWeek=new JButton("Low end of week");
+		showExpectedStockRunOutMonth=new JButton("Low end of Month");
+		backToStock=new JButton("Back");
+		
+		JPanel buttonPanel=new JPanel();
+		buttonPanel.setLayout(new GridBagLayout());
+		
+		GridBagConstraints c=new GridBagConstraints();
+		c.gridx=0;
+		c.gridy=0;
+		c.gridheight=1;
+		c.gridwidth=1;
+		c.weightx=1;
+		c.weighty=1;
+		c.anchor=GridBagConstraints.WEST;
+		buttonPanel.add(showLowStock,c);
+		
+		c.gridy=1;
+		buttonPanel.add(showExpectedStockRunOutWeek,c);
+		
+		c.gridy=2;
+		buttonPanel.add(showExpectedStockRunOutMonth,c);
+		
+		
+		c.gridx=0;
+		c.gridy=0;
+		c.weighty=0.1;
+		c.fill=GridBagConstraints.BOTH;
+		c.anchor=GridBagConstraints.FIRST_LINE_START;
+		stockControlButtonsPanel.add(buttonPanel,c);
+		
+		c.gridx=0;
+		c.gridy=2;
+		c.weighty=0.9;
+		c.fill=GridBagConstraints.NONE;
+		c.anchor=GridBagConstraints.FIRST_LINE_START;
+		stockControlButtonsPanel.add(backToStock,c);
+		
+		lowStockColumns=new String[]{"Product","Id","Quantity"};
+		expectedRunOutWeekColumns=new String[]{"Product","Id","Supplier","Current Quantity","Expected Quantity at end of Week"};
+		expectedRunOutMonthColumns=new String[]{"Product","Id","Supplier","Current Quantity","Expected Quantity at end of Month"};
+		Object data[][]=new Object[1][3];
+		lowStockTable=new JTable(data,lowStockColumns);
+		
+		stockControlScroll=new JScrollPane(lowStockTable);
+		
+		
+		c.gridx=0;
+		c.gridy=0;
+		c.weightx=1;
+		c.weighty=1;
+		c.fill=GridBagConstraints.BOTH;
+		c.anchor=GridBagConstraints.FIRST_LINE_START;
+		stockControlScrollPanel.add(stockControlScroll,c);
+		
+		c.gridx=0;
+		c.gridy=0;
+		c.gridwidth=1;
+		c.gridheight=3;
+		c.weightx=0.3;
+		c.weighty=1;
+		c.fill=GridBagConstraints.BOTH;
+		c.anchor=GridBagConstraints.FIRST_LINE_START;
+		stockControlPanel.add(stockControlButtonsPanel,c);
+		
+		c.gridx=1;
+		c.gridy=0;
+		c.gridheight=3;
+		c.gridwidth=2;
+		c.weightx=1;
+		c.weighty=1;
+		c.fill=GridBagConstraints.BOTH;
+		c.anchor=GridBagConstraints.FIRST_LINE_START;
+		stockControlPanel.add(stockControlScrollPanel,c);
 		
 		//
 
@@ -86,6 +176,7 @@ public class StockGUI extends JPanel {
 		//stockPanel.add(textArea);
 		buttonsPanel.add(viewStockBtn);
 		buttonsPanel.add(predictStock);
+		buttonsPanel.add(stockControlButton);
 		buttonsPanel.add(stockBarChartBtn);
 		// stockPanel.add(viewStockBtn, BorderLayout.NORTH);
 		//stockPanel.add(buttonsPanel, BorderLayout.NORTH);
@@ -321,85 +412,7 @@ public class StockGUI extends JPanel {
 
 	}
 
-	public int getNext() {
-		return next;
-	}
-
-	public void setNext(int next) {
-		this.next = next;
-	}
-
-	public int getCurrent() {
-		return current;
-	}
-
-	public void setCurrent(int current) {
-		this.current = current;
-	}
-
-	public int getLast() {
-		return last;
-	}
-
-	public void setLast(int last) {
-		this.last = last;
-	}
-
-	public int getLastTwo() {
-		return lastTwo;
-	}
-
-	public void setLastTwo(int lastTwo) {
-		this.lastTwo = lastTwo;
-	}
-
-	public int getLastThree() {
-		return lastThree;
-	}
-
-	public void setLastThree(int lastThree) {
-		this.lastThree = lastThree;
-	}
-
-	public double getDnext() {
-		return dnext;
-	}
-
-	public void setDnext(double dnext) {
-		this.dnext = dnext;
-	}
-
-	public double getDcurrent() {
-		return dcurrent;
-	}
-
-	public void setDcurrent(double dcurrent) {
-		this.dcurrent = dcurrent;
-	}
-
-	public double getDlast() {
-		return dlast;
-	}
-
-	public void setDlast(double dlast) {
-		this.dlast = dlast;
-	}
-
-	public double getDlastTwo() {
-		return dlastTwo;
-	}
-
-	public void setDlastTwo(double dlastTwo) {
-		this.dlastTwo = dlastTwo;
-	}
-
-	public double getDlastThree() {
-		return dlastThree;
-	}
-
-	public void setDlastThree(double dlastThree) {
-		this.dlastThree = dlastThree;
-	}
+	
 
 	public Object[][] getPredictData() {
 		return predictData;
@@ -450,7 +463,35 @@ public class StockGUI extends JPanel {
 		showPanel.validate();
 		showPanel.repaint();
 	}
+	
+	public void switchToControl(){
+		showPanel.removeAll();
+		showPanel.add(stockControlPanel,showConstraints);
+		showPanel.validate();
+		showPanel.repaint();
+	}
 
+	public void fillLowStock(Object[][] data){
+		stockControlScrollPanel.remove(stockControlScroll);
+		lowStockTable=new JTable(data,lowStockColumns);
+		
+		stockControlScroll=new JScrollPane(lowStockTable);
+		System.out.println("fill");
+		GridBagConstraints c=new GridBagConstraints();
+		c.gridx=0;
+		c.gridy=0;
+		c.gridheight=3;
+		c.gridwidth=3;
+		c.weightx=1;
+		c.weighty=1;
+		c.fill=GridBagConstraints.BOTH;
+		c.anchor=GridBagConstraints.FIRST_LINE_START;
+		stockControlScrollPanel.add(stockControlScroll,c);
+		stockControlScrollPanel.validate();
+		stockControlScrollPanel.repaint();
+		
+	}
+	
 	public JButton getPredictNextWeek() {
 		return predictNextWeek;
 	}
@@ -474,5 +515,31 @@ public class StockGUI extends JPanel {
 	public void setPredictStock(JButton predictStock) {
 		this.predictStock = predictStock;
 	}
+
+	public JButton getStockControlButton() {
+		return stockControlButton;
+	}
+
+	public void setStockControlButton(JButton stockControlButton) {
+		this.stockControlButton = stockControlButton;
+	}
+
+	public JButton getShowLowStock() {
+		return showLowStock;
+	}
+
+	public JButton getShowExpectedStockRunOutWeek() {
+		return showExpectedStockRunOutWeek;
+	}
+
+	public JButton getShowExpectedStockRunOutMonth() {
+		return showExpectedStockRunOutMonth;
+	}
+
+	public JButton getBackToStock() {
+		return backToStock;
+	}
+	
+	
 
 }
