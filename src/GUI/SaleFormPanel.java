@@ -261,7 +261,7 @@ public class SaleFormPanel extends JPanel {
 				if (formListener != null) {
 					formListener.createSaleOccurred(saleEvent);
 				}
-				// setVisible(false);
+				setVisible(false);
 			}
 
 		});
@@ -403,7 +403,7 @@ public class SaleFormPanel extends JPanel {
 				if (formListener != null) {
 					formListener.editSaleOccurred(saleEvent, saleToEdit.getId());
 				}
-				// setVisible(false);
+				setVisible(false);
 			}
 
 		});
