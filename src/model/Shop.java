@@ -905,6 +905,7 @@ public class Shop {
 			for (Product product : orders.get(index).getProducts()) {
 				Stock stock = new Stock(product, product.getQuantity());
 				stocks.add(stock);
+				availableStock.add(stock);
 			}
 		}
 		orders.get(index).setCurrent(false);
