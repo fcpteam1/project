@@ -138,7 +138,7 @@ public class StockMainPanel extends JPanel {
 				}
 				stockTablePanel.setPredictionRowCount(model.getShop().getUniqueStockList().size());
 				stockTablePanel.setPredictData(data);
-				stockTablePanel.setPredictionColumns(2);
+				//stockTablePanel.setPredictionColumns(2);
 				stockTablePanel.setModel(3);
 				stockTablePanel.refresh();
 			}
@@ -161,7 +161,7 @@ public class StockMainPanel extends JPanel {
 				}
 				stockTablePanel.setPredictionRowCount(model.getShop().getUniqueStockList().size());
 				stockTablePanel.setPredictData(data);
-				stockTablePanel.setPredictionColumns(1);
+				//stockTablePanel.setPredictionColumns(1);
 				stockTablePanel.setModel(3);
 				stockTablePanel.refresh();
 			}

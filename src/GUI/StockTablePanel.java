@@ -74,9 +74,9 @@ public class StockTablePanel extends JPanel {
 		predictionModel.setData(predictData);
 	}
 	
-	public void setPredictionColumns(int i){
-		predictionModel.setColumnNames(i);
-	}
+//	public void setPredictionColumns(int i){
+//		predictionModel.setColumnNames(i);
+//	}
 	
 	public void setPredictionRowCount(int i){
 		predictionModel.setRowCount(i);

@@ -8,9 +8,9 @@ import model.Stock;
 
 public class StockPredictionTableModel extends AbstractTableModel {
 
-	private String[] columnNames = { "Item", "3 Week", "2 Week", "Last Week", "This Week", "Next Week"};
-	private String[] monthColumns = { "Item", "3 Months", "2 Months", "Last Month", "This Month", "Next Month"};
-	private String[] weekColumns = { "Item", "3 Week", "2 Week", "Last Week", "This Week", "Next Week"};
+	private String[] columnNames = { "Item", "3 Ago", "2 Ago", "Last", "This", "Next"};
+//	private String[] monthColumns = { "Item", "3 Months", "2 Months", "Last Month", "This Month", "Next Month"};
+//	private String[] weekColumns = { "Item", "3 Week", "2 Week", "Last Week", "This Week", "Next Week"};
 	private Object[][] predictData;
 	private int rowCount;
 
@@ -18,14 +18,18 @@ public class StockPredictionTableModel extends AbstractTableModel {
 		
 	}
 	
-	public void setColumnNames(int i){
-		if(i==1){
-			columnNames = monthColumns;
-		}
-		else if(i==2){
-			columnNames = weekColumns;
-		}
-	}
+//	public void setColumnNames(int i){
+//		if(i==1){
+//			for(int j=0; j<6;j++){
+//				columnNames[j] = monthColumns[j];
+//			}
+//		}
+//		else if(i==2){
+//			for(int j=0; j<6;j++){
+//				columnNames[j] = weekColumns[j];
+//			}
+//		}
+//	}
 	
 	public void setRowCount(int i){
 		this.rowCount = i;
