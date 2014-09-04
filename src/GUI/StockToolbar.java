@@ -4,14 +4,17 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class StockToolbar extends JPanel implements ActionListener {
 	private JButton allBtn;
 	private JButton byDateBtn;
 	private JButton predictionBtn;
+	private JButton stockBarChartBtn;
 	private StockFormPanel formPanel;
 	private StockToolbarListener listener;
 	
@@ -20,16 +23,19 @@ public class StockToolbar extends JPanel implements ActionListener {
 		allBtn = new JButton("View All");
 		byDateBtn = new JButton("View By Date");
 		predictionBtn = new JButton("Predictions");
-
+		stockBarChartBtn = new JButton("Stock Chart");
+		
+		stockBarChartBtn.addActionListener(this);
 		allBtn.addActionListener(this);
 		byDateBtn.addActionListener(this);
 		predictionBtn.addActionListener(this);
 
 		setLayout(new FlowLayout(FlowLayout.LEFT));
-
+		
 		add(allBtn);
 		add(byDateBtn);
 		add(predictionBtn);
+		add(stockBarChartBtn);
 	}
 	
 	public void setFormPanel(StockFormPanel formPanel) {
@@ -60,6 +66,9 @@ public class StockToolbar extends JPanel implements ActionListener {
 			listener.viewPredictions();
 			formPanel.validate();
 			formPanel.repaint();
+		}
+		if (clicked == stockBarChartBtn) {
+			listener.stockGraph();
 		}
 	}
 }

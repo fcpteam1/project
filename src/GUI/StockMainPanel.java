@@ -1,17 +1,21 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+
+import javax.swing.SwingUtilities;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
 import model.Model;
 import model.Stock;
@@ -64,7 +68,29 @@ public class StockMainPanel extends JPanel {
 				stockFormPanel.validate();
 				stockFormPanel.repaint();
 			}
-			
+
+			@Override
+			public void stockGraph() {
+				final JDialog dialog = new JDialog();
+				final JFXPanel contentPane = new JFXPanel();
+				dialog.setContentPane(contentPane);
+				dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+
+				// building the scene graph must be done on the javafx thread
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						contentPane.setScene(createStockBarChart());
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								dialog.pack();
+								dialog.setVisible(true);
+							}
+						});
+					}
+				});
+			}
 		});
 		
 		stockTablePanel.setFormPanel(stockFormPanel);
@@ -179,6 +205,27 @@ public class StockMainPanel extends JPanel {
 			}
 		}
 		return stockLevels;
+	}
+	
+	private Scene createStockBarChart() {
+		Map<String, Integer> stockLevels = stockLevels();
+		final CategoryAxis xAxis = new CategoryAxis();
+		final NumberAxis yAxis = new NumberAxis();
+		final BarChart<String, Number> bc = new BarChart<String, Number>(
+				xAxis, yAxis);
+		bc.setTitle("Stock Summary");
+		xAxis.setLabel("Products");
+		yAxis.setLabel("Quantity");
+
+		XYChart.Series series1 = new XYChart.Series();
+
+		for (Map.Entry<String, Integer> current : stockLevels.entrySet()){
+			series1.getData().add(
+					new XYChart.Data(current.getKey(), current.getValue()));
+		}
+		
+		bc.getData().addAll(series1);
+		return new Scene(bc, 800, 600);		
 	}
 
 }
