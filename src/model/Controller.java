@@ -12,12 +12,9 @@ public class Controller {
 
 	private View view;
 	private Model model;
-	private ActionListener loginListener, logoutListener, createUserListener,
-			backToUserMenu, deleteUserListener;
+	private ActionListener loginListener, logoutListener;
 	private ActionListener viewSupplier, viewProducts, nextSupplier,
 			prevSupplier, searchSupplier;
-	private ActionListener btnSubmitNewCustomer, btnViewCustomers,
-			btnAddCustomer;
 
 	private MouseAdapter supplierTableListener;
 	private ActionListener menuViewSupplier, menuEditSupplier, menuAddProduct,
@@ -30,11 +27,7 @@ public class Controller {
 			addSupButton;
 	private ActionListener createSupplier;
 
-	private ActionListener stockBack, weekPredict, monthPredict, predict;
-
 	public Controller() throws IOException {
-		// TODO Auto-generated constructor stub
-
 		view = new View();
 		model = new Model();
 		addListeners();

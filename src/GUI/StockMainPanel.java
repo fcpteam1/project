@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,18 +22,6 @@ public class StockMainPanel extends JPanel {
 	private StockFormPanel stockFormPanel;
 	private StockTablePanel stockTablePanel;
 	private Model model;
-	private StockGUI predictionPanel;
-	private JButton predictStock, predictNextWeek, predictNextMonth, backTo;
-	private JComboBox stocks;
-	private int next, current, last, lastTwo, lastThree;
-	double dnext, dcurrent, dlast, dlastTwo, dlastThree;
-	private JPanel editPanel;
-	private JPanel chartPanel, buttonsPanel, showPanel;
-	private String[] predictColumnsWeeks, predictColumnsMonths;
-	private Object[][] predictData;
-	private JTable predictionTabel;
-	private JScrollPane predictionScroll, stockTableScroll;
-	private GridBagConstraints showConstraints;
 	
 	public StockMainPanel() throws IOException{
 		mainPanel = new JPanel();
@@ -85,6 +75,7 @@ public class StockMainPanel extends JPanel {
 			public void editPrice(StockFormEvent e) {
 				model.getShop().setEditedStockName(e.getName());
 				model.getShop().setEditedStockPrice(e.getPrice());
+				stockFormPanel.removeAll();
 				stockFormPanel.editPanel(e);
 				stockTablePanel.refresh();
 			}
@@ -98,6 +89,7 @@ public class StockMainPanel extends JPanel {
 				model.getShop().setEditedStockPrice(ev.getPrice());
 				model.getShop().editCustomerPrice();
 				stockTablePanel.setData(model.getShop().getUniqueStockList());
+				stockTablePanel.setModel(1);
 				stockTablePanel.refresh();
 			}
 
@@ -106,8 +98,8 @@ public class StockMainPanel extends JPanel {
 				Object data[][];
 				int count = 0;
 				int[] result = new int[5];
-				data = new Object[model.getShop().getStock().size()][6];
-				for (Stock stock : model.getShop().getStock()) {
+				data = new Object[model.getShop().getUniqueStockList().size()][6];
+				for (Stock stock : model.getShop().getUniqueStockList()) {
 					result = model.getShop().getPredictor().stockPredictor(model.getShop().getSales(), stock, true);
 					data[count][0] = stock.getName();
 					data[count][1] = result[0];
@@ -118,9 +110,11 @@ public class StockMainPanel extends JPanel {
 					System.out.println(count);
 					count++;
 				}
+				stockTablePanel.setPredictionRowCount(model.getShop().getUniqueStockList().size());
+				stockTablePanel.setPredictData(data);
+				stockTablePanel.setPredictionColumns(2);
 				stockTablePanel.setModel(3);
-//				stockTablePanel.setPredictData(data);
-//				fillWeekPrediction(data);
+				stockTablePanel.refresh();
 			}
 
 			@Override
@@ -128,8 +122,8 @@ public class StockMainPanel extends JPanel {
 				Object data[][];
 				int count = 0;
 				int[] result = new int[5];
-				data = new Object[model.getShop().getStock().size()][6];
-				for (Stock stock : model.getShop().getStock()) {
+				data = new Object[model.getShop().getUniqueStockList().size()][6];
+				for (Stock stock : model.getShop().getUniqueStockList()) {
 					result = model.getShop().getPredictor().stockPredictor(model.getShop().getSales(), stock, false);
 					data[count][0] = stock.getName();
 					data[count][1] = result[0];
@@ -139,8 +133,11 @@ public class StockMainPanel extends JPanel {
 					data[count][5] = result[4];
 					count++;
 				}
-//				setPredictData(data);
-//				fillMonthPrediction(data);
+				stockTablePanel.setPredictionRowCount(model.getShop().getUniqueStockList().size());
+				stockTablePanel.setPredictData(data);
+				stockTablePanel.setPredictionColumns(1);
+				stockTablePanel.setModel(3);
+				stockTablePanel.refresh();
 			}
 		});
 		
@@ -152,4 +149,36 @@ public class StockMainPanel extends JPanel {
 	public JPanel getPanel(){
 		return mainPanel;
 	}	
+	
+	public Map<String, Integer> stockLevels() {
+		for (Stock stock : model.getShop().getStock()) {
+			System.out.println(stock.getName() + "" + stock.calculatePrice());
+		}
+
+		Map<String, Integer> stockLevels = new HashMap<String, Integer>();
+
+		for (int i = 0; i < model.getShop().getStock().size(); i++) {
+			int quantity = 0;
+			for (int j = i; j < model.getShop().getStock().size(); j++) {
+				boolean inMap = stockLevels.containsKey(model.getShop()
+						.getStock().get(i).getName());
+				if (inMap && j == i) {
+					j = model.getShop().getStock().size();
+				} else if (model.getShop().getStock().get(i).getName()
+						.equals(model.getShop().getStock().get(j).getName())) {
+					quantity = quantity
+							+ model.getShop().getStock().get(j).getQuantity();
+					System.out.println(model.getShop().getStock().get(j)
+							.getQuantity());
+					stockLevels.put(
+							model.getShop().getStock().get(i).getName(),
+							quantity);
+					System.out.println(quantity);
+				}
+
+			}
+		}
+		return stockLevels;
+	}
+
 }

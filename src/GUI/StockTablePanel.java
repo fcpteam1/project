@@ -24,7 +24,6 @@ public class StockTablePanel extends JPanel {
 	private StockPredictionTableModel predictionModel;
 	private JPopupMenu popup;
 	private StockTableListener listener;
-	private JTextField price;
 	private StockFormPanel formPanel;
 	
 	public StockTablePanel() {
@@ -71,13 +70,22 @@ public class StockTablePanel extends JPanel {
 		byDateTableModel.setData(stock);
 	}
 	
-	public void setPredictData(){
-		
+	public void setPredictData(Object[][] predictData){
+		predictionModel.setData(predictData);
+	}
+	
+	public void setPredictionColumns(int i){
+		predictionModel.setColumnNames(i);
+	}
+	
+	public void setPredictionRowCount(int i){
+		predictionModel.setRowCount(i);
 	}
 	
 	public void refresh() {
 		tableModel.fireTableDataChanged();
 		byDateTableModel.fireTableDataChanged();
+		predictionModel.fireTableDataChanged();
 	}
 	
 	public void setListener(StockTableListener listener) {
@@ -91,15 +99,12 @@ public class StockTablePanel extends JPanel {
 	public void setModel(int i){
 		switch (i) {
 		case 1:
-			//popup.setVisible(true);
 			table.setModel(tableModel);
 			break;
 		case 2:
-			//popup.setVisible(true);
 			table.setModel(byDateTableModel);
 			break;
 		case 3:
-			//popup.setVisible(false);
 			table.setModel(predictionModel);
 			break;
 		}
