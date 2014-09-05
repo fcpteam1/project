@@ -15,6 +15,7 @@ public class StockToolbar extends JPanel implements ActionListener {
 	private JButton byDateBtn;
 	private JButton predictionBtn;
 	private JButton stockBarChartBtn;
+	private JButton lowStockBtn;
 	private StockFormPanel formPanel;
 	private StockToolbarListener listener;
 	
@@ -23,11 +24,13 @@ public class StockToolbar extends JPanel implements ActionListener {
 		allBtn = new JButton("View All");
 		byDateBtn = new JButton("View By Date");
 		predictionBtn = new JButton("Predictions");
+		lowStockBtn=new JButton("Low Stock");
 		stockBarChartBtn = new JButton("Stock Chart");
 		
 		stockBarChartBtn.addActionListener(this);
 		allBtn.addActionListener(this);
 		byDateBtn.addActionListener(this);
+		lowStockBtn.addActionListener(this);
 		predictionBtn.addActionListener(this);
 
 		setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -35,6 +38,7 @@ public class StockToolbar extends JPanel implements ActionListener {
 		add(allBtn);
 		add(byDateBtn);
 		add(predictionBtn);
+		add(lowStockBtn);
 		add(stockBarChartBtn);
 	}
 	
@@ -69,6 +73,13 @@ public class StockToolbar extends JPanel implements ActionListener {
 		}
 		if (clicked == stockBarChartBtn) {
 			listener.stockGraph();
+		}
+		
+		if (clicked == lowStockBtn) {
+			formPanel.removeAll();
+			listener.viewLowStock();
+			formPanel.validate();
+			formPanel.repaint();
 		}
 	}
 }

@@ -34,6 +34,9 @@ public class StockFormPanel extends JPanel {
 	private String name;
 	private JButton predictNextWeek;
 	private JButton predictNextMonth;
+	private JButton viewCurrentLowStock;
+	private JButton viewWeekLowStock;
+	private JButton viewMonthLowStock;
 	
 	public StockFormPanel(){
 		
@@ -161,6 +164,80 @@ public class StockFormPanel extends JPanel {
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(predictNextMonth, gc);
 
+		this.validate();
+		this.repaint();
+	}
+	
+	
+	public void	viewLowStockPanel(){
+		Dimension dim = getPreferredSize();
+		dim.width = 300;
+		setPreferredSize(dim);
+		Border innerBorder = BorderFactory.createTitledBorder("Low Stock");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+		setVisible(true);
+		setLayout(new GridBagLayout());
+		GridBagConstraints gc = new GridBagConstraints();
+		
+		viewCurrentLowStock = new JButton("Current Low Stock");
+		viewWeekLowStock = new JButton("Est Next Wk. Low Stock");
+		viewMonthLowStock = new JButton("Est Next Mth. Low Stock");
+		
+		viewCurrentLowStock.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				if(listener!=null){
+					listener.viewCurrentLowStock();
+				}
+			}
+		});
+		
+		viewWeekLowStock.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				if(listener!=null){
+					listener.viewWeekLowStock();
+				}
+			}
+		});
+		
+		viewMonthLowStock.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				if(listener!=null){
+					listener.viewMonthLowStock();
+				}
+			}
+		});
+
+		// First Row
+		gc.gridy = 0;
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+
+		gc.gridx = 0;
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(viewCurrentLowStock, gc);
+
+		// Next Row
+		gc.gridy++;
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(viewWeekLowStock, gc);
+
+		
+		gc.gridy++;
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(viewMonthLowStock, gc);
 		this.validate();
 		this.repaint();
 	}

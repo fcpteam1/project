@@ -22,6 +22,7 @@ public class StockTablePanel extends JPanel {
 	private StockTableModel tableModel;
 	private StockByDateTableModel byDateTableModel;
 	private StockPredictionTableModel predictionModel;
+	private StockLowStockTableModel lowStockModel;
 	private JPopupMenu popup;
 	private StockTableListener listener;
 	private StockFormPanel formPanel;
@@ -30,6 +31,7 @@ public class StockTablePanel extends JPanel {
 		
 		predictionModel = new StockPredictionTableModel();
 		byDateTableModel = new StockByDateTableModel();
+		lowStockModel=new  StockLowStockTableModel();
 		tableModel = new StockTableModel();
 		table = new JTable(tableModel);
 		popup = new JPopupMenu();
@@ -74,6 +76,10 @@ public class StockTablePanel extends JPanel {
 		predictionModel.setData(predictData);
 	}
 	
+	public void setLowStockData(Object[][] low){
+		lowStockModel.setData(low);
+	}
+	
 //	public void setPredictionColumns(int i){
 //		predictionModel.setColumnNames(i);
 //	}
@@ -82,10 +88,15 @@ public class StockTablePanel extends JPanel {
 		predictionModel.setRowCount(i);
 	}
 	
+	public void setLowStockRowCount(int i){
+		lowStockModel.setRowCount(i);
+	}
+	
 	public void refresh() {
 		tableModel.fireTableDataChanged();
 		byDateTableModel.fireTableDataChanged();
 		predictionModel.fireTableDataChanged();
+		lowStockModel.fireTableDataChanged();
 	}
 	
 	public void setListener(StockTableListener listener) {
@@ -106,6 +117,9 @@ public class StockTablePanel extends JPanel {
 			break;
 		case 3:
 			table.setModel(predictionModel);
+			break;
+		case 4:
+			table.setModel(lowStockModel);
 			break;
 		}
 	}
