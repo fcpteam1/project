@@ -77,18 +77,37 @@ public class SaleMainPanel extends JPanel {
 
 			public void createSaleOccurred(SaleFormEvent e) {
 
-				model.getShop().createSale(e);
-				tablePanel.refresh();
-				ArrayList<Stock> stockItems = e.getStockList();
-				for (int i = 0; i < stockItems.size(); i++) {
-					textPanel.appendText(stockItems.get(i).getName()
-							+ "  Quantity: " + stockItems.get(i).getQuantity()
-							+ "\n");
-				}
-				textPanel.appendText("\n------Sale Complete-------\n");
-				textPanel.appendText("\n");
-			}
+				int k = 0;
+				String name;
+				int quantity;
+				ArrayList<Stock> saleStock = e.getStockList();
+				Map<String, Integer> actualStock = StockGUI.stockLevels();
+				ArrayList<Stock> saleProcessed = model.getShop().createSale(e);
 
+				tablePanel.refresh();
+				for (int i = 0; i < saleStock.size(); i++) {
+					for (int j = 0; j <= saleProcessed.size(); j++) {
+						name = saleStock.get(i).getName();
+						quantity = saleStock.get(i).getQuantity();
+
+						if (saleStock.get(i).getName()
+								.equals(saleProcessed.get(j).getName())) {
+							textPanel.appendText(name + "  Quantity: "
+									+ quantity + "\n");
+							j = saleProcessed.size();
+						} else if (j + 50 >= saleProcessed.size()) {
+							textPanel
+									.appendText(name + "  Not In Stock" + "\n");
+						}
+					}
+				}
+
+				/*
+				 * for (Map.Entry<String, Integer> current : actualStock
+				 * .entrySet()) { textPanel.appendText(current.getKey() +
+				 * "  Quantity: " + current.getValue() + "\n"); }
+				 * textPanel.appendText("\n------Sale Complete-------\n");
+				 */
 			@Override
 			public void editSaleOccurred(SaleFormEvent e, int id) {
 
