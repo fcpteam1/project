@@ -212,30 +212,34 @@ public class SaleFormPanel extends JPanel {
 				ArrayList<String> stockNames = new ArrayList<String>();
 				// Get ordered stock and associated quantities
 				for (int i = 0; i < size; i++) {
-					if (!quantityField[i].getText().equals("")
-							&& (Integer.parseInt(quantityField[i].getText()) <= Integer
-									.parseInt(maxAvailable[i].getText()))) {
-						try {
-							quantities.add(Integer.valueOf(quantityField[i]
+					if (!quantityField[i].getText().equals("")){
+						try{
+							if (Integer.parseInt(quantityField[i].getText()) <= Integer
+									.parseInt(maxAvailable[i].getText())) {
+									
+									quantities.add(Integer.valueOf(quantityField[i]
 									.getText()));
-							stockNames.add(stockName[i].getText());
-						} catch (NumberFormatException nfEx) {
-							System.out.println("Not an integer");
+									stockNames.add(stockName[i].getText());
+									}else {
+										JOptionPane.showMessageDialog(errorPanel,"Exceeded max Available",
+										"Out of Stock", JOptionPane.ERROR_MESSAGE);
+										removeAll();
+										try {
+											createSaleSelectionPanel(event);
+										} catch (IOException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+										//return prevents an empty sale being completed
+										return;	
+										}
+						} catch (NumberFormatException nfEx){
+							JOptionPane.showMessageDialog(errorPanel,"Please enter correct value", "ERROR!!", JOptionPane.ERROR_MESSAGE);
+							return;
 						}
-					} else if (!quantityField[i].getText().equals("")) {
-						JOptionPane.showMessageDialog(errorPanel,"Exceeded max Available",
-								"Out of Stock", JOptionPane.ERROR_MESSAGE);
-								removeAll();
-								try {
-									createSaleSelectionPanel(event);
-								} catch (IOException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-								//return prevents an empty sale being completed
-								return;	
 					}
 				}
+
 				// clear stock list from previous runs
 				saleStockList.clear();
 				// Loop through ordered stock names and link to actual product

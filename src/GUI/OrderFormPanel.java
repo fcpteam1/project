@@ -13,6 +13,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -23,6 +24,7 @@ import model.Supplier;
 
 public class OrderFormPanel extends JPanel {
 
+	private JPanel errorPanel;
 	private JLabel supplierLabel;
 	private JComboBox supplierCombo;
 	private JButton selectButton;
@@ -179,8 +181,10 @@ public class OrderFormPanel extends JPanel {
 							quantities.add(Integer.valueOf(fields[i].getText()));
 							productNames.add(names[i].getText());
 						} catch (NumberFormatException nfEx) {
-							System.out.println("Not an integer");
+							JOptionPane.showMessageDialog(errorPanel,"Please enter correct ammount!", "ERROR!!", JOptionPane.ERROR_MESSAGE);		
+							return;
 						}
+						
 					}
 				}
 				// Loop through ordered product names and link to actual product
@@ -294,7 +298,7 @@ public class OrderFormPanel extends JPanel {
 							quantities.add(Integer.valueOf(fields[i].getText()));
 							productNames.add(names[i].getText());
 						} catch (NumberFormatException nfEx) {
-							System.out.println("Not an integer");
+							
 						}
 					}
 				}
