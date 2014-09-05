@@ -38,11 +38,9 @@ public class StockMainPanel extends JPanel {
 		model = new Model();
 		
 		stockToolbar.setFormPanel(stockFormPanel);
-	
 		
 		stockToolbar.setStockToolbarListener(new StockToolbarListener(){
-		
-			
+
 			@Override
 			public void viewLowStock() {
 				stockFormPanel.removeAll();
@@ -55,8 +53,7 @@ public class StockMainPanel extends JPanel {
 			@Override
 			public void viewAll() {
 				stockFormPanel.removeAll();
-				model.getShop().loadAvailableStock();
-				stockTablePanel.setData(model.getShop().getAvailableStock());
+				stockTablePanel.setData(model.getShop().getUniqueStockList());
 				stockFormPanel.viewAllPanel();
 				stockTablePanel.setModel(1);
 				stockFormPanel.validate();
@@ -327,9 +324,4 @@ public class StockMainPanel extends JPanel {
 		return new Scene(bc, 800, 600);		
 	}
 
-	
-	public StockToolbar getStockToolbar ()
-	{
-		return stockToolbar;
-	}
 }

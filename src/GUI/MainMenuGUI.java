@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,8 +10,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class MainMenuGUI {
 
@@ -37,7 +34,6 @@ public class MainMenuGUI {
 		if (instance == null) {
 			instance = new MainMenuGUI();
 		}
-
 
 		return instance;
 	}
@@ -82,19 +78,6 @@ public class MainMenuGUI {
 		c.weighty = 0.1;
 		c.anchor = GridBagConstraints.LAST_LINE_END;
 		framePanel.add(logoutPanel, c);
-		
-/*		tabbedPane.addChangeListener(new ChangeListener()
-		    {
-				public void stateChanged(ChangeEvent e) {
-					if (tabbedPane.getSelectedIndex()==4)
-					{
-						System.out.println("Stock");
-						
-					}
-	
-			}
-		    });*/
-
 
 	}
 

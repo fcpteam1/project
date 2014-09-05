@@ -18,12 +18,7 @@ import GUI.FinancialFormEvent;
 import GUI.OrderFormEvent;
 import GUI.OrderFormPanel;
 import GUI.SaleFormEvent;
-<<<<<<< HEAD
 import GUI.StockFormEvent;
-import GUI.StockToolbar;
-=======
-import GUI.StockGUI;
->>>>>>> branch 'christine' of https://github.com/fcpteam1/project
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
 
@@ -808,7 +803,6 @@ public class Shop {
 		return inStock;
 	}
 
-<<<<<<< HEAD
 	public static ArrayList<Stock> checkStock(ArrayList<Stock> saleList,
 			ArrayList<Stock> stockList) {
 
@@ -829,19 +823,11 @@ public class Shop {
 	}
 
 	public void createSale(SaleFormEvent e) {
-=======
-	public ArrayList<Stock> createSale(SaleFormEvent e) {
->>>>>>> branch 'christine' of https://github.com/fcpteam1/project
 
 		ArrayList<Stock> inStockList = checkStock(e.getStockList(), stocks);
 
-<<<<<<< HEAD
 		Sale sale = new Sale(inStockList, e.getCustomer());
 		sales.add(sale);
-=======
-		ArrayList<Stock> saleProcessed = StockGUI.checkStock(saleStocks,
-				getStock());
->>>>>>> branch 'christine' of https://github.com/fcpteam1/project
 
 		writeStock(stockFile);
 
@@ -850,11 +836,7 @@ public class Shop {
 			s.setId(newCount++);
 		}
 		writeSale(saleFile);
-<<<<<<< HEAD
 		loadAvailableStock();
-=======
-		return saleProcessed;
->>>>>>> branch 'christine' of https://github.com/fcpteam1/project
 	}
 
 	public void removeSale(int index) {
@@ -923,10 +905,7 @@ public class Shop {
 			for (Product product : orders.get(index).getProducts()) {
 				Stock stock = new Stock(product, product.getQuantity());
 				stocks.add(stock);
-				StockToolbar stb= new StockToolbar();
-
 				//availableStock.add(stock);
-
 			}
 		}
 		loadAvailableStock();
