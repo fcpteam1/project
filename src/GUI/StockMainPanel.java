@@ -325,4 +325,8 @@ public class StockMainPanel extends JPanel {
 		return new Scene(bc, 800, 600);		
 	}
 
+	public StockToolbar getStockToolbar() {
+		return stockToolbar;
+	}
+
 }
