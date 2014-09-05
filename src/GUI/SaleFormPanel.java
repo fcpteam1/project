@@ -235,6 +235,7 @@ public class SaleFormPanel extends JPanel {
 								//return prevents an empty sale being completed
 								return;	
 					}
+					
 				}
 				// clear stock list from previous runs
 				saleStockList.clear();

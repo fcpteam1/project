@@ -53,7 +53,8 @@ public class StockMainPanel extends JPanel {
 			@Override
 			public void viewAll() {
 				stockFormPanel.removeAll();
-				stockTablePanel.setData(model.getShop().getUniqueStockList());
+				model.getShop().loadAvailableStock();
+				stockTablePanel.setData(model.getShop().getAvailableStock());
 				stockFormPanel.viewAllPanel();
 				stockTablePanel.setModel(1);
 				stockFormPanel.validate();
