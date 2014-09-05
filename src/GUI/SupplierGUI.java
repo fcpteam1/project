@@ -624,27 +624,6 @@ public class SupplierGUI {
 
 	public void deletePanel() {
 
-		/*
-		 * deletePanel=new JPanel(); deletePanel.setLayout(new BorderLayout());
-		 * warning=new JLabel(); yes=new JButton("YES"); no=new JButton("NO");
-		 * 
-		 * JPanel buttonPanel=new JPanel(); buttonPanel.setLayout(new
-		 * FlowLayout(FlowLayout.CENTER));
-		 * 
-		 * buttonPanel.add(yes); buttonPanel.add(no);
-		 * 
-		 * deletePanel.add(warning,BorderLayout.CENTER);
-		 * deletePanel.add(buttonPanel,BorderLayout.SOUTH);
-		 * 
-		 * 
-		 * 
-		 * deleteFrame=new JFrame(); deleteFrame.setLocationRelativeTo(null);
-		 * deleteFrame.getContentPane().add(deletePanel);
-		 * deleteFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		 * 
-		 * deleteFrame.setVisible(false);
-		 */
-
 	}
 
 	public void refreshSupplier(Object data[][]) {

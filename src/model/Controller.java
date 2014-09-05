@@ -460,6 +460,7 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				view.getMainmenu().getSupplierTab().showCreateSupplierPanel();
 			}
+			
 		};
 
 		deleteSupButton = new ActionListener() {
@@ -482,6 +483,7 @@ public class Controller {
 					if (n == JOptionPane.YES_OPTION) {
 						model.getShop().getSuppliers().remove(index);
 					}
+					viewSuppliers();
 				}
 
 			}
@@ -539,6 +541,7 @@ public class Controller {
 				supplier.setAddress(view.getMainmenu().getSupplierTab()
 						.getCreateAddress().getText());
 				model.getShop().getSuppliers().add(supplier);
+				viewSuppliers();
 			}
 		};
 
@@ -592,38 +595,7 @@ public class Controller {
 			}
 		};
 		
-		/*lowStock=new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				view.getMainmenu().getStockTab().switchToControl();
-			}
-		};*/
-		
-		/*showLowStock=new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				
-				ArrayList<Stock> lowStocks=new ArrayList<Stock>();
-				
-				for(Stock stock : model.getShop().getStock()){
-					
-					if(stock.getQuantity()<25){
-						lowStocks.add(stock);
-						System.out.println("low");
-					}
-				}
-				
-				Object data[][]=new Object[lowStocks.size()][4];
-				for(int i=0;i<lowStocks.size();i++){
-					data[i][0]=lowStocks.get(i).getName();
-					data[i][1]=lowStocks.get(i).getId();
-					data[i][2]=lowStocks.get(i).getQuantity();
-				}
-				
-				view.getMainmenu().getStockTab().fillLowStock(data);
-				
-			}
-		};*/
-		
-		
+
 		showLowWeek=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
@@ -710,9 +682,6 @@ public class Controller {
 		view.getMainmenu().getSupplierTab().getExitCreatePanelButton()
 				.addActionListener(exitCreatePanel);		
 		
-		/*view.getMainmenu().getStockTab().getStockControlButton().addActionListener(lowStock);
-		view.getMainmenu().getStockTab().getShowLowStock().addActionListener(showLowStock);
-		view.getMainmenu().getStockTab().getBackToStock().addActionListener(stockBack);*/
 		view.getWelcomeScreen().getswitchToLoginPanelButton().addActionListener(switchToLogin);
 		view.getWelcomeScreen().getExit().addActionListener(exit);
 		view.getLogin().setDelayTimer(loginDelay);
@@ -767,10 +736,6 @@ public class Controller {
 
 	}
 
-	/**
-	 * @param args
-	 * @throws IOException
-	 */
 	public static void main(String[] args) throws IOException {
 
 		new Controller();

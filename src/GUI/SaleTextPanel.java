@@ -14,7 +14,7 @@ public class SaleTextPanel extends JPanel {
 
 	public SaleTextPanel() {
 		textArea = new JTextArea();
-		textArea.append("Product and Quantity Selected: \n\n");
+		textArea.setText("Product and Quantity Selected: \n\n");
 		// finalSaleButton = new JButton("Place Sale");
 		setLayout(new BorderLayout());
 
@@ -22,6 +22,11 @@ public class SaleTextPanel extends JPanel {
 		// add(finalSaleButton, BorderLayout.SOUTH);
 	}
 
+	public void setHeader ()
+	{
+		textArea.setText("Product and Quantity Selected: \n\n");
+	}
+	
 	public void appendText(String text) {
 		textArea.append(text);
 	}
