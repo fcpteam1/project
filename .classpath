@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+<<<<<<< HEAD
+	<classpathentry kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Project/src"/>
+		</attributes>
+	</classpathentry>
+=======
 	<classpathentry kind="src" path="src"/>
+<<<<<<< HEAD
+>>>>>>> branch 'christine' of https://github.com/fcpteam1/project
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home/jre/lib/jfxrt.jar"/>
+<<<<<<< HEAD
+	<classpathentry kind="lib" path="/usr/lib/jvm/java-8-oracle/jre/lib/ext/jfxrt.jar"/>
+=======
+<<<<<<< HEAD
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre7/lib/jfxrt.jar"/>
+=======
+=======
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="/home/christine/Downloads/junit4.11.zip"/>
+>>>>>>> branch 'christine' of https://github.com/fcpteam1/project
+>>>>>>> branch 'christine' of https://github.com/fcpteam1/project
+>>>>>>> branch 'christine' of https://github.com/fcpteam1/project
 	<classpathentry kind="output" path="bin"/>
 </classpath>

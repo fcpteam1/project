@@ -40,6 +40,8 @@ public class StockToolbar extends JPanel implements ActionListener {
 		add(predictionBtn);
 		add(lowStockBtn);
 		add(stockBarChartBtn);
+		
+
 	}
 	
 	public void setFormPanel(StockFormPanel formPanel) {

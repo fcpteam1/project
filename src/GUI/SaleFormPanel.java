@@ -235,7 +235,9 @@ public class SaleFormPanel extends JPanel {
 								//return prevents an empty sale being completed
 								return;	
 					}
+
 				}
+
 				// clear stock list from previous runs
 				saleStockList.clear();
 				// Loop through ordered stock names and link to actual product
@@ -259,6 +261,8 @@ public class SaleFormPanel extends JPanel {
 					formListener.createSaleOccurred(saleEvent);
 				}
 				setVisible(false);
+				StockToolbar stb= new StockToolbar();
+				stb.repaint();
 			}
 
 		});
