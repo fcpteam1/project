@@ -11,12 +11,15 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
+import GUI.MainMenuGUI;
 import model.ErrorChecker;
 
 public class Controller {
 
 	private View view;
 	private Model model;
+	private MainMenuGUI mainMenu;
+	
 	private ActionListener loginListener, logoutListener;
 	private ActionListener viewSupplier, viewProducts, nextSupplier,
 			prevSupplier, searchSupplier;

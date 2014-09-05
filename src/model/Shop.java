@@ -19,6 +19,7 @@ import GUI.OrderFormEvent;
 import GUI.OrderFormPanel;
 import GUI.SaleFormEvent;
 import GUI.StockFormEvent;
+import GUI.StockToolbar;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
 
@@ -905,7 +906,11 @@ public class Shop {
 			for (Product product : orders.get(index).getProducts()) {
 				Stock stock = new Stock(product, product.getQuantity());
 				stocks.add(stock);
+				StockToolbar stb= new StockToolbar();
+
 				//availableStock.add(stock);
+				System.out.println("jlj");
+
 			}
 		}
 		loadAvailableStock();
