@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.JobAttributes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -83,7 +84,7 @@ public class Controller {
 					view.getLogin().stopTimer();
 					
 				} else
-					System.out.println("Not a valid user");
+					view.getErrorMessage();
 
 				view.getLogin().getLoginUsername().setText("");
 				view.getLogin().getLoginPassword().setText("");
