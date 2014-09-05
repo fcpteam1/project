@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +41,15 @@ public class StockMainPanel extends JPanel {
 		
 		stockToolbar.setStockToolbarListener(new StockToolbarListener(){
 
+			@Override
+			public void viewLowStock() {
+				stockFormPanel.removeAll();
+				stockFormPanel.viewLowStockPanel();
+				stockTablePanel.setModel(4);
+				stockFormPanel.validate();
+				stockFormPanel.repaint();
+			}
+			
 			@Override
 			public void viewAll() {
 				stockFormPanel.removeAll();
@@ -163,6 +173,92 @@ public class StockMainPanel extends JPanel {
 				stockTablePanel.setPredictData(data);
 				//stockTablePanel.setPredictionColumns(1);
 				stockTablePanel.setModel(3);
+				stockTablePanel.refresh();
+			}
+			
+			@Override
+			public void viewCurrentLowStock() {
+				ArrayList<Stock> lowStock=new ArrayList<Stock>();
+				Object[][] low = null;
+				
+				for(Stock stock : model.getShop().getStock()){
+					if(stock.getQuantity()<25){
+						lowStock.add(stock);
+					}
+				}
+				
+				low=new Object[lowStock.size()][4];
+				for(int i=0;i<lowStock.size();i++){
+					low[i][0]=lowStock.get(i).getName();
+					low[i][1]=lowStock.get(i).getId();
+					low[i][2]=lowStock.get(i).getQuantity();
+					low[i][3]=null;
+				}
+				stockTablePanel.setLowStockRowCount(lowStock.size());
+				stockTablePanel.setLowStockData(low);
+				//stockTablePanel.setPredictionColumns(1);
+				stockTablePanel.setModel(4);
+				stockTablePanel.refresh();
+			}
+			
+			@Override
+			public void viewWeekLowStock() {
+			
+				Object low[][];
+				ArrayList<Integer> predictedValues =new ArrayList<Integer>();
+				int[] result = new int[5];
+				ArrayList<Stock> lowStock=new ArrayList<Stock>();
+				
+				for(Stock stock : model.getShop().getStock()){
+					result = model.getShop().getPredictor().stockPredictor(model.getShop().getSales(), stock, true);
+					if((stock.getQuantity()-result[4])<25){
+						lowStock.add(stock);
+						predictedValues.add((stock.getQuantity()-result[4]));
+					}
+				}
+				
+				low=new Object[lowStock.size()][4];
+				for(int i=0;i<lowStock.size();i++){
+					low[i][0]=lowStock.get(i).getName();
+					low[i][1]=lowStock.get(i).getId();
+					low[i][2]=lowStock.get(i).getQuantity();
+					low[i][3]=predictedValues.get(i);
+				}
+				stockTablePanel.setLowStockRowCount(lowStock.size());
+				stockTablePanel.setLowStockData(low);
+				//stockTablePanel.setPredictionColumns(1);
+				stockTablePanel.setModel(4);
+				stockTablePanel.refresh();
+				
+			}
+				
+			@Override
+			public void viewMonthLowStock() {
+				
+				Object low[][];
+				ArrayList<Integer> predictedValues =new ArrayList<Integer>();
+				int[] result = new int[5];
+				ArrayList<Stock> lowStock=new ArrayList<Stock>();
+				
+				for(Stock stock : model.getShop().getStock()){
+					result = model.getShop().getPredictor().stockPredictor(model.getShop().getSales(), stock, false);
+					if((stock.getQuantity()-result[4])<25){
+						lowStock.add(stock);
+						predictedValues.add((stock.getQuantity()-result[4]));
+					}
+				}
+				
+				low=new Object[lowStock.size()][4];
+				for(int i=0;i<lowStock.size();i++){
+					low[i][0]=lowStock.get(i).getName();
+					low[i][1]=lowStock.get(i).getId();
+					low[i][2]=lowStock.get(i).getQuantity();
+					low[i][3]=predictedValues.get(i);
+				}
+				stockTablePanel.setLowStockRowCount(lowStock.size());
+				stockTablePanel.setLowStockData(low);
+				//stockTablePanel.setPredictionColumns(1);
+				stockTablePanel.setModel(4);
 				stockTablePanel.refresh();
 			}
 		});
