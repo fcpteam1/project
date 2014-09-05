@@ -28,6 +28,7 @@ import model.Stock;
 public class SaleFormPanel extends JPanel {
 
 	private JLabel customerLabel, maxLabel;
+	private JPanel errorPanel = new JPanel();
 	private JComboBox customerBox;
 	private JButton enterButton;
 	private JButton saleButton;
@@ -222,21 +223,17 @@ public class SaleFormPanel extends JPanel {
 							System.out.println("Not an integer");
 						}
 					} else if (!quantityField[i].getText().equals("")) {
-
-						int option = JOptionPane.showConfirmDialog(
-								SaleFormPanel.this, "Exceeded max Available",
-								"Out of Stock", JOptionPane.OK_OPTION);
-						if (option == JOptionPane.OK_OPTION) {
-							try {
+						JOptionPane.showMessageDialog(errorPanel,"Exceeded max Available",
+								"Out of Stock", JOptionPane.ERROR_MESSAGE);
 								removeAll();
-								createSaleSelectionPanel(event);
+								try {
+									createSaleSelectionPanel(event);
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 								//return prevents an empty sale being completed
-								return;
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
+								return;	
 					}
 				}
 				// clear stock list from previous runs
