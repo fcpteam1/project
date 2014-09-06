@@ -122,4 +122,6 @@ public class SaleMainPanel extends JPanel {
 	public JPanel getPanel() {
 		return mainPanel;
 	}
+	
+
 }

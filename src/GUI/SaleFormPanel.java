@@ -42,7 +42,7 @@ public class SaleFormPanel extends JPanel {
 	private ArrayList<Stock> stocks;
 	private String stockFile;
 	private ArrayList<Stock> saleStockList = new ArrayList<Stock>();
-	private ArrayList<Stock> availableStock = new ArrayList<Stock>();
+	private ArrayList<Stock> availableStock;
 	private SaleFormEvent event;
 	Customer thisCustomer;
 	int size;
@@ -61,6 +61,7 @@ public class SaleFormPanel extends JPanel {
 		this.stockFile = stockFile;
 		this.availableStock = stocks;
 	}
+
 
 	public void createCustomerPanel() throws IOException {
 
