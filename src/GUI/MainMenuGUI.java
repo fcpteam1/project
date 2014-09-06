@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class MainMenuGUI {
 
@@ -78,6 +80,15 @@ public class MainMenuGUI {
 		c.weighty = 0.1;
 		c.anchor = GridBagConstraints.LAST_LINE_END;
 		framePanel.add(logoutPanel, c);
+		
+		 tabbedPane.addChangeListener(new ChangeListener() {
+		        public void stateChanged(ChangeEvent e) {
+		        	if (tabbedPane.getSelectedIndex()==4)
+		        	{
+		        		stockTab.getStockToolbar().getListener().viewAll();
+		        	}
+		        }
+		    });	
 
 	}
 

@@ -41,7 +41,6 @@ public class OrderFormPanel extends JPanel {
 	private ArrayList<Product> products;
 	private Supplier thisSupplier;
 	private ArrayList<Product> orderProducts = new ArrayList<Product>();
-	private StockTablePanel stockTable = new StockTablePanel();
 	int size;
 	JLabel[] names;
 	JLabel[] prices;
@@ -204,9 +203,8 @@ public class OrderFormPanel extends JPanel {
 				if (formListener != null) {
 					formListener.createOrderOccurred(orderEvent);
 				}
-				
 				setVisible(false);
-				stockTable.refresh();
+
 			}
 		});
 

@@ -17,8 +17,9 @@ import javax.swing.border.Border;
 
 import model.Customer;
 import model.Model;
-
+//The CustomerFormPanel is where the details for creating or editing a user will be shown
 public class CustomerFormPanel extends JPanel {
+	//Crating the multiple variables needed
 	private JLabel nameLabel;
 	private JLabel numberLabel;
 	private JLabel idLabel;
@@ -42,20 +43,21 @@ public class CustomerFormPanel extends JPanel {
 	public CustomerFormPanel() {
 
 	}
-
+	
+	//calling setData will set the store the arrayList of customers within the local Arraylist customers
 	public void setData(ArrayList<Customer> customers) {
 		this.customers = customers;
 	}
-
+	//Taking in the edited customer name 
 	public void setEditDataName(String editCustomerName) {
 		this.editCustomerName = editCustomerName;
 		System.out.println(editCustomerName);
 	}
-
+	//Taking in the edited customer number 
 	public void setEditDataNumber(String editCustomerNumber) {
 		this.editCustomerNumber = editCustomerNumber;
 	}
-
+	//Taking in the edited customer address
 	public void setEditDataAddress(String editCustomerAddress) {
 		this.editCustomerAddress = editCustomerAddress;
 	}

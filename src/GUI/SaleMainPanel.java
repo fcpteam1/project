@@ -79,6 +79,7 @@ public class SaleMainPanel extends JPanel {
 
 				model.getShop().createSale(e);
 				tablePanel.refresh();
+				textPanel.setHeader();
 				ArrayList<Stock> stockItems = e.getStockList();
 				for (int i = 0; i < stockItems.size(); i++) {
 					textPanel.appendText(stockItems.get(i).getName()
@@ -87,6 +88,9 @@ public class SaleMainPanel extends JPanel {
 				}
 				textPanel.appendText("\n------Sale Complete-------\n");
 				textPanel.appendText("\n");
+				
+
+
 			}
 
 			@Override
@@ -118,4 +122,6 @@ public class SaleMainPanel extends JPanel {
 	public JPanel getPanel() {
 		return mainPanel;
 	}
+	
+
 }
