@@ -1,7 +1,11 @@
 package GUI;
 
 import java.util.EventObject;
-
+/*When a button is clicked the form listener tells the CustoemrFormEven panel that an
+ * event has occurred within the customer form panel and the data is passed
+ * to the CustomerFormEvent. This data will be passes to the shop class to create a
+ * new customer.  
+ */
 public class CustomerFormEvent extends EventObject {
 
 	private String name;
@@ -11,7 +15,7 @@ public class CustomerFormEvent extends EventObject {
 	public CustomerFormEvent(Object source) {
 		super(source);
 	}
-
+	// The constructor takes in the customer name, number and address
 	public CustomerFormEvent(Object source, String name, String number,
 			String address) {
 		super(source);
@@ -20,6 +24,8 @@ public class CustomerFormEvent extends EventObject {
 		this.number = number;
 		this.address = address;
 	}
+	
+	//Getters and setters for the name,number and address
 
 	public String getName() {
 		return name;
