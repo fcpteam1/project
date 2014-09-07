@@ -43,7 +43,7 @@ public class FinancialGraphPanel extends JPanel {
 	private double janSaleSum,febSaleSum,marSaleSum,aprSaleSum,maySaleSum,junSaleSum,julSaleSum,augSaleSum,sepSaleSum,octSaleSum,novSaleSum,decSaleSum;
 	private double janOrderSum,febOrderSum,marOrderSum,aprOrderSum,mayOrderSum,junOrderSum,julOrderSum,augOrderSum,sepOrderSum,octOrderSum,novOrderSum,decOrderSum;
 	private double janTotalSum,febTotalSum,marTotalSum,aprTotalSum,mayTotalSum,junTotalSum,julTotalSum,augTotalSum,sepTotalSum,octTotalSum,novTotalSum,decTotalSum;
-
+	
 	private JButton barChartBtn, pieChartBtn, lineChartMonthBtn;
 	private Model model;
 	private Calendar cal;
@@ -212,15 +212,55 @@ public class FinancialGraphPanel extends JPanel {
 
 				XYChart.Series series1 = new XYChart.Series();
 
+				double total = 0;
+				double total1 = 0;
+				double total2 = 0;
+				double total3 = 0;
+				double total4 = 0;
+				double total5 = 0;
+				
 				for (Sale sale : sales) {
-					/* series1.setName(sale.getCustomer().getName()); */
+					
+					if (sale.getCustomer().getName().equals("Get Fresh")){
+						total = total + sale.getTotalPrice();
+					}
+					series1.getData().add(new XYChart.Data("Get Fresh",total));
+					
+					
+					if (sale.getCustomer().getName().equals("Ever Green")){
+						total1 = total1 + sale.getTotalPrice();
+					}
 					series1.getData().add(
-							new XYChart.Data(sale.getCustomer().getName(), sale
-									.getTotalPrice()));
+							new XYChart.Data("Ever Green",total1));	
+					
+					if (sale.getCustomer().getName().equals("Happy Pear")){
+						total2 = total2 + sale.getTotalPrice();
+					}
+					series1.getData().add(new XYChart.Data("Happy Pear",total2));
+					
+					
+					if (sale.getCustomer().getName().equals("Asia Market")){
+						total3 = total3 + sale.getTotalPrice();
+					}
+					series1.getData().add(
+							new XYChart.Data("Asia Market",total3));
+					
+					if (sale.getCustomer().getName().equals("Donnybrook Fair")){
+						total4 = total4 + sale.getTotalPrice();
+					}
+					series1.getData().add(new XYChart.Data("Donnybrook Fair",total4));
+					
+					
+					if (sale.getCustomer().getName().equals("Fresh Veg")){
+						total5 = total5 + sale.getTotalPrice();
+					}
+					series1.getData().add(
+							new XYChart.Data("Fresh Veg",total5));	
 				}
+				
 
 				bc.getData().addAll(series1);
-				return new Scene(bc, 800, 600);
+				return new Scene(bc, 900, 600);
 			}
 
 		});
@@ -252,16 +292,53 @@ public class FinancialGraphPanel extends JPanel {
 		private Scene createSalePieChart() {
 			System.out.println("creating scene");
 			final PieChart pc = new PieChart();
+			
+			double total = 0;
+			double total1 = 0;
+			double total2 = 0;
+			double total3 = 0;
+			double total4 = 0;
+			double total5 = 0;
+			
 			for (Sale sale: sales) {
+				if (sale.getCustomer().getName().equals("Get Fresh")){
+					total = total + sale.getTotalPrice();
+				}
+					
+				if (sale.getCustomer().getName().equals("Ever Green")){
+					total1 = total1 + sale.getTotalPrice();
+				}
+			
+				if (sale.getCustomer().getName().equals("Happy Pear")){
+					total2 = total2 + sale.getTotalPrice();
+				}
+						
+				if (sale.getCustomer().getName().equals("Asia Market")){
+					total3 = total3 + sale.getTotalPrice();
+				}
+				
+				if (sale.getCustomer().getName().equals("Donnybrook Fair")){
+					total4 = total4 + sale.getTotalPrice();
+				}
+						
+				if (sale.getCustomer().getName().equals("Fresh Veg")){
+					total5 = total5 + sale.getTotalPrice();
+				}
+			}
+			
 	        ObservableList<PieChart.Data> pieChartData =
 	                FXCollections.observableArrayList(
-	                new PieChart.Data(sale.getCustomer().getName(), sale.getTotalPrice()));
+	                new PieChart.Data("Get Fresh", total),
+	                new PieChart.Data("Ever Green", total1),
+	                new PieChart.Data("Happy Pear", total2),
+	                new PieChart.Data("Asia Market", total3),
+	                new PieChart.Data("Donnybrook Fair", total4),
+	                new PieChart.Data("Fresh Veg", total5));
 			
 	        pc.setTitle("Sales Pie Chart");
 
 	        pc.getData().addAll(pieChartData);
-			}
-			
+
 			return new Scene(pc, 800, 600);
 		}
 
@@ -351,18 +428,100 @@ public class FinancialGraphPanel extends JPanel {
 
 				XYChart.Series series1 = new XYChart.Series();
 
+				double total = 0;
+				double total1 = 0;
+				double total2 = 0;
+				double total3 = 0;
+				double total4 = 0;
+				double total5 = 0;
+				
 				for (Order order : orders) {
-					/* series1.setName(sale.getCustomer().getName()); */
+					
+					if (order.getSupplier().getName().equals("Keelings")){
+						total = total + order.getTotalPrice();
+					}
+					series1.getData().add(new XYChart.Data("Keelings",total));
+					
+					
+					if (order.getSupplier().getName().equals("Wexford Fruit Farm")){
+						total1 = total1 + order.getTotalPrice();
+					}
 					series1.getData().add(
-							new XYChart.Data(order.getSupplier().getName(), order
-									.getTotalPrice()));
+							new XYChart.Data("Wexford Fruit Farm",total1));	
+					
+					if (order.getSupplier().getName().equals("Dublin Fruit Market")){
+						total2 = total2 + order.getTotalPrice();
+					}
+					series1.getData().add(new XYChart.Data("Dublin Fruit Market",total2));
 				}
-
+					
 				bc.getData().addAll(series1);
-				return new Scene(bc, 800, 600);
+				return new Scene(bc, 900, 600);
 			}
 
 		});
+		
+		pieChartBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			final JDialog dialog = new JDialog();
+			final JFXPanel contentPane = new JFXPanel();
+			dialog.setContentPane(contentPane);
+			dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+
+			// building the scene graph must be done on the javafx thread
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					contentPane.setScene(createExpensePieChart());
+					
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							dialog.pack();
+							dialog.setVisible(true);
+						}
+					});
+				}
+			});
+		}
+
+		private Scene createExpensePieChart() {
+			System.out.println("creating scene");
+			final PieChart pc = new PieChart();
+			
+			double total = 0;
+			double total1 = 0;
+			double total2 = 0;
+			
+			for (Order order: orders) {
+				if (order.getSupplier().getName().equals("Keelings")){
+					total = total + order.getTotalPrice();
+				}
+					
+				if (order.getSupplier().getName().equals("Wexford Fruit Farm")){
+					total1 = total1 + order.getTotalPrice();
+				}
+			
+				if (order.getSupplier().getName().equals("Dublin Fruit Market")){
+					total2 = total2 + order.getTotalPrice();
+				}
+			}
+			
+	        ObservableList<PieChart.Data> pieChartData =
+	                FXCollections.observableArrayList(
+	                new PieChart.Data("Keelings", total),
+	                new PieChart.Data("Wexford Fruit Farm", total1),
+	                new PieChart.Data("Dublin Fruit Market", total2));
+	             
+	        pc.setTitle("Sales Pie Chart");
+
+	        pc.getData().addAll(pieChartData);
+
+			return new Scene(pc, 800, 600);
+		}
+
+
+	});
 		
 
 		Border innerBorder = BorderFactory.createTitledBorder("Graphs");

@@ -41,27 +41,13 @@ public class SaleMainPanel extends JPanel {
 
 		tablePanel.setSaleTableListener(new SaleTableListener() {
 			public void rowDeleted(int row) {
-				formPanel.setData(model.getShop().getUniqueStockList(), model.getShop()
-				.getCustomers(), model.getShop().getStockFile());
 				model.getShop().removeSale(row);
 				tablePanel.refresh();
 			}
 
-			@Override
-			public void rowEdited(int row) {
-				formPanel.setData(model.getShop().getUniqueStockList(), model.getShop()
-				.getCustomers(), model.getShop().getStockFile());
-				formPanel.setVisible(true);
-				formPanel.setSaleToEdit(model.getShop().getSales().get(row));
-				formPanel.setSaleStockListToEdit(model.getShop().getSales()
-						.get(row).getStocks());
-				formPanel.editSaleSelectionPanel();
-				tablePanel.refresh();
-			}
 
 			public void listItems(int row) {
-				formPanel.setData(model.getShop().getUniqueStockList(), model.getShop()
-				.getCustomers(), model.getShop().getStockFile());
+				textPanel.setHeader();
 				ArrayList<Stock> itemsBought = model.getShop().getSales()
 						.get(row).getStocks();
 
@@ -82,10 +68,9 @@ public class SaleMainPanel extends JPanel {
 		formPanel.setFormListener(new SaleFormListener() {
 
 			public void createSaleOccurred(SaleFormEvent e) {
-				formPanel.setData(model.getShop().getAvailableStock(), model.getShop()
-						.getCustomers(), model.getShop().getStockFile());
-				tablePanel.refresh();
 				model.getShop().createSale(e);
+				tablePanel.refresh();
+				textPanel.setHeader();
 				ArrayList<Stock> stockItems = e.getStockList();
 				for (int i = 0; i < stockItems.size(); i++) {
 					textPanel.appendText(stockItems.get(i).getName()
@@ -96,22 +81,8 @@ public class SaleMainPanel extends JPanel {
 				textPanel.appendText("\n");
 			}
 
-			@Override
-			public void editSaleOccurred(SaleFormEvent e, int id) {
-				formPanel.setData(model.getShop().getAvailableStock(), model.getShop()
-						.getCustomers(), model.getShop().getStockFile());
-				tablePanel.refresh();
-				model.getShop().editSale(e, id);
-				ArrayList<Stock> stockItems = e.getStockList();
-				for (int i = 0; i < stockItems.size(); i++) {
-					textPanel.appendText(stockItems.get(i).getName()
-							+ "  Quantity: " + stockItems.get(i).getQuantity()
-							+ "\n");
-				}
-				textPanel.appendText("\n------Sale Edited-------\n");
-				textPanel.appendText("\n");
-				tablePanel.setVisible(false);
-			}
+
+
 		});
 	}
 

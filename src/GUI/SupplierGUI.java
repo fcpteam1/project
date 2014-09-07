@@ -563,8 +563,8 @@ public class SupplierGUI {
 		createPhoneLabel = new JLabel("Phone");
 		createAddressLabel = new JLabel("Address");
 
-		Border titleBorder = BorderFactory.createTitledBorder("Edit Supplier");
-		editSupplierPanel.setBorder(titleBorder);
+		Border titleBorder = BorderFactory.createTitledBorder("Create Supplier");
+		createSupplierPanel.setBorder(titleBorder);
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -623,27 +623,6 @@ public class SupplierGUI {
 	}
 
 	public void deletePanel() {
-
-		/*
-		 * deletePanel=new JPanel(); deletePanel.setLayout(new BorderLayout());
-		 * warning=new JLabel(); yes=new JButton("YES"); no=new JButton("NO");
-		 * 
-		 * JPanel buttonPanel=new JPanel(); buttonPanel.setLayout(new
-		 * FlowLayout(FlowLayout.CENTER));
-		 * 
-		 * buttonPanel.add(yes); buttonPanel.add(no);
-		 * 
-		 * deletePanel.add(warning,BorderLayout.CENTER);
-		 * deletePanel.add(buttonPanel,BorderLayout.SOUTH);
-		 * 
-		 * 
-		 * 
-		 * deleteFrame=new JFrame(); deleteFrame.setLocationRelativeTo(null);
-		 * deleteFrame.getContentPane().add(deletePanel);
-		 * deleteFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		 * 
-		 * deleteFrame.setVisible(false);
-		 */
 
 	}
 

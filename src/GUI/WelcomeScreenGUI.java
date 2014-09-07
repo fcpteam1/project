@@ -51,29 +51,6 @@ public class WelcomeScreenGUI {
 		gbc.anchor = GridBagConstraints.LINE_START;
 		welcomePanel.add(exitButton, gbc);
 
-		// adding animation to the switchToLoginPanelButton button
-		/*switchToLoginPanelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				((JButton) e.getSource()).setEnabled(false);
-				new Timer(1, new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						welcomePanel.setLocation(welcomePanel.getX() - 5, 0);
-						if (welcomePanel.getX() + welcomePanel.getWidth() == 0) {
-							((Timer) e.getSource()).stop();
-							System.out.println("Timer stopped");
-						}
-					}
-				}).start();
-			}
-		});*/
-		/*exitButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-
-			}
-		});*/
 
 	}
 

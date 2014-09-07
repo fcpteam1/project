@@ -1,6 +1,7 @@
 package model;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Invoice implements java.io.Serializable {
@@ -11,6 +12,7 @@ public class Invoice implements java.io.Serializable {
 
 	public Invoice() {
 		this.totalPrice = 0;
+
 	}
 
 	public double getTotalPrice() {

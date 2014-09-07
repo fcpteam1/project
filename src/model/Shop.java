@@ -779,41 +779,61 @@ public class Shop {
 		System.out.println("Edit address sent");
 	}
 
-	public boolean processSale(Stock sale, int stockIndex) {
+	public boolean processSale(Stock saleItem,ArrayList<Stock> stockList, int quantity, int stockIndex) {
 		boolean inStock = false;
-		for (int i = stockIndex; i < stocks.size(); i++) {
-			if (sale.getProduct().getName().equals(stocks.get(i).getName())) {
-				if (stocks.get(i).getQuantity() > sale.getQuantity()) {
-					stocks.get(i)
-							.setQuantity(
-									stocks.get(i).getQuantity()
-											- sale.getQuantity());
+		
+		while (stockIndex<stockList.size())
+		{	
+			for (int i = stockIndex; i < stockList.size(); i++) 
+			{
+				String name = saleItem.getName();
+				
+				if (name.equals(stockList.get(i).getName()) &&quantity>0) {
+					
+					if (stockList.get(i).getQuantity() > quantity) 
+					{
+						stockList.get(i).setQuantity(stockList.get(i).getQuantity() - quantity);
+						inStock = true;
+						i = stockList.size();
+						//System.out.println("greater: "+ name + quantity);
+					} 
+					else if (stockList.get(i).getQuantity() == quantity) 
+					{
+						stockList.remove(stockList.get(i));
+						inStock = true;
+						i = stockList.size();
+					//	System.out.println("equal: "+ name + quantity);
+	
+					} 
+					else if (stockList.get(i).getQuantity() < quantity)
+					{
+						quantity -= stockList.get(i).getQuantity();
+						//System.out.println("lesser: "+ name + quantity);
+						//System.out.println("Num "+i);
+						inStock=processSale(saleItem, stockList,quantity, i+1);
+						if (inStock)
+						{
+							stockList.remove(stockList.get(i));
+						}
+						//System.out.println("Num "+i);
 
-					inStock = true;
-					i = stocks.size();
-				} else if (stocks.get(i).getQuantity() == sale.getQuantity()) {
-					stocks.remove(stocks.get(i));
-					inStock = true;
-					i = stocks.size();
-
-				} else {
-					sale.setQuantity(sale.getQuantity()
-							- stocks.get(i).getQuantity());
-					stocks.remove(stocks.get(i));
-					processSale(sale, i);
+						i=stockList.size();
+	
+					}
 				}
+	
 			}
-
+			stockIndex=stockList.size();
 		}
 		return inStock;
 	}
 
-	public ArrayList<Stock> checkStock(ArrayList<Stock> saleList) {
+	public ArrayList<Stock> checkStock(ArrayList<Stock> saleList, ArrayList<Stock> stockList) {
 
 		for (Stock temp : saleList) {
-			if (!processSale(temp, 0)) {
-				System.out.println("Out of Stock Item: "
-						+ temp.getProduct().getName());
+			if (!processSale(temp, stockList, temp.getQuantity(), 0)) {
+				//System.out.println("Out of Stock Item: "
+				//		+ temp.getProduct().getName());
 
 				if (saleList.get(saleList.size() - 1) == temp) {
 					saleList.remove(temp);
@@ -827,41 +847,51 @@ public class Shop {
 	}
 
 	public void createSale(SaleFormEvent e) {
-
-		ArrayList<Stock> inStockList = checkStock(e.getStockList());
+		/*try 
+		{
+			model = new Model();
+		} 
+		catch (IOException e1) 
+		{
+			e1.printStackTrace();
+		}*/
+		ArrayList<Stock> inStockList = checkStock(e.getStockList(), stocks);
 
 		Sale sale = new Sale(inStockList, e.getCustomer());
 		sales.add(sale);
-
+		
 		writeStock(stockFile);
 
 		int newCount = 0;
 		for (Sale s : sales) {
 			s.setId(newCount++);
 		}
+		
+		System.out.println("START PRINTING SALES");
+		for (Sale temp : sales) {
+			System.out.println(temp.getId());
+			for (Stock stock : temp.getStocks())
+			System.out.println(stock.getName() + ": " + stock.getQuantity());
+		}
+		
 		writeSale(saleFile);
-		//loadAvailableStock();
+		loadAvailableStock();
 	}
 
 	public void removeSale(int index) {
+		for (Stock stock: sales.get(index).getStocks()) {
+			stocks.add(stock);
+		}
 		sales.remove(index);
 		int newCount = 0;
 		for (Sale s : sales) {
 			s.setId(newCount++);
 		}
+		writeStock(stockFile);
 		writeSale(saleFile);
+		loadAvailableStock();
 	}
 
-	public void editSale(SaleFormEvent e, int id) {
-
-		for (Sale s : sales) {
-			if (s.getId() == id) {
-				s.setStocks(e.getStockList());
-				s.calculatePrice();
-			}
-		}
-		writeSale(saleFile);
-	}
 
 	public void createOrder(OrderFormEvent e) {
 		ArrayList<Product> products = e.getProducts();
@@ -875,6 +905,10 @@ public class Shop {
 		writeOrder(orderFile);
 	}
 
+	public void viewOrders(OrderFormEvent e) {
+
+	}
+
 	public void editOrder(OrderFormEvent e, int id) {
 		for (Order order : orders) {
 			if (order.getId() == id) {
@@ -886,6 +920,7 @@ public class Shop {
 		for (Order newOrder : orders) {
 			newOrder.setId(newCount++);
 		}
+
 		writeOrder(orderFile);
 	}
 
@@ -899,17 +934,16 @@ public class Shop {
 		writeOrder(orderFile);
 	}
 
-	public void processOrder(int id) {
-		for(Order order: orders){
-			if(order.getId()==id){
-				for (Product product : order.getProducts()) {
-					Stock stock = new Stock(product, product.getQuantity());
-					stocks.add(stock);
-				}
-				order.setCurrent(false);
+	public void processOrder(int index) {
+		if (orders.get(index).isCurrent()) {
+			for (Product product : orders.get(index).getProducts()) {
+				Stock stock = new Stock(product, product.getQuantity());
+				stocks.add(stock);
+				//availableStock.add(stock);
 			}
 		}
-		//loadAvailableStock();
+		loadAvailableStock();
+		orders.get(index).setCurrent(false);
 		writeOrder(orderFile);
 		writeStock(stockFile);
 	}

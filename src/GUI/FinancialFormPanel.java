@@ -27,6 +27,7 @@ public class FinancialFormPanel extends JPanel {
 			submitBtn;
 	private JComboBox dayList, weekList, monthList;
 	private JLabel dayLabel, weekLabel, monthLabel;
+	private Model model;
 	private FinancialFormListener listener;
 	private Calendar cal;
 	private int day, week, month;
@@ -264,7 +265,6 @@ public class FinancialFormPanel extends JPanel {
 		add(monthlyBtn, gc);
 	}
 
-
 	// ////////////////////Profit////////////////////////
 
 	public void ProfitFormPanel() {
@@ -272,43 +272,48 @@ public class FinancialFormPanel extends JPanel {
 		dim.width = 250;
 		setPreferredSize(dim);
 
-		allBtn = new JButton("All Profits");
-		todayBtn = new JButton("Today's Profits");
-		dailyBtn = new JButton("Daily Profits");
-		weeklyBtn = new JButton("Weekly Profits");
-		monthlyBtn = new JButton("Monthly Profits");
-
-		Border innerBorder = BorderFactory.createTitledBorder("Profits");
-		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-
-		setLayout(new GridBagLayout());
+		allBtn = new JButton("All Profit");
+		todayBtn = new JButton("Todays Profit");
+		dailyBtn = new JButton("Daily Profit");
+		weeklyBtn = new JButton("Weekly Profit");
+		monthlyBtn = new JButton("Monthly Profit");
 
 		allBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listener.allProfits();
 			}
 		});
+
+		todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.todaysProfits();
+			}
+		});
+
 		dailyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listener.dailyProfits();
 			}
 		});
-		todayBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				listener.todaysProfits();
-			}
-		});
+
 		weeklyBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				listener.weeklyProfits();
+
 			}
 		});
+
 		monthlyBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				listener.monthlyProfits();
 			}
 		});
+
+		Border innerBorder = BorderFactory.createTitledBorder("Expenses");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
 
 		GridBagConstraints gc = new GridBagConstraints();
 
@@ -360,7 +365,7 @@ public class FinancialFormPanel extends JPanel {
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 100;
+		gc.weighty = 1000000;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -1330,7 +1335,7 @@ public class FinancialFormPanel extends JPanel {
 			}
 		});
 
-		Border innerBorder = BorderFactory.createTitledBorder("Profits");
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
@@ -1481,12 +1486,12 @@ public class FinancialFormPanel extends JPanel {
 				FinancialFormEvent ev = new FinancialFormEvent(this,week,month);
 
 				if (listener != null) {
-					listener.profitWeekSelected(ev);
+					listener.saleWeekSelected(ev);
 				}
 			}
 		});
 
-		Border innerBorder = BorderFactory.createTitledBorder("Profits");
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
@@ -1606,7 +1611,7 @@ public class FinancialFormPanel extends JPanel {
 			}
 		});
 		
-		Border innerBorder = BorderFactory.createTitledBorder("Profits");
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
