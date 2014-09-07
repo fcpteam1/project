@@ -15,11 +15,9 @@ public class SaleTextPanel extends JPanel {
 	public SaleTextPanel() {
 		textArea = new JTextArea();
 		textArea.setText("Product and Quantity Selected: \n\n");
-		// finalSaleButton = new JButton("Place Sale");
 		setLayout(new BorderLayout());
 
 		add(new JScrollPane(textArea), BorderLayout.EAST);
-		// add(finalSaleButton, BorderLayout.SOUTH);
 	}
 
 	public void setHeader ()

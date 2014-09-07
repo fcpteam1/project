@@ -1,3 +1,5 @@
+//Same set up as Customer Form Panel
+
 package GUI;
 
 import java.awt.Dimension;

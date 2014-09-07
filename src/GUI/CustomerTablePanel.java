@@ -39,6 +39,7 @@ public class CustomerTablePanel extends JPanel {
 		JMenuItem removeItem = new JMenuItem("Delete User");
 		JMenuItem editItem = new JMenuItem("Edit User");
 		//Adding them to the popup menu
+
 		popup.add(removeItem);
 		popup.add(editItem);
 

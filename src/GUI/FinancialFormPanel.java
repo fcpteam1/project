@@ -21,12 +21,14 @@ import model.Model;
 import model.Order;
 import model.Sale;
 
+//Creating the FinacialFormPanel within this class there are multiple panels methods
 public class FinancialFormPanel extends JPanel {
 
 	private JButton allBtn, todayBtn, dailyBtn, weeklyBtn, monthlyBtn,
 			submitBtn;
 	private JComboBox dayList, weekList, monthList;
 	private JLabel dayLabel, weekLabel, monthLabel;
+	private Model model;
 	private FinancialFormListener listener;
 	private Calendar cal;
 	private int day, week, month;
@@ -50,6 +52,11 @@ public class FinancialFormPanel extends JPanel {
 		this.listener = listener;
 	}
 
+	/*
+	 * The SalesFormPanel is made up of 5 buttons as seen below each button will
+	 * have different results.
+	 */
+
 	// ////////////////////Sales////////////////////////
 
 	public void SalesFormPanel() {
@@ -63,37 +70,42 @@ public class FinancialFormPanel extends JPanel {
 		weeklyBtn = new JButton("Weekly Sales");
 		monthlyBtn = new JButton("Monthly Sales");
 
+		// Adding an action listener to the allBtn that when it
+		// is clicked the allSales method is called within the financial
+		// listener.
 		allBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listener.allSales();
 			}
 		});
 
+		// todayBtn calls todaySales
 		todayBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listener.todaysSales();
 			}
 		});
-
+		// dailyBtn calls dailySales
 		dailyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listener.dailySales();
 			}
 		});
-
+		// WeeklyBtn calls weeklySales
 		weeklyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listener.weeklySales();
 
 			}
 		});
-
+		// monthlyBtn calls monthlySales
 		monthlyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listener.monthlySales();
 			}
 		});
 
+		// Setting the layout for the panel using gridbaglayout
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
@@ -159,6 +171,7 @@ public class FinancialFormPanel extends JPanel {
 
 	// ////////////////////Expenditures////////////////////////
 
+	// Same structure as SaleFormPanel
 	public void ExpendituresFormPanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
@@ -264,51 +277,56 @@ public class FinancialFormPanel extends JPanel {
 		add(monthlyBtn, gc);
 	}
 
-
 	// ////////////////////Profit////////////////////////
 
+	// Same structure as SaleFormPanel
 	public void ProfitFormPanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
 		setPreferredSize(dim);
 
-		allBtn = new JButton("All Profits");
-		todayBtn = new JButton("Today's Profits");
-		dailyBtn = new JButton("Daily Profits");
-		weeklyBtn = new JButton("Weekly Profits");
-		monthlyBtn = new JButton("Monthly Profits");
-
-		Border innerBorder = BorderFactory.createTitledBorder("Profits");
-		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-
-		setLayout(new GridBagLayout());
+		allBtn = new JButton("All Profit");
+		todayBtn = new JButton("Todays Profit");
+		dailyBtn = new JButton("Daily Profit");
+		weeklyBtn = new JButton("Weekly Profit");
+		monthlyBtn = new JButton("Monthly Profit");
 
 		allBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listener.allProfits();
 			}
 		});
+
+		todayBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listener.todaysProfits();
+			}
+		});
+
 		dailyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listener.dailyProfits();
 			}
 		});
-		todayBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				listener.todaysProfits();
-			}
-		});
+
 		weeklyBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				listener.weeklyProfits();
+
 			}
 		});
+
 		monthlyBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				listener.monthlyProfits();
 			}
 		});
+
+		Border innerBorder = BorderFactory.createTitledBorder("Expenses");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+
+		setLayout(new GridBagLayout());
 
 		GridBagConstraints gc = new GridBagConstraints();
 
@@ -360,7 +378,7 @@ public class FinancialFormPanel extends JPanel {
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 100;
+		gc.weighty = 1000000;
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -369,6 +387,8 @@ public class FinancialFormPanel extends JPanel {
 
 	// ////////////////////DailySale////////////////////////
 
+	// The chooseDaySalePanel is a panel that will display 3 combo boxes
+	// along with a submitbtn.
 	public void chooseDaySalePanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
@@ -382,6 +402,7 @@ public class FinancialFormPanel extends JPanel {
 		weekList = new JComboBox();
 		monthList = new JComboBox();
 
+		// Within the dayList combo box we have added each day of the week
 		DefaultComboBoxModel dayModel = new DefaultComboBoxModel();
 		dayModel.addElement("Monday");
 		dayModel.addElement("Tuesday");
@@ -392,6 +413,7 @@ public class FinancialFormPanel extends JPanel {
 		dayModel.addElement("Sunday");
 		dayList.setModel(dayModel);
 
+		// add week 1 to 4 in the weekList combo box
 		DefaultComboBoxModel weekModel = new DefaultComboBoxModel();
 		weekModel.addElement("Week1");
 		weekModel.addElement("Week2");
@@ -399,6 +421,7 @@ public class FinancialFormPanel extends JPanel {
 		weekModel.addElement("Week4");
 		weekList.setModel(weekModel);
 
+		// add all the months to the monthList combo box
 		DefaultComboBoxModel monthModel = new DefaultComboBoxModel();
 		monthModel.addElement("January");
 		monthModel.addElement("February");
@@ -416,6 +439,15 @@ public class FinancialFormPanel extends JPanel {
 
 		submitBtn = new JButton("Submit");
 
+		/*
+		 * To find out the correct month and day we decided to use calendar
+		 * instead of date. To get a sale,Expenditure or profit of a given day,
+		 * week or month the choice choosen within the combo boxes had to
+		 * converted to integers so that we could match them against calendar to
+		 * get the date we wanted. This is what is happending here. When the
+		 * submit button is pressed whatever is selected will be converted into
+		 * a integer and stored within the day,week and month variables.
+		 */
 		submitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dayList.getSelectedItem() == ("Monday")) {
@@ -470,8 +502,10 @@ public class FinancialFormPanel extends JPanel {
 					month = cal.DECEMBER;
 				}
 
-				FinancialFormEvent ev = new FinancialFormEvent(this, day, week,month);
-
+				FinancialFormEvent ev = new FinancialFormEvent(this, day, week,
+						month);
+				// If an event has occurred the values are passed to the method
+				// called below
 				if (listener != null) {
 					listener.saleDaySelected(ev);
 				}
@@ -553,6 +587,7 @@ public class FinancialFormPanel extends JPanel {
 
 	// ////////////////////WeeklySale////////////////////////
 
+	// Same setup as before just that the option to choose the day is removed
 	public void chooseWeekSalePanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
@@ -626,7 +661,8 @@ public class FinancialFormPanel extends JPanel {
 					month = cal.DECEMBER;
 				}
 
-				FinancialFormEvent ev = new FinancialFormEvent(this,week,month);
+				FinancialFormEvent ev = new FinancialFormEvent(this, week,
+						month);
 
 				if (listener != null) {
 					listener.saleWeekSelected(ev);
@@ -692,6 +728,9 @@ public class FinancialFormPanel extends JPanel {
 
 	// ////////////////////MonthlySale////////////////////////
 
+	// Same setup as before just that the option to choose the day and week is
+	// removed
+	// These methods are then copied and changed to for Expenditures and Profit
 	public void chooseMonthSalePanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 250;
@@ -746,14 +785,14 @@ public class FinancialFormPanel extends JPanel {
 					month = cal.DECEMBER;
 				}
 
-				FinancialFormEvent ev = new FinancialFormEvent(this,month);
+				FinancialFormEvent ev = new FinancialFormEvent(this, month);
 
 				if (listener != null) {
 					listener.saleMonthSelected(ev);
 				}
 			}
 		});
-		
+
 		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
@@ -841,7 +880,7 @@ public class FinancialFormPanel extends JPanel {
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
-		
+
 		submitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dayList.getSelectedItem() == ("Monday")) {
@@ -896,7 +935,8 @@ public class FinancialFormPanel extends JPanel {
 					month = cal.DECEMBER;
 				}
 
-				FinancialFormEvent ev = new FinancialFormEvent(this, day, week,month);
+				FinancialFormEvent ev = new FinancialFormEvent(this, day, week,
+						month);
 
 				if (listener != null) {
 					listener.expenseDaySelected(ev);
@@ -1013,7 +1053,7 @@ public class FinancialFormPanel extends JPanel {
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
-		
+
 		submitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (weekList.getSelectedItem() == ("Week1")) {
@@ -1052,7 +1092,8 @@ public class FinancialFormPanel extends JPanel {
 					month = cal.DECEMBER;
 				}
 
-				FinancialFormEvent ev = new FinancialFormEvent(this,week,month);
+				FinancialFormEvent ev = new FinancialFormEvent(this, week,
+						month);
 
 				if (listener != null) {
 					listener.expenseWeekSelected(ev);
@@ -1143,7 +1184,7 @@ public class FinancialFormPanel extends JPanel {
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
-		
+
 		submitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (monthList.getSelectedItem() == ("January")) {
@@ -1172,7 +1213,7 @@ public class FinancialFormPanel extends JPanel {
 					month = cal.DECEMBER;
 				}
 
-				FinancialFormEvent ev = new FinancialFormEvent(this,month);
+				FinancialFormEvent ev = new FinancialFormEvent(this, month);
 
 				if (listener != null) {
 					listener.expenseMonthSelected(ev);
@@ -1267,7 +1308,7 @@ public class FinancialFormPanel extends JPanel {
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
-		
+
 		submitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (dayList.getSelectedItem() == ("Monday")) {
@@ -1322,7 +1363,8 @@ public class FinancialFormPanel extends JPanel {
 					month = cal.DECEMBER;
 				}
 
-				FinancialFormEvent ev = new FinancialFormEvent(this, day, week,month);
+				FinancialFormEvent ev = new FinancialFormEvent(this, day, week,
+						month);
 
 				if (listener != null) {
 					listener.profitDaySelected(ev);
@@ -1330,7 +1372,7 @@ public class FinancialFormPanel extends JPanel {
 			}
 		});
 
-		Border innerBorder = BorderFactory.createTitledBorder("Profits");
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
@@ -1439,7 +1481,7 @@ public class FinancialFormPanel extends JPanel {
 		monthList.setModel(monthModel);
 
 		submitBtn = new JButton("Submit");
-		
+
 		submitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (weekList.getSelectedItem() == ("Week1")) {
@@ -1478,15 +1520,16 @@ public class FinancialFormPanel extends JPanel {
 					month = cal.DECEMBER;
 				}
 
-				FinancialFormEvent ev = new FinancialFormEvent(this,week,month);
+				FinancialFormEvent ev = new FinancialFormEvent(this, week,
+						month);
 
 				if (listener != null) {
-					listener.profitWeekSelected(ev);
+					listener.saleWeekSelected(ev);
 				}
 			}
 		});
 
-		Border innerBorder = BorderFactory.createTitledBorder("Profits");
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
@@ -1598,15 +1641,15 @@ public class FinancialFormPanel extends JPanel {
 					month = cal.DECEMBER;
 				}
 
-				FinancialFormEvent ev = new FinancialFormEvent(this,month);
+				FinancialFormEvent ev = new FinancialFormEvent(this, month);
 
 				if (listener != null) {
 					listener.profitMonthSelected(ev);
 				}
 			}
 		});
-		
-		Border innerBorder = BorderFactory.createTitledBorder("Profits");
+
+		Border innerBorder = BorderFactory.createTitledBorder("Sales");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 

@@ -12,6 +12,7 @@ public class Invoice implements java.io.Serializable {
 
 	public Invoice() {
 		this.totalPrice = 0;
+
 	}
 
 	public double getTotalPrice() {

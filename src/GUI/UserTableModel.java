@@ -1,3 +1,5 @@
+//Same set up as Customer Table Model
+
 package GUI;
 
 import java.util.ArrayList;
