@@ -36,19 +36,19 @@ public class SupplierGUI {
 			editSupplierFromProducts, addProductFromProducts, deleteSupplier,editProduct,deleteProduct;
 	private JPopupMenu viewProductsPopup;
 
-	// add products
+	// component for add products panel
 	private JPanel addProductsPanel;
 	private JTextField productName, supplierPrice;
 	private JLabel productNameLabel, supplierPriceLabel;
 	private JButton addProduct, exitProductPanel;
 
-	// edit supplier name etc
+	// components for edit supplier
 	private JPanel editSupplierPanel;
 	private JTextField supplierName, supplierPhone, supplierAddress;
 	private JButton editSupName, editSupPhone, editSupAddress, exitEditPanel;
 	private JLabel editNameLabel, editPhoneLabel, editAddressLabel;
 
-	// edit product name etc
+	// components for edit product 
 	private JPanel editProductPanel;
 	private JTextField editPnameField,editPpriceField;
 	private JButton editProductName, editProductPrice, exitEditProductPanel,editProductBtn;
@@ -109,9 +109,9 @@ public class SupplierGUI {
 
 		holder = new JPanel();
 		holder.setLayout(new GridBagLayout());
-
+		// search throw suppliers
 		search = new JButton("Search");
-		next = new JButton(">>");
+		next = new JButton(">>");  
 		previous = new JButton("<<");
 		supplierButton = new JButton("View Suppliers");
 		productButton = new JButton("View Products");
@@ -135,7 +135,7 @@ public class SupplierGUI {
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
 		buttonsPanel.add(supplierButton);
-
+		// hold create delete edit buttons
 		JPanel crudPanel = new JPanel();
 		crudPanel.setLayout(new FlowLayout());
 		crudPanel.add(edit);
@@ -231,7 +231,7 @@ public class SupplierGUI {
 		c.weighty = 0.1;
 		c.anchor = GridBagConstraints.PAGE_END;
 		showPanel.add(supplierTextPanel, c);
-
+		// buttons diabled at start
 		search.setEnabled(false);
 		next.setEnabled(false);
 		previous.setEnabled(false);
@@ -246,7 +246,7 @@ public class SupplierGUI {
 	public void backToMainPanel() {
 
 	}
-
+	// put suppliers in table
 	public void focusViewSuppliers() {
 		showPanel.removeAll();
 
@@ -296,7 +296,7 @@ public class SupplierGUI {
 
 		showPanel.revalidate();
 		showPanel.repaint();
-
+		// what available for r-click in supplier view
 		viewProductsPopup.removeAll();
 		viewProductsPopup.add(viewProducts);
 		viewProductsPopup.add(editSupplier);
@@ -306,7 +306,7 @@ public class SupplierGUI {
 		next.setEnabled(false);
 		previous.setEnabled(false);
 		search.setEnabled(false);
-
+		// wahts enabled depending on user or admin
 		if (adminLogged == true) {
 			add.setEnabled(false);
 			delete.setEnabled(true);
@@ -323,7 +323,7 @@ public class SupplierGUI {
 		supplier = true;
 
 	}
-
+	// viewing products in table
 	public void focusViewProducts() {
 
 		showPanel.removeAll();
@@ -378,7 +378,7 @@ public class SupplierGUI {
 		supplier = false;
 
 		viewProductsPopup.removeAll();
-
+		// r-click for products table
 		viewProductsPopup.add(editSupplierFromProducts);
 		viewProductsPopup.add(addProductFromProducts);
 		viewProductsPopup.add(editProduct);
@@ -400,7 +400,7 @@ public class SupplierGUI {
 		}
 
 	}
-
+	// create add product panel
 	public void addNewProducts() {
 		addProductsPanel = new JPanel();
 
@@ -464,7 +464,7 @@ public class SupplierGUI {
 		addProductsPanel.add(addProduct, c);
 
 	}
-
+	// create edit product panel
 	public void editProduct() {
 
 		editProductPanel = new JPanel();
@@ -539,7 +539,7 @@ public class SupplierGUI {
 		editProductPanel.add(exitEditProductPanel,c);
 	}
 
-	
+	// create edit supplier panel
 	public void editSupplier() {
 
 		editSupplierPanel = new JPanel();
@@ -714,7 +714,7 @@ public class SupplierGUI {
 	public void deletePanel() {
 
 	}
-
+	// table refresh when data changed
 	public void refreshSupplier(Object data[][]) {
 
 		tablePanel.remove(viewScroll);
@@ -738,7 +738,7 @@ public class SupplierGUI {
 		tablePanel.repaint();
 
 	}
-
+	// current supplier
 	public int getCurrent() {
 		return current;
 	}
@@ -858,7 +858,7 @@ public class SupplierGUI {
 	public void setEditSupplier(JMenuItem editSupplier) {
 		this.editSupplier = editSupplier;
 	}
-
+	// add remove panels for edit create 
 	public void showAddProductPanel() {
 		BorderLayout layout = (BorderLayout) tablePanel.getLayout();
 		tablePanel.remove(layout.getLayoutComponent(BorderLayout.WEST));

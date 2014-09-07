@@ -42,6 +42,7 @@ public class SaleMainPanel extends JPanel {
 		mainPanel.add(textPanel, BorderLayout.EAST);
 
 		tablePanel.setSaleTableListener(new SaleTableListener() {
+			
 			public void rowDeleted(int row) {
 				model.getShop().removeSale(row);
 				tablePanel.refresh();
@@ -51,7 +52,7 @@ public class SaleMainPanel extends JPanel {
 			public void listItems(int row) {
 				textPanel.setHeader();
 				itemsBought = model.getShop().getSales().get(row).getStocks();
-
+				
 				textPanel.appendText("\n------Products from Sale Id: " + row
 						+ "-------\n");
 
