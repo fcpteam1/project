@@ -77,6 +77,8 @@ public class Shop {
 		return stockFile;
 	}
 
+	//The following methods are getters and setters for the editable
+	//data for Users and Customers
 	public void setEditUserUsername(String editUserUsername) {
 		this.editUserUsername = editUserUsername;
 	}
@@ -100,11 +102,11 @@ public class Shop {
 	public void setEditCustomerName(String editCustomerName) {
 		this.editCustomerName = editCustomerName;
 	}
-
+	
 	public String getEditCustomerNumber() {
 		return editCustomerNumber;
 	}
-
+	
 	public void setEditCustomerNumber(String editCustomerNumber) {
 		this.editCustomerNumber = editCustomerNumber;
 	}
@@ -116,6 +118,7 @@ public class Shop {
 	public void setEditCustomerAddress(String editCustomerAddress) {
 		this.editCustomerAddress = editCustomerAddress;
 	}
+	// Ends Here
 
 	private static Shop ShopInstance = null;
 
@@ -146,7 +149,6 @@ public class Shop {
 			System.out.println(stock.getName() + " Avaiable Stock: "
 					+ stock.getQuantity());
 
-		
 	}
 
 	public static Shop getInstance() throws IOException {
@@ -219,6 +221,7 @@ public class Shop {
 		}
 	}
 
+	// load in the users from the ser files and store within the users array
 	public void loadUsers(String inPutFile) {
 
 		try {
@@ -258,7 +261,8 @@ public class Shop {
 			c.printStackTrace();
 		}
 	}
-
+	
+	//Loading in the customers
 	public void loadCustomers(String inPutFile) {
 
 		try {
@@ -353,7 +357,7 @@ public class Shop {
 			i.printStackTrace();
 		}
 	}
-
+	//Saving the Customers to file and the end of a session
 	public void writeCustomer(String customerFile) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(customerFile);
@@ -389,7 +393,7 @@ public class Shop {
 			i.printStackTrace();
 		}
 	}
-
+	//Saving the users to file
 	public void writeUser(String userFile) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(userFile);
@@ -402,20 +406,24 @@ public class Shop {
 		}
 	}
 
+	//Returning the users arrayList
 	public ArrayList<User> getUsers() {
 		return users;
 	}
 
+	//Taking in the username,password, id and if they are an admin or not
 	public void addUser(UserFormEvent e) {
 		String username = e.getUsername();
 		String password = e.getPassword();
 		String id = e.getId();
 		Boolean admin = e.getAdmin();
-
+		
+		//creating a new user 
 		User newUser = new User(username, password, admin);
-
+		//adding new customer to the arraylist
 		users.add(newUser);
 
+		//setting the id to match that of the table rows
 		int newCount = 0;
 		for (User user : users) {
 			user.setId(newCount++);
@@ -423,23 +431,29 @@ public class Shop {
 		}
 	}
 
+	//removing the user and the selected row within the table
+	//index is the row 
 	public void removeUser(int index) {
 		users.remove(index);
 		writeUser(userFile);
 	}
-
+	
+	//Storing in the username and password of the user to be edited
 	public void editUser(int index) {
 		this.tableIndex = index;
 		editUserUsername = users.get(index).getUsername();
 		editUserPassword = users.get(index).getPassword();
 	}
 
+	//Taking in the new details for the user
 	public void NewEditUser(UserFormEvent ee) {
 		String username = ee.getUsername();
 		String password = ee.getPassword();
+		//id is the same as the table index
 		int id = tableIndex;
 		Boolean admin = ee.getAdmin();
 
+		//changing the details for that user
 		for (User user : users) {
 			if (user.getId() == (tableIndex)) {
 				user.setUsername(username);
@@ -453,18 +467,22 @@ public class Shop {
 		writeUser(userFile);
 	}
 
+	//sending the username to the form panel to be displayed with the appropriate text field
 	public void sendEditUsername() {
 		userFormPanel.setEditDataUsername(editUserUsername);
 	}
-
+	//same for the password
 	public void sendEditPassword(String editUserPassword) {
 		userFormPanel.setEditDataPassword(editUserPassword);
 	}
 
+	//return the orders arraylist
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}
 
+	//getting all the orders and putting them
+	//into the finacialOrders arrayList
 	public ArrayList<Order> getAllOrders() {
 		financialOrders.clear();
 		for (Order order : orders) {
@@ -472,13 +490,16 @@ public class Shop {
 		}
 		return financialOrders;
 	}
-
+	//Just todays orders
 	public ArrayList<Order> getTodayOrders() {
+		//setting the date to today
 		Calendar today = Calendar.getInstance();
+		//clearing the financialOrders arraylist
 		financialOrders.clear();
 		for (Order order : orders) {
+			//setting the order date to today
 			Calendar orderDate = dateToCalender(order.getDate());
-
+			//if the date,month and year match then add them orders to the fincialOrders arrayList
 			if ((orderDate.get(Calendar.DATE) == today.get(Calendar.DATE))
 					&& (orderDate.get(Calendar.MONTH) == today
 							.get(Calendar.MONTH))
@@ -489,7 +510,11 @@ public class Shop {
 		}
 		return financialOrders;
 	}
-
+	//get orders created on any day of any week in any month
+	//This is done by taking the the day,week,month chosen from
+	//the combo in financailFormPanel and setting the date to that
+	//date and then comparing the dates within orders to see which match
+	//then adding them to finacialOrders
 	public ArrayList<Order> getDailyOrders(FinancialFormEvent e) {
 		int day = e.getDay();
 		int week = e.getWeek();
@@ -515,7 +540,8 @@ public class Shop {
 		}
 		return financialOrders;
 	}
-
+	//Same method as before except just checking is the week and month match
+	//storing them that do to the finacialOrders arrayList
 	public ArrayList<Order> getWeeklyOrders(FinancialFormEvent e) {
 		int week = e.getWeek();
 		int month = e.getMonth();
@@ -537,7 +563,7 @@ public class Shop {
 		}
 		return financialOrders;
 	}
-
+	//This just checks if the months match
 	public ArrayList<Order> getMonthlyOrders(FinancialFormEvent e) {
 		int month = e.getMonth();
 		Calendar today = Calendar.getInstance();
@@ -554,7 +580,8 @@ public class Shop {
 		}
 		return financialOrders;
 	}
-
+	
+	//Same methods used for stock and profit
 	public ArrayList<Stock> getStock() {
 		return stocks;
 	}
@@ -616,10 +643,12 @@ public class Shop {
 		return sales;
 	}
 
+	//Setting up a blank table without any data for initial start up
 	public ArrayList<Sale> getBlankSalesTable() {
 		return blankSalesTable;
 	}
-
+	
+	
 	public ArrayList<Sale> getTodaySales() {
 		Calendar today = Calendar.getInstance();
 		financialSales.clear();
@@ -715,7 +744,7 @@ public class Shop {
 	public void setSuppliers(ArrayList<Supplier> suppliers) {
 		this.suppliers = suppliers;
 	}
-
+	
 	public ArrayList<Customer> getCustomers() {
 		return customers;
 	}
@@ -723,7 +752,7 @@ public class Shop {
 	public ArrayList<Product> getTotalProducts() {
 		return totalProducts;
 	}
-
+	//Same as user
 	public void addCustomer(CustomerFormEvent e) {
 		String name = e.getName();
 		String number = e.getNumber();
@@ -738,19 +767,19 @@ public class Shop {
 			writeCustomer(customerFile);
 		}
 	}
-
+	//Same as user
 	public void removeCustomer(int index) {
 		customers.remove(index);
 		writeCustomer(customerFile);
 	}
-
+	//Same as user
 	public void editCustomer(int index) {
 		this.tableIndex = index;
 		editCustomerName = customers.get(index).getName();
 		editCustomerNumber = customers.get(index).getNumber();
 		editCustomerAddress = customers.get(index).getAddress();
 	}
-
+	//Same as user
 	public void NewEditCustomer(CustomerFormEvent ee) {
 		String name = ee.getName();
 		String number = ee.getNumber();
@@ -865,7 +894,7 @@ public class Shop {
 
 		System.out.println("START PRINTING SALES");
 		for (Sale temp : sales) {
-			System.out.println(temp.getId() + " " + temp.getCustomer().getName());
+			System.out.println(temp.getId());
 			for (Stock stock : temp.getStocks())
 				System.out
 						.println(stock.getName() + ": " + stock.getQuantity());
@@ -947,7 +976,7 @@ public class Shop {
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 	}
-
+	//Getting the total sales for the sales within the financialSales arrayList
 	public double totalSales() {
 		double totalSum = 0;
 		for (Sale sale : financialSales) {
@@ -955,7 +984,7 @@ public class Shop {
 		}
 		return totalSum;
 	}
-
+	//Getting the total orders for the orders within the financialOrders arrayList
 	public double totalOrders() {
 		double totalSum = 0;
 		for (Order order : financialOrders) {
