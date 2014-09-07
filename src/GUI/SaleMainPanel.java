@@ -42,6 +42,7 @@ public class SaleMainPanel extends JPanel {
 		mainPanel.add(textPanel, BorderLayout.EAST);
 
 		tablePanel.setSaleTableListener(new SaleTableListener() {
+			
 			public void rowDeleted(int row) {
 				model.getShop().removeSale(row);
 				tablePanel.refresh();

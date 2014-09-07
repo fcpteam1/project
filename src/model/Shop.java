@@ -865,7 +865,7 @@ public class Shop {
 
 		System.out.println("START PRINTING SALES");
 		for (Sale temp : sales) {
-			System.out.println(temp.getId());
+			System.out.println(temp.getId() + " " + temp.getCustomer().getName());
 			for (Stock stock : temp.getStocks())
 				System.out
 						.println(stock.getName() + ": " + stock.getQuantity());
