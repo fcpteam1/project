@@ -18,6 +18,8 @@ public class SaleMainPanel extends JPanel {
 	private SaleTablePanel tablePanel;
 	private Model model;
 
+	private ArrayList<Stock> itemsBought = new ArrayList<Stock>();
+
 	public SaleMainPanel() throws IOException {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -48,8 +50,7 @@ public class SaleMainPanel extends JPanel {
 
 			public void listItems(int row) {
 				textPanel.setHeader();
-				ArrayList<Stock> itemsBought = model.getShop().getSales()
-						.get(row).getStocks();
+				itemsBought = model.getShop().getSales().get(row).getStocks();
 
 				textPanel.appendText("\n------Products from Sale Id: " + row
 						+ "-------\n");

@@ -18,7 +18,6 @@ import GUI.FinancialFormEvent;
 import GUI.OrderFormEvent;
 import GUI.OrderFormPanel;
 import GUI.SaleFormEvent;
-import GUI.StockFormEvent;
 import GUI.UserFormEvent;
 import GUI.UserFormPanel;
 
@@ -35,9 +34,11 @@ public class Shop {
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private ArrayList<Sale> blankSalesTable = new ArrayList<Sale>();
 	private ArrayList<Product> totalProducts = new ArrayList<Product>();
+	private Model model;
 
 	private String username, password, choice, customerName, customerNumber,
-			customerAddress, editUserPassword, editUserUsername, editedStockName;
+			customerAddress, editUserPassword, editUserUsername,
+			editedStockName;
 	private double editedStockPrice;
 	private String editCustomerName, editCustomerNumber, editCustomerAddress;
 	private String saleFile = "sales.ser";
@@ -468,9 +469,10 @@ public class Shop {
 		}
 		return null;
 	}
+
 	public ArrayList<Order> getAllOrders() {
 		financialOrders.clear();
-		for (Order order: orders){
+		for (Order order : orders) {
 			financialOrders.add(order);
 		}
 		return financialOrders;
@@ -492,7 +494,7 @@ public class Shop {
 		}
 		return financialOrders;
 	}
-	
+
 	public ArrayList<Order> getDailyOrders(FinancialFormEvent e) {
 		int day = e.getDay();
 		int week = e.getWeek();
@@ -505,10 +507,14 @@ public class Shop {
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
 
-			if ((orderDate.get(Calendar.DAY_OF_WEEK) == today.get(Calendar.DAY_OF_WEEK))&&
-					(orderDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
-					&& (orderDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
-					&& (orderDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+			if ((orderDate.get(Calendar.DAY_OF_WEEK) == today
+					.get(Calendar.DAY_OF_WEEK))
+					&& (orderDate.get(Calendar.WEEK_OF_MONTH) == today
+							.get(Calendar.WEEK_OF_MONTH))
+					&& (orderDate.get(Calendar.MONTH) == today
+							.get(Calendar.MONTH))
+					&& (orderDate.get(Calendar.YEAR) == today
+							.get(Calendar.YEAR))) {
 				financialOrders.add(order);
 			}
 		}
@@ -525,7 +531,8 @@ public class Shop {
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
 
-			if ((orderDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
+			if ((orderDate.get(Calendar.WEEK_OF_MONTH) == today
+					.get(Calendar.WEEK_OF_MONTH))
 					&& (orderDate.get(Calendar.MONTH) == today
 							.get(Calendar.MONTH))
 					&& (orderDate.get(Calendar.YEAR) == today
@@ -539,13 +546,12 @@ public class Shop {
 	public ArrayList<Order> getMonthlyOrders(FinancialFormEvent e) {
 		int month = e.getMonth();
 		Calendar today = Calendar.getInstance();
-		today.set(Calendar.MONTH,month);
+		today.set(Calendar.MONTH, month);
 		financialOrders.clear();
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
 
-			if ((orderDate.get(Calendar.MONTH) == today
-							.get(Calendar.MONTH))
+			if ((orderDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
 					&& (orderDate.get(Calendar.YEAR) == today
 							.get(Calendar.YEAR))) {
 				financialOrders.add(order);
@@ -554,15 +560,14 @@ public class Shop {
 		return financialOrders;
 	}
 
-
 	public ArrayList<Stock> getStock() {
 		return stocks;
 	}
 
-	public ArrayList<Product> getAllSupplierProducts(){
+	public ArrayList<Product> getAllSupplierProducts() {
 		ArrayList<Product> allProducts = new ArrayList<Product>();
-		for(Supplier supplier: suppliers){
-			for(Product product: supplier.getProducts()){
+		for (Supplier supplier : suppliers) {
+			for (Product product : supplier.getProducts()) {
 				allProducts.add(product);
 			}
 		}
@@ -572,47 +577,49 @@ public class Shop {
 	public ArrayList<Stock> getUniqueStockList() {
 		ArrayList<Stock> uniqueStockList = new ArrayList<Stock>();
 		ArrayList<Product> allProducts = new ArrayList<Product>();
-		//Get all products that we can sell
+		// Get all products that we can sell
 		allProducts = getAllSupplierProducts();
-		//Loop through individual products and add them to a list of stock
-		for (Product product: allProducts) {
+		// Loop through individual products and add them to a list of stock
+		for (Product product : allProducts) {
 			Stock stock = new Stock(product, 0);
 			uniqueStockList.add(stock);
 		}
-		//Loop through list of unique products which we stock
-		for(Stock stock: uniqueStockList){
-			//Loop through all stock
-			for(Stock current: stocks){
-				//if the stock is a certain product, add it's quantity to the uniquelist
-				if(current.getName().equals(stock.getName())){
-					stock.setQuantity(stock.getQuantity()+current.getQuantity());
+		// Loop through list of unique products which we stock
+		for (Stock stock : uniqueStockList) {
+			// Loop through all stock
+			for (Stock current : stocks) {
+				// if the stock is a certain product, add it's quantity to the
+				// uniquelist
+				if (current.getName().equals(stock.getName())) {
+					stock.setQuantity(stock.getQuantity()
+							+ current.getQuantity());
 					stock.setCustomerPrice(current.getCustomerPrice());
 				}
 			}
 		}
 		return uniqueStockList;
 	}
-	
-	public void editCustomerPrice(){
-		for(Stock stock: stocks){
-			if(stock.getName().equals(editedStockName)){
+
+	public void editCustomerPrice() {
+		for (Stock stock : stocks) {
+			if (stock.getName().equals(editedStockName)) {
 				stock.setCustomerPrice(editedStockPrice);
 			}
 		}
 		writeStock(stockFile);
 	}
-	
-		public ArrayList<Sale> getAllSales() {
+
+	public ArrayList<Sale> getAllSales() {
 		financialSales.clear();
-		for (Sale sale: sales){
+		for (Sale sale : sales) {
 			financialSales.add(sale);
 		}
 		return financialSales;
 	}
-	
+
 	public ArrayList<Sale> getSales() {
 		return sales;
-	} 
+	}
 
 	public ArrayList<Sale> getBlankSalesTable() {
 		return blankSalesTable;
@@ -648,9 +655,12 @@ public class Shop {
 		for (Sale sale : sales) {
 			Calendar saleDate = dateToCalender(sale.getDate());
 
-			if ((saleDate.get(Calendar.DAY_OF_WEEK) == today.get(Calendar.DAY_OF_WEEK))&&
-					(saleDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
-					&& (saleDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
+			if ((saleDate.get(Calendar.DAY_OF_WEEK) == today
+					.get(Calendar.DAY_OF_WEEK))
+					&& (saleDate.get(Calendar.WEEK_OF_MONTH) == today
+							.get(Calendar.WEEK_OF_MONTH))
+					&& (saleDate.get(Calendar.MONTH) == today
+							.get(Calendar.MONTH))
 					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
 				financialSales.add(sale);
 			}
@@ -660,11 +670,11 @@ public class Shop {
 		}
 		return financialSales;
 	}
-	
+
 	public ArrayList<Sale> getWeeklySales(FinancialFormEvent e) {
 		int week = e.getWeek();
 		int month = e.getMonth();
-		
+
 		Calendar today = Calendar.getInstance();
 		today.set(Calendar.WEEK_OF_MONTH, week);
 		today.set(Calendar.MONTH, month);
@@ -672,7 +682,8 @@ public class Shop {
 		for (Sale sale : sales) {
 			Calendar saleDate = dateToCalender(sale.getDate());
 
-			if ((saleDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
+			if ((saleDate.get(Calendar.WEEK_OF_MONTH) == today
+					.get(Calendar.WEEK_OF_MONTH))
 					&& (saleDate.get(Calendar.MONTH) == today
 							.get(Calendar.MONTH))
 					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
@@ -692,7 +703,7 @@ public class Shop {
 			Calendar saleDate = dateToCalender(sale.getDate());
 
 			if ((saleDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
-				&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
 				financialSales.add(sale);
 			}
 		}
@@ -787,62 +798,55 @@ public class Shop {
 		System.out.println("Edit address sent");
 	}
 
-	public boolean processSale(Stock saleItem,ArrayList<Stock> stockList, int quantity, int stockIndex) {
+	public static boolean processSale(Stock saleItem,
+			ArrayList<Stock> stockList, int quantity, int stockIndex) {
 		boolean inStock = false;
-		
-		while (stockIndex<stockList.size())
-		{	
-			for (int i = stockIndex; i < stockList.size(); i++) 
-			{
+
+		while (stockIndex < stockList.size()) {
+			for (int i = stockIndex; i < stockList.size(); i++) {
 				String name = saleItem.getName();
-				
-				if (name.equals(stockList.get(i).getName()) &&quantity>0) {
-					
-					if (stockList.get(i).getQuantity() > quantity) 
-					{
-						stockList.get(i).setQuantity(stockList.get(i).getQuantity() - quantity);
+
+				if (name.equals(stockList.get(i).getName()) && quantity > 0) {
+
+					if (stockList.get(i).getQuantity() > quantity) {
+						stockList.get(i).setQuantity(
+								stockList.get(i).getQuantity() - quantity);
 						inStock = true;
 						i = stockList.size();
-						//System.out.println("greater: "+ name + quantity);
-					} 
-					else if (stockList.get(i).getQuantity() == quantity) 
-					{
+						// System.out.println("greater: "+ name + quantity);
+					} else if (stockList.get(i).getQuantity() == quantity) {
 						stockList.remove(stockList.get(i));
 						inStock = true;
 						i = stockList.size();
-					//	System.out.println("equal: "+ name + quantity);
-	
-					} 
-					else if (stockList.get(i).getQuantity() < quantity)
-					{
+						// System.out.println("equal: "+ name + quantity);
+
+					} else if (stockList.get(i).getQuantity() < quantity) {
 						quantity -= stockList.get(i).getQuantity();
-						//System.out.println("lesser: "+ name + quantity);
-						//System.out.println("Num "+i);
-						inStock=processSale(saleItem, stockList,quantity, i+1);
-						if (inStock)
-						{
+						// System.out.println("lesser: "+ name + quantity);
+						// System.out.println("Num "+i);
+						inStock = processSale(saleItem, stockList, quantity,
+								i + 1);
+						if (inStock) {
 							stockList.remove(stockList.get(i));
 						}
-						//System.out.println("Num "+i);
+						// System.out.println("Num "+i);
 
-						i=stockList.size();
-	
+						i = stockList.size();
+
 					}
 				}
-	
+
 			}
-			stockIndex=stockList.size();
+			stockIndex = stockList.size();
 		}
 		return inStock;
 	}
 
-	public ArrayList<Stock> checkStock(ArrayList<Stock> saleList, ArrayList<Stock> stockList) {
+	public ArrayList<Stock> checkStock(ArrayList<Stock> saleList,
+			ArrayList<Stock> stockList) {
 
 		for (Stock temp : saleList) {
 			if (!processSale(temp, stockList, temp.getQuantity(), 0)) {
-				//System.out.println("Out of Stock Item: "
-				//		+ temp.getProduct().getName());
-
 				if (saleList.get(saleList.size() - 1) == temp) {
 					saleList.remove(temp);
 					break;
@@ -855,39 +859,37 @@ public class Shop {
 	}
 
 	public void createSale(SaleFormEvent e) {
-		/*try 
-		{
+		try {
 			model = new Model();
-		} 
-		catch (IOException e1) 
-		{
+		} catch (IOException e1) {
 			e1.printStackTrace();
-		}*/
-		ArrayList<Stock> inStockList = checkStock(e.getStockList(), stocks);
+		}
+		ArrayList<Stock> inStockList = checkStock(e.getStockList(), model
+				.getShop().getStock());
 
 		Sale sale = new Sale(inStockList, e.getCustomer());
 		sales.add(sale);
-		
 		writeStock(stockFile);
 
 		int newCount = 0;
 		for (Sale s : sales) {
 			s.setId(newCount++);
 		}
-		
+
 		System.out.println("START PRINTING SALES");
 		for (Sale temp : sales) {
 			System.out.println(temp.getId());
 			for (Stock stock : temp.getStocks())
-			System.out.println(stock.getName() + ": " + stock.getQuantity());
+				System.out
+						.println(stock.getName() + ": " + stock.getQuantity());
 		}
-		
+
 		writeSale(saleFile);
 		loadAvailableStock();
 	}
 
 	public void removeSale(int index) {
-		for (Stock stock: sales.get(index).getStocks()) {
+		for (Stock stock : sales.get(index).getStocks()) {
 			stocks.add(stock);
 		}
 		sales.remove(index);
@@ -899,7 +901,6 @@ public class Shop {
 		writeSale(saleFile);
 		loadAvailableStock();
 	}
-
 
 	public void createOrder(OrderFormEvent e) {
 		ArrayList<Product> products = e.getProducts();
@@ -974,7 +975,6 @@ public class Shop {
 		return totalSum;
 	}
 
-	
 	public double totalOrders() {
 		double totalSum = 0;
 		for (Order order : financialOrders) {
@@ -1018,8 +1018,8 @@ public class Shop {
 		income = round(income);
 		return income;
 	}
-	
-	public double getDailyIncome(FinancialFormEvent e){
+
+	public double getDailyIncome(FinancialFormEvent e) {
 		double income = 0;
 		int day = e.getDay();
 		int week = e.getWeek();
@@ -1033,29 +1033,10 @@ public class Shop {
 		for (Sale sale : sales) {
 			Calendar saleDate = dateToCalender(sale.getDate());
 
-			if ((saleDate.get(Calendar.DAY_OF_WEEK) == today.get(Calendar.DAY_OF_WEEK))&&
-					(saleDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
-					&& (saleDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
-					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
-				income += sale.getTotalPrice();
-			}
-		}
-		income = round(income);
-		return income;
-	}
-
-	public double getWeeklyIncome(FinancialFormEvent e){
-		double income = 0;
-		int week = e.getWeek();
-		int month = e.getMonth();
-		
-		Calendar today = Calendar.getInstance();
-		today.set(Calendar.WEEK_OF_MONTH, week);
-		today.set(Calendar.MONTH, month);
-		for (Sale sale : sales) {
-			Calendar saleDate = dateToCalender(sale.getDate());
-
-			if ((saleDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
+			if ((saleDate.get(Calendar.DAY_OF_WEEK) == today
+					.get(Calendar.DAY_OF_WEEK))
+					&& (saleDate.get(Calendar.WEEK_OF_MONTH) == today
+							.get(Calendar.WEEK_OF_MONTH))
 					&& (saleDate.get(Calendar.MONTH) == today
 							.get(Calendar.MONTH))
 					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
@@ -1065,8 +1046,31 @@ public class Shop {
 		income = round(income);
 		return income;
 	}
-	
-	public double getMonthlyIncome(FinancialFormEvent e){
+
+	public double getWeeklyIncome(FinancialFormEvent e) {
+		double income = 0;
+		int week = e.getWeek();
+		int month = e.getMonth();
+
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.WEEK_OF_MONTH, week);
+		today.set(Calendar.MONTH, month);
+		for (Sale sale : sales) {
+			Calendar saleDate = dateToCalender(sale.getDate());
+
+			if ((saleDate.get(Calendar.WEEK_OF_MONTH) == today
+					.get(Calendar.WEEK_OF_MONTH))
+					&& (saleDate.get(Calendar.MONTH) == today
+							.get(Calendar.MONTH))
+					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+				income += sale.getTotalPrice();
+			}
+		}
+		income = round(income);
+		return income;
+	}
+
+	public double getMonthlyIncome(FinancialFormEvent e) {
 		double income = 0;
 		int month = e.getMonth();
 		Calendar today = Calendar.getInstance();
@@ -1075,14 +1079,14 @@ public class Shop {
 			Calendar saleDate = dateToCalender(sale.getDate());
 
 			if ((saleDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
-				&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+					&& (saleDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
 				income += sale.getTotalPrice();
 			}
 		}
 		income = round(income);
 		return income;
 	}
-	
+
 	public double getAllExpenses() {
 		double expenses = 0;
 		for (Order order : getOrders()) {
@@ -1101,7 +1105,7 @@ public class Shop {
 		return expenses;
 	}
 
-	public double getDailyExpenses(FinancialFormEvent e){
+	public double getDailyExpenses(FinancialFormEvent e) {
 		double expenses = 0;
 		int day = e.getDay();
 		int week = e.getWeek();
@@ -1113,18 +1117,22 @@ public class Shop {
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
 
-			if ((orderDate.get(Calendar.DAY_OF_WEEK) == today.get(Calendar.DAY_OF_WEEK))&&
-					(orderDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
-					&& (orderDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
-					&& (orderDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+			if ((orderDate.get(Calendar.DAY_OF_WEEK) == today
+					.get(Calendar.DAY_OF_WEEK))
+					&& (orderDate.get(Calendar.WEEK_OF_MONTH) == today
+							.get(Calendar.WEEK_OF_MONTH))
+					&& (orderDate.get(Calendar.MONTH) == today
+							.get(Calendar.MONTH))
+					&& (orderDate.get(Calendar.YEAR) == today
+							.get(Calendar.YEAR))) {
 				expenses += order.getTotalPrice();
 			}
 		}
 		expenses = round(expenses);
 		return expenses;
 	}
-	
-	public double getWeeklyExpenses(FinancialFormEvent e){
+
+	public double getWeeklyExpenses(FinancialFormEvent e) {
 		double expenses = 0;
 		int week = e.getWeek();
 		int month = e.getMonth();
@@ -1134,18 +1142,20 @@ public class Shop {
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
 
-			if ((orderDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
+			if ((orderDate.get(Calendar.WEEK_OF_MONTH) == today
+					.get(Calendar.WEEK_OF_MONTH))
 					&& (orderDate.get(Calendar.MONTH) == today
 							.get(Calendar.MONTH))
-					&& (orderDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+					&& (orderDate.get(Calendar.YEAR) == today
+							.get(Calendar.YEAR))) {
 				expenses += order.getTotalPrice();
 			}
 		}
 		expenses = round(expenses);
 		return expenses;
 	}
-	
-	public double getMonthlyExpenses(FinancialFormEvent e){
+
+	public double getMonthlyExpenses(FinancialFormEvent e) {
 		double expenses = 0;
 		int month = e.getMonth();
 		Calendar today = Calendar.getInstance();
@@ -1154,19 +1164,20 @@ public class Shop {
 			Calendar orderDate = dateToCalender(order.getDate());
 
 			if ((orderDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
-				&& (orderDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
+					&& (orderDate.get(Calendar.YEAR) == today
+							.get(Calendar.YEAR))) {
 				expenses += order.getTotalPrice();
 			}
 		}
 		expenses = round(expenses);
 		return expenses;
 	}
-	
+
 	public double round(double val) {
 		val = Math.round(val * 100) / 100.00;
 		return val;
 	}
-	
+
 	public StockSalesPredictor getPredictor() {
 		return predictor;
 	}

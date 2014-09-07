@@ -1,3 +1,5 @@
+//same set up as the customer form event
+
 package GUI;
 
 import java.util.EventObject;
