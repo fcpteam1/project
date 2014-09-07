@@ -1,3 +1,5 @@
+//Same set up as Customer Table Listener
+
 package GUI;
 
 public interface UserTableListener {

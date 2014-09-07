@@ -1,3 +1,5 @@
+//Same set up as Customer Form Listener
+
 package GUI;
 
 import java.util.EventListener;

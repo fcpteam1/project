@@ -1,3 +1,5 @@
+//Same set up as Customer Table Panel
+
 package GUI;
 
 import java.awt.BorderLayout;

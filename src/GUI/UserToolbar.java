@@ -1,3 +1,5 @@
+//Same Set up as Customer Toolbar
+
 package GUI;
 
 import java.awt.FlowLayout;
