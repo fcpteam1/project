@@ -606,6 +606,7 @@ public class Shop {
 				stock.setCustomerPrice(editedStockPrice);
 			}
 		}
+		loadAvailableStock();
 		writeStock(stockFile);
 	}
 
