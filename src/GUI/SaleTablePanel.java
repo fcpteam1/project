@@ -30,10 +30,8 @@ public class SaleTablePanel extends JPanel {
 		popup = new JPopupMenu();
 
 		JMenuItem removeItem = new JMenuItem("Delete Sale");
-		JMenuItem editItem = new JMenuItem("Edit Products");
 		JMenuItem listItem = new JMenuItem("List Products");
 		popup.add(removeItem);
-		popup.add(editItem);
 		popup.add(listItem);
 
 		table.addMouseListener(new MouseAdapter() {
@@ -58,14 +56,6 @@ public class SaleTablePanel extends JPanel {
 			}
 		});
 
-		editItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int row = table.getSelectedRow();
-				if (saleTableListener != null) {
-					saleTableListener.rowEdited(row);
-				}
-			}
-		});
 
 		listItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
