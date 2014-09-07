@@ -46,6 +46,7 @@ public class SaleMainPanel extends JPanel {
 			}
 
 			public void listItems(int row) {
+				textPanel.setHeader();
 				ArrayList<Stock> itemsBought = model.getShop().getSales()
 						.get(row).getStocks();
 

@@ -12,14 +12,7 @@ public class Invoice implements java.io.Serializable {
 
 	public Invoice() {
 		this.totalPrice = 0;
-		
-		Calendar c=Calendar.getInstance();
-		
-		c.add(Calendar.YEAR, -1);
-		c.set(Calendar.MONTH, 0);
-		c.set(Calendar.WEEK_OF_MONTH, 1);
-		c.set(Calendar.DAY_OF_WEEK,1);
-		date = c.getTime();
+
 	}
 
 	public double getTotalPrice() {
