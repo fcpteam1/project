@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+//Toolbar that listens for button selection within finance tab
 public class FinancialToolbar extends JPanel implements ActionListener {
 	private JButton saleButton;
 	private JButton profitButton;
@@ -42,6 +43,7 @@ public class FinancialToolbar extends JPanel implements ActionListener {
 		this.listener = listener;
 	}
 
+	//set the view based on the button clicked
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton clicked = (JButton) e.getSource();

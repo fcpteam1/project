@@ -7,6 +7,8 @@ import javax.swing.table.AbstractTableModel;
 import model.Sale;
 
 public class FinancialSaleTableModel extends AbstractTableModel {
+
+	//Similar to financialexpendituretablemodel 
 	private ArrayList<Sale> sales;
 	private String[] columnNames = { "Sale Id", "Customer Name", "Date",
 			"Total Price" };

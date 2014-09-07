@@ -49,7 +49,7 @@ public class StockFormPanel extends JPanel {
 	public void viewByDatePanel(){
 		setVisible(false);
 	}
-	
+	//view and layout for editing the price of an item in stock
 	public void editPanel(StockFormEvent e){
 
 		Dimension dim = getPreferredSize();

@@ -7,8 +7,9 @@ import javax.swing.JPanel;
 
 import model.Model;
 
-
+//The main panel for the finance tab
 public class FinancialMainPanel {
+	//necessary main panel and all components to be added
 	private JPanel mainPanel;
 	private FinancialToolbar financialToolbar;
 	private FinancialFormPanel financialFormPanel;
@@ -26,22 +27,30 @@ public class FinancialMainPanel {
 		financialFormPanel = new FinancialFormPanel();
 		financialTextPanel = new FinancialTextPanel();
 		financialGraphPanel = new FinancialGraphPanel();
+		//reference to the model to access all necessary data
 		model = new Model();
-
+		//set listeners for buttons in the form panel
 		financialFormPanel
 				.setFinancialFormListener(new FinancialFormListener() {
 
 					@Override
 					public void allSales() {
+						//set data in table from the shop's data
 						financialTablePanel.setSaleData(model.getShop()
 								.getAllSales());
+						//set the table model to the sale model
 						financialTablePanel.setTableModel(1);
+						//refresh the data in the table
 						financialTablePanel.refresh();
+						//get the total price for all sales
 						double totalPrice = model.getShop().totalSales();
+						//add to text panel
 						financialTextPanel.getTotal(totalPrice);
+						//set data for graph panel
 						financialGraphPanel.setSaleData(model.getShop().getAllSales());
 					}
 
+					//similar to allSales: just for today
 					@Override
 					public void todaysSales() {
 						financialTablePanel.setSaleData(model.getShop()
@@ -53,14 +62,16 @@ public class FinancialMainPanel {
 						financialGraphPanel.setSaleData(model.getShop().getTodaySales());
 						
 					}
-
+					
+					//opens new form panel to select precise day.
 					public void dailySales() {
 						financialFormPanel.removeAll();
 						financialFormPanel.chooseDaySalePanel();
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
 					}
-					
+
+					//opens new form panel to select precise week.
 					public void weeklySales() {
 						financialFormPanel.removeAll();
 						financialFormPanel.chooseWeekSalePanel();
@@ -68,6 +79,7 @@ public class FinancialMainPanel {
 						financialFormPanel.repaint();
 					}
 
+					//opens new form panel to select precise month.
 					@Override
 					public void monthlySales() {
 						financialFormPanel.removeAll();
@@ -75,7 +87,8 @@ public class FinancialMainPanel {
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
 					}
-
+					
+					//Same as Sales but for expenses
 					@Override
 					public void allExpenses() {
 						financialTablePanel.setExpenditureData(model.getShop()
@@ -123,20 +136,25 @@ public class FinancialMainPanel {
 						financialFormPanel.validate();
 						financialFormPanel.repaint();
 					}
-
+					
+					//Similar to sales and expenses
 					@Override
 					public void allProfits() {
+						//all income, expenses and associated profit and loss calculated
 						double income = model.getShop().getAllIncome();
 						double expenses = model.getShop().getAllExpenses();
 						double profit = model.getShop()
 								.profit(income, expenses);
 						double loss = model.getShop().loss(income, expenses);
+						//set the table data
 						financialTablePanel.setProfitData(income, expenses,
 								profit, loss);
+						//set the model (column headers)
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
 
+					//Similar to sales and expenses but with profit data for today
 					@Override
 					public void todaysProfits() {
 						double income = model.getShop().getTodaysIncome();
@@ -149,7 +167,8 @@ public class FinancialMainPanel {
 						financialTablePanel.setTableModel(3);
 						financialTablePanel.refresh();
 					}
-
+					
+					//choose day for profit information
 					@Override
 					public void dailyProfits() {
 						financialFormPanel.removeAll();
@@ -158,6 +177,7 @@ public class FinancialMainPanel {
 						financialFormPanel.repaint();
 					}
 
+					//choose week for profit information
 					@Override
 					public void weeklyProfits() {
 						financialFormPanel.removeAll();
@@ -166,6 +186,7 @@ public class FinancialMainPanel {
 						financialFormPanel.repaint();
 					}
 
+					//choose month for profit information
 					@Override
 					public void monthlyProfits() {
 						financialFormPanel.removeAll();
@@ -174,6 +195,8 @@ public class FinancialMainPanel {
 						financialFormPanel.repaint();
 					}
 
+					//all listeners for data chosen from form panels
+					//Sales/Expenses/Profits per day/week/month selected
 					@Override
 					public void saleMonthSelected(FinancialFormEvent e) {
 						financialTablePanel.setSaleData(model.getShop()
@@ -281,20 +304,27 @@ public class FinancialMainPanel {
 
 				});
 
+		//Give the table panel a reference to the form panel
 		financialTablePanel.setFormPanel(financialFormPanel);
+		//set the intitial sale data to all sales
 		financialTablePanel.setSaleData(model.getShop().getSales());
+		//same for expenses
 		financialTablePanel.setExpenditureData(model.getShop().getOrders());
-
+		//give the toolbar a reference to the form panel
 		financialToolbar.setFormPanel(financialFormPanel);
+		//setting the view after toolbar button is pressed
 		financialToolbar
 				.setFinancialToolbarListener(new FinancialToolbarListener() {
-
+					//listener for sales button selected
 					@Override
 					public void saleSelected() {
 						financialFormPanel.removeAll();
+						//set form panel to sales
 						financialFormPanel.SalesFormPanel();
+						//set data
 						financialTablePanel.setSaleData(model.getShop()
 								.getSales());
+						//set model to sales model
 						financialTablePanel.setTableModel(1);
 						financialTablePanel.refresh();
 						financialFormPanel.validate();
@@ -306,6 +336,7 @@ public class FinancialMainPanel {
 						financialGraphPanel.repaint();
 					}
 
+					//similar to sales, but for expenses
 					@Override
 					public void expendituresSelected() {
 						financialFormPanel.removeAll();
@@ -323,6 +354,7 @@ public class FinancialMainPanel {
 						financialGraphPanel.repaint();
 					}
 
+					//profit form panel
 					@Override
 					public void profitsSelected() {
 						financialFormPanel.removeAll();
@@ -353,7 +385,7 @@ public class FinancialMainPanel {
 		
 		financialTablePanel.setSaleData(model.getShop().getBlankSalesTable());
 		financialTablePanel.setVisible(true);
-
+		//add all components to main panel
 		mainPanel.add(financialFormPanel, BorderLayout.WEST);
 		mainPanel.add(financialToolbar, BorderLayout.NORTH);
 		mainPanel.add(financialTablePanel, BorderLayout.CENTER);
@@ -367,8 +399,4 @@ public class FinancialMainPanel {
 
 	}
 
-	public double round(double val) {
-		val = Math.round(val * 100) / 100.00;
-		return val;
-	}
 }

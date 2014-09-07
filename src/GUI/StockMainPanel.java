@@ -38,7 +38,7 @@ public class StockMainPanel extends JPanel {
 		model = new Model();
 		
 		stockToolbar.setFormPanel(stockFormPanel);
-		
+		//listeners for selected buttons in stock toolbar
 		stockToolbar.setStockToolbarListener(new StockToolbarListener(){
 
 			@Override
@@ -50,6 +50,7 @@ public class StockMainPanel extends JPanel {
 				stockFormPanel.repaint();
 			}
 			
+			//set view, set data to view and set the table model
 			@Override
 			public void viewAll() {
 				stockFormPanel.removeAll();
@@ -61,6 +62,7 @@ public class StockMainPanel extends JPanel {
 				stockFormPanel.repaint();
 			}
 
+			//set view, set data to view and set the table model
 			@Override
 			public void viewByDate() {
 				stockFormPanel.removeAll();
@@ -71,6 +73,7 @@ public class StockMainPanel extends JPanel {
 				stockFormPanel.repaint();
 			}
 
+			//set view, set data to view and set the table model
 			@Override
 			public void viewPredictions() {
 				stockFormPanel.removeAll();
@@ -107,6 +110,7 @@ public class StockMainPanel extends JPanel {
 		stockTablePanel.setFormPanel(stockFormPanel);
 		stockTablePanel.setData(model.getShop().getUniqueStockList());
 		
+		//listener for table button to edit item price
 		stockTablePanel.setListener(new StockTableListener(){
 			@Override
 			public void editPrice(StockFormEvent e) {

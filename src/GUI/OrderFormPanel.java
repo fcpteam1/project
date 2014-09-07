@@ -56,26 +56,28 @@ public class OrderFormPanel extends JPanel {
 		this.products = products;
 	}
 
+	//data for form panels set from main panel
 	public void setData(ArrayList<Order> orders, ArrayList<Supplier> suppliers) {
 		this.orders = orders;
 		this.suppliers = suppliers;
 	}
 
+	//form panel displayed when creating an order
 	public void createFormPanel() {
 		Dimension dim = getPreferredSize();
 		dim.width = 300;
 		setPreferredSize(dim);
-		Border innerBorder = BorderFactory.createTitledBorder("Create Order");
+		Border innerBorder = BorderFactory.createTitledBorder("Choose Supplier");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-
+		//panel components
 		supplierLabel = new JLabel("Supplier: ");
 		supplierCombo = new JComboBox();
 		selectButton = new JButton("Select");
 
 		// Set up combo box
 		DefaultComboBoxModel supplierModel = new DefaultComboBoxModel();
-
+		//add list of suppliers to a combo box
 		for (Supplier supplier : suppliers) {
 			supplierModel.addElement(supplier);
 		}
@@ -84,10 +86,12 @@ public class OrderFormPanel extends JPanel {
 		supplierCombo.setSelectedIndex(0);
 		supplierCombo.setEditable(false);
 
+		//when select button is clicked
 		selectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Supplier thisSupplier = (Supplier) supplierCombo
 						.getSelectedItem();
+				//supplier is added to an order event and sent to the addproduct view
 				OrderFormEvent ev = new OrderFormEvent(e, thisSupplier);
 				addProductSelect(ev);
 			}
@@ -128,7 +132,9 @@ public class OrderFormPanel extends JPanel {
 		this.removeAll();
 		quantities.clear();
 		productNames.clear();
+		//selected supplier from initial form
 		thisSupplier = ev.getSupplier();
+		//list of products from supplier
 		products = thisSupplier.getProducts();
 		Dimension dim = getPreferredSize();
 		dim.width = 300;
@@ -178,8 +184,11 @@ public class OrderFormPanel extends JPanel {
 				orderProducts.clear();
 				// Get ordered products and associated quantities
 				for (int i = 0; i < size; i++) {
+					//check if text field is empty
 					if (!fields[i].getText().equals("")) {
 						try {
+							//try get integer value from field
+							//quantities and productnames lists take in data for products to be ordered
 							quantities.add(Integer.valueOf(fields[i].getText()));
 							productNames.add(names[i].getText());
 							System.out.println(names[i].getText() + " " + Integer.valueOf(fields[i].getText()));
@@ -201,9 +210,11 @@ public class OrderFormPanel extends JPanel {
 					}
 					i++;
 				}
+				//create event with supplier and product info
 				OrderFormEvent orderEvent = new OrderFormEvent(this,
 						thisSupplier, orderProducts);
 				if (formListener != null) {
+					//listener set in main panel
 					formListener.createOrderOccurred(orderEvent);
 				}
 				setVisible(false);
@@ -226,6 +237,7 @@ public class OrderFormPanel extends JPanel {
 
 	public void editFormPanel() {
 		this.removeAll();
+		//clear data in lists
 		quantities.clear();
 		productNames.clear();
 		Dimension dim = getPreferredSize();
@@ -241,9 +253,6 @@ public class OrderFormPanel extends JPanel {
 
 		editButton = new JButton("Edit Order");
 		size = editedSupplierProducts.size();
-//		for(int i=0; i<size; i++){
-//			fields[i].setText("");
-//		}
 		names = new JLabel[size];
 		prices = new JLabel[size];
 		fields = new JTextField[size];

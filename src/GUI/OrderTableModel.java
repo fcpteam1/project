@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import model.Order;
 import model.Supplier;
-
+//Table with necessary columns for order data
 public class OrderTableModel extends AbstractTableModel {
 
 	private ArrayList<Order> orders;
