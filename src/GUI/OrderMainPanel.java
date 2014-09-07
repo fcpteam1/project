@@ -50,7 +50,7 @@ public class OrderMainPanel extends JPanel {
 			
 			@Override
 			public void showCurrent() {
-				orderFormPanel.removeAll();
+				orderFormPanel.setVisible(false);
 				ArrayList<Order> current = new ArrayList<Order>();
 				for (Order order : model.getShop().getOrders()) {
 					if (order.isCurrent()) {
@@ -63,7 +63,7 @@ public class OrderMainPanel extends JPanel {
 
 			@Override
 			public void showPrevious() {
-				orderFormPanel.removeAll();
+				orderFormPanel.setVisible(false);
 				ArrayList<Order> previous = new ArrayList<Order>();
 				for (Order order : model.getShop().getOrders()) {
 					if (!order.isCurrent()) {
@@ -83,28 +83,30 @@ public class OrderMainPanel extends JPanel {
 		orderTablePanel.setOrderTableListener(new OrderTableListener() {
 
 			@Override
-			public void rowDeleted(int row) {
-				model.getShop().deleteOrder(row);
+			public void rowDeleted(int id) {
+				model.getShop().deleteOrder(id);
 				orderTablePanel.refresh();
 			}
 
 			@Override
-			public void rowEdited(Order order) {
-				orderFormPanel.setEditedOrder(order);
-				orderFormPanel.setEditedProducts(order.getProducts());
-				orderFormPanel.setEditedSupplierProducts(order.getSupplier().getProducts());
-//				orderFormPanel.setEditedOrder(model.getShop().getOrders().get(row));
-//				orderFormPanel.setEditedProducts(model.getShop().getOrders().get(row).getProducts());
-//				orderFormPanel.setEditedSupplierProducts(model.getShop().getOrders().get(row).getSupplier().getProducts());
-				if(order.isCurrent()){
+			public void rowEdited(int id) {
+				orderFormPanel.removeAll();
+				Order order = model.getShop().getOrderById(id);
+				if(order.isCurrent() && order!=null){
+					for(int i=0; i<order.getProducts().size(); i++){
+						System.out.println(order.getProducts().get(i).getName() + order.getProducts().get(i).getQuantity());
+					}
+					orderFormPanel.setEditedOrder(order);
+					orderFormPanel.setEditedProducts(order.getProducts());
+					orderFormPanel.setEditedSupplierProducts(order.getSupplier().getProducts());
 					orderFormPanel.editFormPanel();
 				}
 				orderTablePanel.refresh();
 			}
 
 			@Override
-			public void rowProcessed(Order order) {
-				model.getShop().processOrder(order.getId());
+			public void rowProcessed(int id) {
+				model.getShop().processOrder(id);
 				orderTablePanel.setData(model.getShop().getOrders(), model.getShop().getSuppliers());
 				orderTablePanel.refresh();
 			}

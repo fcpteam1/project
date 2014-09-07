@@ -459,7 +459,15 @@ public class Shop {
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}
-
+	
+	public Order getOrderById(int id) {
+		for(Order order: orders){
+			if(order.getId()==id){
+				return order;
+			}
+		}
+		return null;
+	}
 	public ArrayList<Order> getAllOrders() {
 		financialOrders.clear();
 		for (Order order: orders){
@@ -897,11 +905,14 @@ public class Shop {
 		ArrayList<Product> products = e.getProducts();
 		Supplier supplier = e.getSupplier();
 		Order order = new Order(products, supplier);
+		int last = orders.size()-1;
+		int newId = orders.get(last).getId()+1;
+		order.setId(newId);
 		orders.add(order);
-		int newCount = 0;
-		for (Order newOrder : orders) {
-			newOrder.setId(newCount++);
-		}
+//		int newCount = 0;
+//		for (Order newOrder : orders) {
+//			newOrder.setId(newCount++);
+//		}
 		writeOrder(orderFile);
 	}
 
@@ -914,36 +925,39 @@ public class Shop {
 			if (order.getId() == id) {
 				order.setProducts(e.getProducts());
 				order.calculatePrice();
+				break;
 			}
 		}
-		int newCount = 0;
-		for (Order newOrder : orders) {
-			newOrder.setId(newCount++);
-		}
+//		int newCount = 0;
+//		for (Order newOrder : orders) {
+//			newOrder.setId(newCount++);
+//		}
 
 		writeOrder(orderFile);
 	}
 
-	public void deleteOrder(int index) {
-		orders.remove(index);
-		int newCount = 0;
-		for (Order order : orders) {
-			order.setId(newCount++);
+	public void deleteOrder(int id) {
+		for(Order order: orders){
+			if(order.isCurrent() && order.getId()==id){
+				orders.remove(order);
+				break;
+			}
+			writeOrder(orderFile);
 		}
-
-		writeOrder(orderFile);
 	}
 
-	public void processOrder(int index) {
-		if (orders.get(index).isCurrent()) {
-			for (Product product : orders.get(index).getProducts()) {
-				Stock stock = new Stock(product, product.getQuantity());
-				stocks.add(stock);
-				//availableStock.add(stock);
+	public void processOrder(int id) {
+		for(Order order: orders){
+			if (order.getId()==id && order.isCurrent()) {
+				for (Product product : order.getProducts()) {
+					Stock stock = new Stock(product, product.getQuantity());
+					stocks.add(stock);
+				}
+				order.setCurrent(false);
+				break;
 			}
 		}
 		loadAvailableStock();
-		orders.get(index).setCurrent(false);
 		writeOrder(orderFile);
 		writeStock(stockFile);
 	}

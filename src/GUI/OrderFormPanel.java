@@ -240,6 +240,9 @@ public class OrderFormPanel extends JPanel {
 
 		editButton = new JButton("Edit Order");
 		size = editedSupplierProducts.size();
+//		for(int i=0; i<size; i++){
+//			fields[i].setText("");
+//		}
 		names = new JLabel[size];
 		prices = new JLabel[size];
 		fields = new JTextField[size];
@@ -253,8 +256,7 @@ public class OrderFormPanel extends JPanel {
 			fields[i] = new JTextField(3);
 			int j = 0;
 			for (Product product : editedProducts) {
-				if (editedSupplierProducts.get(i).getName()
-						.equals(product.getName())) {
+				if (editedSupplierProducts.get(i).getName().equals(product.getName())) {
 					fields[i].setText(String.valueOf(editedProducts.get(j)
 							.getQuantity()));
 					break;

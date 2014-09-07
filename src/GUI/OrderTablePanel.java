@@ -41,6 +41,7 @@ public class OrderTablePanel extends JPanel {
 			public void mousePressed(MouseEvent e) {
 
 				int row = table.rowAtPoint(e.getPoint());
+
 				table.getSelectionModel().setSelectionInterval(row, row);
 
 				if (e.getButton() == MouseEvent.BUTTON3) {
@@ -52,8 +53,9 @@ public class OrderTablePanel extends JPanel {
 		deleteItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
+				int id = (Integer)table.getValueAt(row, 0);
 				if (orderTableListener != null) {
-					orderTableListener.rowDeleted(row);
+					orderTableListener.rowDeleted(id);
 				}
 			}
 		});
@@ -61,9 +63,9 @@ public class OrderTablePanel extends JPanel {
 		editItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
-				Order order = tableModel.getOrderByRow(row);
+				int id = (Integer)table.getValueAt(row, 0);
 				if (orderTableListener != null) {
-					orderTableListener.rowEdited(order);
+					orderTableListener.rowEdited(id);
 				}
 			}
 		});
@@ -71,9 +73,10 @@ public class OrderTablePanel extends JPanel {
 		processItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
+				int id = (Integer)table.getValueAt(row, 0);
 				Order order = tableModel.getOrderByRow(row);
 				if (orderTableListener != null) {
-					orderTableListener.rowProcessed(order);
+					orderTableListener.rowProcessed(id);
 				}
 			}
 		});

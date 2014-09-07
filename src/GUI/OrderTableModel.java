@@ -36,6 +36,9 @@ public class OrderTableModel extends AbstractTableModel {
 	}
 
 	public Order getOrderByRow(int row){
+		for(int i=0; i<orders.size(); i++){
+			System.out.println(orders.get(i).getId());
+		}
 		return orders.get(row);
 	}
 	
