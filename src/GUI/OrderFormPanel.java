@@ -182,6 +182,7 @@ public class OrderFormPanel extends JPanel {
 						try {
 							quantities.add(Integer.valueOf(fields[i].getText()));
 							productNames.add(names[i].getText());
+							System.out.println(names[i].getText() + " " + Integer.valueOf(fields[i].getText()));
 						} catch (NumberFormatException nfEx) {
 							JOptionPane.showMessageDialog(errorPanel,"Please enter correct ammount!", "ERROR!!", JOptionPane.ERROR_MESSAGE);		
 							return;

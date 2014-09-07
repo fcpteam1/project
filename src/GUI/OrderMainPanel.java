@@ -84,21 +84,28 @@ public class OrderMainPanel extends JPanel {
 
 			@Override
 			public void rowDeleted(int id) {
+				orderFormPanel.setVisible(false);
 				model.getShop().deleteOrder(id);
+				orderTablePanel.setData(model.getShop().getOrders(), model.getShop().getSuppliers());
 				orderTablePanel.refresh();
 			}
 
 			@Override
 			public void rowEdited(int id) {
 				orderFormPanel.removeAll();
-				Order order = model.getShop().getOrderById(id);
-				if(order.isCurrent() && order!=null){
-					for(int i=0; i<order.getProducts().size(); i++){
-						System.out.println(order.getProducts().get(i).getName() + order.getProducts().get(i).getQuantity());
+				Order thisOrder = null;
+				for(Order order: model.getShop().getOrders()){
+					if(order.getId()==id){
+						thisOrder = order;
 					}
-					orderFormPanel.setEditedOrder(order);
-					orderFormPanel.setEditedProducts(order.getProducts());
-					orderFormPanel.setEditedSupplierProducts(order.getSupplier().getProducts());
+				}
+				if(thisOrder.isCurrent() && thisOrder!=null){
+					for(int i=0; i<thisOrder.getProducts().size(); i++){
+						System.out.println(thisOrder.getProducts().get(i).getName() + thisOrder.getProducts().get(i).getQuantity());
+					}
+					orderFormPanel.setEditedOrder(thisOrder);
+					orderFormPanel.setEditedProducts(thisOrder.getProducts());
+					orderFormPanel.setEditedSupplierProducts(thisOrder.getSupplier().getProducts());
 					orderFormPanel.editFormPanel();
 				}
 				orderTablePanel.refresh();

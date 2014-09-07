@@ -74,7 +74,6 @@ public class OrderTablePanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
 				int id = (Integer)table.getValueAt(row, 0);
-				Order order = tableModel.getOrderByRow(row);
 				if (orderTableListener != null) {
 					orderTableListener.rowProcessed(id);
 				}

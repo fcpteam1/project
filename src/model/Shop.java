@@ -907,8 +907,8 @@ public class Shop {
 		ArrayList<Product> products = e.getProducts();
 		Supplier supplier = e.getSupplier();
 		Order order = new Order(products, supplier);
-		int last = orders.size()-1;
-		int newId = orders.get(last).getId()+1;
+		int last = orders.size() - 1;
+		int newId = orders.get(last).getId() + 1;
 		order.setId(newId);
 		orders.add(order);
 //		int newCount = 0;
@@ -934,7 +934,6 @@ public class Shop {
 //		for (Order newOrder : orders) {
 //			newOrder.setId(newCount++);
 //		}
-
 		writeOrder(orderFile);
 	}
 
