@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.JobAttributes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -31,7 +32,8 @@ public class Controller {
 	private ActionListener createSupButton, deleteSupButton, editSupButton,
 			addSupButton;
 
-	private ActionListener createSupplier;
+	
+	private ActionListener createSupplier,deleteProduct,editProduct,exitEditProduct,editThisProduct;
 
 	private ActionListener stockBack, weekPredict, monthPredict, predict;
 	private ActionListener lowStock,showLowStock,showLowWeek,showLowMonth;
@@ -83,7 +85,7 @@ public class Controller {
 					view.getLogin().stopTimer();
 					
 				} else
-					System.out.println("Not a valid user");
+					view.getErrorMessage();
 
 				view.getLogin().getLoginUsername().setText("");
 				view.getLogin().getLoginPassword().setText("");
@@ -459,6 +461,7 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				view.getMainmenu().getSupplierTab().showCreateSupplierPanel();
 			}
+			
 		};
 
 		deleteSupButton = new ActionListener() {
@@ -481,6 +484,7 @@ public class Controller {
 					if (n == JOptionPane.YES_OPTION) {
 						model.getShop().getSuppliers().remove(index);
 					}
+					viewSuppliers();
 				}
 
 			}
@@ -538,6 +542,7 @@ public class Controller {
 				supplier.setAddress(view.getMainmenu().getSupplierTab()
 						.getCreateAddress().getText());
 				model.getShop().getSuppliers().add(supplier);
+				viewSuppliers();
 			}
 		};
 
@@ -591,44 +596,80 @@ public class Controller {
 			}
 		};
 		
-		/*lowStock=new ActionListener(){
+		editProduct=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				view.getMainmenu().getStockTab().switchToControl();
+				
+					int current=view.getMainmenu().getSupplierTab().getCurrent();
+					int index=view.getMainmenu().getSupplierTab().getViewSupplierTabel()
+							.getSelectedRow();
+					view.getMainmenu().getSupplierTab().setIndex(index);
+					view.getMainmenu().getSupplierTab().getEditPnameField().setText(model.getShop().getSuppliers().get(current).getProducts().get(index).getName());
+					view.getMainmenu().getSupplierTab().getEditPpriceField().setText(""+model.getShop().getSuppliers().get(current).getProducts().get(index).getSupplierPrice());
+					view.getMainmenu().getSupplierTab().showEditProductPanel();
+				
 			}
-		};*/
+		};
 		
-		/*showLowStock=new ActionListener(){
+		deleteProduct=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
-				ArrayList<Stock> lowStocks=new ArrayList<Stock>();
-				
-				for(Stock stock : model.getShop().getStock()){
+				if (view.getMainmenu().getSupplierTab().getViewSupplierTabel()
+						.getSelectedRow() != (-1)) {
 					
-					if(stock.getQuantity()<25){
-						lowStocks.add(stock);
-						System.out.println("low");
+					int n = JOptionPane.showConfirmDialog(view.getMainmenu()
+							.getSupplierTab().getDeleteFrame(), "Are you sure you want to delete this product?",
+							"An Inane Question", JOptionPane.YES_NO_OPTION);
+					
+					if(n==JOptionPane.YES_OPTION){
+					model.getShop().getSuppliers().get(view.getMainmenu().getSupplierTab().getCurrent()).getProducts().remove(view.getMainmenu().getSupplierTab().getViewSupplierTabel()
+							.getSelectedRow());
+					Object data[][] = fillProductsForSupplier(view.getMainmenu().getSupplierTab().getCurrent());
+
+					view.getMainmenu().getSupplierTab().refreshProducts(data);
 					}
+					
 				}
-				
-				Object data[][]=new Object[lowStocks.size()][4];
-				for(int i=0;i<lowStocks.size();i++){
-					data[i][0]=lowStocks.get(i).getName();
-					data[i][1]=lowStocks.get(i).getId();
-					data[i][2]=lowStocks.get(i).getQuantity();
-				}
-				
-				view.getMainmenu().getStockTab().fillLowStock(data);
-				
 			}
-		};*/
+		};
 		
+		exitEditProduct=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				view.getMainmenu().getSupplierTab().removeEditProductPanel();
+			}
+		};
 		
+
 		showLowWeek=new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
 				ArrayList<Stock> lowWeekStock =new ArrayList<Stock>();
 				
 				
+			}
+		};
+		
+		editThisProduct=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				String name=view.getMainmenu().getSupplierTab().getEditPnameField().getText();
+				String price=view.getMainmenu().getSupplierTab().getEditPpriceField().getText();
+				
+				
+				int current=view.getMainmenu().getSupplierTab().getCurrent();
+				int index=view.getMainmenu().getSupplierTab().getIndex();
+				
+				if(ErrorChecker.isFloat(price)==false){
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Product price must be of format e.cc","Product Price Format Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else if(ErrorChecker.isOnlyLetters(name)==false){
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Product name must only contain letters and '-'","Product Name Format Error",JOptionPane.ERROR_MESSAGE);
+				}
+				else{
+				model.getShop().getSuppliers().get(current).getProducts().get(index).setName(name);
+				model.getShop().getSuppliers().get(current).getProducts().get(index).setSupplierPrice(Double.parseDouble(price));
+				Object data[][] = fillProductsForSupplier(current);
+
+				view.getMainmenu().getSupplierTab().refreshProducts(data);
+				}
 			}
 		};
 		
@@ -707,11 +748,13 @@ public class Controller {
 		view.getMainmenu().getSupplierTab().getAddProduct()
 				.addActionListener(addProduct);
 		view.getMainmenu().getSupplierTab().getExitCreatePanelButton()
-				.addActionListener(exitCreatePanel);		
+				.addActionListener(exitCreatePanel);	
 		
-		/*view.getMainmenu().getStockTab().getStockControlButton().addActionListener(lowStock);
-		view.getMainmenu().getStockTab().getShowLowStock().addActionListener(showLowStock);
-		view.getMainmenu().getStockTab().getBackToStock().addActionListener(stockBack);*/
+		view.getMainmenu().getSupplierTab().getDeleteProduct().addActionListener(deleteProduct);
+		view.getMainmenu().getSupplierTab().getEditProduct().addActionListener(editProduct);
+		view.getMainmenu().getSupplierTab().getExitEditProductPanel().addActionListener(exitEditProduct);
+		view.getMainmenu().getSupplierTab().getEditProductBtn().addActionListener(editThisProduct);
+		
 		view.getWelcomeScreen().getswitchToLoginPanelButton().addActionListener(switchToLogin);
 		view.getWelcomeScreen().getExit().addActionListener(exit);
 		view.getLogin().setDelayTimer(loginDelay);
@@ -745,8 +788,8 @@ public class Controller {
 
 	public void viewProducts() {
 
-		if (view.getMainmenu().getSupplierTab().getViewSupplierTabel()
-				.getSelectedRow() > -1) {
+		if ((view.getMainmenu().getSupplierTab().getViewSupplierTabel()
+				.getSelectedRow() > -1) && (view.getMainmenu().getSupplierTab().getSupplier()==true)) {
 			view.getMainmenu()
 					.getSupplierTab()
 					.setCurrent(
@@ -766,10 +809,6 @@ public class Controller {
 
 	}
 
-	/**
-	 * @param args
-	 * @throws IOException
-	 */
 	public static void main(String[] args) throws IOException {
 
 		new Controller();

@@ -28,11 +28,10 @@ import model.Stock;
 public class SaleFormPanel extends JPanel {
 
 	private JLabel customerLabel, maxLabel;
+	private JPanel errorPanel = new JPanel();
 	private JComboBox customerBox;
 	private JButton enterButton;
 	private JButton saleButton;
-	private Sale saleToEdit;
-	private ArrayList<Stock> saleStockListToEdit = new ArrayList<Stock>();
 	private JButton editButton;
 	private SaleMainPanel mainPanel;
 	private SaleFormListener formListener;
@@ -41,7 +40,7 @@ public class SaleFormPanel extends JPanel {
 	private ArrayList<Stock> stocks;
 	private String stockFile;
 	private ArrayList<Stock> saleStockList = new ArrayList<Stock>();
-	private ArrayList<Stock> availableStock = new ArrayList<Stock>();
+	private ArrayList<Stock> availableStock;
 	private SaleFormEvent event;
 	Customer thisCustomer;
 	int size;
@@ -60,6 +59,7 @@ public class SaleFormPanel extends JPanel {
 		this.stockFile = stockFile;
 		this.availableStock = stocks;
 	}
+
 
 	public void createCustomerPanel() throws IOException {
 
@@ -148,9 +148,8 @@ public class SaleFormPanel extends JPanel {
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
 		saleButton = new JButton("Process Sale");
-		// local arraylist for stock to be created by checkLevel() giving
-		// product with total quantity
-		// will be used in place of stocks
+		// availableStock is created by checkLevel() giving total quantity of each product
+		// used to populate the panel JLabels
 		size = availableStock.size();
 		System.out.println("The size of availableStock:" + size);
 		maxLabel = new JLabel("Quantity in Stock");
@@ -211,42 +210,40 @@ public class SaleFormPanel extends JPanel {
 				ArrayList<String> stockNames = new ArrayList<String>();
 				// Get ordered stock and associated quantities
 				for (int i = 0; i < size; i++) {
-					if (!quantityField[i].getText().equals("")
-							&& (Integer.parseInt(quantityField[i].getText()) <= Integer
-									.parseInt(maxAvailable[i].getText()))) {
-						try {
-							quantities.add(Integer.valueOf(quantityField[i]
+					if (!quantityField[i].getText().equals("")){
+						try{
+							if (Integer.parseInt(quantityField[i].getText()) <= Integer
+									.parseInt(maxAvailable[i].getText())) {
+									
+									quantities.add(Integer.valueOf(quantityField[i]
 									.getText()));
-							stockNames.add(stockName[i].getText());
-						} catch (NumberFormatException nfEx) {
-							System.out.println("Not an integer");
-						}
-					} else if (!quantityField[i].getText().equals("")) {
-
-						int option = JOptionPane.showConfirmDialog(
-								SaleFormPanel.this, "Exceeded max Available",
-								"Out of Stock", JOptionPane.OK_OPTION);
-						if (option == JOptionPane.OK_OPTION) {
-							try {
-								removeAll();
-								createSaleSelectionPanel(event);
-								//return prevents an empty sale being completed
-								return;
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
+									stockNames.add(stockName[i].getText());
+									}else {
+										JOptionPane.showMessageDialog(errorPanel,"Exceeded max Available",
+										"Out of Stock", JOptionPane.ERROR_MESSAGE);
+										removeAll();
+										try {
+											createSaleSelectionPanel(event);
+										} catch (IOException e1) {
+											e1.printStackTrace();
+										}
+										//return prevents an empty sale being completed
+										return;	
+										}
+						} catch (NumberFormatException nfEx){
+							JOptionPane.showMessageDialog(errorPanel,"Please enter whole number", "ERROR!!", JOptionPane.ERROR_MESSAGE);
+							return;
 						}
 					}
+					
 				}
+
 				// clear stock list from previous runs
 				saleStockList.clear();
 				// Loop through ordered stock names and link to actual product
 				int i = 0;
 				for (String name : stockNames) {
 					for (Stock s : availableStock) {
-						// stocks will be replaced by local arraylist derived
-						// using checkLevels()
 						if (s.getName().equals(name)) {
 							Stock saleStockItem = new Stock(s.getProduct(),
 									quantities.get(i));
@@ -255,7 +252,6 @@ public class SaleFormPanel extends JPanel {
 					}
 					i++;
 				}
-				int sizeSaleStockList = saleStockList.size();
 				SaleFormEvent saleEvent = new SaleFormEvent(this, thisCustomer,
 						saleStockList);
 				if (formListener != null) {
@@ -273,159 +269,10 @@ public class SaleFormPanel extends JPanel {
 
 	}
 
-	public void editSaleSelectionPanel() {
-
-		this.removeAll();
-
-		Dimension dim = getPreferredSize();
-		dim.width = 450;
-		setPreferredSize(dim);
-		Border innerBorder = (BorderFactory.createTitledBorder("Edit Amount"));
-		Border outerBorder = (BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-
-		editButton = new JButton("Finish");
-
-		size = availableStock.size();
-		maxLabel = new JLabel("Quantity in Stock");
-		stockName = new JLabel[size];
-		customerPrice = new JLabel[size];
-		quantityField = new JTextField[size];
-		maxAvailable = new JLabel[size];
-
-		setLayout(new GridBagLayout());
-		GridBagConstraints gc = new GridBagConstraints();
-
-		gc.gridy = 0;
-		gc.gridx = 2;
-		gc.weightx = 1;
-		gc.weighty = 0.1;
-		gc.anchor = GridBagConstraints.LINE_START;
-		add(maxLabel, gc);
-		// i set to 1, to fill 2nd row, therefore arrays have i-1, so they start
-		// at zero
-
-		for (int i = 1; i < size + 1; i++) {
-			stockName[i - 1] = new JLabel(availableStock.get(i - 1).getName());
-			customerPrice[i - 1] = new JLabel(": "
-					+ "\u20ac"
-					+ Double.toString(availableStock.get(i - 1)
-							.getCustomerPrice()));
-			maxAvailable[i - 1] = new JLabel(Integer.toString(availableStock
-					.get(i - 1).getQuantity()));
-			quantityField[i - 1] = new JTextField(3);
-
-			int j = 0;
-			for (Stock stock : saleStockListToEdit) {
-
-				if (availableStock.get(i - 1).getName().equals(stock.getName())) {
-					quantityField[i - 1].setText(String
-							.valueOf(saleStockListToEdit.get(j).getQuantity()));
-					break;
-				}
-				j++;
-			}
-
-			gc.gridy = i;
-			gc.weightx = 1;
-			gc.weighty = 0.1;
-
-			gc.gridx = 0;
-			gc.fill = GridBagConstraints.NONE;
-			gc.anchor = GridBagConstraints.LINE_END;
-			gc.insets = new Insets(0, 0, 0, 5);
-			add(stockName[i - 1], gc);
-
-			gc.gridx = 1;
-			gc.insets = new Insets(0, 0, 0, 0);
-			gc.anchor = GridBagConstraints.LINE_START;
-			add(customerPrice[i - 1], gc);
-
-			gc.gridx = 2;
-			gc.insets = new Insets(0, 0, 0, 0);
-			gc.anchor = GridBagConstraints.LINE_START;
-			add(maxAvailable[i - 1], gc);
-
-			gc.gridx = 3;
-			gc.insets = new Insets(0, 0, 0, 0);
-			gc.anchor = GridBagConstraints.LINE_START;
-			add(quantityField[i - 1], gc);
-		}
-
-		editButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)  {
-				ArrayList<Integer> quantities = new ArrayList<Integer>();
-				ArrayList<String> stockNames = new ArrayList<String>();
-				// Get ordered stock and associated quantities
-				for (int i = 0; i < size; i++) {
-					if (!quantityField[i].getText().equals("")
-							&& (Integer.parseInt(quantityField[i].getText()) <= Integer
-									.parseInt(maxAvailable[i].getText()))) {
-						try {
-							quantities.add(Integer.valueOf(quantityField[i]
-									.getText()));
-							stockNames.add(stockName[i].getText());
-						} catch (NumberFormatException nfEx) {
-							System.out.println("Not an integer");
-						}
-					} else if (!quantityField[i].getText().equals("")) {
-
-						int option = JOptionPane.showConfirmDialog(
-								SaleFormPanel.this, "Exceeded max Available",
-								"Out of Stock", JOptionPane.OK_OPTION);
-						if (option == JOptionPane.OK_OPTION) {
-							removeAll();
-							editSaleSelectionPanel();
-							//return prevents an empty sale being completed
-							return;
-						}
-					}
-				}
-				// clear stock list from previous runs
-				saleStockListToEdit.clear();
-				// Loop through ordered stock names and link to actual product
-				int i = 0;
-				for (String name : stockNames) {
-					for (Stock s : availableStock) {
-						// stocks will be replaced by local arraylist derived
-						// using checkLevels()
-						if (s.getName().equals(name)) {
-							Stock saleStockItem = new Stock(s.getProduct(),
-									quantities.get(i));
-							saleStockListToEdit.add(saleStockItem);
-						}
-					}
-					i++;
-				}
-
-				SaleFormEvent saleEvent = new SaleFormEvent(this, saleToEdit
-						.getCustomer(), saleStockListToEdit);
-				if (formListener != null) {
-					formListener.editSaleOccurred(saleEvent, saleToEdit.getId());
-				}
-				setVisible(false);
-			}
-
-		});
-		gc.gridy++;
-		gc.gridx = 1;
-		add(editButton, gc);
-		this.validate();
-		this.repaint();
-
-	}
-
 	public void setFormListener(SaleFormListener listener) {
 		this.formListener = listener;
 	}
 
-	public void setSaleToEdit(Sale saleToEdit) {
-		this.saleToEdit = saleToEdit;
-	}
-
-	public void setSaleStockListToEdit(ArrayList<Stock> saleStockListToEdit) {
-		this.saleStockListToEdit = saleStockListToEdit;
-	}
 
 	public void setEvent(SaleFormEvent event) {
 		this.event = event;

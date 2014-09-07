@@ -45,16 +45,6 @@ public class SaleMainPanel extends JPanel {
 				tablePanel.refresh();
 			}
 
-			@Override
-			public void rowEdited(int row) {
-				formPanel.setVisible(true);
-				formPanel.setSaleToEdit(model.getShop().getSales().get(row));
-				formPanel.setSaleStockListToEdit(model.getShop().getSales()
-						.get(row).getStocks());
-				formPanel.editSaleSelectionPanel();
-				tablePanel.refresh();
-			}
-
 			public void listItems(int row) {
 				ArrayList<Stock> itemsBought = model.getShop().getSales()
 						.get(row).getStocks();
@@ -79,6 +69,7 @@ public class SaleMainPanel extends JPanel {
 
 				model.getShop().createSale(e);
 				tablePanel.refresh();
+				textPanel.setHeader();
 				ArrayList<Stock> stockItems = e.getStockList();
 				for (int i = 0; i < stockItems.size(); i++) {
 					textPanel.appendText(stockItems.get(i).getName()
@@ -87,22 +78,9 @@ public class SaleMainPanel extends JPanel {
 				}
 				textPanel.appendText("\n------Sale Complete-------\n");
 				textPanel.appendText("\n");
-			}
+				
 
-			@Override
-			public void editSaleOccurred(SaleFormEvent e, int id) {
 
-				model.getShop().editSale(e, id);
-				tablePanel.refresh();
-				ArrayList<Stock> stockItems = e.getStockList();
-				for (int i = 0; i < stockItems.size(); i++) {
-					textPanel.appendText(stockItems.get(i).getName()
-							+ "  Quantity: " + stockItems.get(i).getQuantity()
-							+ "\n");
-				}
-				textPanel.appendText("\n------Sale Edited-------\n");
-				textPanel.appendText("\n");
-				tablePanel.setVisible(false);
 			}
 		});
 	}
@@ -118,4 +96,6 @@ public class SaleMainPanel extends JPanel {
 	public JPanel getPanel() {
 		return mainPanel;
 	}
+	
+
 }

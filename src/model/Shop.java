@@ -35,6 +35,8 @@ public class Shop {
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private ArrayList<Sale> blankSalesTable = new ArrayList<Sale>();
 	private ArrayList<Product> totalProducts = new ArrayList<Product>();
+	
+	private Model model;
 
 	private String username, password, choice, customerName, customerNumber,
 			customerAddress, editUserPassword, editUserUsername, editedStockName;
@@ -322,7 +324,7 @@ public class Shop {
 			}
 		}
 	}
-
+	
 	public ArrayList<Stock> getAvailableStock() {
 		return availableStock;
 	}
@@ -552,7 +554,7 @@ public class Shop {
 	public ArrayList<Stock> getStock() {
 		return stocks;
 	}
-
+	
 	public ArrayList<Product> getAllSupplierProducts(){
 		ArrayList<Product> allProducts = new ArrayList<Product>();
 		for(Supplier supplier: suppliers){
@@ -562,6 +564,7 @@ public class Shop {
 		}
 		return allProducts;
 	}
+	
 	
 	public ArrayList<Stock> getUniqueStockList() {
 		ArrayList<Stock> uniqueStockList = new ArrayList<Stock>();
@@ -773,43 +776,63 @@ public class Shop {
 		System.out.println("Edit address sent");
 	}
 
-	public static boolean processSale(Stock sale, ArrayList<Stock> stockList,
-			int stockIndex) {
+	public boolean processSale(Stock saleItem,ArrayList<Stock> stockList, int quantity, int stockIndex) {
 		boolean inStock = false;
-		for (int i = stockIndex; i < stockList.size(); i++) {
-			if (sale.getProduct().getName().equals(stockList.get(i).getName())) {
-				if (stockList.get(i).getQuantity() > sale.getQuantity()) {
-					stockList.get(i)
-							.setQuantity(
-									stockList.get(i).getQuantity()
-											- sale.getQuantity());
 
-					inStock = true;
-					i = stockList.size();
-				} else if (stockList.get(i).getQuantity() == sale.getQuantity()) {
-					stockList.remove(stockList.get(i));
-					inStock = true;
-					i = stockList.size();
+		while (stockIndex<stockList.size())
+		{	
+			for (int i = stockIndex; i < stockList.size(); i++) 
+			{
+				String name = saleItem.getName();
+				
+				if (name.equals(stockList.get(i).getName()) &&quantity>0) {
+					
+					if (stockList.get(i).getQuantity() > quantity) 
+					{
+						stockList.get(i).setQuantity(stockList.get(i).getQuantity() - quantity);
+						inStock = true;
+						i = stockList.size();
+						//System.out.println("greater: "+ name + quantity);
+					} 
+					else if (stockList.get(i).getQuantity() == quantity) 
+					{
+						stockList.remove(stockList.get(i));
+						inStock = true;
+						i = stockList.size();
+					//	System.out.println("equal: "+ name + quantity);
+	
+					} 
+					else if (stockList.get(i).getQuantity() < quantity)
+					{
+						quantity -= stockList.get(i).getQuantity();
+						//System.out.println("lesser: "+ name + quantity);
+						//System.out.println("Num "+i);
+						inStock=processSale(saleItem, stockList,quantity, i+1);
+						if (inStock)
+						{
+							stockList.remove(stockList.get(i));
+						}
+						//System.out.println("Num "+i);
 
-				} else {
-					sale.setQuantity(sale.getQuantity()
-							- stockList.get(i).getQuantity());
-					stockList.remove(stockList.get(i));
-					processSale(sale, stockList, i);
+						i=stockList.size();
+	
+					}
 				}
+	
 			}
-
+			stockIndex=stockList.size();
 		}
 		return inStock;
 	}
 
-	public static ArrayList<Stock> checkStock(ArrayList<Stock> saleList,
+
+	public ArrayList<Stock> checkStock(ArrayList<Stock> saleList,
 			ArrayList<Stock> stockList) {
 
 		for (Stock temp : saleList) {
-			if (!processSale(temp, stockList, 0)) {
-				System.out.println("Out of Stock Item: "
-						+ temp.getProduct().getName());
+			if (!processSale(temp, stockList, temp.getQuantity(), 0)) {
+				//System.out.println("Out of Stock Item: "
+				//		+ temp.getProduct().getName());
 
 				if (saleList.get(saleList.size() - 1) == temp) {
 					saleList.remove(temp);
@@ -823,41 +846,51 @@ public class Shop {
 	}
 
 	public void createSale(SaleFormEvent e) {
-
+		/*try 
+		{
+			model = new Model();
+		} 
+		catch (IOException e1) 
+		{
+			e1.printStackTrace();
+		}*/
 		ArrayList<Stock> inStockList = checkStock(e.getStockList(), stocks);
 
 		Sale sale = new Sale(inStockList, e.getCustomer());
 		sales.add(sale);
-
+		
 		writeStock(stockFile);
 
 		int newCount = 0;
 		for (Sale s : sales) {
 			s.setId(newCount++);
 		}
+		
+		System.out.println("START PRINTING SALES");
+		for (Sale temp : sales) {
+			System.out.println(temp.getId());
+			for (Stock stock : temp.getStocks())
+			System.out.println(stock.getName() + ": " + stock.getQuantity());
+		}
+		
 		writeSale(saleFile);
 		loadAvailableStock();
 	}
 
 	public void removeSale(int index) {
+		for (Stock stock: sales.get(index).getStocks()) {
+			stocks.add(stock);
+		}
 		sales.remove(index);
 		int newCount = 0;
 		for (Sale s : sales) {
 			s.setId(newCount++);
 		}
+		writeStock(stockFile);
 		writeSale(saleFile);
+		loadAvailableStock();
 	}
 
-	public void editSale(SaleFormEvent e, int id) {
-
-		for (Sale s : sales) {
-			if (s.getId() == id) {
-				s.setStocks(e.getStockList());
-				s.calculatePrice();
-			}
-		}
-		writeSale(saleFile);
-	}
 
 	public void createOrder(OrderFormEvent e) {
 		ArrayList<Product> products = e.getProducts();
