@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class MainMenuGUI {
 
@@ -22,7 +24,7 @@ public class MainMenuGUI {
 	private UserMainPanel userTab;
 	private OrderMainPanel orderTab;
 	private SupplierGUI supplierTab;
-	private StockGUI stockTab;
+	private StockMainPanel stockTab;
 	private SaleMainPanel saleTab;
 	private FinancialMainPanel profitAndLossTab;
 	protected boolean adminLogged = false;
@@ -51,7 +53,7 @@ public class MainMenuGUI {
 		userTab = new UserMainPanel();
 		supplierTab = new SupplierGUI();
 		orderTab = new OrderMainPanel();
-		stockTab = new StockGUI();
+		stockTab = new StockMainPanel();
 		saleTab = new SaleMainPanel();
 		profitAndLossTab = new FinancialMainPanel();
 
@@ -78,6 +80,15 @@ public class MainMenuGUI {
 		c.weighty = 0.1;
 		c.anchor = GridBagConstraints.LAST_LINE_END;
 		framePanel.add(logoutPanel, c);
+		
+		 tabbedPane.addChangeListener(new ChangeListener() {
+		        public void stateChanged(ChangeEvent e) {
+		        	if (tabbedPane.getSelectedIndex()==4)
+		        	{
+		        		stockTab.getStockToolbar().getListener().viewAll();
+		        	}
+		        }
+		    });	
 
 	}
 
@@ -142,14 +153,6 @@ public class MainMenuGUI {
 		this.supplierTab = supplierTab;
 	}
 
-	public StockGUI getStockTab() {
-		return stockTab;
-	}
-
-	public void setStockTab(StockGUI stockTab) {
-		this.stockTab = stockTab;
-	}
-
 	private ImageIcon createIcon(String path) {
 		URL url = getClass().getResource(path);
 
@@ -165,8 +168,7 @@ public class MainMenuGUI {
 
 	public void addTabs(boolean admin) {
 
-		adminLogged = admin;
-
+		adminLogged = admin;		
 		tabbedPane.removeAll();
 		if (admin) {
 			tabbedPane.addTab("Customers", customerTab.getPanel());
@@ -220,5 +222,11 @@ public class MainMenuGUI {
 		this.adminLogged = adminLogged;
 	}
 
+	public StockMainPanel getStockTab() {
+		return stockTab;
+	}
 
+	public void setStockTab(StockMainPanel stockTab) {
+		this.stockTab = stockTab;
+	}
 }

@@ -33,8 +33,8 @@ public class OrderToolbar extends JPanel implements ActionListener {
 		add(previousButton);
 	}
 
-	public void setFormPanel(OrderFormPanel mainPanel) {
-		this.formPanel = mainPanel;
+	public void setFormPanel(OrderFormPanel formPanel) {
+		this.formPanel = formPanel;
 	}
 
 	public void setOrderToolbarListener(OrderToolbarListener listener) {

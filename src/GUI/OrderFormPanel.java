@@ -13,6 +13,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -23,6 +24,7 @@ import model.Supplier;
 
 public class OrderFormPanel extends JPanel {
 
+	private JPanel errorPanel;
 	private JLabel supplierLabel;
 	private JComboBox supplierCombo;
 	private JButton selectButton;
@@ -127,8 +129,7 @@ public class OrderFormPanel extends JPanel {
 		Dimension dim = getPreferredSize();
 		dim.width = 300;
 		setPreferredSize(dim);
-		Border innerBorder = BorderFactory
-				.createTitledBorder("Select Products");
+		Border innerBorder = BorderFactory.createTitledBorder("Select Products");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
@@ -145,11 +146,7 @@ public class OrderFormPanel extends JPanel {
 		// Dynamically create labels and text fields for products
 		for (int i = 0; i < size; i++) {
 			names[i] = new JLabel(products.get(i).getName());
-			prices[i] = new JLabel(
-					": \u20ac"
-							+ Double.toString(products.get(i)
-									.getSupplierPrice() * 100.00 / 100.00)
-							+ " each");
+			prices[i] = new JLabel(": \u20ac" + Double.toString(products.get(i).getSupplierPrice() * 100.00 / 100.00) + " each");
 			fields[i] = new JTextField(3);
 			gc.gridy = i;
 			gc.weightx = 1;
@@ -184,8 +181,10 @@ public class OrderFormPanel extends JPanel {
 							quantities.add(Integer.valueOf(fields[i].getText()));
 							productNames.add(names[i].getText());
 						} catch (NumberFormatException nfEx) {
-							System.out.println("Not an integer");
+							JOptionPane.showMessageDialog(errorPanel,"Please enter correct ammount!", "ERROR!!", JOptionPane.ERROR_MESSAGE);		
+							return;
 						}
+						
 					}
 				}
 				// Loop through ordered product names and link to actual product
@@ -299,7 +298,7 @@ public class OrderFormPanel extends JPanel {
 							quantities.add(Integer.valueOf(fields[i].getText()));
 							productNames.add(names[i].getText());
 						} catch (NumberFormatException nfEx) {
-							System.out.println("Not an integer");
+							
 						}
 					}
 				}
@@ -314,11 +313,9 @@ public class OrderFormPanel extends JPanel {
 					}
 					i++;
 				}
-				OrderFormEvent orderEvent = new OrderFormEvent(this,
-						editedOrder.getSupplier(), editedProducts);
+				OrderFormEvent orderEvent = new OrderFormEvent(this, editedOrder.getSupplier(), editedProducts);
 				if (formListener != null) {
-					formListener.editOrderOccurred(orderEvent,
-							editedOrder.getId());
+					formListener.editOrderOccurred(orderEvent, editedOrder.getId());
 				}
 				setVisible(false);
 			}

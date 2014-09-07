@@ -1,18 +1,14 @@
 package model;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import GUI.LoginGUI;
 import GUI.MainMenuGUI;
@@ -20,8 +16,8 @@ import GUI.UserFormPanel;
 import GUI.WelcomeScreenGUI;
 
 public class View extends JFrame {
-
 	JPanel currentPanel;
+	JPanel errorPanel = new JPanel();
 	GridBagConstraints current;
 	Container thisContainer;
 	JLayeredPane layeredPanel;
@@ -68,31 +64,10 @@ public class View extends JFrame {
 		login.getPanel().setVisible(false);
 		login.getSubmit().setEnabled(false);
 		
-		/*button.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				//testPanel.setVisible(false);
-				currentPanel.setVisible(true);
-				
-				
-					new Timer(1, new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							testPanel.setLocation(testPanel.getX() - 5, 0);
-							if (testPanel.getX() + testPanel.getWidth() == 0) {
-								((Timer) e.getSource()).stop();
-								System.out.println("Timer stopped");
-							}
-						}
-					}).start();
-				
-			}
-		});*/
-		//thisContainer.add(login.getPanel());
 		thisContainer.add(layeredPanel);
 		pack();
 		setVisible(true);
-		
-		//login.startTimer();
-		
+
 	}
 
 	public JPanel getCurrentPanel() {
@@ -147,6 +122,7 @@ public class View extends JFrame {
 		
 		currentPanel.validate();
 		currentPanel.repaint();
+		
 	}
 
 	public WelcomeScreenGUI getWelcomeScreen() {
@@ -162,6 +138,10 @@ public class View extends JFrame {
 		login.getSubmit().setEnabled(false);
 		welcomeScreen.getWelcomePanel().setVisible(true);
 		
+	}
+
+	public void getErrorMessage() {
+		JOptionPane.showMessageDialog(errorPanel,"Incorrect Password", "ERROR!!", JOptionPane.ERROR_MESSAGE);		
 	}
 
 }

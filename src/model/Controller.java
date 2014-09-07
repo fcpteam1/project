@@ -1,26 +1,26 @@
 package model;
 
+import java.awt.JobAttributes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+
 import model.ErrorChecker;
 
 public class Controller {
 
 	private View view;
 	private Model model;
-	private ActionListener loginListener, logoutListener, createUserListener,
-			backToUserMenu, deleteUserListener;
+	private ActionListener loginListener, logoutListener;
 	private ActionListener viewSupplier, viewProducts, nextSupplier,
 			prevSupplier, searchSupplier;
-	private ActionListener btnSubmitNewCustomer, btnViewCustomers,
-			btnAddCustomer;
 
 	private MouseAdapter supplierTableListener;
 	private ActionListener menuViewSupplier, menuEditSupplier, menuAddProduct,
@@ -31,14 +31,14 @@ public class Controller {
 			addProduct;
 	private ActionListener createSupButton, deleteSupButton, editSupButton,
 			addSupButton;
+
 	private ActionListener createSupplier;
 
 	private ActionListener stockBack, weekPredict, monthPredict, predict;
+	private ActionListener lowStock,showLowStock,showLowWeek,showLowMonth;
 	private ActionListener switchToLogin,exit,loginDelay;
 
 	public Controller() throws IOException {
-		// TODO Auto-generated constructor stub
-
 		view = new View();
 		model = new Model();
 		addListeners();
@@ -76,6 +76,7 @@ public class Controller {
 					}
 				}
 				if (correctUser) {
+					
 					view.getMainmenu().addTabs(admin);
 					view.changeToMaineMenu();
 					view.getLogin().settStart(System.currentTimeMillis());
@@ -83,7 +84,7 @@ public class Controller {
 					view.getLogin().stopTimer();
 					
 				} else
-					System.out.println("Not a valid user");
+					view.getErrorMessage();
 
 				view.getLogin().getLoginUsername().setText("");
 				view.getLogin().getLoginPassword().setText("");
@@ -391,7 +392,7 @@ public class Controller {
 					
 				}
 				else{
-					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Phone number can only contain numbers and ' - '");
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Phone number can only contain numbers and ' - '","Phone Number Format Error", JOptionPane.ERROR_MESSAGE);
 				}
 			
 			}
@@ -424,10 +425,10 @@ public class Controller {
 				
 				
 				if(ErrorChecker.isOnlyLetters(name)==false){
-					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Product name must only conatain letters");
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Product name must only conatain letters","Product Name Format Error",JOptionPane.ERROR_MESSAGE);
 				}
 				else if(ErrorChecker.isFloat(price)==false){
-					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Supplier Price must be of the format e.cc.");
+					JOptionPane.showMessageDialog(ErrorChecker.getFrame(), "Supplier Price must be of the format e.cc.","Supplier Price format Exception",JOptionPane.ERROR_MESSAGE);
 					
 				}
 				else{
@@ -459,6 +460,7 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				view.getMainmenu().getSupplierTab().showCreateSupplierPanel();
 			}
+			
 		};
 
 		deleteSupButton = new ActionListener() {
@@ -481,6 +483,7 @@ public class Controller {
 					if (n == JOptionPane.YES_OPTION) {
 						model.getShop().getSuppliers().remove(index);
 					}
+					viewSuppliers();
 				}
 
 			}
@@ -538,73 +541,10 @@ public class Controller {
 				supplier.setAddress(view.getMainmenu().getSupplierTab()
 						.getCreateAddress().getText());
 				model.getShop().getSuppliers().add(supplier);
+				viewSuppliers();
 			}
 		};
 
-		predict = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				view.getMainmenu().getStockTab().switchToStockPredict();
-			}
-		};
-
-		weekPredict = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object data[][];
-				int count = 0;
-				int[] result = new int[5];
-				data = new Object[model.getShop().getStock().size()][6];
-				for (Stock stock : model.getShop().getStock()) {
-					result = model
-							.getShop()
-							.getPredictor()
-							.stockPredictor(model.getShop().getSales(), stock,
-									true);
-					data[count][0] = stock.getName();
-					data[count][1] = result[0];
-					data[count][2] = result[1];
-					data[count][3] = result[2];
-					data[count][4] = result[3];
-					data[count][5] = result[4];
-					System.out.println(count);
-					count++;
-				}
-				view.getMainmenu().getStockTab().setPredictData(data);
-				view.getMainmenu().getStockTab().fillWeekPrediction(data);
-			}
-		};
-
-		monthPredict = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object data[][];
-				int count = 0;
-				int[] result = new int[5];
-				data = new Object[model.getShop().getStock().size()][6];
-				for (Stock stock : model.getShop().getStock()) {
-					result = model
-							.getShop()
-							.getPredictor()
-							.stockPredictor(model.getShop().getSales(), stock,
-									false);
-					data[count][0] = stock.getName();
-					data[count][1] = result[0];
-					data[count][2] = result[1];
-					data[count][3] = result[2];
-					data[count][4] = result[3];
-					data[count][5] = result[4];
-					count++;
-				}
-
-				view.getMainmenu().getStockTab().setPredictData(data);
-				view.getMainmenu().getStockTab().fillMonthPrediction(data);
-			}
-		};
-
-		stockBack = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				view.getMainmenu().getStockTab().switchToMain();
-			}
-		};
-		
 		switchToLogin=new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				
@@ -651,6 +591,16 @@ public class Controller {
 					view.getLogin().getPanel().setVisible(false);
 					
 				}
+				
+			}
+		};
+		
+
+		showLowWeek=new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				ArrayList<Stock> lowWeekStock =new ArrayList<Stock>();
+				
 				
 			}
 		};
@@ -730,17 +680,7 @@ public class Controller {
 		view.getMainmenu().getSupplierTab().getAddProduct()
 				.addActionListener(addProduct);
 		view.getMainmenu().getSupplierTab().getExitCreatePanelButton()
-				.addActionListener(exitCreatePanel);
-
-		view.getMainmenu().getStockTab().getBackTo()
-				.addActionListener(stockBack);
-		view.getMainmenu().getStockTab().getPredictNextWeek()
-				.addActionListener(weekPredict);
-		view.getMainmenu().getStockTab().getPredictNextMonth()
-				.addActionListener(monthPredict);
-		view.getMainmenu().getStockTab().getPredictStock()
-				.addActionListener(predict);
-		
+				.addActionListener(exitCreatePanel);		
 		
 		view.getWelcomeScreen().getswitchToLoginPanelButton().addActionListener(switchToLogin);
 		view.getWelcomeScreen().getExit().addActionListener(exit);
@@ -789,17 +729,13 @@ public class Controller {
 		view.getMainmenu().getSupplierTab().getSupplierText()
 				.setText(model.getShop().getSuppliers().get(current).getName());
 		view.getMainmenu().getSupplierTab().setProductData(data);
-		// view.getMainmenu().getSupplierTab().refreshProducts(data);
+		view.getMainmenu().getSupplierTab().refreshProducts(data);
 		view.getMainmenu().getSupplierTab().focusViewProducts();
 		view.getMainmenu().getSupplierTab().getViewSupplierTabel()
 				.addMouseListener(supplierTableListener);
 
 	}
 
-	/**
-	 * @param args
-	 * @throws IOException
-	 */
 	public static void main(String[] args) throws IOException {
 
 		new Controller();

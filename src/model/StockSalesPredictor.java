@@ -317,6 +317,7 @@ public class StockSalesPredictor {
 		if (daysGone == 0)
 			daysGone = 7;
 
+		double realWeek=thisWeekSales;
 		thisWeekSales = (thisWeekSales / daysGone) * 7;
 
 		nextWeekSales = ((((thisWeekSales / thisWeekLastYearSales) * 2) + (lastWeekSales / lastWeekLastYearSales)) / 3)
@@ -326,6 +327,7 @@ public class StockSalesPredictor {
 					+ (twoWeekSales * 2) + (threeWeekSales)) / 10;
 		}
 
+		double realMonth=thisMonthSales;
 		thisMonthSales = thisMonthSales / calendar.get(Calendar.DATE)
 				* calendar.getMaximum(calendar.get(Calendar.MONTH));
 
@@ -344,17 +346,17 @@ public class StockSalesPredictor {
 		double result[] = new double[5];
 
 		if (week == true) {
-			result[0] = (int) threeWeekSales;
-			result[1] = (int) twoWeekSales;
-			result[2] = (int) lastWeekSales;
-			result[3] = (int) thisWeekSales;
-			result[4] = (int) nextWeekSales;
+			result[0] =  threeWeekSales;
+			result[1] =  twoWeekSales;
+			result[2] =  lastWeekSales;
+			result[3] =  realWeek;
+			result[4] =  nextWeekSales;
 		} else {
-			result[0] = (int) threeMonthSales;
-			result[1] = (int) twoMonthSales;
-			result[2] = (int) lastMonthSales;
-			result[3] = (int) thisMonthSales;
-			result[4] = (int) nextMonthSales;
+			result[0] =  threeMonthSales;
+			result[1] =  twoMonthSales;
+			result[2] =  lastMonthSales;
+			result[3] =  realMonth;
+			result[4] =  nextMonthSales;
 		}
 
 		return result;
@@ -494,7 +496,7 @@ public class StockSalesPredictor {
 		nextMonthLastYear.add(Calendar.MONTH, 1);
 
 		// System.out.println("This week" + calendar.getTime());
-		System.out.println("This week begiing " + weekBeginning.getTime());
+		/*System.out.println("This week begiing " + weekBeginning.getTime());
 		System.out.println("This week ending " + weekEnding.getTime());
 		// System.out.println("Last week" + lastWeek.getTime());
 		System.out.println("last week begiing " + lastWeekBeginning.getTime());
@@ -526,7 +528,7 @@ public class StockSalesPredictor {
 		System.out.println("next week last year ending "
 				+ nextWeekLastYearEnding.getTime());
 		System.out
-				.println("next month last year" + nextMonthLastYear.getTime());
+				.println("next month last year" + nextMonthLastYear.getTime());*/
 
 		for (Sale sale : sales) {
 
@@ -687,47 +689,69 @@ public class StockSalesPredictor {
 
 		int daysGone = calendar.get(Calendar.DAY_OF_WEEK);
 		daysGone -= 1;
+		int realThisWeeksSales=(int) thisWeekStockSales;
 		thisWeekStockSales = (thisWeekStockSales / daysGone) * 7;
 
+		/*if(nextWeekLastYearStockSales!=0){
 		nextWeekStockSales = ((((thisWeekStockSales / thisWeekLastYearStockSales) * 2) + (lastWeekStockSales / lastWeekLastYearStockSales)) / 3)
 				* nextWeekLastYearStockSales;
-		if (nextWeekStockSales == 0) {
+			
+		}
+		else{
+			nextWeekStockSales = ((((thisWeekStockSales / thisWeekLastYearStockSales) * 2) + (lastWeekStockSales / lastWeekLastYearStockSales)) / 3) * thisWeekStockSales;
+			System.out.println(stock.getName()+stock.getName()+nextWeekStockSales);
+		}*/
+		
+		
+		if ((nextWeekStockSales == 0) || (nextWeekStockSales==Double.POSITIVE_INFINITY) || (nextWeekStockSales==Double.NaN)) {
 			nextWeekStockSales = ((thisWeekStockSales * 4)
 					+ (lastWeekStockSales * 3) + (twoWeekStockSales * 2) + (threeWeekStockSales)) / 10;
+			System.out.println(stock.getName() + nextWeekStockSales);
 		}
-
+		
+		System.out.println(stock.getName());
+		
+		int realThisMonthStockSales=(int) thisMonthStockSales;
 		thisMonthStockSales = thisMonthStockSales / calendar.get(Calendar.DATE)
 				* calendar.getMaximum(calendar.get(Calendar.MONTH));
 
+/*		if(nextMonthLastYearStockSales!=0){
 		nextMonthStockSales = ((((thisMonthStockSales / thisMonthLastYearStockSales) * 2) + (lastMonthStockSales / lastMonthLastYearStockSales)) / 3)
 				* nextMonthLastYearStockSales;
-
-		if (nextMonthStockSales == 0) {
+		}
+		else{
+			nextMonthStockSales = ((((thisMonthStockSales / thisMonthLastYearStockSales) * 2) + (lastMonthStockSales / lastMonthLastYearStockSales)) / 3)
+					* thisMonthStockSales;
+		}
+*/
+		if ((nextMonthStockSales == 0)  || (nextMonthSales == Double.POSITIVE_INFINITY) || (nextMonthSales == Double.NaN)) {
 			nextMonthStockSales = ((thisMonthStockSales * 4)
 					+ (lastMonthStockSales * 3) + (twoMonthStockSales * 2) + (threeMonthStockSales)) / 10;
 		}
 
-		System.out.println("Next week sales prediction for " + stock.getName()
+		/*System.out.println("Next week sales prediction for " + stock.getName()
 				+ " " + nextWeekStockSales);
 		System.out.println("Next month sales prediction for " + stock.getName()
-				+ " " + nextMonthStockSales);
+				+ " " + nextMonthStockSales);*/
 
+		
 		int result[] = new int[5];
 
 		if (week == true) {
 			result[0] = (int) threeWeekStockSales;
 			result[1] = (int) twoWeekStockSales;
 			result[2] = (int) lastWeekStockSales;
-			result[3] = (int) thisWeekStockSales;
+			result[3] = realThisWeeksSales;
 			result[4] = (int) nextWeekStockSales;
 		} else {
 			result[0] = (int) threeMonthStockSales;
 			result[1] = (int) twoMonthStockSales;
 			result[2] = (int) lastMonthStockSales;
-			result[3] = (int) thisMonthStockSales;
+			result[3] = realThisMonthStockSales;
 			result[4] = (int) nextMonthStockSales;
 		}
-
+		
+		
 		return result;
 	}
 
