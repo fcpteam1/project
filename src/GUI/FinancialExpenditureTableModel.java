@@ -6,8 +6,10 @@ import javax.swing.table.AbstractTableModel;
 
 import model.Order;
 
+//There are three financial table models one for sales one for expenditures and for Profit
 public class FinancialExpenditureTableModel extends AbstractTableModel {
-
+	// Creating a arrayList of orders to store the current orders in
+	// This table model is very similar to that of User and others
 	private ArrayList<Order> orders;
 	private String[] columnNames = { "Order ID", "Supplier Name", "Date",
 			"Total Price" };
@@ -33,11 +35,14 @@ public class FinancialExpenditureTableModel extends AbstractTableModel {
 		return orders.size();
 	}
 
+	// As there is only 4 columns we return 4 starting at 1 instead of 0
 	@Override
 	public int getColumnCount() {
 		return 4;
 	}
 
+	// Displaying within the table the supplier ID,Name,Date of order and the
+	// total price of the order
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 
@@ -56,3 +61,4 @@ public class FinancialExpenditureTableModel extends AbstractTableModel {
 	}
 
 }
+
