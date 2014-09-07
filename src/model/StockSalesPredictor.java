@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+// stock sales predictor predicts next week /month sales
+// based on current, week before, two weeks and three weeks ago
+
 public class StockSalesPredictor {
 
 	Calendar calendar;

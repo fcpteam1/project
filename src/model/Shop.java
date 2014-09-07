@@ -146,6 +146,7 @@ public class Shop {
 			System.out.println(stock.getName() + " Avaiable Stock: "
 					+ stock.getQuantity());
 
+		
 	}
 
 	public static Shop getInstance() throws IOException {
