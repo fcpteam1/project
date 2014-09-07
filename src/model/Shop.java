@@ -310,17 +310,7 @@ public class Shop {
 
 	public void loadAvailableStock() {
 		availableStock.clear();
-		for (Product p : totalProducts) {
-
-			if (stockLevels().get(p.getName()) == null) {
-				Stock stock = new Stock(p, 0);
-				availableStock.add(stock);
-			} else {
-
-				Stock stock = new Stock(p, stockLevels().get(p.getName()));
-				availableStock.add(stock);
-			}
-		}
+		availableStock = getUniqueStockList();
 	}
 
 	public ArrayList<Stock> getAvailableStock() {
@@ -422,6 +412,10 @@ public class Shop {
 
 	public void removeUser(int index) {
 		users.remove(index);
+		int newCount = 0;
+		for (User user : users) {
+			user.setId(newCount++);
+		}
 		writeUser(userFile);
 	}
 
@@ -447,6 +441,10 @@ public class Shop {
 				System.out.println(username + password + id + admin);
 			}
 		}
+		int newCount = 0;
+		for (User user : users) {
+			user.setId(newCount++);
+		}
 		writeUser(userFile);
 	}
 
@@ -461,7 +459,7 @@ public class Shop {
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}
-	
+
 	public ArrayList<Order> getAllOrders() {
 		financialOrders.clear();
 		for (Order order: orders){
@@ -729,6 +727,10 @@ public class Shop {
 
 	public void removeCustomer(int index) {
 		customers.remove(index);
+		int newCount = 0;
+		for (Customer customer : customers) {
+			customer.setId(newCount++);
+		}
 		writeCustomer(customerFile);
 	}
 
@@ -755,6 +757,10 @@ public class Shop {
 				System.out.println(name + number + id + address);
 			}
 		}
+		int newCount = 0;
+		for (Customer customer : customers) {
+			customer.setId(newCount++);
+		}
 		writeCustomer(customerFile);
 	}
 
@@ -773,29 +779,28 @@ public class Shop {
 		System.out.println("Edit address sent");
 	}
 
-	public static boolean processSale(Stock sale, ArrayList<Stock> stockList,
-			int stockIndex) {
+	public boolean processSale(Stock sale, int stockIndex) {
 		boolean inStock = false;
-		for (int i = stockIndex; i < stockList.size(); i++) {
-			if (sale.getProduct().getName().equals(stockList.get(i).getName())) {
-				if (stockList.get(i).getQuantity() > sale.getQuantity()) {
-					stockList.get(i)
+		for (int i = stockIndex; i < stocks.size(); i++) {
+			if (sale.getProduct().getName().equals(stocks.get(i).getName())) {
+				if (stocks.get(i).getQuantity() > sale.getQuantity()) {
+					stocks.get(i)
 							.setQuantity(
-									stockList.get(i).getQuantity()
+									stocks.get(i).getQuantity()
 											- sale.getQuantity());
 
 					inStock = true;
-					i = stockList.size();
-				} else if (stockList.get(i).getQuantity() == sale.getQuantity()) {
-					stockList.remove(stockList.get(i));
+					i = stocks.size();
+				} else if (stocks.get(i).getQuantity() == sale.getQuantity()) {
+					stocks.remove(stocks.get(i));
 					inStock = true;
-					i = stockList.size();
+					i = stocks.size();
 
 				} else {
 					sale.setQuantity(sale.getQuantity()
-							- stockList.get(i).getQuantity());
-					stockList.remove(stockList.get(i));
-					processSale(sale, stockList, i);
+							- stocks.get(i).getQuantity());
+					stocks.remove(stocks.get(i));
+					processSale(sale, i);
 				}
 			}
 
@@ -803,11 +808,10 @@ public class Shop {
 		return inStock;
 	}
 
-	public static ArrayList<Stock> checkStock(ArrayList<Stock> saleList,
-			ArrayList<Stock> stockList) {
+	public ArrayList<Stock> checkStock(ArrayList<Stock> saleList) {
 
 		for (Stock temp : saleList) {
-			if (!processSale(temp, stockList, 0)) {
+			if (!processSale(temp, 0)) {
 				System.out.println("Out of Stock Item: "
 						+ temp.getProduct().getName());
 
@@ -824,7 +828,7 @@ public class Shop {
 
 	public void createSale(SaleFormEvent e) {
 
-		ArrayList<Stock> inStockList = checkStock(e.getStockList(), stocks);
+		ArrayList<Stock> inStockList = checkStock(e.getStockList());
 
 		Sale sale = new Sale(inStockList, e.getCustomer());
 		sales.add(sale);
@@ -836,7 +840,7 @@ public class Shop {
 			s.setId(newCount++);
 		}
 		writeSale(saleFile);
-		loadAvailableStock();
+		//loadAvailableStock();
 	}
 
 	public void removeSale(int index) {
@@ -871,10 +875,6 @@ public class Shop {
 		writeOrder(orderFile);
 	}
 
-	public void viewOrders(OrderFormEvent e) {
-
-	}
-
 	public void editOrder(OrderFormEvent e, int id) {
 		for (Order order : orders) {
 			if (order.getId() == id) {
@@ -886,7 +886,6 @@ public class Shop {
 		for (Order newOrder : orders) {
 			newOrder.setId(newCount++);
 		}
-
 		writeOrder(orderFile);
 	}
 
@@ -900,16 +899,17 @@ public class Shop {
 		writeOrder(orderFile);
 	}
 
-	public void processOrder(int index) {
-		if (orders.get(index).isCurrent()) {
-			for (Product product : orders.get(index).getProducts()) {
-				Stock stock = new Stock(product, product.getQuantity());
-				stocks.add(stock);
-				//availableStock.add(stock);
+	public void processOrder(int id) {
+		for(Order order: orders){
+			if(order.getId()==id){
+				for (Product product : order.getProducts()) {
+					Stock stock = new Stock(product, product.getQuantity());
+					stocks.add(stock);
+				}
+				order.setCurrent(false);
 			}
 		}
-		loadAvailableStock();
-		orders.get(index).setCurrent(false);
+		//loadAvailableStock();
 		writeOrder(orderFile);
 		writeStock(stockFile);
 	}

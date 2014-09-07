@@ -8,7 +8,7 @@ import model.Stock;
 
 public class StockByDateTableModel extends AbstractTableModel {
 
-	private String[] columnNames = { "Name", "Quantity", "Customer Price", "Date"};
+	private String[] columnNames = { "Name", "Quantity", "Customer Price", "Delivered On"};
 	private ArrayList<Stock> stockList;
 	public StockByDateTableModel(){
 		

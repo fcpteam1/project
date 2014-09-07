@@ -35,6 +35,10 @@ public class OrderTableModel extends AbstractTableModel {
 		return 5;
 	}
 
+	public Order getOrderByRow(int row){
+		return orders.get(row);
+	}
+	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 

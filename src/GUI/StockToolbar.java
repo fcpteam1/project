@@ -21,8 +21,8 @@ public class StockToolbar extends JPanel implements ActionListener {
 	
 	public StockToolbar(){
 		setBorder(BorderFactory.createEtchedBorder());
-		allBtn = new JButton("View All");
-		byDateBtn = new JButton("View By Date");
+		allBtn = new JButton("Stock Levels");
+		byDateBtn = new JButton("Available Stock");
 		predictionBtn = new JButton("Predictions");
 		lowStockBtn=new JButton("Low Stock");
 		stockBarChartBtn = new JButton("Stock Chart");

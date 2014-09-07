@@ -39,6 +39,8 @@ public class OrderFormPanel extends JPanel {
 	private ArrayList<Product> products;
 	private Supplier thisSupplier;
 	private ArrayList<Product> orderProducts = new ArrayList<Product>();
+	ArrayList<Integer> quantities = new ArrayList<Integer>();
+	ArrayList<String> productNames = new ArrayList<String>();
 	int size;
 	JLabel[] names;
 	JLabel[] prices;
@@ -122,6 +124,8 @@ public class OrderFormPanel extends JPanel {
 
 	public void addProductSelect(OrderFormEvent ev) {
 		this.removeAll();
+		quantities.clear();
+		productNames.clear();
 		thisSupplier = ev.getSupplier();
 		products = thisSupplier.getProducts();
 		Dimension dim = getPreferredSize();
@@ -170,8 +174,6 @@ public class OrderFormPanel extends JPanel {
 		orderButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				orderProducts.clear();
-				ArrayList<Integer> quantities = new ArrayList<Integer>();
-				ArrayList<String> productNames = new ArrayList<String>();
 				// Get ordered products and associated quantities
 				for (int i = 0; i < size; i++) {
 					if (!fields[i].getText().equals("")) {
@@ -219,6 +221,8 @@ public class OrderFormPanel extends JPanel {
 
 	public void editFormPanel() {
 		this.removeAll();
+		quantities.clear();
+		productNames.clear();
 		Dimension dim = getPreferredSize();
 		dim.width = 300;
 		setPreferredSize(dim);
@@ -235,7 +239,7 @@ public class OrderFormPanel extends JPanel {
 		names = new JLabel[size];
 		prices = new JLabel[size];
 		fields = new JTextField[size];
-
+		
 		// Dynamically create labels and text fields for products
 		for (int i = 0; i < size; i++) {
 			names[i] = new JLabel(editedSupplierProducts.get(i).getName());
@@ -285,8 +289,6 @@ public class OrderFormPanel extends JPanel {
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				editedProducts.clear();
-				ArrayList<Integer> quantities = new ArrayList<Integer>();
-				ArrayList<String> productNames = new ArrayList<String>();
 				// Get ordered products and associated quantities
 				for (int i = 0; i < size; i++) {
 					if (!fields[i].getText().equals("")) {
@@ -334,8 +336,7 @@ public class OrderFormPanel extends JPanel {
 		this.editedProducts = products;
 	}
 
-	public void setEditedSupplierProducts(
-			ArrayList<Product> editedSupplierProducts) {
+	public void setEditedSupplierProducts(ArrayList<Product> editedSupplierProducts) {
 		this.editedSupplierProducts = editedSupplierProducts;
 	}
 

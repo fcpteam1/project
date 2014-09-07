@@ -41,12 +41,16 @@ public class SaleMainPanel extends JPanel {
 
 		tablePanel.setSaleTableListener(new SaleTableListener() {
 			public void rowDeleted(int row) {
+				formPanel.setData(model.getShop().getUniqueStockList(), model.getShop()
+				.getCustomers(), model.getShop().getStockFile());
 				model.getShop().removeSale(row);
 				tablePanel.refresh();
 			}
 
 			@Override
 			public void rowEdited(int row) {
+				formPanel.setData(model.getShop().getUniqueStockList(), model.getShop()
+				.getCustomers(), model.getShop().getStockFile());
 				formPanel.setVisible(true);
 				formPanel.setSaleToEdit(model.getShop().getSales().get(row));
 				formPanel.setSaleStockListToEdit(model.getShop().getSales()
@@ -56,6 +60,8 @@ public class SaleMainPanel extends JPanel {
 			}
 
 			public void listItems(int row) {
+				formPanel.setData(model.getShop().getUniqueStockList(), model.getShop()
+				.getCustomers(), model.getShop().getStockFile());
 				ArrayList<Stock> itemsBought = model.getShop().getSales()
 						.get(row).getStocks();
 
@@ -76,9 +82,10 @@ public class SaleMainPanel extends JPanel {
 		formPanel.setFormListener(new SaleFormListener() {
 
 			public void createSaleOccurred(SaleFormEvent e) {
-
-				model.getShop().createSale(e);
+				formPanel.setData(model.getShop().getAvailableStock(), model.getShop()
+						.getCustomers(), model.getShop().getStockFile());
 				tablePanel.refresh();
+				model.getShop().createSale(e);
 				ArrayList<Stock> stockItems = e.getStockList();
 				for (int i = 0; i < stockItems.size(); i++) {
 					textPanel.appendText(stockItems.get(i).getName()
@@ -91,9 +98,10 @@ public class SaleMainPanel extends JPanel {
 
 			@Override
 			public void editSaleOccurred(SaleFormEvent e, int id) {
-
-				model.getShop().editSale(e, id);
+				formPanel.setData(model.getShop().getAvailableStock(), model.getShop()
+						.getCustomers(), model.getShop().getStockFile());
 				tablePanel.refresh();
+				model.getShop().editSale(e, id);
 				ArrayList<Stock> stockItems = e.getStockList();
 				for (int i = 0; i < stockItems.size(); i++) {
 					textPanel.appendText(stockItems.get(i).getName()

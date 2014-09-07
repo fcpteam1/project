@@ -3,6 +3,7 @@ package GUI;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 
@@ -52,6 +53,10 @@ public class MainMenuGUI {
 		supplierTab = new SupplierGUI();
 		orderTab = new OrderMainPanel();
 		stockTab = new StockMainPanel();
+//		stockTab.addActionListener(new ActionListener(){
+//			
+//		});
+//		stockTab.refresh();
 		saleTab = new SaleMainPanel();
 		profitAndLossTab = new FinancialMainPanel();
 
