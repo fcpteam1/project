@@ -40,6 +40,7 @@ public class SaleMainPanel extends JPanel {
 		mainPanel.add(textPanel, BorderLayout.EAST);
 
 		tablePanel.setSaleTableListener(new SaleTableListener() {
+			
 			public void rowDeleted(int row) {
 				model.getShop().removeSale(row);
 				tablePanel.refresh();
@@ -78,9 +79,6 @@ public class SaleMainPanel extends JPanel {
 				}
 				textPanel.appendText("\n------Sale Complete-------\n");
 				textPanel.appendText("\n");
-				
-
-
 			}
 		});
 	}
