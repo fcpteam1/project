@@ -554,7 +554,7 @@ public class Shop {
 	public ArrayList<Stock> getStock() {
 		return stocks;
 	}
-
+	
 	public ArrayList<Product> getAllSupplierProducts(){
 		ArrayList<Product> allProducts = new ArrayList<Product>();
 		for(Supplier supplier: suppliers){
@@ -564,6 +564,7 @@ public class Shop {
 		}
 		return allProducts;
 	}
+	
 	
 	public ArrayList<Stock> getUniqueStockList() {
 		ArrayList<Stock> uniqueStockList = new ArrayList<Stock>();
@@ -845,48 +846,51 @@ public class Shop {
 	}
 
 	public void createSale(SaleFormEvent e) {
-		try 
+		/*try 
 		{
 			model = new Model();
 		} 
 		catch (IOException e1) 
 		{
 			e1.printStackTrace();
-		}
-		ArrayList<Stock> inStockList = checkStock(e.getStockList(), model.getShop().getStock());
+		}*/
+		ArrayList<Stock> inStockList = checkStock(e.getStockList(), stocks);
 
 		Sale sale = new Sale(inStockList, e.getCustomer());
 		sales.add(sale);
-
+		
 		writeStock(stockFile);
 
 		int newCount = 0;
 		for (Sale s : sales) {
 			s.setId(newCount++);
 		}
+		
+		System.out.println("START PRINTING SALES");
+		for (Sale temp : sales) {
+			System.out.println(temp.getId());
+			for (Stock stock : temp.getStocks())
+			System.out.println(stock.getName() + ": " + stock.getQuantity());
+		}
+		
 		writeSale(saleFile);
 		loadAvailableStock();
 	}
 
 	public void removeSale(int index) {
+		for (Stock stock: sales.get(index).getStocks()) {
+			stocks.add(stock);
+		}
 		sales.remove(index);
 		int newCount = 0;
 		for (Sale s : sales) {
 			s.setId(newCount++);
 		}
+		writeStock(stockFile);
 		writeSale(saleFile);
+		loadAvailableStock();
 	}
 
-	public void editSale(SaleFormEvent e, int id) {
-
-		for (Sale s : sales) {
-			if (s.getId() == id) {
-				s.setStocks(e.getStockList());
-				s.calculatePrice();
-			}
-		}
-		writeSale(saleFile);
-	}
 
 	public void createOrder(OrderFormEvent e) {
 		ArrayList<Product> products = e.getProducts();

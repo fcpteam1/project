@@ -31,7 +31,7 @@ public class Sale extends Invoice implements java.io.Serializable {
 		}
 		super.setTotalPrice(price);
 	}
-
+	
 	public Customer getCustomer() {
 		return customer;
 	}
