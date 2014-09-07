@@ -89,7 +89,7 @@ public class SupplierGUI {
 
 		
 		buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new GridBagLayout());
+		buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		tablePanel = new JPanel();
 		tablePanel.setLayout(new BorderLayout());
@@ -124,7 +124,7 @@ public class SupplierGUI {
 		c.weightx = 1;
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
-		buttonsPanel.add(supplierButton, c);
+		buttonsPanel.add(supplierButton);
 
 		JPanel crudPanel = new JPanel();
 		crudPanel.setLayout(new FlowLayout());
@@ -138,38 +138,38 @@ public class SupplierGUI {
 		c.weightx = 1;
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
-		buttonsPanel.add(crudPanel, c);
+		buttonsPanel.add(crudPanel);
 
 		c.gridx = 2;
 		c.gridy = 0;
 		c.weightx = 1;
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
-		buttonsPanel.add(productButton, c);
+		buttonsPanel.add(productButton);
 
 		c.gridx = 0;
 		c.gridy = 2;
 		c.weightx = 1;
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
-		buttonsPanel.add(searchText, c);
+		//buttonsPanel.add(searchText, c);
 
 		c.gridx = 1;
 		c.gridy = 2;
 		c.weightx = 1;
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
-		buttonsPanel.add(search, c);
+		//buttonsPanel.add(search, c);
 
 		nextPrevPanel.add(previous);
-		nextPrevPanel.add(next);
+		//nextPrevPanel.add(next);
 
 		c.gridx = 2;
 		c.gridy = 2;
 		c.weightx = 1;
 		c.weighty = 1;
 		c.anchor = GridBagConstraints.CENTER;
-		buttonsPanel.add(nextPrevPanel, c);
+		//buttonsPanel.add(nextPrevPanel, c);
 
 		supplierData = new Object[1][4];
 		supplierData[0][0] = "null";
@@ -552,9 +552,11 @@ public class SupplierGUI {
 		exitCreatePanelButton = new JButton("Exit Panel");
 		createSupplierButton = new JButton("Create Supplier");
 
+		Border titleBorder = BorderFactory.createTitledBorder("Create Supplier");
 		JPanel createPanel = new JPanel();
 		createPanel.setLayout(new GridBagLayout());
 
+		createSupplierPanel.setBorder(titleBorder);
 		createName = new JTextField(15);
 		createPhone = new JTextField(15);
 		createAddress = new JTextField(15);
@@ -563,8 +565,7 @@ public class SupplierGUI {
 		createPhoneLabel = new JLabel("Phone");
 		createAddressLabel = new JLabel("Address");
 
-		Border titleBorder = BorderFactory.createTitledBorder("Edit Supplier");
-		editSupplierPanel.setBorder(titleBorder);
+		
 
 		c.gridx = 0;
 		c.gridy = 0;
