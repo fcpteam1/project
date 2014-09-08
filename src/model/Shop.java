@@ -287,28 +287,40 @@ public class Shop {
 		}
 	}
 
+
+	//puts stock into a map with only one entry for each item and their total quantity
 	public Map<String, Integer> stockLevels() {
 
-		Map<String, Integer> stockLevels = new HashMap<String, Integer>();
+			Map<String, Integer> stockLevels = new HashMap<String, Integer>();
 
-		for (int i = 0; i < stocks.size(); i++) {
-			int quantity = 0;
-			for (int j = i; j < stocks.size(); j++) {
-				boolean inMap = stockLevels
-						.containsKey(stocks.get(i).getName());
-				if (inMap && j == i) {
-					j = stocks.size();
-				} else if (stocks.get(i).getName()
-						.equals(stocks.get(j).getName())) {
-					quantity = quantity + stocks.get(j).getQuantity();
-					// System.out.println(stocks.get(j).getQuantity());
-					stockLevels.put(stocks.get(i).getName(), quantity);
-					// System.out.println(quantity);
+			//outer loop stays on an item while the inner loop goes through the arraylist
+			//adding up the quantities for each entry of that item in the arraylist
+			for (int i = 0; i < stocks.size(); i++) {
+				//reset quantity each time
+				int quantity = 0;
+				//start at i as any entries before will already be in the map
+				for (int j = i; j < stocks.size(); j++) {
+					//find if item has already been saved to map
+					boolean inMap = stockLevels.containsKey(stocks.get(i).getName());
+					//if already in the map and was not been added in this iteration 
+					// so quantities have already been totalled then exit this inner loop iteration
+					if (inMap && j == i) {
+						j = stocks.size();
+					}
+					//else either not in map yet or still calculating total quantity
+					//if same item as is current in the outer loop
+					else if (stocks.get(i).getName().equals(stocks.get(j).getName())) {
+						//increase quantity by adding the previous total to this entries quantity
+						quantity = quantity + stocks.get(j).getQuantity();
+						//put item and quantity into map, giving at total quantity the final time
+						//an item of the same time is in the loop
+						stockLevels.put(stocks.get(i).getName(), quantity);
+					}
 				}
 			}
-		}
-		return stockLevels;
+			return stockLevels;
 	}
+
 
 	public void loadAvailableStock() {
 		availableStock.clear();
@@ -800,94 +812,132 @@ public class Shop {
 		System.out.println("Edit address sent");
 	}
 
-	public static boolean processSale(Stock saleItem,
-			ArrayList<Stock> stockList, int quantity, int stockIndex) {
+
+
+
+	//goes through stock array list and checks to see if it contains the full quantity of
+	//the sale item requested. If not it returns false and doesnt remove any items from 
+	//the list, else it returns true and removes the item quantity from the list
+	
+	//As there can be multiple instances of the same item, because items are added with their dates,
+	//each instance of these items needs to be checked
+	public boolean processSale(Stock saleItem,ArrayList<Stock> stockList, int quantity, int stockIndex) {
 		boolean inStock = false;
 
+		//stops the method calling itself beyond the bounds of the for loop
 		while (stockIndex < stockList.size()) {
+			//Goes through the stock list
 			for (int i = stockIndex; i < stockList.size(); i++) {
+				//save the name of the item for each iteration
 				String name = saleItem.getName();
-
+				
+				//check if this iteration contains the required product and make sure
+				//that this recursive cycle still requires a quantity
 				if (name.equals(stockList.get(i).getName()) && quantity > 0) {
-
+					//check if the current item has a quantity greater than that required
+					//if so you deduct the quantity required from the item entries quantity,
+					//set inStock= true and exit the loop
 					if (stockList.get(i).getQuantity() > quantity) {
 						stockList.get(i).setQuantity(
 								stockList.get(i).getQuantity() - quantity);
 						inStock = true;
 						i = stockList.size();
-						// System.out.println("greater: "+ name + quantity);
-					} else if (stockList.get(i).getQuantity() == quantity) {
+						
+					}
+					//check if entry contains exact quantity required
+					//delete entry, inStock= true and exit the loop
+					else if (stockList.get(i).getQuantity() == quantity) {
 						stockList.remove(stockList.get(i));
 						inStock = true;
 						i = stockList.size();
-						// System.out.println("equal: "+ name + quantity);
-
-					} else if (stockList.get(i).getQuantity() < quantity) {
+					}
+					//check if current entry contains quantity less than that required
+					else if (stockList.get(i).getQuantity() < quantity) {
+						//set quantity = the quantity required- quantity held by this entry
+						//Pass into the next recursion to know the quantity left to find in the list
 						quantity -= stockList.get(i).getQuantity();
-						// System.out.println("lesser: "+ name + quantity);
-						// System.out.println("Num "+i);
+						//pass the new quantity and the next index into processSale and
+						//save the return
 						inStock = processSale(saleItem, stockList, quantity,
 								i + 1);
+						//remove entry after you know the full quantity is in stock
 						if (inStock) {
 							stockList.remove(stockList.get(i));
 						}
-						// System.out.println("Num "+i);
-
+						//exit loop as the recursion will go to the end of the loop
 						i = stockList.size();
-
+	
 					}
 				}
 
 			}
+			//exit while
 			stockIndex = stockList.size();
+
 		}
 		return inStock;
 	}
 
+
+	//Takes in list of sale items and stock list
 	public ArrayList<Stock> checkStock(ArrayList<Stock> saleList,
 			ArrayList<Stock> stockList) {
-
+		//pass each sale item into processSale with the stockList, required quantity
+		//and starting index of zero
 		for (Stock temp : saleList) {
+			//returns if item is inStock
 			if (!processSale(temp, stockList, temp.getQuantity(), 0)) {
-				if (saleList.get(saleList.size() - 1) == temp) {
-					saleList.remove(temp);
-					break;
-				} else {
-					saleList.remove(temp);
+				//Not inStock: remove that item from the saleList
+				//if last loop iteration, break from loop
+				if (!processSale(temp, stockList, temp.getQuantity(), 0)) {
+					//System.out.println("Out of Stock Item: "
+					//		+ temp.getProduct().getName());
+					if (saleList.get(saleList.size() - 1) == temp) {
+						saleList.remove(temp);
+						break;
+					} else {
+						saleList.remove(temp);
+					}
 				}
 			}
 		}
-		return saleList;
+	//return list of processed sales
+	return saleList;
 	}
 
-	public void createSale(SaleFormEvent e) {
-		try {
-			model = new Model();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		ArrayList<Stock> inStockList = checkStock(e.getStockList(), model
-				.getShop().getStock());
 
+
+public void createSale(SaleFormEvent e) {
+		//Process sale and return list of processed sales
+		ArrayList<Stock> inStockList = checkStock(e.getStockList(), getStock());
+
+		//save sale and add to salelist 
 		Sale sale = new Sale(inStockList, e.getCustomer());
 		sales.add(sale);
+				
+		//update stock file with new stock list after sale
 		writeStock(stockFile);
 
+		//give all sales an id
 		int newCount = 0;
 		for (Sale s : sales) {
 			s.setId(newCount++);
 		}
 
+				
 		System.out.println("START PRINTING SALES");
 		for (Sale temp : sales) {
 			System.out.println(temp.getId() + " " + temp.getCustomer().getName());
-			for (Stock stock : temp.getStocks())
-				System.out
-						.println(stock.getName() + ": " + stock.getQuantity());
+			for (Stock stock : temp.getStocks()){
+				System.out.println(stock.getName() + ": " + stock.getQuantity());
+			}
 		}
-
+				
+		//update sales file
 		writeSale(saleFile);
+		//reload the stock available
 		loadAvailableStock();
+		
 	}
 
 	public void removeSale(int index) {
