@@ -34,7 +34,6 @@ public class Shop {
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private ArrayList<Sale> blankSalesTable = new ArrayList<Sale>();
 	private ArrayList<Product> totalProducts = new ArrayList<Product>();
-
 	private Model model;
 
 	private String username, password, choice, customerName, customerNumber,
@@ -317,17 +316,7 @@ public class Shop {
 
 	public void loadAvailableStock() {
 		availableStock.clear();
-		for (Product p : totalProducts) {
-
-			if (stockLevels().get(p.getName()) == null) {
-				Stock stock = new Stock(p, 0);
-				availableStock.add(stock);
-			} else {
-
-				Stock stock = new Stock(p, stockLevels().get(p.getName()));
-				availableStock.add(stock);
-			}
-		}
+		availableStock = getUniqueStockList();
 	}
 
 	public ArrayList<Stock> getAvailableStock() {
@@ -435,6 +424,10 @@ public class Shop {
 	//index is the row 
 	public void removeUser(int index) {
 		users.remove(index);
+		int newCount = 0;
+		for (User user : users) {
+			user.setId(newCount++);
+		}
 		writeUser(userFile);
 	}
 	
@@ -464,6 +457,10 @@ public class Shop {
 				System.out.println(username + password + id + admin);
 			}
 		}
+		int newCount = 0;
+		for (User user : users) {
+			user.setId(newCount++);
+		}
 		writeUser(userFile);
 	}
 
@@ -479,6 +476,15 @@ public class Shop {
 	//return the orders arraylist
 	public ArrayList<Order> getOrders() {
 		return orders;
+	}
+	
+	public Order getOrderById(int id) {
+		for(Order order: orders){
+			if(order.getId()==id){
+				return order;
+			}
+		}
+		return null;
 	}
 
 	//getting all the orders and putting them
@@ -595,7 +601,7 @@ public class Shop {
 		}
 		return allProducts;
 	}
-
+	
 	public ArrayList<Stock> getUniqueStockList() {
 		ArrayList<Stock> uniqueStockList = new ArrayList<Stock>();
 		ArrayList<Product> allProducts = new ArrayList<Product>();
@@ -628,6 +634,7 @@ public class Shop {
 				stock.setCustomerPrice(editedStockPrice);
 			}
 		}
+		loadAvailableStock();
 		writeStock(stockFile);
 	}
 
@@ -770,6 +777,10 @@ public class Shop {
 	//Same as user
 	public void removeCustomer(int index) {
 		customers.remove(index);
+		int newCount = 0;
+		for (Customer customer : customers) {
+			customer.setId(newCount++);
+		}
 		writeCustomer(customerFile);
 	}
 	//Same as user
@@ -795,6 +806,10 @@ public class Shop {
 
 				System.out.println(name + number + id + address);
 			}
+		}
+		int newCount = 0;
+		for (Customer customer : customers) {
+			customer.setId(newCount++);
 		}
 		writeCustomer(customerFile);
 	}
@@ -922,11 +937,14 @@ public class Shop {
 		ArrayList<Product> products = e.getProducts();
 		Supplier supplier = e.getSupplier();
 		Order order = new Order(products, supplier);
+		int last = orders.size() - 1;
+		int newId = orders.get(last).getId() + 1;
+		order.setId(newId);
 		orders.add(order);
-		int newCount = 0;
-		for (Order newOrder : orders) {
-			newOrder.setId(newCount++);
-		}
+//		int newCount = 0;
+//		for (Order newOrder : orders) {
+//			newOrder.setId(newCount++);
+//		}
 		writeOrder(orderFile);
 	}
 
@@ -939,36 +957,38 @@ public class Shop {
 			if (order.getId() == id) {
 				order.setProducts(e.getProducts());
 				order.calculatePrice();
+				break;
 			}
 		}
-		int newCount = 0;
-		for (Order newOrder : orders) {
-			newOrder.setId(newCount++);
-		}
-
+//		int newCount = 0;
+//		for (Order newOrder : orders) {
+//			newOrder.setId(newCount++);
+//		}
 		writeOrder(orderFile);
 	}
 
-	public void deleteOrder(int index) {
-		orders.remove(index);
-		int newCount = 0;
-		for (Order order : orders) {
-			order.setId(newCount++);
+	public void deleteOrder(int id) {
+		for(Order order: orders){
+			if(order.isCurrent() && order.getId()==id){
+				orders.remove(order);
+				break;
+			}
+			writeOrder(orderFile);
 		}
-
-		writeOrder(orderFile);
 	}
 
-	public void processOrder(int index) {
-		if (orders.get(index).isCurrent()) {
-			for (Product product : orders.get(index).getProducts()) {
-				Stock stock = new Stock(product, product.getQuantity());
-				stocks.add(stock);
-				// availableStock.add(stock);
+	public void processOrder(int id) {
+		for(Order order: orders){
+			if (order.getId()==id && order.isCurrent()) {
+				for (Product product : order.getProducts()) {
+					Stock stock = new Stock(product, product.getQuantity());
+					stocks.add(stock);
+				}
+				order.setCurrent(false);
+				break;
 			}
 		}
 		loadAvailableStock();
-		orders.get(index).setCurrent(false);
 		writeOrder(orderFile);
 		writeStock(stockFile);
 	}
@@ -1212,3 +1232,4 @@ public class Shop {
 		this.editedStockPrice = editedStockPrice;
 	}
 }
+

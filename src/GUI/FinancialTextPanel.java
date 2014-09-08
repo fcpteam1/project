@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+//Panel that displays the total price in each of sales and expenditures tables
 public class FinancialTextPanel extends JPanel {
 
 	//private JTextArea textArea;

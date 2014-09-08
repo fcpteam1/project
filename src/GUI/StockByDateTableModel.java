@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 import model.Stock;
-
+//one of three possible table models for stock table
 public class StockByDateTableModel extends AbstractTableModel {
 
-	private String[] columnNames = { "Name", "Quantity", "Customer Price", "Date"};
+	private String[] columnNames = { "Name", "Quantity", "Customer Price", "Delivered On"};
 	private ArrayList<Stock> stockList;
 	public StockByDateTableModel(){
 		

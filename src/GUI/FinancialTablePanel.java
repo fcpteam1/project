@@ -25,15 +25,18 @@ import model.Order;
 import model.Sale;
 
 public class FinancialTablePanel extends JPanel {
-
+	
+	//value needed to decide what graph to display inside tab
 	private int choice;
 	private JTable table;
+	//3 different models for table in finance tab
 	private FinancialExpenditureTableModel expenditureModel;
 	private FinancialSaleTableModel saleModel;
 	private FinancialProfitTableModel profitModel;
 	private FinancialFormPanel formPanel;
 
 	public FinancialTablePanel() {
+		//initialise components
 		table = new JTable();
 		expenditureModel = new FinancialExpenditureTableModel();
 		saleModel = new FinancialSaleTableModel();
@@ -47,6 +50,7 @@ public class FinancialTablePanel extends JPanel {
 		this.formPanel = formPanel;
 	}
 
+	//methods to pass data through to table models
 	public void setExpenditureData(ArrayList<Order> orders) {
 		expenditureModel.setData(orders);
 	}
@@ -60,12 +64,14 @@ public class FinancialTablePanel extends JPanel {
 		profitModel.setData(income, expenditure, profit, loss);
 	}
 
+	//update data in table
 	public void refresh() {
 		expenditureModel.fireTableDataChanged();
 		saleModel.fireTableDataChanged();
 		profitModel.fireTableDataChanged();
 	}
 
+	//set table model from main panel based on int i
 	public void setTableModel(int i) {
 		switch (i) {
 		case 1:

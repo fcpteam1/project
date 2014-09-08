@@ -38,7 +38,7 @@ public class StockMainPanel extends JPanel {
 		model = new Model();
 		
 		stockToolbar.setFormPanel(stockFormPanel);
-		
+		//listeners for selected buttons in stock toolbar
 		stockToolbar.setStockToolbarListener(new StockToolbarListener(){
 
 			@Override
@@ -50,6 +50,7 @@ public class StockMainPanel extends JPanel {
 				stockFormPanel.repaint();
 			}
 			
+			//set view, set data to view and set the table model
 			@Override
 			public void viewAll() {
 				stockFormPanel.removeAll();
@@ -61,6 +62,7 @@ public class StockMainPanel extends JPanel {
 				stockFormPanel.repaint();
 			}
 
+			//set view, set data to view and set the table model
 			@Override
 			public void viewByDate() {
 				stockFormPanel.removeAll();
@@ -71,6 +73,7 @@ public class StockMainPanel extends JPanel {
 				stockFormPanel.repaint();
 			}
 
+			//set view, set data to view and set the table model
 			@Override
 			public void viewPredictions() {
 				stockFormPanel.removeAll();
@@ -107,6 +110,7 @@ public class StockMainPanel extends JPanel {
 		stockTablePanel.setFormPanel(stockFormPanel);
 		stockTablePanel.setData(model.getShop().getUniqueStockList());
 		
+		//listener for table button to edit item price
 		stockTablePanel.setListener(new StockTableListener(){
 			@Override
 			public void editPrice(StockFormEvent e) {
@@ -182,7 +186,7 @@ public class StockMainPanel extends JPanel {
 				ArrayList<Stock> lowStock=new ArrayList<Stock>();
 				Object[][] low = null;
 				
-				for(Stock stock : model.getShop().getStock()){
+				for(Stock stock : model.getShop().getUniqueStockList()){
 					if(stock.getQuantity()<25){
 						lowStock.add(stock);
 					}
@@ -210,7 +214,7 @@ public class StockMainPanel extends JPanel {
 				int[] result = new int[5];
 				ArrayList<Stock> lowStock=new ArrayList<Stock>();
 				
-				for(Stock stock : model.getShop().getStock()){
+				for(Stock stock : model.getShop().getUniqueStockList()){
 					result = model.getShop().getPredictor().stockPredictor(model.getShop().getSales(), stock, true);
 					if((stock.getQuantity()-result[4])<25){
 						lowStock.add(stock);
@@ -241,7 +245,7 @@ public class StockMainPanel extends JPanel {
 				int[] result = new int[5];
 				ArrayList<Stock> lowStock=new ArrayList<Stock>();
 				
-				for(Stock stock : model.getShop().getStock()){
+				for(Stock stock : model.getShop().getUniqueStockList()){
 					result = model.getShop().getPredictor().stockPredictor(model.getShop().getSales(), stock, false);
 					if((stock.getQuantity()-result[4])<25){
 						lowStock.add(stock);
@@ -324,6 +328,11 @@ public class StockMainPanel extends JPanel {
 		bc.getData().addAll(series1);
 		return new Scene(bc, 800, 600);		
 	}
+
+	public void refresh(){
+		stockTablePanel.refresh();
+	}
+	
 
 	public StockToolbar getStockToolbar() {
 		return stockToolbar;

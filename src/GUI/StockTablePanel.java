@@ -106,7 +106,7 @@ public class StockTablePanel extends JPanel {
 	public void setFormPanel(StockFormPanel formPanel){
 		this.formPanel = formPanel;
 	}
-	
+	//method to set which model to display
 	public void setModel(int i){
 		switch (i) {
 		case 1:

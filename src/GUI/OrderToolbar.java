@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 public class OrderToolbar extends JPanel implements ActionListener {
 
+	private JButton allButton;
 	private JButton createButton;
 	private JButton currentButton;
 	private JButton previousButton;
@@ -19,16 +20,19 @@ public class OrderToolbar extends JPanel implements ActionListener {
 	public OrderToolbar() {
 		setBorder(BorderFactory.createEtchedBorder());
 		createButton = new JButton("Create");
+		allButton = new JButton("All");
 		currentButton = new JButton("Current");
 		previousButton = new JButton("Previous");
 
 		createButton.addActionListener(this);
+		allButton.addActionListener(this);
 		currentButton.addActionListener(this);
 		previousButton.addActionListener(this);
 
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		add(createButton);
+		add(allButton);
 		add(currentButton);
 		add(previousButton);
 	}
@@ -47,6 +51,12 @@ public class OrderToolbar extends JPanel implements ActionListener {
 		if (clicked == createButton) {
 			formPanel.removeAll();
 			listener.createOrder();
+			formPanel.validate();
+			formPanel.repaint();
+		}
+		if (clicked == allButton) {
+			formPanel.removeAll();
+			listener.showAll();
 			formPanel.validate();
 			formPanel.repaint();
 		}

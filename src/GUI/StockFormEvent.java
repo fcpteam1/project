@@ -3,7 +3,8 @@ package GUI;
 import java.util.EventObject;
 
 import model.Stock;
-
+//event for stock tab with name and price info
+//used for updating price of items
 public class StockFormEvent extends EventObject {
 	
 	private String name;

@@ -48,7 +48,6 @@ public class SaleMainPanel extends JPanel {
 				tablePanel.refresh();
 			}
 
-
 			public void listItems(int row) {
 				textPanel.setHeader();
 				itemsBought = model.getShop().getSales().get(row).getStocks();
@@ -70,6 +69,7 @@ public class SaleMainPanel extends JPanel {
 		formPanel.setFormListener(new SaleFormListener() {
 
 			public void createSaleOccurred(SaleFormEvent e) {
+
 				model.getShop().createSale(e);
 				tablePanel.refresh();
 				textPanel.setHeader();
@@ -82,9 +82,6 @@ public class SaleMainPanel extends JPanel {
 				textPanel.appendText("\n------Sale Complete-------\n");
 				textPanel.appendText("\n");
 			}
-
-
-
 		});
 	}
 
@@ -99,4 +96,5 @@ public class SaleMainPanel extends JPanel {
 	public JPanel getPanel() {
 		return mainPanel;
 	}
+
 }

@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import model.Order;
 import model.Supplier;
-
+//Table with necessary columns for order data
 public class OrderTableModel extends AbstractTableModel {
 
 	private ArrayList<Order> orders;
@@ -35,6 +35,13 @@ public class OrderTableModel extends AbstractTableModel {
 		return 5;
 	}
 
+	public Order getOrderByRow(int row){
+		for(int i=0; i<orders.size(); i++){
+			System.out.println(orders.get(i).getId());
+		}
+		return orders.get(row);
+	}
+	
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 

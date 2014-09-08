@@ -28,6 +28,8 @@ public class OrderTablePanel extends JPanel {
 
 		tableModel = new OrderTableModel();
 		table = new JTable(tableModel);
+
+		//popup menu to allow edit/delete/process functionality
 		popup = new JPopupMenu();
 
 		JMenuItem deleteItem = new JMenuItem("Delete Order");
@@ -43,7 +45,7 @@ public class OrderTablePanel extends JPanel {
 				int row = table.rowAtPoint(e.getPoint());
 
 				table.getSelectionModel().setSelectionInterval(row, row);
-
+				//done through right click
 				if (e.getButton() == MouseEvent.BUTTON3) {
 					popup.show(table, e.getX(), e.getY());
 				}
@@ -53,8 +55,9 @@ public class OrderTablePanel extends JPanel {
 		deleteItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
+				int id = (Integer)table.getValueAt(row, 0);
 				if (orderTableListener != null) {
-					orderTableListener.rowDeleted(row);
+					orderTableListener.rowDeleted(id);
 				}
 			}
 		});
@@ -62,8 +65,9 @@ public class OrderTablePanel extends JPanel {
 		editItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
+				int id = (Integer)table.getValueAt(row, 0);
 				if (orderTableListener != null) {
-					orderTableListener.rowEdited(row);
+					orderTableListener.rowEdited(id);
 				}
 			}
 		});
@@ -71,8 +75,9 @@ public class OrderTablePanel extends JPanel {
 		processItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
+				int id = (Integer)table.getValueAt(row, 0);
 				if (orderTableListener != null) {
-					orderTableListener.rowProcessed(row);
+					orderTableListener.rowProcessed(id);
 				}
 			}
 		});

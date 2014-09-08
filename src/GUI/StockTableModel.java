@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.swing.table.AbstractTableModel;
 
 import model.Stock;
-
+//basic model for stock table
 public class StockTableModel extends AbstractTableModel {
 
 	private String[] columnNames = { "Name", "Quantity", "Customer Price"};
