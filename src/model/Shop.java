@@ -316,7 +316,17 @@ public class Shop {
 
 	public void loadAvailableStock() {
 		availableStock.clear();
-		availableStock = getUniqueStockList();
+		for (Product p : totalProducts) {
+
+			if (stockLevels().get(p.getName()) == null) {
+				Stock stock = new Stock(p, 0);
+				availableStock.add(stock);
+			} else {
+
+				Stock stock = new Stock(p, stockLevels().get(p.getName()));
+				availableStock.add(stock);
+			}
+		}
 	}
 
 	public ArrayList<Stock> getAvailableStock() {
