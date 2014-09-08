@@ -133,12 +133,14 @@ public class OrderMainPanel extends JPanel {
 			public void createOrderOccurred(OrderFormEvent e) {
 				model.getShop().createOrder(e);
 				orderTablePanel.refresh();
+				model.getShop().viewOrders(e);
 			}
 			//pass edited order's data to the shop and list
 			@Override
 			public void editOrderOccurred(OrderFormEvent e, int id) {
 				model.getShop().editOrder(e, id);
 				orderTablePanel.refresh();
+				orderFormPanel.setVisible(false);
 			}
 
 		});

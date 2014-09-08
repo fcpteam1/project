@@ -39,7 +39,6 @@ public class SaleFormPanel extends JPanel {
 	private ArrayList<Customer> customers;
 	private ArrayList<Stock> stocks;
 	private String stockFile;
-	
 	private ArrayList<Stock> availableStock;
 	private SaleFormEvent event;
 	Customer thisCustomer;
@@ -136,7 +135,7 @@ public class SaleFormPanel extends JPanel {
 	public void createSaleSelectionPanel(SaleFormEvent ev) throws IOException {
 
 		this.removeAll();
-		
+
 		thisCustomer = ev.getCustomer();
 
 		Dimension dim = getPreferredSize();
@@ -151,6 +150,7 @@ public class SaleFormPanel extends JPanel {
 		// availableStock is created by checkLevel() giving total quantity of each product
 		// used to populate the panel JLabels
 		size = availableStock.size();
+		System.out.println("The size of availableStock:" + size);
 		maxLabel = new JLabel("Quantity in Stock");
 		stockName = new JLabel[size];
 		customerPrice = new JLabel[size];
@@ -168,48 +168,47 @@ public class SaleFormPanel extends JPanel {
 		add(maxLabel, gc);
 		// i set to 1, to fill 2nd row, therefore arrays have i-1, so they start
 		// at zero
-			for (int i = 1; i < (size + 1); i++) {
-				stockName[i - 1] = new JLabel(availableStock.get(i - 1).getName());
-				customerPrice[i - 1] = new JLabel(": "
-						+ "\u20ac"
-						+ Double.toString(availableStock.get(i - 1)
-								.getCustomerPrice()));
-				maxAvailable[i - 1] = new JLabel(Integer.toString(availableStock
-						.get(i - 1).getQuantity()));
-				quantityField[i - 1] = new JTextField(3);
-	
-				gc.gridy = i;
-	
-				gc.gridx = 0;
-				gc.fill = GridBagConstraints.NONE;
-				gc.anchor = GridBagConstraints.LINE_END;
-				gc.insets = new Insets(0, 0, 0, 5);
-				add(stockName[i - 1], gc);
-	
-				gc.gridx = 1;
-				gc.insets = new Insets(0, 0, 0, 0);
-				gc.anchor = GridBagConstraints.LINE_START;
-				add(customerPrice[i - 1], gc);
-	
-				gc.gridx = 2;
-				gc.insets = new Insets(0, 0, 0, 0);
-				gc.anchor = GridBagConstraints.LINE_START;
-				add(maxAvailable[i - 1], gc);
-	
-				gc.gridx = 3;
-				gc.insets = new Insets(0, 0, 0, 0);
-				gc.anchor = GridBagConstraints.LINE_START;
-				add(quantityField[i - 1], gc);
-			}
+		for (int i = 1; i < (size + 1); i++) {
+			stockName[i - 1] = new JLabel(availableStock.get(i - 1).getName());
+			customerPrice[i - 1] = new JLabel(": "
+					+ "\u20ac"
+					+ Double.toString(availableStock.get(i - 1)
+							.getCustomerPrice()));
+			maxAvailable[i - 1] = new JLabel(Integer.toString(availableStock
+					.get(i - 1).getQuantity()));
+			quantityField[i - 1] = new JTextField(3);
+
+			gc.gridy = i;
+
+			gc.gridx = 0;
+			gc.fill = GridBagConstraints.NONE;
+			gc.anchor = GridBagConstraints.LINE_END;
+			gc.insets = new Insets(0, 0, 0, 5);
+			add(stockName[i - 1], gc);
+
+			gc.gridx = 1;
+			gc.insets = new Insets(0, 0, 0, 0);
+			gc.anchor = GridBagConstraints.LINE_START;
+			add(customerPrice[i - 1], gc);
+
+			gc.gridx = 2;
+			gc.insets = new Insets(0, 0, 0, 0);
+			gc.anchor = GridBagConstraints.LINE_START;
+			add(maxAvailable[i - 1], gc);
+
+			gc.gridx = 3;
+			gc.insets = new Insets(0, 0, 0, 0);
+			gc.anchor = GridBagConstraints.LINE_START;
+			add(quantityField[i - 1], gc);
+		}
 
 		saleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				ArrayList<Integer> quantities = new ArrayList<Integer>();
 				ArrayList<String> stockNames = new ArrayList<String>();
+			    ArrayList<Stock> saleStockList = new ArrayList<Stock>();
 				// Get ordered stock and associated quantities
-				 ArrayList<Stock> saleStockList = new ArrayList<Stock>();
-			
 				for (int i = 0; i < size; i++) {
 					if (!quantityField[i].getText().equals("")){
 						try{
@@ -219,8 +218,7 @@ public class SaleFormPanel extends JPanel {
 									quantities.add(Integer.valueOf(quantityField[i]
 									.getText()));
 									stockNames.add(stockName[i].getText());
-							}
-							else {
+									}else {
 										JOptionPane.showMessageDialog(errorPanel,"Exceeded max Available",
 										"Out of Stock", JOptionPane.ERROR_MESSAGE);
 										removeAll();
@@ -231,7 +229,7 @@ public class SaleFormPanel extends JPanel {
 										}
 										//return prevents an empty sale being completed
 										return;	
-							}
+										}
 						} catch (NumberFormatException nfEx){
 							JOptionPane.showMessageDialog(errorPanel,"Please enter whole number", "ERROR!!", JOptionPane.ERROR_MESSAGE);
 							return;
@@ -239,9 +237,9 @@ public class SaleFormPanel extends JPanel {
 					}
 					
 				}
-				
+
 				// clear stock list from previous runs
-				//saleStockList.clear();
+				saleStockList.clear();
 				// Loop through ordered stock names and link to actual product
 				int i = 0;
 				for (String name : stockNames) {
@@ -254,8 +252,6 @@ public class SaleFormPanel extends JPanel {
 					}
 					i++;
 				}
-
-				
 				SaleFormEvent saleEvent = new SaleFormEvent(this, thisCustomer,
 						saleStockList);
 				if (formListener != null) {
@@ -263,7 +259,7 @@ public class SaleFormPanel extends JPanel {
 				}
 				setVisible(false);
 			}
-			
+
 		});
 		gc.gridy++;
 		gc.gridx = 1;

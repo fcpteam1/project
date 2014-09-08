@@ -47,7 +47,7 @@ public class Stock extends Product implements java.io.Serializable {
 		double price = 0;
 		if (super.getName().equals("Apple")) {
 			price = 0.80;
-		} else if (super.getName().equals("Apples")) {
+		} else if (super.getName().equals("Kiwi")) {
 			price = 0.80;
 		} else if (super.getName().equals("Orange")) {
 			price = 0.30;
@@ -61,7 +61,7 @@ public class Stock extends Product implements java.io.Serializable {
 			price = 0.90;
 		} else if (super.getName().equals("Pear")) {
 			price = 0.30;
-		} else if (super.getName().equals("Pears")) {
+		} else if (super.getName().equals("Cherrys")) {
 			price = 0.30;
 		} else if (super.getName().equals("Mango")) {
 			price = 1.00;
@@ -73,7 +73,7 @@ public class Stock extends Product implements java.io.Serializable {
 			price = 2.00;
 		} else if (super.getName().equals("Blueberries")) {
 			price = 2.50;
-		} else if (super.getName().equals("Mandarins")) {
+		} else if (super.getName().equals("Mandarin")) {
 			price = 0.20;
 		}
 		return price;
