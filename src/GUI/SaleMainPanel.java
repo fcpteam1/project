@@ -81,6 +81,9 @@ public class SaleMainPanel extends JPanel {
 				}
 				textPanel.appendText("\n------Sale Complete-------\n");
 				textPanel.appendText("\n");
+				
+
+
 			}
 
 
@@ -99,4 +102,6 @@ public class SaleMainPanel extends JPanel {
 	public JPanel getPanel() {
 		return mainPanel;
 	}
+	
+
 }

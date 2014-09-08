@@ -34,6 +34,10 @@ public class Shop {
 	private ArrayList<Sale> sales = new ArrayList<Sale>();
 	private ArrayList<Sale> blankSalesTable = new ArrayList<Sale>();
 	private ArrayList<Product> totalProducts = new ArrayList<Product>();
+	
+	private Model model;
+
+	
 	private Model model;
 
 	private String username, password, choice, customerName, customerNumber,
@@ -324,9 +328,19 @@ public class Shop {
 
 	public void loadAvailableStock() {
 		availableStock.clear();
-		availableStock = getUniqueStockList();
-	}
+		for (Product p : totalProducts) {
 
+			if (stockLevels().get(p.getName()) == null) {
+				Stock stock = new Stock(p, 0);
+				availableStock.add(stock);
+			} else {
+
+				Stock stock = new Stock(p, stockLevels().get(p.getName()));
+				availableStock.add(stock);
+			}
+		}
+	}
+	
 	public ArrayList<Stock> getAvailableStock() {
 		return availableStock;
 	}
@@ -426,10 +440,8 @@ public class Shop {
 
 	public void removeUser(int index) {
 		users.remove(index);
-		int newCount = 0;
-		for (User user : users) {
-			user.setId(newCount++);
-		}
+		writeUser(userFile);
+
 		writeUser(userFile);
 	}
 
@@ -454,10 +466,6 @@ public class Shop {
 
 				System.out.println(username + password + id + admin);
 			}
-		}
-		int newCount = 0;
-		for (User user : users) {
-			user.setId(newCount++);
 		}
 		writeUser(userFile);
 	}
@@ -485,7 +493,7 @@ public class Shop {
 
 	public ArrayList<Order> getAllOrders() {
 		financialOrders.clear();
-		for (Order order : orders) {
+		for (Order order: orders){
 			financialOrders.add(order);
 		}
 		return financialOrders;
@@ -520,14 +528,10 @@ public class Shop {
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
 
-			if ((orderDate.get(Calendar.DAY_OF_WEEK) == today
-					.get(Calendar.DAY_OF_WEEK))
-					&& (orderDate.get(Calendar.WEEK_OF_MONTH) == today
-							.get(Calendar.WEEK_OF_MONTH))
-					&& (orderDate.get(Calendar.MONTH) == today
-							.get(Calendar.MONTH))
-					&& (orderDate.get(Calendar.YEAR) == today
-							.get(Calendar.YEAR))) {
+			if ((orderDate.get(Calendar.DAY_OF_WEEK) == today.get(Calendar.DAY_OF_WEEK))&&
+					(orderDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
+					&& (orderDate.get(Calendar.MONTH) == today.get(Calendar.MONTH))
+					&& (orderDate.get(Calendar.YEAR) == today.get(Calendar.YEAR))) {
 				financialOrders.add(order);
 			}
 		}
@@ -544,8 +548,7 @@ public class Shop {
 		for (Order order : orders) {
 			Calendar orderDate = dateToCalender(order.getDate());
 
-			if ((orderDate.get(Calendar.WEEK_OF_MONTH) == today
-					.get(Calendar.WEEK_OF_MONTH))
+			if ((orderDate.get(Calendar.WEEK_OF_MONTH) == today.get(Calendar.WEEK_OF_MONTH))
 					&& (orderDate.get(Calendar.MONTH) == today
 							.get(Calendar.MONTH))
 					&& (orderDate.get(Calendar.YEAR) == today
@@ -760,10 +763,6 @@ public class Shop {
 
 	public void removeCustomer(int index) {
 		customers.remove(index);
-		int newCount = 0;
-		for (Customer customer : customers) {
-			customer.setId(newCount++);
-		}
 		writeCustomer(customerFile);
 	}
 
@@ -789,10 +788,6 @@ public class Shop {
 
 				System.out.println(name + number + id + address);
 			}
-		}
-		int newCount = 0;
-		for (Customer customer : customers) {
-			customer.setId(newCount++);
 		}
 		writeCustomer(customerFile);
 	}
@@ -869,11 +864,9 @@ public class Shop {
 	
 					}
 				}
-
 			}
 			//exit while
 			stockIndex = stockList.size();
-
 		}
 		return inStock;
 	}
@@ -905,8 +898,6 @@ public class Shop {
 	return saleList;
 	}
 
-
-
 public void createSale(SaleFormEvent e) {
 		//Process sale and return list of processed sales
 		ArrayList<Stock> inStockList = checkStock(e.getStockList(), getStock());
@@ -923,15 +914,6 @@ public void createSale(SaleFormEvent e) {
 		for (Sale s : sales) {
 			s.setId(newCount++);
 		}
-
-				
-		System.out.println("START PRINTING SALES");
-		for (Sale temp : sales) {
-			System.out.println(temp.getId() + " " + temp.getCustomer().getName());
-			for (Stock stock : temp.getStocks()){
-				System.out.println(stock.getName() + ": " + stock.getQuantity());
-			}
-		}
 				
 		//update sales file
 		writeSale(saleFile);
@@ -941,31 +923,23 @@ public void createSale(SaleFormEvent e) {
 	}
 
 	public void removeSale(int index) {
-		for (Stock stock : sales.get(index).getStocks()) {
-			stocks.add(stock);
-		}
 		sales.remove(index);
 		int newCount = 0;
 		for (Sale s : sales) {
 			s.setId(newCount++);
 		}
-		writeStock(stockFile);
-		writeSale(saleFile);
-		loadAvailableStock();
+				writeSale(saleFile);
+;
 	}
-
 	public void createOrder(OrderFormEvent e) {
 		ArrayList<Product> products = e.getProducts();
 		Supplier supplier = e.getSupplier();
 		Order order = new Order(products, supplier);
-		int last = orders.size() - 1;
-		int newId = orders.get(last).getId() + 1;
-		order.setId(newId);
 		orders.add(order);
-//		int newCount = 0;
-//		for (Order newOrder : orders) {
-//			newOrder.setId(newCount++);
-//		}
+		int newCount = 0;
+		for (Order newOrder : orders) {
+			newOrder.setId(newCount++);
+		}
 		writeOrder(orderFile);
 	}
 
@@ -978,38 +952,37 @@ public void createSale(SaleFormEvent e) {
 			if (order.getId() == id) {
 				order.setProducts(e.getProducts());
 				order.calculatePrice();
-				break;
 			}
 		}
-//		int newCount = 0;
-//		for (Order newOrder : orders) {
-//			newOrder.setId(newCount++);
-//		}
+		int newCount = 0;
+		for (Order newOrder : orders) {
+			newOrder.setId(newCount++);
+		}
+
 		writeOrder(orderFile);
 	}
 
-	public void deleteOrder(int id) {
-		for(Order order: orders){
-			if(order.isCurrent() && order.getId()==id){
-				orders.remove(order);
-				break;
-			}
-			writeOrder(orderFile);
+
+	public void deleteOrder(int index) {
+		orders.remove(index);
+		int newCount = 0;
+		for (Order order : orders) {
+			order.setId(newCount++);
 		}
+
+		writeOrder(orderFile);
 	}
 
-	public void processOrder(int id) {
-		for(Order order: orders){
-			if (order.getId()==id && order.isCurrent()) {
-				for (Product product : order.getProducts()) {
-					Stock stock = new Stock(product, product.getQuantity());
-					stocks.add(stock);
-				}
-				order.setCurrent(false);
-				break;
+	public void processOrder(int index) {
+		if (orders.get(index).isCurrent()) {
+			for (Product product : orders.get(index).getProducts()) {
+				Stock stock = new Stock(product, product.getQuantity());
+				stocks.add(stock);
+				//availableStock.add(stock);
 			}
 		}
 		loadAvailableStock();
+		orders.get(index).setCurrent(false);
 		writeOrder(orderFile);
 		writeStock(stockFile);
 	}
